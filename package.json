@@ -9,6 +9,7 @@
     "typecheck": "turbo run typecheck --continue",
     "publish-packages": "pnpm build && pnpm publish -r",
     "publish-local": "pnpm build && pnpm publish -r",
+    "publish-changesets": "pnpm build && pnpm changeset publish",
     "preinstall": "npx only-allow pnpm",
     "demo-types": "clarigen"
   },
