@@ -1,5 +1,14 @@
 # @clarigen/test
 
+## 1.0.16-alpha.7
+
+### Patch Changes
+
+- [#37](https://github.com/mechanismHQ/clarigen/pull/37) [`b5b382e`](https://github.com/mechanismHQ/clarigen/commit/b5b382ee7cbd5fd33bc490a06a7169cf72de6eb2) Thanks [@hstove](https://github.com/hstove)! - Fix: invalid build of previous release
+
+- Updated dependencies [[`b5b382e`](https://github.com/mechanismHQ/clarigen/commit/b5b382ee7cbd5fd33bc490a06a7169cf72de6eb2)]:
+  - @clarigen/core@1.0.16-alpha.7
+
 ## 1.0.16-alpha.6
 
 ### Patch Changes
