@@ -20,6 +20,10 @@ const tester = contracts.tester;
 const [deployer] = tester.identifier.split('.');
 
 describe('using clarigen/test', () => {
+  it('can get deployment info', () => {
+    const data = simnet.getContractsInterfaces();
+    // console.log(data);
+  });
   it('can call public functions', () => {
     const receipt = txOk(tester.printPub(), deployer);
     expect(receipt.value).toEqual(true);
