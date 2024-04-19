@@ -1,4 +1,4 @@
-import { ClarityAbiFunction, ClarityValue } from 'micro-stacks/clarity';
+import { ClarityAbiFunction, ClarityValue } from '@stacks/transactions';
 import { TypedAbi, TypedAbiFunction, TypedAbiMap } from '../src/abi-types';
 import {
   Batch,

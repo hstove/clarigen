@@ -1,5 +1,5 @@
-import { AssetInfo } from 'micro-stacks/clarity';
-import { IntegerType } from 'micro-stacks/common';
+import { AssetInfo } from '@stacks/transactions';
+import { IntegerType } from '@stacks/common';
 import {
   createAssetInfo as _createAssetInfo,
   FungibleConditionCode,
@@ -9,7 +9,7 @@ import {
   makeStandardNonFungiblePostCondition,
   NonFungibleConditionCode,
   PostCondition,
-} from 'micro-stacks/transactions';
+} from '@stacks/transactions';
 import type { ClarityAbiType, TypedAbi } from './abi-types';
 import { AbiTypeTo, CVInput, parseToCV, ReadonlyTuple } from './clarity-types';
 import type { FullContract } from './factory-types';

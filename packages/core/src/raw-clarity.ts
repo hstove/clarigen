@@ -1,4 +1,4 @@
-import { hexToBytes } from 'micro-stacks/common';
+import { hexToBytes } from './utils';
 import { ClarityAbiType, ClarityAbiTypePrimitive, TypedAbiFunction } from './abi-types';
 import {
   isClarityAbiOptional,

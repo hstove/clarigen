@@ -1,6 +1,6 @@
 import { project, contracts } from 'demo-project';
 import { DeploymentNetwork, contractsFactory, mapFactory, projectFactory } from '../src';
-import { stringAsciiCV, uintCV } from 'micro-stacks/clarity';
+import { stringAsciiCV, uintCV } from '@stacks/transactions';
 
 test('can make the factory', () => {
   const { tester } = contractsFactory(contracts, 'addr');

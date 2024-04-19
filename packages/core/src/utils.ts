@@ -1,5 +1,6 @@
-import { contractPrincipalCV, ContractPrincipalCV } from 'micro-stacks/clarity';
+import { contractPrincipalCV, ContractPrincipalCV } from '@stacks/transactions';
 import { Contract } from './types';
+import { hex } from '@scure/base';
 
 export const TESTNET_BURN_ADDRESS = 'ST000000000000000000002AMW42H';
 export const MAINNET_BURN_ADDRESS = 'SP000000000000000000002Q6VF78';
@@ -47,3 +48,18 @@ export function bootContractIdentifier(name: string, mainnet: boolean) {
   const addr = mainnet ? MAINNET_BURN_ADDRESS : TESTNET_BURN_ADDRESS;
   return `${addr}.${name}`;
 }
+
+export function bytesToHex(bytes: Uint8Array) {
+  return hex.encode(bytes);
+}
+
+export function hexToBytes(hexString: string) {
+  return hex.decode(hexString);
+}
+
+export function bytesToAscii(bytes: Uint8Array) {
+  const bytesArray = Array.from(bytes);
+  return String.fromCharCode.apply(null, bytesArray);
+}
+
+export const isNumber = (value: number | string): value is number => typeof value === 'number';

@@ -10,7 +10,6 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "skipLibCheck": true,
-    "types": ["micro-stacks/connect"]
   },
   "include": ["./src/**/*"]
 }

@@ -13,7 +13,7 @@ import {
   ClarityAbiFunction,
   Address,
   ClarityType,
-} from 'micro-stacks/clarity';
+} from '@stacks/transactions';
 
 export function cvConvertMS(value: MSClarityValue): HiroClarityValue {
   return deserializeCVHiro(serializeCVMS(value));

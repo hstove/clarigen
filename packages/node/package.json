@@ -26,8 +26,7 @@
     "demo-project": "workspace:*"
   },
   "dependencies": {
-    "@clarigen/core": "workspace:*",
-    "micro-stacks": "^1.2.1"
+    "@clarigen/core": "workspace:*"
   },
   "publishConfig": {
     "access": "public"

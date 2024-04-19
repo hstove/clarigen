@@ -1,15 +1,36 @@
-import {
-  isMainnetAddress,
-  parseReadOnlyResponse,
-  ReadOnlyFunctionOptions,
-  ReadOnlyFunctionResponse,
-} from 'micro-stacks/api';
-import { ClarityValue, cvToHex } from 'micro-stacks/clarity';
-import { fetchPrivate } from 'micro-stacks/common';
+import { ClarityValue, ReadOnlyFunctionResponse, cvToHex, hexToCV } from '@stacks/transactions';
+import { smartContractsApi } from './api-helpers';
 
-export type ReadOnlyOptions = Omit<ReadOnlyFunctionOptions, 'network'> & {
+export interface ReadOnlyOptions {
+  contractAddress: string;
+  contractName: string;
+  functionName: string;
+  functionArgs: (string | ClarityValue)[];
+  /** address of the sender (can be left blank, will default to contract address) */
+  senderAddress?: string;
+  /** the network that the contract which contains the function is deployed to */
+  // network?: StacksNetwork;
   url: string;
-};
+  tip?: string;
+}
+
+/**
+ * Converts the response of a read-only function call into its Clarity Value
+ * @param response - {@link ReadOnlyFunctionResponse}
+ */
+export function parseReadOnlyResponse<T extends ClarityValue>(
+  response: ReadOnlyFunctionResponse
+): T {
+  if (response.okay) {
+    return hexToCV(response.result) as T;
+  } else {
+    throw new Error(response.cause);
+  }
+}
+
+// export type ReadOnlyOptions = Omit<ReadOnlyFunctionOptions, 'network'> & {
+//   url: string;
+// };
 
 /**
  * Calls a read only function from a contract interface
@@ -22,44 +43,17 @@ export type ReadOnlyOptions = Omit<ReadOnlyFunctionOptions, 'network'> & {
 export async function callReadOnlyFunction<T extends ClarityValue>(
   options: ReadOnlyOptions
 ): Promise<T> {
-  const {
-    contractName,
-    contractAddress,
-    functionName,
-    functionArgs,
-    senderAddress = contractAddress,
-    tip,
-    url,
-  } = options;
+  const { contractAddress, functionArgs, senderAddress = contractAddress, url } = options;
 
-  let fullUrl = `${url}/v2/contracts/call-read/${contractAddress}/${contractName}/${encodeURIComponent(
-    functionName
-  )}`;
-  if (tip) {
-    fullUrl += `?tip=${tip}`;
-  }
-
-  const body = JSON.stringify({
-    sender: senderAddress,
-    arguments: functionArgs.map(arg => (typeof arg === 'string' ? arg : cvToHex(arg))),
-  });
-
-  const response = await fetchPrivate(fullUrl, {
-    method: 'POST',
-    body,
-    headers: {
-      'Content-Type': 'application/json',
+  // const contractsApi = new
+  const apiResponse = await smartContractsApi(url).callReadOnlyFunction({
+    ...options,
+    readOnlyFunctionArgs: {
+      sender: senderAddress,
+      arguments: functionArgs.map(arg => (typeof arg === 'string' ? arg : cvToHex(arg))),
     },
   });
-  if (!response.ok) {
-    let msg = '';
-    try {
-      msg = await response.text();
-    } catch (error) {}
-    throw new Error(
-      `Error calling read-only function. Response ${response.status}: ${response.statusText}. Attempted to fetch ${fullUrl} and failed with the message: "${msg}"`
-    );
-  }
 
-  return parseReadOnlyResponse<T>((await response.json()) as ReadOnlyFunctionResponse);
+  const cv = parseReadOnlyResponse<T>(apiResponse as ReadOnlyFunctionResponse);
+  return cv;
 }
