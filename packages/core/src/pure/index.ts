@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { ClarityAbiFunction, ClarityValue } from 'micro-stacks/clarity';
+import { ClarityAbiFunction, ClarityValue } from '@stacks/transactions';
 import { ClarityAbi, parseToCV, transformArgsToCV } from '../clarity-types';
 import { Response, ClarityAbiMap } from '../abi-types';
 import { toCamelCase } from '../utils';

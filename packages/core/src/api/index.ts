@@ -1,22 +1,27 @@
-import { v2Endpoint, generateUrl } from 'micro-stacks/api';
-import { cvToHex, hexToCV } from 'micro-stacks/clarity';
-import { StacksTransaction, broadcastRawTransaction } from 'micro-stacks/transactions';
+import { cvToHex, hexToCV } from '@stacks/transactions';
+import {
+  StacksTransaction,
+  broadcastRawTransaction,
+  broadcastTransaction,
+} from '@stacks/transactions';
 import { cvToJSON, cvToValue, expectErr, expectOk, Jsonize } from '../clarity-types';
 import { Response, TypedAbiMap } from '../abi-types';
 import { ContractCall } from '../factory-types';
 import { mapFactory } from '../factory';
 import { callReadOnlyFunction } from './call-read-only';
+import { generateUrl, v2Endpoint } from './api-helpers';
+import { StacksNetwork, StacksNetworkName } from '@stacks/network';
 
 export interface ApiOptionsUrl {
   url: string;
+  network?: undefined;
 }
 
-export type Network = {
-  getCoreApiUrl: () => string;
-};
+export type Network = StacksNetwork | StacksNetworkName;
 
 export interface ApiOptionsNetwork {
-  network: Network;
+  network: StacksNetworkName | StacksNetwork;
+  url?: undefined;
 }
 
 export type ApiOptionsBase = (ApiOptionsUrl | ApiOptionsNetwork) & {
@@ -85,7 +90,9 @@ export async function roErr<O extends ApiOptions, Err>(
 }
 
 export function getApiUrl(opts: ApiOptionsUrl | ApiOptionsNetwork) {
-  if ('network' in opts) return opts.network.getCoreApiUrl();
+  if (opts.network) {
+    return StacksNetwork.fromNameOrNetwork(opts.network).coreApiUrl;
+  }
   return opts.url;
 }
 
@@ -119,9 +126,9 @@ export async function fetchMapGet<Key, Val>(
 }
 
 export async function broadcast(transaction: StacksTransaction, options: ApiOptions) {
-  const url = `${getApiUrl(options)}/v2/transactions`;
-  const result = await broadcastRawTransaction(transaction.serialize(), url);
-  if ('error' in result) {
+  const network = 'network' in options ? options.network : new StacksNetwork({ url: options.url });
+  const result = await broadcastTransaction(transaction, network);
+  if (result.error) {
     throw new Error(
       `Error broadcasting tx: ${result.error} - ${result.reason} - ${JSON.stringify(
         result.reason_data
@@ -135,9 +142,9 @@ export async function broadcast(transaction: StacksTransaction, options: ApiOpti
   }
 }
 
-type ClientOptions = Omit<ApiOptions, 'url'>;
+type ClientOptions = Omit<ApiOptions, 'url' | 'network'>;
 
-type JsonIf<O extends ClientOptions, T> = JsonIfOption<O & { url: string }, T>;
+type JsonIf<O extends ClientOptions, T> = JsonIfOption<O & (ApiOptionsUrl | ApiOptionsNetwork), T>;
 
 export class ClarigenClient {
   public url: string;
@@ -146,7 +153,7 @@ export class ClarigenClient {
     if (typeof networkOrUrl === 'string') {
       this.url = networkOrUrl;
     } else {
-      this.url = networkOrUrl.getCoreApiUrl();
+      this.url = StacksNetwork.fromNameOrNetwork(networkOrUrl).coreApiUrl;
     }
   }
 

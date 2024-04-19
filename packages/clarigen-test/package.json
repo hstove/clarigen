@@ -32,8 +32,7 @@
     "@clarigen/core": "workspace:*",
     "@hirosystems/clarinet-sdk": "1.2.0",
     "@hirosystems/clarinet-sdk-wasm": "1.2.0",
-    "@stacks/transactions": "6.10.0",
-    "micro-stacks": "^1.2.1"
+    "@stacks/transactions": "6.13.0"
   },
   "publishConfig": {
     "access": "public"

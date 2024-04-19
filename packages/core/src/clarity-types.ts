@@ -17,9 +17,8 @@ import {
   listCV,
   hexToCV,
   bufferCV,
-} from 'micro-stacks/clarity';
-import { parseToCV as _parseToCV } from 'micro-stacks/transactions';
-import { bytesToAscii, bytesToHex } from 'micro-stacks/common';
+  parseToCV as _parseToCV,
+} from '@stacks/transactions';
 import {
   Response,
   ResponseOk,
@@ -43,7 +42,7 @@ import {
   TypedAbiFunction,
   TypedAbiArg,
 } from './abi-types';
-import { toCamelCase, toKebabCase } from './utils';
+import { toCamelCase, toKebabCase, bytesToHex, bytesToAscii } from './utils';
 
 export function ok<T, Err = never>(value: T): ResponseOk<T, Err> {
   return {

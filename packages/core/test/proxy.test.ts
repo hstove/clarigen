@@ -1,4 +1,4 @@
-// import { uintCV } from 'micro-stacks/clarity';
+// import { uintCV } from '@stacks/transactions';
 // import { pureProxy } from '../src';
 // import { SimpleContract, SimpleInterface } from './mocks';
 

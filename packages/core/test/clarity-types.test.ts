@@ -26,9 +26,9 @@ import {
   stringAsciiCV,
   tupleCV,
   uintCV,
-} from 'micro-stacks/clarity';
+} from '@stacks/transactions';
 import { project, contracts } from 'demo-project';
-import { StacksMocknet } from 'micro-stacks/network';
+import { StacksMocknet } from '@stacks/network';
 
 const devnet = projectFactory(project, 'devnet');
 
@@ -67,7 +67,7 @@ describe('cvToValue', () => {
 describe('parseToCV', () => {
   test('can handle trait references correctly', () => {
     const cv = parseToCV('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.asdf', 'trait_reference');
-    expect(cv).toEqual(contractPrincipalCV('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.asdf'));
+    expect(cv).toEqual(contractPrincipalCV('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM', 'asdf'));
   });
 });
 

@@ -1,9 +1,9 @@
-import { createLPString, uintCV } from 'micro-stacks/clarity';
+import { createLPString, uintCV } from '@stacks/transactions';
 import {
   FungibleConditionCode,
   NonFungibleConditionCode,
   PostConditionType,
-} from 'micro-stacks/transactions';
+} from '@stacks/transactions';
 import { project } from 'demo-project';
 import {
   AssetNames,
@@ -47,13 +47,8 @@ test('throw if invalid asset name', () => {
 const _nftId: NftAssetType<typeof contract> = 'asdf';
 
 test('can create post condition', () => {
-  const pc = makeNonFungiblePostCondition(
-    contract,
-    deployer,
-    NonFungibleConditionCode.DoesNotOwn,
-    1n
-  );
-  if (pc.conditionCode !== NonFungibleConditionCode.DoesNotOwn) {
+  const pc = makeNonFungiblePostCondition(contract, deployer, NonFungibleConditionCode.Sends, 1n);
+  if (pc.conditionCode !== NonFungibleConditionCode.Sends) {
     throw new Error('invalid');
   }
   expect(pc.assetName).toEqual(uintCV(1));
@@ -64,7 +59,7 @@ test('correct type errors', () => {
     makeNonFungiblePostCondition(
       contract,
       deployer,
-      NonFungibleConditionCode.DoesNotOwn,
+      NonFungibleConditionCode.Sends,
       // @ts-expect-error Should fail types
       'asdf'
     );

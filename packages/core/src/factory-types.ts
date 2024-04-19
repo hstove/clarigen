@@ -1,4 +1,4 @@
-import { ClarityValue } from 'micro-stacks/clarity';
+import { ClarityValue } from '@stacks/transactions';
 import { ClarityAbiFunction, TypedAbi, TypedAbiArg, TypedAbiFunction } from './abi-types';
 
 export interface ContractCall<T> {
