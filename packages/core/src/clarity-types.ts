@@ -41,6 +41,8 @@ import {
   ClarityAbiType,
   TypedAbiFunction,
   TypedAbiArg,
+  StacksEpochId,
+  ClarityVersion,
 } from './abi-types';
 import { toCamelCase, toKebabCase, bytesToHex, bytesToAscii } from './utils';
 
@@ -62,9 +64,18 @@ export function isResponse<T>(value: Response<T, T> | T): value is Response<T, T
   return typeof value === 'object' && value !== null && 'isOk' in value;
 }
 
-export interface ClarityAbi extends Omit<_ClarityAbi, 'maps'> {
-  maps: ClarityAbiMap[];
-  clarity_version?: string;
+// export interface ClarityAbi extends Omit<_ClarityAbi, 'maps'> {
+//   maps: ClarityAbiMap[];
+//   epoch: StacksEpochId;
+//   clarity_version: ClarityVersion;
+//   // clarity_version?: string;
+// }
+
+export interface ClarityAbi extends _ClarityAbi {
+  // maps: ClarityAbiMap[];
+  epoch: StacksEpochId;
+  clarity_version: ClarityVersion;
+  // clarity_version?: string;
 }
 
 export function principalToString(principal: PrincipalCV): string {
@@ -166,6 +177,9 @@ export const isClarityAbiTuple = (val: ClarityAbiType): val is ClarityAbiTypeTup
   (val as ClarityAbiTypeTuple).tuple !== undefined;
 export const isClarityAbiList = (val: ClarityAbiType): val is ClarityAbiTypeList =>
   (val as ClarityAbiTypeList).list !== undefined;
+export const isClarityAbiTraitReference = (
+  val: ClarityAbiType
+): val is ClarityAbiTypeTraitReference => val === 'trait_reference';
 
 export function parseToCV(input: CVInput, type: ClarityAbiType): ClarityValue {
   if (isClarityAbiTuple(type)) {

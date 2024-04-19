@@ -33,11 +33,6 @@ export async function writeFile(path: string, contents: string) {
   return path;
 }
 
-export function cwdResolve(...paths: string[]) {
-  return resolve(process.cwd(), ...paths);
-  // return resolve(Deno.cwd(), ...paths);
-}
-
 export function cwdRelative(path: string) {
   return relative(process.cwd(), path);
 }

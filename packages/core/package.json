@@ -14,7 +14,7 @@
   "scripts": {
     "start": "tsup --watch",
     "dev": "tsup --watch",
-    "build": "shx rm -rf ./dist && tsup",
+    "build": "tsup",
     "test": "vitest run",
     "lint": "eslint \"src/**/*.{ts,tsx}\" && prettier --check \"./**/*.{ts,js}\"",
     "typecheck": "tsc --noEmit -p tsconfig-test.json",
