@@ -1,0 +1,40 @@
+{
+  "version": "1.0.16-alpha.7",
+  "license": "MIT",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "import": "./dist/index.mjs",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsx",
+    "dev": "tsup --watch",
+    "build": "shx rm -rf dist && tsup",
+    "test": "vitest run --passWithNoTests",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" && prettier --check \"./**/*.{ts,js}\"",
+    "typecheck": "tsc --noEmit -p tsconfig-test.json"
+  },
+  "prettier": "@stacks/prettier-config",
+  "name": "@clarigen/cli",
+  "author": "Hank Stoever",
+  "devDependencies": {
+    "demo-project": "workspace:*",
+    "tsx": "^4.7.2"
+  },
+  "dependencies": {
+    "@clarigen/core": "workspace:*",
+    "clipanion": "4.0.0-rc.3",
+    "pino": "^8.20.0",
+    "pino-pretty": "^11.0.0",
+    "smol-toml": "^1.1.4",
+    "zod": "^3.22.5"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
