@@ -90,12 +90,26 @@ export interface ClarityAbiTypeNonFungibleToken<T = unknown> {
   _t?: T;
 }
 
+export type StacksEpochId =
+  | 'Epoch10'
+  | 'Epoch20'
+  | 'Epoch2_05'
+  | 'Epoch21'
+  | 'Epoch22'
+  | 'Epoch23'
+  | 'Epoch24'
+  | 'Epoch25'
+  | 'Epoch30';
+export type ClarityVersion = 'Clarity1' | 'Clarity2';
+
 export interface ClarityAbi {
   functions: ClarityAbiFunction[];
   variables: ClarityAbiVariable[];
   maps: ClarityAbiMap[];
   fungible_tokens: ClarityAbiTypeFungibleToken[];
   non_fungible_tokens: readonly ClarityAbiTypeNonFungibleToken<unknown>[];
+  epoch: StacksEpochId;
+  clarity_version: ClarityVersion;
 }
 
 export type TypedAbi = Readonly<{

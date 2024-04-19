@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { cwdResolve } from './utils';
 import { readFile } from 'fs/promises';
 import { parse } from 'smol-toml';
 

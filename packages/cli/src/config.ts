@@ -1,8 +1,8 @@
 import { z } from 'zod';
 import { log } from './logger';
-import { cwdRelative, cwdResolve, fileExists, writeFile } from './utils';
+import { fileExists, writeFile } from './utils';
 import { ClarinetConfig, getClarinetConfig } from './clarinet-config';
-import { dirname, join, resolve } from 'path';
+import { dirname, join, relative, resolve } from 'path';
 import { stringify, parse } from 'smol-toml';
 import { readFile } from 'fs/promises';
 
@@ -74,7 +74,7 @@ export class Config {
     const outputs = this.getOutputs(type);
     if (!this.supports(type)) return null;
     return outputs.map(path => {
-      return cwdResolve(path, filePath || '');
+      return resolve(this.cwd, path, filePath || '');
     });
   }
 
@@ -84,7 +84,7 @@ export class Config {
     await Promise.all(
       paths.map(async path => {
         await writeFile(path, contents);
-        log.debug(`Generated ${type} file at ${cwdRelative(path)}`);
+        log.debug(`Generated ${type} file at ${relative(this.cwd, path)}`);
       })
     );
     return paths;
@@ -109,7 +109,7 @@ export class Config {
   }
 
   clarinetFile() {
-    return cwdResolve(this.configFile.clarinet);
+    return resolve(this.cwd, this.configFile.clarinet);
   }
 
   joinFromClarinet(filePath: string) {
@@ -119,8 +119,7 @@ export class Config {
 }
 
 export function configFilePath(cwd?: string) {
-  return typeof cwd === 'undefined' ? cwdResolve(CONFIG_FILE) : resolve(cwd, CONFIG_FILE);
-  // return cwdResolve(CONFIG_FILE);
+  return resolve(cwd ?? process.cwd(), CONFIG_FILE);
 }
 
 export async function saveConfig(config: ConfigFile) {

@@ -13,6 +13,7 @@
   },
   "scripts": {
     "start": "tsx",
+    "run:demo": "tsx src/run-cli.ts ../../demo-project",
     "dev": "tsup --watch",
     "build": "shx rm -rf dist && tsup",
     "test": "vitest run --passWithNoTests",
@@ -24,14 +25,19 @@
   "author": "Hank Stoever",
   "devDependencies": {
     "demo-project": "workspace:*",
-    "tsx": "^4.7.2"
+    "tsx": "^4.7.2",
+    "vitest": "1.5.0"
   },
   "dependencies": {
     "@clarigen/core": "workspace:*",
+    "@hirosystems/clarinet-sdk": "2.5.0",
+    "@hirosystems/clarinet-sdk-wasm": "2.5.0",
+    "@stacks/transactions": "6.13.1",
     "clipanion": "4.0.0-rc.3",
     "pino": "^8.20.0",
     "pino-pretty": "^11.0.0",
     "smol-toml": "^1.1.4",
+    "yaml": "^2.4.1",
     "zod": "^3.22.5"
   },
   "publishConfig": {
