@@ -1,5 +1,6 @@
 import { project, contracts } from 'demo-project';
 import { projectFactory, rawClarityToValue, ResponseType } from '../src';
+import { describe, test, it, expect } from 'vitest';
 
 // const contracts = projectFactory(project, 'simnet');
 

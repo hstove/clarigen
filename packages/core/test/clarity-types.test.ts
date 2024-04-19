@@ -29,6 +29,7 @@ import {
 } from '@stacks/transactions';
 import { project, contracts } from 'demo-project';
 import { StacksMocknet } from '@stacks/network';
+import { expect, it, test, describe } from 'vitest';
 
 const devnet = projectFactory(project, 'devnet');
 

@@ -1,6 +1,7 @@
 import { project, contracts } from 'demo-project';
 import { DeploymentNetwork, contractsFactory, mapFactory, projectFactory } from '../src';
 import { stringAsciiCV, uintCV } from '@stacks/transactions';
+import { test, expect } from 'vitest';
 
 test('can make the factory', () => {
   const { tester } = contractsFactory(contracts, 'addr');
