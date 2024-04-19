@@ -13,6 +13,7 @@ import {
   NftAssetType,
   projectFactory,
 } from '../src';
+import { expect, test, describe } from 'vitest';
 const devnet = projectFactory(project, 'devnet');
 
 const contract = devnet.tester;

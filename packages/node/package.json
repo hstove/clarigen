@@ -15,7 +15,7 @@
     "start": "tsup --watch",
     "dev": "tsup --watch",
     "build": "shx rm -rf dist && tsup",
-    "test": "jest --passWithNoTests",
+    "test": "vitest run --passWithNoTests",
     "lint": "eslint \"src/**/*.{ts,tsx}\" && prettier --check \"./**/*.{ts,js}\"",
     "typecheck": "tsc --noEmit -p tsconfig-test.json"
   },

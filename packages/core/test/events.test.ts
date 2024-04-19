@@ -1,4 +1,5 @@
 import { filterEvents, SmartContractEvent, CoreNodeEventType } from '../src/events';
+import { test, expect } from 'vitest';
 
 test('can filter events by type', () => {
   const event: SmartContractEvent = {
