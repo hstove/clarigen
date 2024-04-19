@@ -28,6 +28,11 @@ export function toKebabCase(input: string): string {
   return matches.join('-').toLowerCase();
 }
 
+export function getContractName(identifier: string, camelCase = true) {
+  const name = identifier.split('.')[1];
+  return camelCase ? toCamelCase(name) : name;
+}
+
 export const getContractNameFromPath = (path: string) => {
   const contractPaths = path.split('/');
   const filename = contractPaths[contractPaths.length - 1];
