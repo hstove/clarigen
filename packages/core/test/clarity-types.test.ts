@@ -27,7 +27,7 @@ import {
   tupleCV,
   uintCV,
 } from '@stacks/transactions';
-import { project, contracts } from 'demo-project';
+import { project, contracts } from './generated/clarigen-types';
 import { StacksMocknet } from '@stacks/network';
 import { expect, it, test, describe } from 'vitest';
 

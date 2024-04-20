@@ -1,4 +1,4 @@
-import { project, contracts } from 'demo-project';
+import { project, contracts } from './generated/clarigen-types';
 import { projectFactory, rawClarityToValue, ResponseType } from '../src';
 import { describe, test, it, expect } from 'vitest';
 

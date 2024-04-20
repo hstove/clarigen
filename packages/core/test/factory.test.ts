@@ -1,4 +1,4 @@
-import { project, contracts } from 'demo-project';
+import { project, contracts } from './generated/clarigen-types';
 import { DeploymentNetwork, contractsFactory, mapFactory, projectFactory } from '../src';
 import { stringAsciiCV, uintCV } from '@stacks/transactions';
 import { test, expect } from 'vitest';
