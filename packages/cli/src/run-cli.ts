@@ -1,4 +1,4 @@
-import { Cli } from 'clipanion';
+import { Cli, Builtins } from 'clipanion';
 import { SessionInfoCommand } from './commands/session-info';
 import { DefaultCommand } from './commands/default-command';
 
@@ -10,8 +10,10 @@ const cli = new Cli({
   binaryVersion: '0.0.1',
 });
 
-cli.register(SessionInfoCommand);
+cli.register(Builtins.HelpCommand);
+cli.register(Builtins.VersionCommand);
 cli.register(DefaultCommand);
+cli.register(SessionInfoCommand);
 
 async function run() {
   await cli.runExit(args, Cli.defaultContext);

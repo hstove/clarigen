@@ -51,6 +51,8 @@ export function generateContractMeta(contract: SessionContract, constants: strin
   }`;
 }
 
+export const TYPE_IMPORTS = `import type { TypedAbiArg, TypedAbiFunction, TypedAbiMap, TypedAbiVariable, Response } from '@clarigen/core';`;
+
 export function generateBaseFile(session: SessionWithVariables) {
   const combined = session.contracts.map((c, i) => ({
     ...c,
@@ -63,10 +65,8 @@ export function generateBaseFile(session: SessionWithVariables) {
     return `${keyName}: ${meta}`;
   });
 
-  const typeImports = `// TODO: import types from @clarigen/core`;
-
   const file = `
-${typeImports}
+${TYPE_IMPORTS}
 
 export const contracts = {
   ${contractDefs.join(',\n')}
