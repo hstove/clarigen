@@ -11,7 +11,8 @@
     "publish-local": "pnpm build && pnpm publish -r",
     "publish-changesets": "pnpm build && pnpm changeset publish",
     "preinstall": "npx only-allow pnpm",
-    "demo-types": "clarigen"
+    "demo-types": "pnpm --filter @clarigen/cli run:demo",
+    "clarigen": "pnpm --filter @clarigen/cli run:demo"
   },
   "prettier": "@stacks/prettier-config",
   "devDependencies": {

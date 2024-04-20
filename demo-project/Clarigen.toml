@@ -12,7 +12,7 @@ clarinet = "./Clarinet.toml"
 # Comment or remove section to skip ESM types
 [esm]
 # `output` can be a directory or a folder.
-output = "esm/index.ts"
+output = "esm/index.ts" 
 
 # `esm.after` - script to run after ESM types are generated.
 # examples:

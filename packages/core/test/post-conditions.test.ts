@@ -4,7 +4,7 @@ import {
   NonFungibleConditionCode,
   PostConditionType,
 } from '@stacks/transactions';
-import { project } from 'demo-project';
+import { project } from './generated/clarigen-types';
 import {
   AssetNames,
   createAssetInfo,
