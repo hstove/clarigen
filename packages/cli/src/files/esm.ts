@@ -15,6 +15,8 @@ import {
 import { getContractName } from '@clarigen/core';
 import { cwdRelative, sortContracts } from '../utils';
 import { Session } from '../session';
+import { spawn } from 'child_process';
+import { logger } from '../logger';
 
 export async function parseDeployment(path: string) {
   const contents = await readFile(path, 'utf-8');
@@ -176,4 +178,26 @@ export const simnetDeployment = ${JSON.stringify(files)};
   //   deployment: simnetDeployment,
   //   accounts,
   // };
+}
+
+export async function afterESM(config: Config): Promise<void> {
+  const command = config.esm?.after;
+  if (!command) return;
+  logger.debug(`Running after ESM command: ${command}`);
+  const parts = command.split(' ');
+  const [cmd, ...args] = parts;
+  return new Promise((resolve, reject) => {
+    const child = spawn(cmd, args, {
+      cwd: config.cwd,
+      stdio: 'inherit',
+    });
+    child.on('error', reject);
+    child.on('exit', code => {
+      if (code === 0) {
+        resolve();
+      } else {
+        reject(new Error(`Command failed with code ${code ?? 'unknown'}`));
+      }
+    });
+  });
 }

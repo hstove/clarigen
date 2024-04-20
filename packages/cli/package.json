@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "tsx",
-    "run:demo": "tsx src/run-cli.ts ../../demo-project",
+    "run:demo": "tsx src/run-cli.ts",
     "dev": "tsup --watch",
     "build": "shx rm -rf dist && tsup",
     "test": "vitest run --passWithNoTests",
