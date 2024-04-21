@@ -6,7 +6,7 @@ export type ClarityAbiTypeResponse = {
 };
 export type ClarityAbiTypeOptional = { optional: ClarityAbiType };
 export type ClarityAbiTypeTuple = {
-  tuple: readonly { name: string; type: ClarityAbiType }[];
+  tuple: { name: string; type: ClarityAbiType }[];
 };
 export type ClarityAbiTypeList = {
   list: { type: ClarityAbiType; length: number };
