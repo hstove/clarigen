@@ -2,3 +2,4 @@ packages:
   - 'packages/*'
   - '!**/test/**'
   - 'demo-project'
+  - 'docs-site'
