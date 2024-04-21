@@ -3,6 +3,7 @@ import { SessionInfoCommand } from './commands/session-info';
 import { DefaultCommand } from './commands/default-command';
 import { DocsCommand } from './commands/docs-command';
 import { InitConfigCommand } from './commands/init-config-command';
+import { logger } from './logger';
 
 const [node, script, ...args] = process.argv;
 
@@ -22,6 +23,11 @@ cli.register(SessionInfoCommand);
 async function run() {
   await cli.runExit(args, Cli.defaultContext);
 }
+
+process.on('SIGINT', () => {
+  logger.info('Bye! 👋');
+  process.exit();
+});
 
 run()
   .catch(console.error)
