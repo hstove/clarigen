@@ -2,6 +2,7 @@ import { Cli, Builtins } from 'clipanion';
 import { SessionInfoCommand } from './commands/session-info';
 import { DefaultCommand } from './commands/default-command';
 import { DocsCommand } from './commands/docs-command';
+import { InitConfigCommand } from './commands/init-config-command';
 
 const [node, script, ...args] = process.argv;
 
@@ -15,6 +16,7 @@ cli.register(Builtins.HelpCommand);
 cli.register(Builtins.VersionCommand);
 cli.register(DefaultCommand);
 cli.register(DocsCommand);
+cli.register(InitConfigCommand);
 cli.register(SessionInfoCommand);
 
 async function run() {
