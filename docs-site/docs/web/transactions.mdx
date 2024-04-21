@@ -1,0 +1,200 @@
+---
+sidebar_label: Signing Transactions
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import CodeBlock from '@theme/CodeBlock';
+
+# Signing Transactions
+
+There are a few ways you can make contract call transactions, and they mostly depend on your personal preference and the type of web development environment you're using.
+
+To learn more about making contract calls, check out the [`micro-stacks`](https://micro-stacks.dev/docs/transactions/contract-calls) docs.
+
+<Tabs>
+  <TabItem value="React" label="React" default>
+
+```tsx
+import { useOpenContractCall } from '@micro-stacks/react';
+import { nftContract } from './clarigen-contracts';
+
+export const TransferTx = () => {
+  const { openContractCall } = useOpenContractCall();
+  const id = 1;
+  const sender = 'SP...';
+  const recipient = 'SP...';
+
+  const handleOpenContractCall = async () => {
+    await openContractCall({
+      // You can use the 'object params' syntax:
+      ...nftContract.transfer({
+        id,
+        sender,
+        recipient,
+      }),
+      // or the vanilla 'arguments' syntax:
+      // ...nftContract.transfer(1, sender, recipient),
+      onFinish: async data => {
+        console.log('Finished!', data);
+      },
+    });
+  };
+
+  return <button onClick={() => handleOpenContractCall()}>Transfer</button>;
+};
+```
+
+  </TabItem>
+  <TabItem value="Svelte" label="Svelte">
+
+```html
+<script lang="ts">
+  import { nftContract } from './clarigen-contracts';
+  import { getOpenContractCall } from '@micro-stacks/svelte';
+
+  const contractCall = getOpenContractCall();
+
+  const id = 1;
+  const sender = 'SP...';
+  const recipient = 'SP...';
+
+  const onClick = async () => {
+    await $contractCall.openContractCall({
+      // You can use the 'object params' syntax:
+      ...nftContract.transfer({
+        id,
+        sender,
+        recipient,
+      }),
+      // or the vanilla 'arguments' syntax:
+      // ...nftContract.transfer(1, sender, recipient),
+      // other options
+      onFinish: data => {
+        console.log('finished contract call!', data);
+      },
+    });
+  };
+</script>
+```
+
+  </TabItem>
+  <TabItem value="Vue" label="Vue">
+
+```html
+<script setup lang="ts">
+  import { nftContract } from "./clarigen-contracts";
+  import { useOpenContractCall } from "@micro-stacks/vue";
+
+  const { openContractCall, isRequestPending } = $(useOpenContractCall());
+
+  const id = 1;
+  const sender = "SP...";
+  const recipient = "SP...";
+
+  const onClick = async () => {
+    await openContractCall({
+      // You can use the 'object params' syntax:
+      ...nftContract.transfer({
+        id,
+        sender,
+        recipient,
+      })
+      // or the vanilla 'arguments' syntax:
+      // ...nftContract.transfer(1, sender, recipient),
+      // other options
+      onFinish: (data) => {
+        console.log("finished contract call!", data);
+      },
+    });
+  };
+</script>
+```
+
+  </TabItem>
+  <TabItem value="Solid" label="Solid">
+
+```tsx
+import { useOpenContractCall } from '@micro-stacks/solidjs';
+import { nftContract } from './clarigen-contracts';
+
+export const TransferTx = () => {
+  const { openContractCall } = useOpenContractCall();
+  const id = 1;
+  const sender = 'SP...';
+  const recipient = 'SP...';
+
+  const handleOpenContractCall = async () => {
+    await openContractCall({
+      // You can use the 'object params' syntax:
+      ...nftContract.transfer({
+        id,
+        sender,
+        recipient,
+      }),
+      // or the vanilla 'arguments' syntax:
+      // ...nftContract.transfer(1, sender, recipient),
+      onFinish: async data => {
+        console.log('Finished!', data);
+      },
+    });
+  };
+
+  return <button onClick={() => handleOpenContractCall()}>Transfer</button>;
+};
+```
+
+  </TabItem>
+
+  <TabItem value="Vanilla" label="Vanilla">
+
+When writing "vanilla JS" you can use the Clarigen client's `openContractCall`
+function or the `MicroStacksClient#signTransaction` function.
+
+Using the Clarigen client:
+
+```ts
+import { clarigen } from './clarigen-client';
+import { nftContract } from './clarigen-contracts';
+
+export async function makeTransfer(id, sender, recipient) {
+  // You can use the 'object params' syntax:
+  const contractCall = nftContract.transfer({
+    id,
+    sender,
+    recipient,
+  });
+  // or the vanilla 'arguments' syntax:
+  // const contractCall = nftContract.transfer(1, sender, recipient),
+  await clarigen.openContractCall(contractCall, {
+    // other options:
+    postConditions: [],
+  });
+}
+```
+
+Or, using a `MicroStacksClient`:
+
+```ts
+import { microStacksClient } from './my-micro-stacks-client';
+import { nftContract } from './clarigen-contracts';
+import { TxType } from '@micro-stacks/client';
+
+export async function makeTransfer(id, sender, recipient) {
+  // You can use the 'object params' syntax:
+  const contractCall = nftContract.transfer({
+    id,
+    sender,
+    recipient,
+  });
+  // or the vanilla 'arguments' syntax:
+  // const contractCall = nftContract.transfer(1, sender, recipient),
+  await microStacksClient.makeTransfer(TxType.ContractCall, {
+    ...contractCall,
+    // other options
+  });
+}
+```
+
+  </TabItem>
+</Tabs>
