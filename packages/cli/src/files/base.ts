@@ -42,9 +42,7 @@ export function generateContractMeta(contract: SessionContract, constants: strin
   ${serializeLines('functions', functionLines)}
   ${serializeLines('maps', mapLines)}
   ${serializeLines('variables', variableLines)}
-  // TODO: fix with clarinet v2
   constants: ${constants},
-  // constants: {},
   ${serializeArray('non_fungible_tokens', nftLines)}
   ${otherAbi.slice(1, -1)},
   contractName: '${contractName}',

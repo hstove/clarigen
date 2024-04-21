@@ -9,33 +9,30 @@ import { readFile } from 'fs/promises';
 export const CONFIG_FILE = 'Clarigen.toml' as const;
 
 export enum OutputType {
-  Deno = 'deno',
-  ESM = 'esm',
+  ESM = 'types',
+  ESM_OLD = 'esm',
   Docs = 'docs',
 }
 
+const typesSchema = z
+  .object({
+    output: z.string().optional(),
+    outputs: z.array(z.string()).optional(),
+    include_accounts: z.boolean().optional(),
+    after: z.string().optional(),
+  })
+  .optional();
+
 export const ConfigFileSchema = z.object({
   clarinet: z.string(),
-  [OutputType.ESM]: z
-    .object({
-      output: z.string().optional(),
-      outputs: z.array(z.string()).optional(),
-      include_accounts: z.boolean().optional(),
-      after: z.string().optional(),
-    })
-    .optional(),
-  [OutputType.Deno]: z
-    .object({
-      output: z.string().optional(),
-      outputs: z.array(z.string()).optional(),
-      helper: z.string().optional(),
-    })
-    .optional(),
+  [OutputType.ESM]: typesSchema,
+  [OutputType.ESM_OLD]: typesSchema,
   [OutputType.Docs]: z
     .object({
       output: z.string().optional(),
       outputs: z.array(z.string()).optional(),
       exclude: z.array(z.string()).optional(),
+      after: z.string().optional(),
     })
     .optional(),
 });
@@ -59,6 +56,10 @@ export class Config {
 
   public static async load(cwd?: string) {
     const config = await getConfig(cwd);
+    if (config[OutputType.ESM_OLD]) {
+      config[OutputType.ESM] = config[OutputType.ESM_OLD];
+      delete config[OutputType.ESM_OLD];
+    }
     const clarinet = await getClarinetConfig(resolve(cwd ?? '', config.clarinet));
     return new this(config, clarinet, cwd);
   }
@@ -98,9 +99,6 @@ export class Config {
     return this.configFile[type];
   }
 
-  get deno() {
-    return this.configFile[OutputType.Deno];
-  }
   get esm() {
     return this.configFile[OutputType.ESM];
   }

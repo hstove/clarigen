@@ -7,8 +7,8 @@
     "noImplicitAny": true,
     "esModuleInterop": true,
     "module": "commonjs",
-    "target": "es2020",
-    "lib": ["dom", "esnext"],
+    "target": "es2022",
+    "lib": ["ESNext"],
     // break
     "importHelpers": true,
     "jsx": "react",

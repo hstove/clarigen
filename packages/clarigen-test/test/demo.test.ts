@@ -1,5 +1,5 @@
 import { projectFactory, ok, err, Response } from '@clarigen/core';
-import { project } from 'demo-project';
+import { project } from './generated/clarigen-types';
 import { describe, expect, it } from 'vitest';
 import {
   txErr,

@@ -352,9 +352,7 @@ export const contracts = {
         access: 'variable',
       } as TypedAbiVariable<string>,
     },
-    // TODO: fix with clarinet v2
     constants: {},
-    // constants: {},
     non_fungible_tokens: [],
     fungible_tokens: [{ name: 'wrapped-bitcoin' }],
     epoch: 'Epoch21',
@@ -390,11 +388,9 @@ export const contracts = {
         access: 'variable',
       } as TypedAbiVariable<bigint>,
     },
-    // TODO: fix with clarinet v2
     constants: {
       counter: 1n,
     },
-    // constants: {},
     non_fungible_tokens: [],
     fungible_tokens: [],
     epoch: 'Epoch21',
@@ -405,9 +401,7 @@ export const contracts = {
     functions: {},
     maps: {},
     variables: {},
-    // TODO: fix with clarinet v2
     constants: {},
-    // constants: {},
     non_fungible_tokens: [],
     fungible_tokens: [],
     epoch: 'Epoch21',
@@ -418,9 +412,7 @@ export const contracts = {
     functions: {},
     maps: {},
     variables: {},
-    // TODO: fix with clarinet v2
     constants: {},
-    // constants: {},
     non_fungible_tokens: [],
     fungible_tokens: [],
     epoch: 'Epoch21',
@@ -548,11 +540,9 @@ export const contracts = {
         access: 'variable',
       } as TypedAbiVariable<bigint>,
     },
-    // TODO: fix with clarinet v2
     constants: {
       numVar: 0n,
     },
-    // constants: {},
     non_fungible_tokens: [{ name: 'nft', type: 'uint128' }],
     fungible_tokens: [{ name: 'ft' }],
     epoch: 'Epoch21',
