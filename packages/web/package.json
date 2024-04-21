@@ -26,9 +26,7 @@
     "@clarigen/core": "workspace:*",
     "@stacks/network": "6.13.0"
   },
-  "devDependencies": {
-    "demo-project": "workspace:*"
-  },
+  "devDependencies": {},
   "publishConfig": {
     "access": "public"
   }

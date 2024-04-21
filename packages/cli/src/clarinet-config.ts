@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { readFile } from 'fs/promises';
-import { parse } from 'smol-toml';
+import { parse } from '@iarna/toml';
 
 export const ClarinetConfigSchema = z.object({
   project: z.object({

@@ -66,6 +66,9 @@ importers:
 
   demo-project:
     dependencies:
+      '@clarigen/core':
+        specifier: workspace:*
+        version: link:../packages/core
       '@hirosystems/clarinet-sdk':
         specifier: 1.2.0
         version: 1.2.0(@types/node@20.10.4)
@@ -98,9 +101,6 @@ importers:
       '@types/node':
         specifier: 20.10.4
         version: 20.10.4
-      demo-project:
-        specifier: workspace:*
-        version: link:../../demo-project
       vitest:
         specifier: 1.0.4
         version: 1.0.4(@types/node@20.10.4)
@@ -119,6 +119,9 @@ importers:
       '@hirosystems/clarinet-sdk-wasm':
         specifier: 2.5.0
         version: 2.5.0
+      '@iarna/toml':
+        specifier: ^2.2.5
+        version: 2.2.5
       '@stacks/transactions':
         specifier: 6.13.1
         version: 6.13.1
@@ -141,9 +144,6 @@ importers:
         specifier: ^3.22.5
         version: 3.22.5
     devDependencies:
-      demo-project:
-        specifier: workspace:*
-        version: link:../../demo-project
       tsx:
         specifier: ^4.7.2
         version: 4.7.2
@@ -171,20 +171,12 @@ importers:
       '@stacks/transactions':
         specifier: 6.13.1
         version: 6.13.1
-    devDependencies:
-      demo-project:
-        specifier: workspace:*
-        version: link:../../demo-project
 
   packages/node:
     dependencies:
       '@clarigen/core':
         specifier: workspace:*
         version: link:../core
-    devDependencies:
-      demo-project:
-        specifier: workspace:*
-        version: link:../../demo-project
 
   packages/web:
     dependencies:
@@ -194,10 +186,6 @@ importers:
       '@stacks/network':
         specifier: 6.13.0
         version: 6.13.0
-    devDependencies:
-      demo-project:
-        specifier: workspace:*
-        version: link:../../demo-project
 
 packages:
 
@@ -947,6 +935,10 @@ packages:
   /@humanwhocodes/object-schema@1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
+
+  /@iarna/toml@2.2.5:
+    resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
+    dev: false
 
   /@istanbuljs/schema@0.1.2:
     resolution: {integrity: sha512-tsAQNx32a8CoFhjhijUIhI4kccIAgmGhy8LZMZgGfmXcpMbPRUqn5LWmgRttILi6yeGmBJd2xsPkFMs0PzgPCw==}

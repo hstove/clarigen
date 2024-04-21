@@ -1,12 +1,12 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "module": "esnext",
+    "module": "Node16",
     "lib": ["esnext"],
     "outDir": "./dist",
     "rootDir": "./src",
     "resolveJsonModule": true,
-    "moduleResolution": "node",
+    "moduleResolution": "Node16",
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "skipLibCheck": true,

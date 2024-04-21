@@ -22,9 +22,7 @@
   "prettier": "@stacks/prettier-config",
   "name": "@clarigen/node",
   "author": "Hank Stoever",
-  "devDependencies": {
-    "demo-project": "workspace:*"
-  },
+  "devDependencies": {},
   "dependencies": {
     "@clarigen/core": "workspace:*"
   },

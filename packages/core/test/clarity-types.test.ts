@@ -8,6 +8,7 @@ import {
   AbiTypeTo,
   AbiTupleTo,
 } from '../src/clarity-types';
+import { ClarityAbiType } from '../src/abi-types';
 import {
   projectFactory,
   ro,
@@ -26,6 +27,8 @@ import {
   stringAsciiCV,
   tupleCV,
   uintCV,
+  ClarityAbiType as StacksClarityAbiType,
+  getTypeString,
 } from '@stacks/transactions';
 import { project, contracts } from './generated/clarigen-types';
 import { StacksMocknet } from '@stacks/network';
@@ -56,12 +59,11 @@ describe('cvToValue', () => {
     const cv = tupleCV({
       val: responseOkCV(uintCV(100)),
     });
-    console.log(cv);
 
     const value = cvToValue<{ val: Response<bigint, bigint> }>(cv, true);
     expect(value.val.isOk).toEqual(true);
     expect(value.val.value).toEqual(100n);
-    console.log(value);
+    // console.log(value);
   });
 });
 
@@ -206,3 +208,15 @@ type BnsTup = AbiTupleTo<(typeof bnsNftAsset)['type']>;
 type Contract = (typeof devnet)['tester'];
 
 type AA = AbiTypeTo<Contract['non_fungible_tokens'][0]['type']>;
+
+type IfEquals<T, U, Y = unknown, N = never> = (<G>() => G extends T ? 1 : 2) extends <
+  G
+>() => G extends U ? 1 : 2
+  ? Y
+  : N;
+
+type AbiEq = IfEquals<StacksClarityAbiType, ClarityAbiType, true, false>;
+
+function testTypeString(abi: ClarityAbiType) {
+  return getTypeString(abi);
+}

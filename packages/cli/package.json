@@ -5,6 +5,7 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "import": "./dist/index.mjs",
+  "type": "commonjs",
   "files": [
     "dist"
   ],
@@ -24,7 +25,6 @@
   "name": "@clarigen/cli",
   "author": "Hank Stoever",
   "devDependencies": {
-    "demo-project": "workspace:*",
     "tsx": "^4.7.2",
     "vitest": "1.5.0"
   },
@@ -32,6 +32,7 @@
     "@clarigen/core": "workspace:*",
     "@hirosystems/clarinet-sdk": "2.5.0",
     "@hirosystems/clarinet-sdk-wasm": "2.5.0",
+    "@iarna/toml": "^2.2.5",
     "@stacks/transactions": "6.13.1",
     "clipanion": "4.0.0-rc.3",
     "pino": "^8.20.0",

@@ -32,9 +32,7 @@
     "@stacks/stacks-blockchain-api-types": "7.10.0",
     "@stacks/transactions": "6.13.1"
   },
-  "devDependencies": {
-    "demo-project": "workspace:*"
-  },
+  "devDependencies": {},
   "publishConfig": {
     "access": "public"
   }

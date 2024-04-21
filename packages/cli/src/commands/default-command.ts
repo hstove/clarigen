@@ -4,6 +4,7 @@ import { Config, OutputType } from '../config';
 import { getSession } from '../session';
 import { generateBaseFile } from '../files/base';
 import { afterESM, generateESMFile } from '../files/esm';
+import { BaseCommand } from './base-command';
 
 export async function generate(config: Config) {
   const session = await getSession(config);
@@ -22,7 +23,7 @@ export async function generate(config: Config) {
   }
 }
 
-export class DefaultCommand extends Command {
+export class DefaultCommand extends BaseCommand {
   static paths = [Command.Default];
   // static description = 'Generate types for your Clarity contracts';
   static usage = Command.Usage({
@@ -37,23 +38,10 @@ export class DefaultCommand extends Command {
     required: false,
   });
 
-  verbose = Option.Boolean('-v,--verbose', false, {
-    description: 'Enable verbose logging',
-  });
   async execute() {
-    if (this.verbose) {
-      logger.level = 'debug';
-    }
+    this.preexecute();
+
     const config = await Config.load(this.cwd);
     await generate(config);
-  }
-
-  // eslint-disable-next-line @typescript-eslint/require-await
-  async catch(error: unknown) {
-    logger.error(error);
-    if (error instanceof Error) {
-      logger.error(error.stack);
-    }
-    throw error;
   }
 }

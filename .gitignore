@@ -15,7 +15,8 @@ yarn-error.log
 lib/
 coverage/
 tsconfig.tsbuildinfo
-docs
+demo-project/docs
+deprecated/claridocs/test/docs
 tmp/
 doc
 lerna-debug.log

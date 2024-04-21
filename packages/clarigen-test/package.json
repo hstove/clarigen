@@ -24,7 +24,6 @@
   "author": "Hank Stoever",
   "devDependencies": {
     "@types/node": "20.10.4",
-    "demo-project": "workspace:*",
     "vitest": "1.0.4",
     "vitest-environment-clarinet": "^1.1.0"
   },

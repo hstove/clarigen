@@ -3,7 +3,7 @@ import { log } from './logger';
 import { fileExists, writeFile } from './utils';
 import { ClarinetConfig, getClarinetConfig } from './clarinet-config';
 import { dirname, join, relative, resolve } from 'path';
-import { stringify, parse } from 'smol-toml';
+import { stringify, parse } from '@iarna/toml';
 import { readFile } from 'fs/promises';
 
 export const CONFIG_FILE = 'Clarigen.toml' as const;
