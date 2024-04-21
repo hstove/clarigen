@@ -4,6 +4,7 @@ import './globals.css';
 import { cn } from '@/lib/utils';
 import { Providers } from '@/components/providers';
 import { Header } from '@/components/header';
+import { ThemeProvider } from '@/components/theme-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,15 +20,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn('min-h-screen bg-background font-sans antialiased', inter.className)}>
-        <div className="container">
-          <div className="flex flex-col gap-8">
-            <Header />
-            <Providers>
-              <>{children}</>
-            </Providers>
+      <body className={cn('bg-background min-h-screen font-sans antialiased', inter.className)}>
+        <ThemeProvider defaultTheme="dark" attribute="class" enableSystem disableTransitionOnChange>
+          <div className="container">
+            <div className="flex flex-col gap-8">
+              <Header />
+              <Providers>
+                <>{children}</>
+              </Providers>
+            </div>
           </div>
-        </div>
+        </ThemeProvider>
       </body>
     </html>
   );

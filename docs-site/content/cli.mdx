@@ -1,0 +1,79 @@
+---
+title: Clarigen CLI
+sidebar_label: CLI
+---
+
+# Clarigen CLI
+
+The Clarigen CLI is the interface you'll use to generate Clarigen types. The CLI is a Deno project - so you'll need Deno installed in order to install it.
+
+To install:
+
+```bash
+npm install @clarigen/cli
+```
+
+After being installed, you can run `clarigen` in your terminal.
+
+```bash
+npx clarigen
+```
+
+```js showLineNumbers title=app/layout.tsx {2,5-8,16-17}
+import '@/styles/globals.css';
+import { Inter as FontSans } from 'next/font/google';
+
+import { cn } from '@/lib/utils';
+
+const fontSans = FontSans({
+  subsets: ['latin'],
+  variable: '--font-sans',
+});
+
+export default function RootLayout({ children }: RootLayoutProps) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <head />
+      <body className={cn('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
+        ...
+      </body>
+    </html>
+  );
+}
+```
+
+## Commands
+
+### `clarigen`
+
+Running `clarigen` on its own will generate type files for you.
+
+#### Watch mode
+
+Running `clarigen --watch` will keep the process open and watch for specific file changes. When a file change is detected, your types will be re-generated. This is helpful for actively developing tests or an app.
+
+The files watched are:
+
+- `Clarigen.toml`
+- `Clarinet.toml`
+- `contracts/*.clar`
+
+### `clarigen docs`
+
+Generate documentation from comments in your contracts. Check out the **TODO: add link** docs for more information.
+
+### `clarigen init`
+
+Generate a `Clarigen.toml` file.
+
+### `clarigen upgrade`
+
+Update your locally installed version of the `clarigen` CLI.
+
+Run `clarigen upgrade -l` to list available versions.
+
+Run `clarigen upgrade --version $version` to install a specific version.
+
+## Log levels
+
+To change the default logging, each command accepts either `--quiet` or `--verbose` flags, which changes the default log level used.
