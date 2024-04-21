@@ -1,21 +1,21 @@
 # Set to your project's Clarinet config file
 clarinet = "./Clarinet.toml"
 
-# Set where you'd like Deno types output.
-# Comment or remove section to skip Deno types
-[deno]
-# `output` can be a directory or a folder.
-output = "artifacts/clarigen.ts"
+# Set where you'd like TypeScript types output.
+# Comment or remove section to skip TypeScript types
+[types]
+# `output` should be a path to a single file
+output = "src/clarigen-types.ts"
 
-# Set where you'd like ESM types output.
-# Comment or remove section to skip ESM types
-[esm]
-# `output` can be a directory or a folder.
-output = "esm/clarigen.ts"
+# You can also specify multiple output paths:
+# outputs = [
+#   "src/clarigen-types.ts",
+#   "test/clarigen-types.ts"
+# ]
 
-# `esm.after` - script to run after ESM types are generated.
+# `types.after` - script to run after TypeScript types are generated.
 # examples:
-# after = "yarn prettier ./esm/index.ts"
+# after = "npm run prettier -w ./src/clarigen-types.ts"
 # after = "echo 'yay'"
 
 # Set where you'd like generated contract docs
@@ -23,3 +23,7 @@ output = "esm/clarigen.ts"
 [docs]
 # `output` should be a folder
 output = "docs"
+
+# `docs.after` - script to run after docs are generated.
+# examples:
+# after = "npm run prettier -w ./docs"
