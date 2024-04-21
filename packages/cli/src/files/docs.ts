@@ -2,8 +2,9 @@ import { SessionWithVariables } from '../session';
 import { Config, OutputType } from '../config';
 import { log } from '../logger';
 import { getContractName } from '@clarigen/core';
-import { relative } from 'path';
+import { relative, extname } from 'path';
 import { generateMarkdown, generateReadme } from '../docs/markdown';
+import { afterDocs } from '../docs';
 
 export async function generateDocs({
   session,
@@ -18,7 +19,8 @@ export async function generateDocs({
     warnNoDocs();
     return;
   }
-  if (docsBase.includes('.')) {
+  const docsPathExt = extname(docsBase);
+  if (docsPathExt) {
     log.warn(`Docs output path ('${docsBase}') looks like a file - it needs to be a directory.`);
   }
   const excluded: Record<string, boolean> = Object.fromEntries(
@@ -59,6 +61,7 @@ export async function generateDocs({
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   paths.push((await config.writeOutput(OutputType.Docs, readme, 'README.md'))![0]);
+  await afterDocs(config);
 
   // TODO: `after` command for docs
   // await runDenoFmt(paths.filter(s => s !== null) as string[]);

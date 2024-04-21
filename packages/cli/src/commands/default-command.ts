@@ -18,7 +18,7 @@ export async function generate(config: Config) {
     await config.writeOutput(OutputType.ESM, esmFile);
     await afterESM(config);
   }
-  if (!config.supports(OutputType.ESM) && !config.supports(OutputType.Deno)) {
+  if (!config.supports(OutputType.ESM)) {
     logger.warn('no config for ESM outputs. Not outputting any generated types.');
   }
 }

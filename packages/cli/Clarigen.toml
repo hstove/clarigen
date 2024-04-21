@@ -22,6 +22,7 @@ after = "pnpm prettier --loglevel error -w ../*/test/generated/clarigen-types.ts
 
 # Set where you'd like generated contract docs
 # Generate docs by running `clarigen docs`
-# [docs]
+[docs]
 # `output` should be a folder
-# output = "docs"
+output = "../../demo-project/docs"
+after = "pnpm prettier --loglevel error -w ../../demo-project/docs"
