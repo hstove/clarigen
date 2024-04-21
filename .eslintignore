@@ -7,3 +7,4 @@ packages/cli/tmp/tests/deno
 dist/
 demo-project/test-runner.ts
 packages/clarigen-test/vitest.config.js
+docs-site/contentlayer.config.js
