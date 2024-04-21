@@ -7,6 +7,16 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 8,
   },
+  extends: ['next/core-web-vitals', 'turbo', 'prettier', 'plugin:tailwindcss/recommended'],
+  settings: {
+    tailwindcss: {
+      callees: ['cn', 'cva'],
+      config: 'tailwind.config.cjs',
+    },
+    next: {
+      rootDir: ['apps/*/'],
+    },
+  },
   overrides: [
     {
       files: ['*.ts', '*.tsx'], // Your TypeScript files extension

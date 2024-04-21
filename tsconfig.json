@@ -19,7 +19,7 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
-    "skipLibCheck": true
+    "skipLibCheck": true,
   },
   "exclude": ["node_modules", "dist"]
 }
