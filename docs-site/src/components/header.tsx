@@ -7,14 +7,23 @@ import { cn } from '@/lib/utils';
 import { GithubIcon } from 'lucide-react';
 import { Icons } from './icons';
 import { ModeToggle } from './mode-toggle';
+import { useTheme } from 'next-themes';
 
 export const Header: React.FC<{ children?: React.ReactNode }> = () => {
+  const { resolvedTheme } = useTheme();
+  const logo = React.useMemo(() => {
+    console.log('theme', resolvedTheme);
+    if (resolvedTheme === 'dark') {
+      return <Icons.logoDark className="size-6" />;
+    }
+    return <Icons.logoLight className="size-6" />;
+  }, [resolvedTheme]);
   return (
     <header className="border-border/40 bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur">
       <div className="container flex h-14 max-w-screen-2xl items-center">
         <div className="mr-4 hidden md:flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
-            {/* <Icons.logo className="size-6" /> */}
+            {logo}
             <span className="hidden font-bold sm:inline-block">Clarigen</span>
           </Link>
         </div>
