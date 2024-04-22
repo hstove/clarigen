@@ -10,9 +10,9 @@ There are two huge benefits to using Clarigen:
 - Less boilerplate
 - Complete type safety
 
-Clarigen is built to work alongside the libraries and tooling you already use. For unit tests, it works perfectly with [Clarinet](https://github.com/hirosystems/clarinet). When you're building web apps or node.js code, it works seamlessly with [Stacks.js](https://github.com/hirosystems/stacks.js).
+Clarigen is built to work alongside the libraries and tooling you already use. For unit tests, it works perfectly with [Clarinet](https://docs.hiro.so/clarinet) and [Clarinet SDK](https://docs.hiro.so/clarinet/guides/clarinet-js-sdk). When you're building web apps or node.js code, it works seamlessly with [Stacks.js](https://docs.hiro.so/stacks.js).
 
-If you'd like to get started using Clarigen in your project, head over to the [getting started with Clarigen](./docs/getting-started) page.
+If you'd like to get started using Clarigen in your project, head over to the [getting started with Clarigen](./getting-started) page.
 
 ## See the difference
 
@@ -27,21 +27,28 @@ When writing contract tests with Clarinet:
   </TabsList>
   <TabsContent value="with">
 
+When using Clarigen, all of your function's arguments and results are strictly type. In this example, passing a non-integer to `increment` will result in a TypeScript error.
+
 ```ts
-const alice = accounts.get('wallet_1').address;
-const receipt = chain.txOk(contracts.counter.increment(2), alice);
-assertEquals(receipt.value, 2n);
+const alice = accounts.wallet_1.address; // `wallet_1` is typed
+const receipt = txOk(contracts.counter.increment(2n), alice);
+console.log(receipt.value); // 2n
 ```
 
 </TabsContent>
 <TabsContent value="without">
 
+When using Clarinet SDK without Clarigen, you have to manually handle the types of your contract's arguments and results. In this example, `call.result` is a ClarityValue of unknown type. Similarly, you need to manually specify the `ClarityValue` arguments of your functions, instead
+of just using native JavaScript types.
+
 ```ts
-const wallet_1 = accounts.get('wallet_1')!;
-let block = chain.mineBlock([
-  Tx.contractCall('counter', 'increment', [types.uint(1)], wallet_1.address),
-]);
-block.receipts[0].result.expectOk().expectUint(2);
+const accounts = simnet.getAccounts();
+const address1 = accounts.get('wallet_1'); // `wallet_1` is untyped
+if (!address1) throw new Error('invalid wallet name.');
+
+const call = simnet.callPublicFn('counter', 'add', [Cl.uint(2)], address1);
+// `call.result` is a ClarityValue of unknown type
+console.log(call.result); // Cl.ok(Cl.int(2n))
 ```
 
   </TabsContent>
@@ -96,13 +103,48 @@ async function handleOpenContractCall() {
 </TabsContent>
 </Tabs>
 
+## From Clarity types to JS types
+
+Because Clarigen knows the types of your contract's functions, it can convert Clarity types to JavaScript types behind the scenes. This means you can pass arguments and check results just like you would with any JavaScript library.
+
+Here's how each Clarity type is converted back and forth with a JavaScript type:
+
+- `uint` and `int`: `bigint`
+- `buff`: `Uint8Array`
+- `bool`: `boolean`
+- `principal`: `string`
+- `string-ascii` and `string-utf8`: `string`
+- `(list <Type>)`: `Type[]`
+- `(optional <Type>)`: `Type | null`
+
+The `response` Clarity type uses a union type to represent the possible return values of a function. For example, the Clarity type `(response principal uint)` would be:
+
+```ts
+{
+  isOk: true;
+  value: string;
+} | {
+  isOk: false;
+  value: bigint;
+};
+```
+
+Clarity tuple types are represented as objects. For example, the Clarity tuple type `{ topic: (string-ascii 12), value: uint }` would be:
+
+```ts
+{
+  topic: string;
+  value: bigint;
+}
+```
+
 ## Why?
 
 When you're building Clarity contracts, and Clarity apps, there is a ton of boilerplate code that you need to write. Similarly, you need to use a different library, with a different API, depending on if you're writing tests, web apps, or node.js code.
 
 On the other hand, Clarity's designs mean that we shouldn't have to write lots of boilerplate. Clarity code is fully type-safe, and isn't compiled, so it's easy to generate a type interface for every single Clarity contract.
 
-Clarigen is designed to harness Clarity's architecture and type safety to remove any and all boilerplate in your JavaScript projects. Ultimately, it makes Clarity development much more productive and easy.
+Clarigen is designed to harness Clarity's architecture and type safety to remove as much boilerplate as possible in your JavaScript projects. Ultimately, it makes Clarity development much more productive and easy.
 
 ## How it works
 
@@ -128,49 +170,73 @@ The magic behind Clarigen starts with the fact that any Clarity contract can be 
 }
 ```
 
-Clarigen will take the JSON interface for each of your projects, lightly annotate it, and generate a TypeScript interface inside your project. When you're writing JS code (whether for testing or building apps), Clarigen's libraries will utilize these types to make interacting with contracts a breeze.
+Clarigen will take the JSON interface for each of your projects, lightly annotate it, and generate a TypeScript file inside your project. When you're writing JS code (whether for testing or building apps), Clarigen's libraries will utilize these types to make interacting with contracts a breeze.
 
 The end result is that you'll be able to write code that looks like native JavaScript, but is converted under-the-hood to proper Clarity types.
 
 Here's an example of what your code will look like when using Clarigen. This is an example of writing unit tests with Clarinet.
 
 ```ts title="tests/counter_test.ts"
-// import helpers from the Clarigen package:
-import { factory, txOk } from 'https://deno.land/x/clarigen/src/index.ts';
-// import from your auto-generated code:
-import { simnet } from './clarigen.ts';
-import { assertEquals } from 'https://deno.land/std@0.90.0/testing/asserts.ts';
+import { CoreNodeEventType, cvToValue, projectFactory } from '@clarigen/core';
+import { accounts, project } from '../src/clarigen-types';
+import { rov, rovOk, txOk, txErr, ro, varGet, mapGet, filterEvents, tx } from '@clarigen/test';
+import { describe, test, it, expect } from 'vitest';
 
-// helper function to "setup" the test environment
-const { contracts, test } = factory(simnet);
-
-// "counter" is the name of our contract
+const contracts = projectFactory(project, 'simnet');
 const { counter } = contracts;
+const alice = accounts.wallet_1.address;
 
-test({
-  name: 'Counter test',
-  fn(chain, accounts) {
-    // similar to `accounts.get('wallet_1').address`;
-    const alice = accounts.addr('wallet_1');
+describe('counter contract tests', () => {
+  it('has a default value', () => {
+    const initial = counter.constants.counter;
+    expect(initial).toEqual(1n);
+    const value = rov(counter.getCounter());
+    expect(value).toEqual(initial);
+    expect(ro(counter.getCounter()).value).toEqual(1n);
+  });
 
-    // mine a block with a single transaction
-    // similar to `const [receipt] = chain.mineBlock(...).receipts;`
-    const receipt = chain.mineOne(txOk(counter.increment(2), alice));
-    assertEquals(receipt.value, 3n);
+  it('can increment', () => {
+    const receipt = txOk(counter.increment(1n), alice);
+    expect(receipt.value).toEqual(2n);
+  });
 
-    // mine a block with multiple transactions
-    const receipts = chain.mine(
-      txOk(counter.increment(2), alice),
-      txOk(counter.decrement(1), alice)
+  it('can increment more than 1', () => {
+    const receipt = txOk(counter.increment(5n), alice);
+    expect(receipt.value).toEqual(7n);
+  });
+
+  it('cannot increment by more than 5', () => {
+    const receipt = txErr(counter.increment(6n), alice);
+    expect(receipt.value).toEqual(100n);
+
+    const responseReceipt = tx(counter.increment(6n), alice);
+    expect(responseReceipt.value.isOk).toEqual(false);
+  });
+
+  it('can get the counter variable', () => {
+    const value = varGet(counter.identifier, counter.variables.counter);
+    expect(value).toEqual(7n);
+  });
+
+  it('can get info from the last-increment map', () => {
+    const value = mapGet(counter.identifier, counter.maps.lastIncrement, alice);
+    expect(value).toEqual(5n);
+  });
+
+  it('can get events from a tx', () => {
+    const receipt = txOk(counter.increment(1n), alice);
+    const printEvents = filterEvents(receipt.events, CoreNodeEventType.ContractEvent);
+    expect(printEvents.length).toEqual(1);
+    const [print] = printEvents;
+    const printData = cvToValue<{ action: string; object: string; value: bigint }>(
+      print.data.value
     );
-    const [increment, decrement] = receipts;
-    assertEquals(decrement.value, 4n);
-
-    // Call a read-only function
-    // similar to Clarinet's `chain.callReadOnlyFn(...).expectOk()`
-    const currentCount = chain.rovOk(counter.readCounter());
-    assertEquals(currentCount, 3n);
-  },
+    expect(printData).toEqual({
+      action: 'incremented',
+      object: 'counter',
+      value: 8n,
+    });
+  });
 });
 ```
 

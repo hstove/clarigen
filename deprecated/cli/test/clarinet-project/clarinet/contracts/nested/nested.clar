@@ -1,1 +1,0 @@
-(define-read-only (hello) true)

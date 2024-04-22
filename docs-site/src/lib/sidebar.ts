@@ -26,7 +26,7 @@ export const docsSidebar: SidebarNavItem[] = [
         href: '/docs/getting-started',
       },
       {
-        title: 'Intro',
+        title: 'What is Clarigen?',
         href: '/docs/intro',
       },
       {
