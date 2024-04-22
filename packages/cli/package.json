@@ -15,10 +15,12 @@
   "scripts": {
     "start": "tsx src/run-cli.ts",
     "dev": "tsup --watch",
-    "build": "shx rm -rf dist && tsup",
+    "build": "pnpm type-stubs && shx rm -rf dist && tsup",
     "test": "vitest run --passWithNoTests",
     "lint": "eslint \"src/**/*.{ts,tsx}\" && prettier --check \"./**/*.{ts,js}\"",
-    "typecheck": "tsc --noEmit -p tsconfig-test.json"
+    "format:fix": "prettier -w \"./**/*.{ts,js}\"",
+    "typecheck": "tsc --noEmit -p tsconfig-test.json",
+    "type-stubs": "tsx scripts/generate-type-stubs.ts && prettier --loglevel error -w ./src/**/*.ts"
   },
   "prettier": "@stacks/prettier-config",
   "name": "@clarigen/cli",

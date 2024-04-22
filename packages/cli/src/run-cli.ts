@@ -4,13 +4,14 @@ import { DefaultCommand } from './commands/default-command';
 import { DocsCommand } from './commands/docs-command';
 import { InitConfigCommand } from './commands/init-config-command';
 import { logger } from './logger';
+import { version } from './generated/version';
 
 const [node, script, ...args] = process.argv;
 
 const cli = new Cli({
   binaryLabel: 'Clarigen',
   binaryName: 'clarigen',
-  binaryVersion: '0.0.1',
+  binaryVersion: version,
 });
 
 cli.register(Builtins.HelpCommand);

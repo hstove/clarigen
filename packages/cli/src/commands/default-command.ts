@@ -66,7 +66,7 @@ export async function watch(config: Config, cwd?: string) {
 }
 
 export class DefaultCommand extends BaseCommand {
-  static paths = [Command.Default];
+  static paths = [Command.Default, ['generate']];
   // static description = 'Generate types for your Clarity contracts';
   static usage = Command.Usage({
     description: 'Generate types for your Clarity contracts',
