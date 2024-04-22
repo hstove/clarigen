@@ -12,10 +12,13 @@ import {
   NftMintEvent as _NftMintEvent,
   NftTransferEvent as _NftTransferEvent,
 } from '@clarigen/core';
+import { ClarityValue } from '@stacks/transactions';
 
 export type SmartContractEvent = {
   event: _SmartContractEvent['type'];
-  data: _SmartContractEvent['contract_event'];
+  data: Omit<_SmartContractEvent['contract_event'], 'value'> & {
+    value: ClarityValue;
+  };
 };
 
 export type StxTransferEvent = {
@@ -126,5 +129,6 @@ export function filterEvents(
   type: CoreNodeEventType.FtBurnEvent
 ): FtBurnEvent[];
 export function filterEvents(events: CoreNodeEvent[], type: CoreNodeEventType): CoreNodeEvent[] {
-  return events.filter(event => event.event === type);
+  const typeString = type === CoreNodeEventType.ContractEvent ? 'print_event' : type;
+  return events.filter(event => event.event === typeString);
 }

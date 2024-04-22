@@ -1,0 +1,143 @@
+---
+title: Examples of unit tests
+---
+
+If you want to follow along, make sure you&apos;ve followed the [instructions for getting setup](./quick-start.mdx).
+
+## The Counter contract
+
+This example uses a simple counter contract. Here's the Clarity code:
+
+```clarity
+;; The counter contract maintains a single global counter
+;; variable. Users can change the counter by calling
+;; `increment`.
+
+;; The variable used to hold the global counter.
+(define-data-var counter uint u1)
+
+;; Map to track each sender's last increment
+(define-map last-increment principal uint)
+
+;; Get the current counter
+(define-read-only (get-counter)
+  (var-get counter)
+)
+
+;; Increment the counter. You cannot increment by more than 5.
+;;
+;; @returns the new value of the counter
+;;
+;; @param step; The interval to increase the counter by
+(define-public (increment (step uint))
+  (let (
+    (new-val (+ step (var-get counter)))
+  )
+  ;; #[allow(unchecked_data)]
+  (var-set counter new-val)
+  (print { object: "counter", action: "incremented", value: new-val })
+  (asserts! (<= step u5) (err u100))
+  (map-set last-increment tx-sender step)
+  (ok new-val))
+)
+```
+
+## Unit test setup
+
+At the top of your unit testing file, you&apos;ll need to import a few things to get started:
+
+```ts
+import { projectFactory } from '@clarigen/core';
+import { project, accounts } from './clarigen-types';
+import { rov, rovOk, txOk, txErr, ro, varGet, mapGet, filterEvents } from '@clarigen/test';
+import { test, expect } from 'vitest';
+
+const { counter } = projectFactory(project, 'simnet');
+const alice = accounts.wallet_1.address;
+
+test('Counter contract tests with Clarigen', () => {
+  // Your tests will go here
+});
+```
+
+### Calling read-only functions
+
+Use the `rov` function, which stands for "read-only-value", to call a read-only function and only get the value returned. For example:
+
+```ts
+const initialValue = rov(counter.getCounter());
+expect(initialValue).toEqual(1n);
+```
+
+If your read-only function returns a `response` type, use `rovOk` and `rovErr` to automatically check the response and return either the `ok` or `err` value.
+
+### Calling public functions
+
+Use the `txOk` function to call a public function and check that it returns an `ok`. For example:
+
+```ts
+const incrementReceipt = txOk(counter.increment(1n), alice);
+expect(incrementReceipt.value).toEqual(2n);
+```
+
+You can also use `tx` to get the full response value, whether the function is `ok` or `err`.
+
+```ts
+const incrementReceipt = tx(counter.increment(1n), alice);
+if (incrementReceipt.value.isOk) {
+  console.log('Incremented successfully');
+  console.log(incrementReceipt.value.value); // inner value of the `ok`
+}
+```
+
+Or, you can use `txErr` to expect an `err` type. This is helpful for testing your function's validation logic.
+
+In the `increment` function, an error is returned if the `step` is greater than 5. You can test this like so:
+
+```ts
+const incrementReceipt = txErr(counter.increment(6n), alice);
+expect(incrementReceipt.value).toEqual(100n); // the "inner" value of the `(err)`
+```
+
+### Getting variables and map entries
+
+Use `varGet` and `mapGet` to get the value of a variable or map entry.
+
+```ts
+const contractId = counter.identifier;
+const currentValue = varGet(contractId, counter.variables.counter);
+expect(currentValue).toEqual(2n);
+
+const lastIncrement = mapGet(contractId, counter.maps.lastIncrement, alice); // the type is `bigint | null`
+expect(lastIncrement).toEqual(1n);
+
+const bobIncrement = mapGet(contractId, counter.maps.lastIncrement, accounts.wallet_2.address);
+expect(bobIncrement).toBeNull();
+```
+
+### Handling transaction events
+
+Use `filterEvents` to get the events emitted by a transaction. This is useful for testing that your contract emits the correct events.
+
+```ts
+import { CoreNodeEventType, cvToValue } from '@clarigen/core';
+
+const incrementReceipt = txOk(counter.increment(3n), alice);
+const printEvents = filterEvents(incrementReceipt.events, CoreNodeEventType.ContractEvent);
+expect(printEvents.length).toEqual(1);
+const [print] = printEvents;
+
+// next, use `cvToValue` to easily convert from a ClarityValue
+// to a "JS Native" value
+const printData = cvToValue<{
+  action: string;
+  object: string;
+  value: bigint;
+}>(print.data.value);
+
+expect(printData).toEqual({
+  object: 'counter',
+  action: 'incremented',
+  value: 5n,
+});
+```

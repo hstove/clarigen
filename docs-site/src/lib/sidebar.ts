@@ -46,10 +46,14 @@ export const docsSidebar: SidebarNavItem[] = [
   {
     title: 'Clarity unit tests',
     items: [
-      // {
-      //   title: "Quick start",
-      //   href: "/docs/unit-tests/quick-start"
-      // }
+      {
+        title: 'Quick start',
+        href: '/docs/unit-tests/quick-start',
+      },
+      {
+        title: 'Detailed testing example',
+        href: '/docs/unit-tests/example',
+      },
     ],
   },
   {

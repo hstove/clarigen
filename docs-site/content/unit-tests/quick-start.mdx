@@ -1,0 +1,59 @@
+---
+title: Use Clarigen with Clarinet-SDK
+---
+
+Clarigen provides the `@clarigen/test` library to help make it easier to write unit tests for your Clarity contracts. You'll still use `Clarinet SDK` to execute and interact with your contracts. Clarigen will just provide a more ergonomic way to write your tests.
+
+## Getting started
+
+Once you have a Clarinet project setup, you'll want to install a few Clarigen libraries:
+
+```bash
+npm install @clarigen/cli @clarigen/test @clarigen/core
+```
+
+Next, generate a Clarigen configuration file:
+
+```bash
+npx clarigen init
+```
+
+In your `Clarigen.toml` file, you can update the `output` field to specify where you want the auto-generated Clarigen code to be saved. For example:
+
+```toml title="Clarigen.toml"
+[types]
+output = "tests/clarigen-types.ts"
+```
+
+Finally, run the Clarigen CLI to generate types for your contracts:
+
+```bash
+npx clarigen
+# or in watch mode:
+npx clarigen --watch
+```
+
+## Writing tests
+
+Now that you have Clarigen types, you can write unit tests that utilize them. Here's an example of a basic test that uses `@clarigen/test`.
+
+```ts
+import { project, accounts } from './clarigen-types'; // where your [types.output] was specified
+import { projectFactory } from '@clarigen/core';
+import { rov, txOk } from '@clarigen/test';
+import { test, expect } from 'vitest';
+
+const alice = accounts.wallet_1.address;
+
+const { counter } = projectFactory(project, 'simnet');
+
+test('Counter contract test', async () => {
+  const value = rov(contracts.getCounter());
+  expect(value).toEqual(1n); // initial value
+
+  const receipt = txOk(counter.increment(2), alice);
+  expect(receipt.value).toEqual(3n);
+
+  expect(rov(counter.getCounter())).toEqual(3n); // new value
+});
+```

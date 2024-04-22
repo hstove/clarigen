@@ -371,8 +371,8 @@ export const contracts = {
         name: 'increment',
         access: 'public',
         args: [{ name: 'step', type: 'uint128' }],
-        outputs: { type: { response: { ok: 'uint128', error: 'none' } } },
-      } as TypedAbiFunction<[step: TypedAbiArg<number | bigint, 'step'>], Response<bigint, null>>,
+        outputs: { type: { response: { ok: 'uint128', error: 'uint128' } } },
+      } as TypedAbiFunction<[step: TypedAbiArg<number | bigint, 'step'>], Response<bigint, bigint>>,
       getCounter: {
         name: 'get-counter',
         access: 'read_only',
@@ -380,7 +380,12 @@ export const contracts = {
         outputs: { type: 'uint128' },
       } as TypedAbiFunction<[], bigint>,
     },
-    maps: {},
+    maps: {
+      lastIncrement: { name: 'last-increment', key: 'principal', value: 'uint128' } as TypedAbiMap<
+        string,
+        bigint
+      >,
+    },
     variables: {
       counter: {
         name: 'counter',
