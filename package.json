@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
+    "build:packages": "turbo run build --filter=!clarigen-docs",
     "lint": "turbo run lint --continue",
     "lint:fix": "eslint --fix packages/**/*.{ts,js} && prettier --write \"packages/**/*.{ts,js}\"",
     "test": "turbo run test --continue",
@@ -11,8 +12,8 @@
     "publish-local": "pnpm build && pnpm publish -r",
     "publish-changesets": "pnpm build && pnpm changeset publish",
     "preinstall": "npx only-allow pnpm",
-    "demo-types": "pnpm --filter @clarigen/cli run:demo",
-    "clarigen": "pnpm --filter @clarigen/cli run:demo"
+    "demo-types": "pnpm --filter @clarigen/cli start",
+    "clarigen": "pnpm --filter @clarigen/cli start"
   },
   "prettier": "@stacks/prettier-config",
   "devDependencies": {

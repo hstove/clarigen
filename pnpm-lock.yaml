@@ -84,19 +84,25 @@ importers:
       '@clarigen/core':
         specifier: workspace:*
         version: link:../packages/core
+      '@clarigen/test':
+        specifier: workspace:*
+        version: link:../packages/clarigen-test
       '@hirosystems/clarinet-sdk':
         specifier: 1.2.0
         version: 1.2.0(@types/node@20.10.4)
+      '@hirosystems/clarinet-sdk-wasm':
+        specifier: 1.2.0
+        version: 1.2.0
+      vitest-environment-clarinet:
+        specifier: ^1.1.0
+        version: 1.1.0(@hirosystems/clarinet-sdk@1.2.0)(vitest@1.0.4)
+    devDependencies:
       '@types/node':
         specifier: 20.10.4
         version: 20.10.4
       vitest:
         specifier: 1.0.4
         version: 1.0.4(@types/node@20.10.4)
-    devDependencies:
-      vitest-environment-clarinet:
-        specifier: ^1.1.0
-        version: 1.1.0(@hirosystems/clarinet-sdk@1.2.0)(vitest@1.0.4)
 
   docs-site:
     dependencies:
@@ -10668,7 +10674,6 @@ packages:
     dependencies:
       '@hirosystems/clarinet-sdk': 1.2.0(@types/node@20.10.4)
       vitest: 1.0.4(@types/node@20.10.4)
-    dev: true
 
   /vitest@1.0.4(@types/node@20.10.4):
     resolution: {integrity: sha512-s1GQHp/UOeWEo4+aXDOeFBJwFzL6mjycbQwwKWX2QcYfh/7tIerS59hWQ20mxzupTJluA2SdwiBuWwQHH67ckg==}

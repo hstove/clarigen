@@ -58,7 +58,6 @@ describe('using clarigen/test', () => {
   });
 
   it('types are correct', () => {
-    /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
     txOk(tester.printPub(), deployer).value as boolean;
     txErr(tester.printErr(), deployer).value as bigint;
     rov(tester.echo('asdf'), deployer) as string;
@@ -66,7 +65,6 @@ describe('using clarigen/test', () => {
     rovErr(tester.roResp(true), deployer) as bigint;
     rov(tester.roResp(true), deployer) as Response<string, bigint>;
     tx(tester.printPub(), deployer) as TransactionResult<Response<boolean, bigint>>;
-    /* eslint-enable @typescript-eslint/no-unnecessary-type-assertion */
   });
 
   it('throws for ok with txErr', () => {

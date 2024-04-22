@@ -38,7 +38,7 @@ export const DocsPage = ({ params }: DocPageProps) => {
   if (!post) throw new Error(`Post not found for slug: ${params.slug}`);
   return (
     <article className="max-w-2xl">
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-10">
         <div className="mt-4">
           <Text variant="h1">{post.title}</Text>
         </div>
