@@ -1,48 +1,36 @@
 ---
 sidebar_label: Quick Start
+title: Building Clarity apps with Clarigen
 ---
-
-import { Terminal } from '../../src/components/Terminal';
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-import CodeBlock from '@theme/CodeBlock';
-
-# Web App Quick Start
-
-:::note Using `micro-stacks`
-Clarigen is designed for being used alongside `micro-stacks` on the web. For more information, refer to the [`micro-stacks` docs](https://micro-stacks.dev).
-
-You can also use Clarigen with [Stacks.js](https://github.com/hirosystems/stacks.js), but the examples in this documentation will use `micro-stacks`.
-:::
 
 Want to start building Stacks web apps using Clarigen? Here's how you can get up and running quickly:
 
-## Install Clarigen and setup your project {#install-clarigen-and-setup-your-project}
+## Install Clarigen and setup your project
 
 Follow the [getting started](../getting-started) guide for installation instructions and project setup.
 
-## Configure Clarigen to export a `esm` file {#configure-clarigen-to-export-a-esm-file}
+## Configure Clarigen to export a TypeScript file
 
-In Clarigen, files targeted for Node.js and the web (basically, any non-Deno environments) are referred to as `esm`.
-
-In your `Clarigen.toml` file, set `esm.output`:
+In your `Clarigen.toml` file, set `types.output`:
 
 ```toml title="Clarigen.toml"
-[esm]
+[types]
 output = "src/clarigen.ts"
 ```
 
 Refer to the [configuration docs](../configuration) for more info.
 
-## Generate the `esm` file {#generate-the-esm-file}
+## Generate the TypeScript file
 
 In your CLI, run:
 
-<Terminal>clarigen</Terminal>
+```bash
+clarigen
+```
 
-You should now have a Clarigen types file generated at `src/clarigen.ts`, or wherever you configured `esm.output`.
+You should now have a Clarigen types file generated at `src/clarigen.ts`, or wherever you configured `types.output`.
 
-## Setup your `ClarigenClient` {#setup-your-webclient}
+## Setup your `ClarigenClient`
 
 ```ts title="src/clarigen-client.ts"
 import { ClarigenClient } from '@clarigen/core';
@@ -52,7 +40,7 @@ const stacksApiUrl = 'https://stacks-node-api.mainnet.stacks.co';
 export const clarigen = new ClarigenClient(stacksApiUrl);
 ```
 
-## Create contract factories {#create-contract-factories}
+## Create contract factories
 
 Contract factories are ways to "connect" a contract definition with a contract identifier. These factories are designed to make it easy to work with your contracts on different environments.
 
@@ -67,7 +55,7 @@ const nftContractId = 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.nft';
 export const nftContract = contractFactory(contracts.nft, nftContractId);
 ```
 
-## Call read-only functions {#call-read-only-functions}
+## Call read-only functions
 
 When calling read-only functions using Clarigen, all responses are automatically converted to JS-native types from their associated Clarity values. In addition, the responses are correctly typed when using TypeScript.
 
@@ -92,7 +80,7 @@ export async function getOwner(id: number | bigint) {
 }
 ```
 
-## Making contract call transactions {#making-contract-call-transactions}
+## Making contract call transactions
 
 When making contract call transactions, you can almost always use the "spread" syntax to pass contract call parameters to whatever library you're using.
 

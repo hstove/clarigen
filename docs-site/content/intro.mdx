@@ -1,13 +1,7 @@
 ---
-sidebar_position: 1
 sidebar_label: Overview
+title: Clarigen
 ---
-
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-import CodeBlock from '@theme/CodeBlock';
-
-# Clarigen
 
 Clarigen is a developer tool that automatically generates TypeScript-friendly clients that can interact with [Clarity](https://clarity-lang.org) smart contracts.
 
@@ -16,7 +10,7 @@ There are two huge benefits to using Clarigen:
 - Less boilerplate
 - Complete type safety
 
-Clarigen is built to work alongside the libraries and tooling you already use. For unit tests, it works perfectly with [Clarinet](https://github.com/hirosystems/clarinet). When you're building web apps or node.js code, it works seamlessly with [`micro-stacks`](https://micro-stacks.dev), but it'll also work with [Stacks.js](https://github.com/hirosystems/stacks.js).
+Clarigen is built to work alongside the libraries and tooling you already use. For unit tests, it works perfectly with [Clarinet](https://github.com/hirosystems/clarinet). When you're building web apps or node.js code, it works seamlessly with [Stacks.js](https://github.com/hirosystems/stacks.js).
 
 If you'd like to get started using Clarigen in your project, head over to the [getting started with Clarigen](./docs/getting-started) page.
 
@@ -26,8 +20,12 @@ To see how Clarigen can make building Stacks apps easier, compare the typical co
 
 When writing contract tests with Clarinet:
 
-<Tabs>
-  <TabItem value="with" label="With Clarigen">
+<Tabs defaultValue="with" className="w-[400px]">
+  <TabsList>
+    <TabsTrigger value="with">With Clarigen</TabsTrigger>
+    <TabsTrigger value="without">Without Clarigen</TabsTrigger>
+  </TabsList>
+  <TabsContent value="with">
 
 ```ts
 const alice = accounts.get('wallet_1').address;
@@ -35,8 +33,8 @@ const receipt = chain.txOk(contracts.counter.increment(2), alice);
 assertEquals(receipt.value, 2n);
 ```
 
-  </TabItem>
-  <TabItem value="without" label="Without Clarigen">
+</TabsContent>
+<TabsContent value="without">
 
 ```ts
 const wallet_1 = accounts.get('wallet_1')!;
@@ -46,13 +44,17 @@ let block = chain.mineBlock([
 block.receipts[0].result.expectOk().expectUint(2);
 ```
 
-  </TabItem>
+  </TabsContent>
 </Tabs>
 
 Or, when building web apps:
 
-<Tabs>
-  <TabItem value="with" label="With Clarigen">
+<Tabs defaultValue="with">
+  <TabsList>
+    <TabsTrigger value="with">With Clarigen</TabsTrigger>
+    <TabsTrigger value="without">Without Clarigen</TabsTrigger>
+  </TabsList>
+  <TabsContent value="with">
 
 ```ts
 const { openContractCall } = useOpenContractCall();
@@ -69,8 +71,8 @@ async function handleOpenContractCall() {
 }
 ```
 
-  </TabItem>
-  <TabItem value="without" label="Without Clarigen">
+</TabsContent>
+<TabsContent value="without">
 
 ```ts
 const { openContractCall, isRequestPending } = useOpenContractCall();
@@ -91,10 +93,10 @@ async function handleOpenContractCall() {
 }
 ```
 
-  </TabItem>
+</TabsContent>
 </Tabs>
 
-## Why? {#why}
+## Why?
 
 When you're building Clarity contracts, and Clarity apps, there is a ton of boilerplate code that you need to write. Similarly, you need to use a different library, with a different API, depending on if you're writing tests, web apps, or node.js code.
 
@@ -102,7 +104,7 @@ On the other hand, Clarity's designs mean that we shouldn't have to write lots o
 
 Clarigen is designed to harness Clarity's architecture and type safety to remove any and all boilerplate in your JavaScript projects. Ultimately, it makes Clarity development much more productive and easy.
 
-## How it works {#how-it-works}
+## How it works
 
 The magic behind Clarigen starts with the fact that any Clarity contract can be represented as a machine-readable interface, exposed in JSON format. In other blockchains, this is commonly referred to as an ABI. The interface for a contract looks something like this:
 
@@ -172,4 +174,4 @@ test({
 });
 ```
 
-Clarity has it’s own set of [built-in types](https://docs.stacks.co/docs/write-smart-contracts/clarity-language/language-types), but Clarigen will convert them to JavaScript native values behind the scenes. This way, you can pass arguments and check results just like you would with any JavaScript library.
+Clarity has it&apos;s own set of [built-in types](https://docs.stacks.co/docs/write-smart-contracts/clarity-language/language-types), but Clarigen will convert them to JavaScript native values behind the scenes. This way, you can pass arguments and check results just like you would with any JavaScript library.

@@ -13,6 +13,7 @@ import { visit } from 'unist-util-visit';
 import { rehypeComponent } from './src/lib/rehype-component';
 import { rehypeNpmCommand } from './src/lib/rehype-npm-command';
 import { getHighlighter, loadTheme } from '@shikijs/compat';
+import rehypeExternalLinks from 'rehype-external-links';
 import path from 'path';
 
 /** @type {import('contentlayer/source-files').ComputedFields} */
@@ -23,9 +24,9 @@ const computedFields = {
   },
   slugAsParams: {
     type: 'string',
-    resolve: doc => doc._raw.flattenedPath.split('/').slice(1).join('/'),
+    resolve: doc => `${doc._raw.flattenedPath}`,
   },
-  url: { type: 'string', resolve: post => `/posts/${post._raw.flattenedPath}` },
+  url: { type: 'string', resolve: post => `/docs/${post._raw.flattenedPath}` },
 };
 
 const LinksProperties = defineNestedType(() => ({
@@ -60,6 +61,13 @@ export default makeSource({
     rehypePlugins: [
       rehypeSlug,
       rehypeComponent,
+      [
+        rehypeExternalLinks,
+        {
+          target: '_blank',
+          rel: ['noopener', 'noreferrer'],
+        },
+      ],
       () => tree => {
         visit(tree, node => {
           if (node?.type === 'element' && node?.tagName === 'pre') {
@@ -89,7 +97,6 @@ export default makeSource({
         {
           getHighlighter: async () => {
             const theme = await loadTheme(path.join(process.cwd(), '/src/lib/themes/dark.json'));
-            console.log('theme', theme);
             return await getHighlighter({ theme });
           },
           onVisitLine(node) {
