@@ -35,7 +35,6 @@ export interface SessionWithVariables extends Session {
 
 export async function getSession(config: Config): Promise<SessionWithVariables> {
   const simnet = await initSimnet(config.clarinetFile());
-  // await simnet.initSession(Deno.cwd(), config.clarinetFile());
   const interfaces = simnet.getContractsInterfaces();
   const accounts = simnet.getAccounts();
 
