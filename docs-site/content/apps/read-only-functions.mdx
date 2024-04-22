@@ -1,8 +1,6 @@
 ---
-sidebar_label: Read-only functions
+title: Calling Read-only Functions
 ---
-
-# Calling Read-Only Functions
 
 When building a Stacks app, you can query on-chain state from a Stacks contract by calling "read-only functions". These are functions exposed by the contract to help apps and other contracts integrate with the contract.
 
@@ -13,7 +11,7 @@ The `@clarigen/core` package exposes a `ClarigenClient` instance, which provides
 To construct the `ClarigenClient`, you need to include either:
 
 - A `string` pointing to a Stacks API endpoint
-- A `StacksNetwork` instance (from either `micro-stacks` or Stacks.js)
+- A `StacksNetwork` instance from `@stacks/network`
 
 To use an API endpoint:
 
@@ -29,7 +27,7 @@ Or, using a `StacksNetwork` instance:
 
 ```ts
 import { ClarigenClient } from '@clarigen/core';
-import { StacksMainnet } from 'micro-stacks/network';
+import { StacksMainnet } from '@stacks/network';
 
 const network = new StacksMainnet();
 
@@ -94,7 +92,7 @@ export async function expectUnowned(id: number | bigint) {
 
 ## Fetching microblock-based state
 
-If you want to query the state of a contract based on the most recent microblock, you can include the `latest` option:
+If you want to query the state of a contract based on the most recent microblock, you can include the `latest` option. This is provided by default.
 
 ```ts
 import { clarigen } from './clarigen-client';
@@ -147,7 +145,7 @@ Or using `network`:
 ```ts
 import { ro } from '@clarigen/core';
 import { nftContract } from './clarigen-contracts';
-import { StacksMainnet } from 'micro-stacks/network';
+import { StacksMainnet } from '@stacks/network';
 
 const network = new StacksMainnet();
 

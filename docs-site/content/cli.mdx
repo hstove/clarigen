@@ -3,8 +3,6 @@ title: Clarigen CLI
 sidebar_label: CLI
 ---
 
-# Clarigen CLI
-
 The Clarigen CLI is the interface you'll use to generate Clarigen types. The CLI is a Deno project - so you'll need Deno installed in order to install it.
 
 To install:
@@ -17,29 +15,6 @@ After being installed, you can run `clarigen` in your terminal.
 
 ```bash
 npx clarigen
-```
-
-```js showLineNumbers title=app/layout.tsx {2,5-8,16-17}
-import '@/styles/globals.css';
-import { Inter as FontSans } from 'next/font/google';
-
-import { cn } from '@/lib/utils';
-
-const fontSans = FontSans({
-  subsets: ['latin'],
-  variable: '--font-sans',
-});
-
-export default function RootLayout({ children }: RootLayoutProps) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <head />
-      <body className={cn('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
-        ...
-      </body>
-    </html>
-  );
-}
 ```
 
 ## Commands

@@ -1,22 +1,23 @@
 ---
-sidebar_label: Signing Transactions
+title: Signing Transactions
 ---
-
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-import CodeBlock from '@theme/CodeBlock';
-
-# Signing Transactions
 
 There are a few ways you can make contract call transactions, and they mostly depend on your personal preference and the type of web development environment you're using.
 
-To learn more about making contract calls, check out the [`micro-stacks`](https://micro-stacks.dev/docs/transactions/contract-calls) docs.
+To learn more about making contract calls, check out the [`@stacks/connect`](https://www.npmjs.com/package/@stacks/connect#calling-smart-contracts-opencontractcall) docs.
 
-<Tabs>
-  <TabItem value="React" label="React" default>
+<Tabs defaultValue="React">
+  <TabsList>
+    <TabsTrigger value="React">React</TabsTrigger>
+    {/* <TabsTrigger value="Svelte">Svelte</TabsTrigger>
+    <TabsTrigger value="Vue">Vue</TabsTrigger>
+    <TabsTrigger value="Solid">Solid</TabsTrigger>
+    <TabsTrigger value="Vanilla">Vanilla JS</TabsTrigger> */}
+  </TabsList>
+  <TabsContent value="React" label="React" default>
 
 ```tsx
-import { useOpenContractCall } from '@micro-stacks/react';
+import { openContractCall } from '@stacks/connect';
 import { nftContract } from './clarigen-contracts';
 
 export const TransferTx = () => {
@@ -45,8 +46,8 @@ export const TransferTx = () => {
 };
 ```
 
-  </TabItem>
-  <TabItem value="Svelte" label="Svelte">
+  </TabsContent>
+  <TabsContent value="Svelte" label="Svelte">
 
 ```html
 <script lang="ts">
@@ -78,8 +79,8 @@ export const TransferTx = () => {
 </script>
 ```
 
-  </TabItem>
-  <TabItem value="Vue" label="Vue">
+  </TabsContent>
+  <TabsContent value="Vue" label="Vue">
 
 ```html
 <script setup lang="ts">
@@ -111,8 +112,8 @@ export const TransferTx = () => {
 </script>
 ```
 
-  </TabItem>
-  <TabItem value="Solid" label="Solid">
+  </TabsContent>
+  <TabsContent value="Solid" label="Solid">
 
 ```tsx
 import { useOpenContractCall } from '@micro-stacks/solidjs';
@@ -144,9 +145,9 @@ export const TransferTx = () => {
 };
 ```
 
-  </TabItem>
+  </TabsContent>
 
-  <TabItem value="Vanilla" label="Vanilla">
+  <TabsContent value="Vanilla" label="Vanilla">
 
 When writing "vanilla JS" you can use the Clarigen client's `openContractCall`
 function or the `MicroStacksClient#signTransaction` function.
@@ -196,5 +197,5 @@ export async function makeTransfer(id, sender, recipient) {
 }
 ```
 
-  </TabItem>
+  </TabsContent>
 </Tabs>

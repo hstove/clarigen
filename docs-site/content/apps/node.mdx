@@ -1,8 +1,6 @@
 ---
-sidebar_label: Using Node.js
+title: Clarigen with Node.js
 ---
-
-# Clarigen with Node.js
 
 When using Clarigen in a Node.js (i.e. server-side) environment, many of the same patterns can be used as with the [web client](./quick-start).
 
@@ -10,12 +8,12 @@ The main difference is that you'll sometimes want to sign and broadcast transact
 
 ## Signing contract call transactions
 
-To sign and broadcast a contract call transaction, utilize the `micro-stacks/transactions` package. Similar to making transactions on the web, use the "spread" syntax to pass options to the `micro-stacks` function.
+To sign and broadcast a contract call transaction, utilize the `@stacks/transactions` package. Similar to making transactions on the web, use the "spread" syntax to pass options to the `makeContractCall` function.
 
-```ts
+```ts showLineNumbers {8-12}
 // import your conttract factory
 import { nftContract } from './clarigen-contract';
-import { makeContractCall } from 'micro-stacks/transactions';
+import { makeContractCall, AnchorMode } from '@stacks/transactions';
 
 export async function transferNft(id, sender, recipient) {
   return makeContractCall({
@@ -31,6 +29,7 @@ export async function transferNft(id, sender, recipient) {
     // other options:
     senderKey: process.env.MY_PRIVATE_KEY,
     fee: '1000',
+    anchorMode: AnchorMode.Any,
   })
 }
 ```

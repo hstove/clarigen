@@ -22,14 +22,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn('bg-background min-h-screen font-sans antialiased', inter.className)}>
         <ThemeProvider defaultTheme="dark" attribute="class" enableSystem disableTransitionOnChange>
-          <div className="container">
-            <div className="flex flex-col gap-8">
-              <Header />
-              <Providers>
-                <>{children}</>
-              </Providers>
-            </div>
+          {/* <div className="container"> */}
+          <div className="flex flex-col">
+            <Header />
+            <Providers>
+              <>{children}</>
+            </Providers>
           </div>
+          {/* </div> */}
         </ThemeProvider>
       </body>
     </html>
