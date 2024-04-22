@@ -1,5 +1,5 @@
 import { Command, Option } from 'clipanion';
-import { logger } from '../logger';
+import { logger } from '@/logger';
 import { ZodError } from 'zod';
 
 export abstract class BaseCommand extends Command {
