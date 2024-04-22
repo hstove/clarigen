@@ -2,18 +2,11 @@
   "baseBranch": "origin/main",
   "pipeline": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "dist/**",
-        "installer/**"
-      ]
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", "installer/**"]
     },
     "test": {
-      "dependsOn": [
-        "^build"
-      ],
+      "dependsOn": ["^build"],
       "outputs": []
     },
     "lint": {
@@ -30,5 +23,6 @@
     "publish:dev": {
       "outputs": []
     }
-  }
+  },
+  "globalEnv": ["NODE_ENV"]
 }
