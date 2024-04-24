@@ -12,7 +12,7 @@ export const toCamelCase = (input: string | number | symbol, titleCase?: boolean
   if (isUpperCaseAndUnderscore) {
     return inputStr;
   }
-  const [first, ...parts] = inputStr.replace('!', '').replace('?', '').split('-');
+  const [first, ...parts] = inputStr.replace('!', '_x').replace('?', '_q').split('-');
   const firstChar = titleCase ? first[0].toUpperCase() : first[0].toLowerCase();
   let result = `${firstChar}${first.slice(1)}`;
   parts.forEach(part => {

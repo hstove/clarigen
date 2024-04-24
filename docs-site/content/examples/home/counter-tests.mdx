@@ -1,0 +1,20 @@
+```ts
+import { project, accounts } from './clarigen-types'; // where your [types.output] was specified
+import { projectFactory } from '@clarigen/core';
+import { rov, txOk } from '@clarigen/test';
+import { test, expect } from 'vitest';
+
+const alice = accounts.wallet_1.address;
+
+const { counter } = projectFactory(project, 'simnet');
+
+test('Counter contract test', async () => {
+  const value = rov(contracts.getCounter());
+  expect(value).toEqual(1n); // initial value
+
+  const receipt = txOk(counter.increment(2), alice);
+  expect(receipt.value).toEqual(3n);
+
+  expect(rov(counter.getCounter())).toEqual(3n); // new value
+});
+```

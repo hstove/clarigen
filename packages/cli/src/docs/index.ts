@@ -141,6 +141,10 @@ function pushItem(contract: ClaridocContract, item: ClaridocItem) {
   }
 }
 
+function clarityNameMatcher(line: string) {
+  return /[\w|\-|\?|\!]+/.exec(line);
+}
+
 function findItemNameFromLine(line: string): string | undefined {
   const fnType = FN_TYPES.find(type => {
     return line.startsWith(`(define-${type}`);
@@ -148,7 +152,7 @@ function findItemNameFromLine(line: string): string | undefined {
   if (fnType) {
     const prefix = `(define-${fnType} (`;
     const startString = line.slice(prefix.length);
-    const match = /[\w|\-]+/.exec(startString);
+    const match = clarityNameMatcher(startString);
     if (!match) {
       console.debug(`[claridocs]: Unable to determine function name from line:\n  \`${line}\``);
       return;
@@ -160,7 +164,7 @@ function findItemNameFromLine(line: string): string | undefined {
     if (!line.startsWith(prefix)) continue;
 
     const startString = line.slice(prefix.length);
-    const match = /[\w|\-]+/.exec(startString);
+    const match = clarityNameMatcher(startString);
     if (!match) {
       console.debug(`[claridocs]: Unable to determine ${type} name from line:\n  \`${line}\``);
       return;
@@ -192,7 +196,7 @@ export function getFnName(line: string) {
   if (typeof fnType === 'undefined') return;
   const prefix = `(define-${fnType} (`;
   const startString = line.slice(prefix.length);
-  const match = /[\w|\-]+/.exec(startString);
+  const match = clarityNameMatcher(startString);
   if (!match) {
     console.debug(`[claridocs]: Unable to determine function name from line:\n  \`${line}\``);
     return;

@@ -43,8 +43,5 @@
   "dependencies": {
     "@changesets/cli": "^2.23.2",
     "jsonfile": "^6.1.0"
-  },
-  "resolutions": {
-    "@hirosystems/clarinet-sdk-wasm": "file:../../stacker/clarinet/components/clarinet-sdk-wasm/pkg"
   }
 }

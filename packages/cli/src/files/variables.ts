@@ -1,4 +1,4 @@
-import { Simnet } from '@hirosystems/clarinet-sdk';
+import type { Simnet } from '@hirosystems/clarinet-sdk';
 import { logger } from '../logger';
 import { Session, SessionContract } from '../session';
 import {

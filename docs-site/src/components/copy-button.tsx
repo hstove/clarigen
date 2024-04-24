@@ -75,6 +75,57 @@ export function CopyButton({
   );
 }
 
+type CopyTextButtonProps = CopyButtonProps & { text: string };
+
+export function CopyWithText({
+  value,
+  className,
+  src,
+  variant = 'ghost',
+  event,
+  size = 'sm',
+  text,
+  ...props
+}: CopyTextButtonProps) {
+  const [hasCopied, setHasCopied] = React.useState(false);
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setHasCopied(false);
+    }, 2000);
+  }, [hasCopied]);
+
+  return (
+    <Button
+      size={size}
+      variant={variant}
+      className={cn(
+        'relative z-10 text-zinc-50 hover:bg-zinc-700 hover:text-zinc-50 [&_svg]:size-3',
+        className
+      )}
+      onClick={() => {
+        copyToClipboardWithMeta(
+          value,
+          event
+            ? {
+                name: event,
+                properties: {
+                  code: value,
+                },
+              }
+            : undefined
+        );
+        setHasCopied(true);
+      }}
+      {...props}
+    >
+      {/* <span className="sr-only">Copy</span> */}
+      <span className="mr-2">{text}</span>
+      {hasCopied ? <CheckIcon /> : <ClipboardIcon />}
+    </Button>
+  );
+}
+
 interface CopyWithClassNamesProps extends DropdownMenuTriggerProps {
   value: string;
   classNames: string;

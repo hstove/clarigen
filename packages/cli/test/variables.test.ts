@@ -1,6 +1,7 @@
 import { join } from 'path';
 import { Config } from '../src/config';
-import { SessionWithVariables, getSession } from '../src/session';
+import { getSession } from '../src/clarinet-sdk';
+import { SessionWithVariables } from '../src/session';
 import { test, expect, describe, beforeAll } from 'vitest';
 
 describe('variables', () => {
