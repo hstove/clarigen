@@ -1,4 +1,3 @@
-import '@/app/styles/mdx.css';
 import { Mdx } from '@/components/mdx-components';
 import { Text } from '@/components/text';
 import { allPosts } from 'contentlayer/generated';
@@ -12,7 +11,7 @@ interface DocPageProps {
 function getDocFromParams({ params }: DocPageProps) {
   const slug = params.slug?.join('/') || '';
   const doc = allPosts.find(doc => {
-    console.log('Doc listing', doc.slugAsParams, slug);
+    // console.log('Doc listing', doc.slugAsParams, slug);
     return doc.slugAsParams === slug;
   });
   // const doc = allPosts.find(doc => doc.slugAsParams === slug);

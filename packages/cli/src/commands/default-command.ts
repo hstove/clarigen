@@ -1,7 +1,7 @@
 import { Command, Option } from 'clipanion';
 import { logger } from '../logger';
 import { Config, OutputType } from '../config';
-import { getSession } from '../session';
+import { getSession } from '../clarinet-sdk';
 import { generateBaseFile } from '../files/base';
 import { afterESM, generateESMFile } from '../files/esm';
 import { BaseCommand } from './base-command';

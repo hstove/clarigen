@@ -1,7 +1,7 @@
 import { Option } from 'clipanion';
 import { BaseCommand } from './base-command';
 import { Config } from '../config';
-import { getSession } from '../session';
+import { getSession } from '../clarinet-sdk';
 import { generateDocs } from '../files/docs';
 
 export class DocsCommand extends BaseCommand {

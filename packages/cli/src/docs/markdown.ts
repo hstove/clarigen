@@ -1,4 +1,4 @@
-import { Session, SessionContract } from '../session';
+import type { Session, SessionContract } from '../session';
 import { getContractName } from '@clarigen/core';
 import {
   ClaridocContract,
@@ -17,9 +17,11 @@ import { sortContracts } from '../utils';
 export function generateMarkdown({
   contract,
   contractFile,
+  withToc = true,
 }: {
   contract: SessionContract;
   contractFile?: string;
+  withToc?: boolean;
 }) {
   const contractName = getContractName(contract.contract_id, false);
   const doc = createContractDocInfo({
@@ -45,9 +47,9 @@ export function generateMarkdown({
 # ${contractName}
 ${fileLine}
 
-${doc.comments.join('\n')}
+${doc.comments.join('\n\n')}
 
-${markdownTOC(doc)}
+${withToc ? markdownTOC(doc) : ''}
 
 ## Functions
 
@@ -102,25 +104,30 @@ ${link}
 
 ${fn.comments.text.join('\n')}
 
-  ${source}
+${source}
 
-  ${params}`;
+${params}`;
 }
 
 function mdParams(fn: ClaridocFunction) {
   if (fn.abi.args.length === 0) return '';
-  const params = Object.values(fn.comments.params).map(markdownParam);
+  const hasDescription = Object.values(fn.comments.params).some(p => p.comments.length > 0);
+  const params = Object.values(fn.comments.params).map(p => markdownParam(p, hasDescription));
+  // const hasDescription = params.some(p => p.includes('Description'));
 
   return `**Parameters:**
 
-| Name | Type | Description |
-| --- | --- | --- |
+| Name | Type | ${hasDescription ? 'Description |' : ''}
+| --- | --- | ${hasDescription ? '--- |' : ''}
 ${params.join('\n')}`;
 }
 
-function markdownParam(param: ClaridocParam) {
+function markdownParam(param: ClaridocParam, withDescription: boolean) {
   const typeString = getTypeString(param.abi.type);
-  return `| ${param.abi.name} | ${typeString} | ${param.comments.join(' ')} |`;
+  const base = `| ${param.abi.name} | ${typeString} |`;
+  if (!withDescription) return base;
+  return `${base} ${param.comments.join(' ')} |`;
+  // return `| ${param.abi.name} | ${typeString} | ${param.comments.join(' ')} |`;
 }
 
 function markdownMap(map: ClaridocMap, contractFile?: string) {
@@ -133,14 +140,13 @@ function markdownMap(map: ClaridocMap, contractFile?: string) {
 
   return `### ${map.abi.name}
 
-  ${map.comments.text.join('\n')}
+${map.comments.text.join('\n')}
 
 \`\`\`clarity
 ${map.source.join('\n')}
 \`\`\`
 
-  ${link}
-  `;
+${link}`;
 }
 
 function markdownVar(variable: ClaridocVariable, contractFile?: string) {
@@ -155,16 +161,15 @@ function markdownVar(variable: ClaridocVariable, contractFile?: string) {
 
   return `### ${variable.abi.name}
 
-  ${sig}
+${sig}
 
-  ${variable.comments.text.join('\n')}
+${variable.comments.text.join('\n')}
 
 \`\`\`clarity
 ${variable.source.join('\n')}
 \`\`\`
 
-  ${link}
-  `;
+${link}`;
 }
 
 function markdownTOC(contract: ClaridocContract) {
@@ -177,7 +182,7 @@ function markdownTOC(contract: ClaridocContract) {
 
   function tocLine(fn: ClaridocItem) {
     const name = fn.abi.name;
-    return `- [\`${name}\`](#${name})`;
+    return `- [\`${name}\`](#${name.toLowerCase().replaceAll('?', '')})`;
   }
 
   return `**Public functions:**

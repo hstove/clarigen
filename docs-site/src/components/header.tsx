@@ -8,11 +8,12 @@ import { GithubIcon } from 'lucide-react';
 import { Icons } from './icons';
 import { ModeToggle } from './mode-toggle';
 import { useTheme } from 'next-themes';
+import { usePathname } from 'next/navigation';
 
 export const Header: React.FC<{ children?: React.ReactNode }> = () => {
   const { resolvedTheme } = useTheme();
+  const pathname = usePathname();
   const logo = React.useMemo(() => {
-    console.log('theme', resolvedTheme);
     if (resolvedTheme === 'dark') {
       return <Icons.logoDark className="size-6" />;
     }
@@ -26,10 +27,22 @@ export const Header: React.FC<{ children?: React.ReactNode }> = () => {
             {logo}
             <span className="hidden font-bold sm:inline-block">Clarigen</span>
           </Link>
+          <nav className="flex items-center gap-4 text-sm lg:gap-6">
+            <Link
+              href="/docs/intro"
+              className={cn(
+                'hover:text-foreground/80 transition-colors',
+                pathname.startsWith('/docs') ? 'text-foreground' : 'text-foreground/60'
+              )}
+            >
+              Docs
+            </Link>
+          </nav>
         </div>
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
           <div className="w-full flex-1 md:w-auto md:flex-none">{/* <CommandMenu /> */}</div>
-          <nav className="flex items-center">
+
+          <div className="flex items-center">
             <Link href="https://github.com/hstove/clarigen" target="_blank" rel="noreferrer">
               <div
                 className={cn(
@@ -44,7 +57,7 @@ export const Header: React.FC<{ children?: React.ReactNode }> = () => {
               </div>
             </Link>
             <ModeToggle />
-          </nav>
+          </div>
         </div>
       </div>
     </header>
