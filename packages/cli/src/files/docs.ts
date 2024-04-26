@@ -62,9 +62,6 @@ export async function generateDocs({
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   paths.push((await config.writeOutput(OutputType.Docs, readme, 'README.md'))![0]);
   await afterDocs(config);
-
-  // TODO: `after` command for docs
-  // await runDenoFmt(paths.filter(s => s !== null) as string[]);
 }
 
 function warnNoDocs() {

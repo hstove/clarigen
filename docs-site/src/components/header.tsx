@@ -37,6 +37,15 @@ export const Header: React.FC<{ children?: React.ReactNode }> = () => {
             >
               Docs
             </Link>
+            <Link
+              href="/contracts"
+              className={cn(
+                'hover:text-foreground/80 transition-colors',
+                pathname.startsWith('/contracts') ? 'text-foreground' : 'text-foreground/60'
+              )}
+            >
+              Generator
+            </Link>
           </nav>
         </div>
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
