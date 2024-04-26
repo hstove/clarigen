@@ -112,6 +112,14 @@ export function functionsFactory<T extends ContractFunctions>(
   ) as FunctionsToContractCalls<T>;
 }
 
+/**
+ * Provide a contract's types and it's contract identifier to generate
+ * a full contract object with all functions available.
+ *
+ * @param abi - The Clarigen-generated contract types
+ * @param identifier - The contract's identifier, like `SP000000000000000000002Q6VF78.bns`
+ * @returns
+ */
 export function contractFactory<T extends TypedAbi, Id extends string>(
   abi: T,
   identifier: Id
