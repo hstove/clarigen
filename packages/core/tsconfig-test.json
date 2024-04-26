@@ -2,6 +2,9 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "rootDir": "../../",
+    "paths": {
+      "@clarigen/core": ["./src/index.ts"]
+    }
   },
   "include": ["./test/**/*", "./src/**/*"]
 }
