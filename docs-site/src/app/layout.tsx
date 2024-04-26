@@ -10,7 +10,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Clarigen docs',
+  title: 'Clarigen Documentation',
   description:
     'Documentation for using Clarigen - a tool for generating types from your Clarity contracts',
   // icons: ['/clarigen-logo.png'],

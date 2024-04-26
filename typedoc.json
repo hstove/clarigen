@@ -1,0 +1,6 @@
+{
+  "entryPoints": ["packages/core", "packages/clarigen-test"],
+  "name": "Packages Example",
+  "entryPointStrategy": "packages",
+  "includeVersion": false
+}
