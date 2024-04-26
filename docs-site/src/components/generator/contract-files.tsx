@@ -27,9 +27,11 @@ export function GeneratedContractFiles({
 }) {
   return (
     <div className="w-full">
-      <div className="items-between container flex w-full justify-between border-b py-4">
+      <div className="items-between container flex w-full flex-col justify-between border-b py-4 md:flex-row">
         <div className="flex items-center gap-3">
-          <Text variant="h3">{files.contractId}</Text>
+          <Text variant="h4" className="sm:text-md break-all text-xs md:text-xl">
+            {files.contractId}
+          </Text>
           <CopyButton value={files.contractId} />
         </div>
         <div className="flex gap-3 md:justify-end">
@@ -49,7 +51,7 @@ export function GeneratedContractFiles({
       </div>
       <div className="container">
         <Tabs defaultValue="docs" className="mt-4 flex flex-col rounded-md border">
-          <div className="flex w-full items-center justify-between border-b p-4">
+          <div className="flex w-full flex-col justify-between gap-3 border-b p-4 md:flex-row md:items-center">
             <TabsList>
               <TabsTrigger value="docs">Docs</TabsTrigger>
               <TabsTrigger value="types">Types</TabsTrigger>

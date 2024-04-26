@@ -66,7 +66,7 @@ import { ${varName} } from './${tsFile}.ts';
 
 export const ${toCamelCase(tsFile)} = contractFactory(${varName}, '${contractId}');
 `;
-  return typeCode;
+  return format(typeCode, { parser: 'typescript' });
 }
 
 export async function generateTypeUsagePage(contract: SessionContract) {
