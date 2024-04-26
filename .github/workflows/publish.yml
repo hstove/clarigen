@@ -16,16 +16,16 @@ jobs:
         run: git checkout main
       - uses: pnpm/action-setup@v2
         with:
-          version: 7.25.1
+          version: 8.14.1
       - name: Set Node Version
         uses: actions/setup-node@v3
         with:
-          node-version: 18.13.0
+          node-version: 18.19.0
           cache: 'pnpm'
       - name: Install monorepo deps
         run: pnpm install
       - name: Build packages
-        run: pnpm build
+        run: pnpm build:packages
       - name: Type checks
         run: pnpm typecheck
       - name: Tests
