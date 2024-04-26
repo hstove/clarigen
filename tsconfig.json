@@ -20,6 +20,7 @@
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
     "skipLibCheck": true,
+    "noEmit": true
   },
   "exclude": ["node_modules", "dist"]
 }
