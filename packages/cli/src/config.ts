@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { log } from './logger';
+import { log, logger } from './logger';
 import { fileExists, writeFile } from './utils';
 import { ClarinetConfig, getClarinetConfig } from './clarinet-config';
 import { dirname, join, relative, resolve } from 'path';
@@ -134,7 +134,16 @@ export async function getConfig(cwd?: string): Promise<ConfigFile> {
   if (await fileExists(path)) {
     const toml = await readFile(path, 'utf-8');
     const parsedToml = parse(toml);
-    sessionConfig = ConfigFileSchema.parse(parsedToml);
+    const parseResult = ConfigFileSchema.safeParse(parsedToml);
+    if (parseResult.success) {
+      sessionConfig = parseResult.data;
+    } else {
+      logger.error('Error parsing Clarigen.toml:');
+      parseResult.error.errors.forEach(e => {
+        logger.error(`${e.path.join('.')}: ${e.message}`);
+      });
+      throw new Error('Error parsing Clarigen.toml');
+    }
   } else {
     sessionConfig = defaultConfigFile;
   }

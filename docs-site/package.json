@@ -14,7 +14,7 @@
     "@clarigen/cli": "workspace:*",
     "@clarigen/core": "workspace:*",
     "@hirosystems/clarinet-sdk": "^2.5.0",
-    "@hirosystems/clarinet-sdk-wasm": "^2.5.0",
+    "@hirosystems/clarinet-sdk-wasm": "2.6.0",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-collapsible": "^1.0.3",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
