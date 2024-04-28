@@ -1,9 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@1.6.1/schema.json",
-  "changelog": [
-    "@changesets/changelog-github",
-    { "repo": "mechanismHQ/clarigen" }
-  ],
+  "changelog": ["@changesets/changelog-github", { "repo": "hstove/clarigen" }],
   "commit": false,
   "fixed": [["@clarigen/*", "demo-project"]],
   "access": "public",
