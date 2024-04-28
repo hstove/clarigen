@@ -35,9 +35,9 @@ jobs:
       - name: Stash changes
         run: git stash
       - name: Create Release Pull Request or Publish to npm
-        uses: changesets/action@c3d88279fd9abe11410de073005e34863f735b1c
+        uses: changesets/action@v1.4.7
         with:
-          publish: pnpm publish-packages
+          publish: pnpm publish-changesets
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
