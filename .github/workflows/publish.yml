@@ -16,7 +16,7 @@ jobs:
         run: git checkout main
       - uses: pnpm/action-setup@v2
         with:
-          version: 8.14.1
+          version: 9.0.6
       - name: Set Node Version
         uses: actions/setup-node@v3
         with:
