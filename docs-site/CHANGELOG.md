@@ -1,5 +1,15 @@
 # clarigen-docs
 
+## 0.1.2
+
+### Patch Changes
+
+- [`70836a4`](https://github.com/hstove/clarigen/commit/70836a4cbc14d832be8acfd460f562662d14d81e) Thanks [@hstove](https://github.com/hstove)! - Updates `clarinet-sdk` imports to latest
+
+- Updated dependencies [[`70836a4`](https://github.com/hstove/clarigen/commit/70836a4cbc14d832be8acfd460f562662d14d81e)]:
+  - @clarigen/cli@2.0.1
+  - @clarigen/core@2.0.1
+
 ## 0.1.1
 
 ### Patch Changes
