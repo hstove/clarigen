@@ -10,7 +10,7 @@
     "typecheck": "turbo run typecheck --continue",
     "publish-packages": "pnpm build:packages && pnpm publish -r",
     "publish-local": "pnpm build:packages && pnpm publish -r",
-    "publish-changesets": "pnpm build && pnpm changeset publish",
+    "publish-changesets": "pnpm build:packages && pnpm changeset publish",
     "preinstall": "npx only-allow pnpm",
     "demo-types": "pnpm --filter @clarigen/cli start",
     "clarigen": "pnpm --filter @clarigen/cli start",
