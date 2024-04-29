@@ -8,6 +8,7 @@ import { visit } from 'unist-util-visit';
 import { rehypeComponent } from './rehype-component';
 import { rehypeNpmCommand } from './rehype-npm-command';
 import { getHighlighter, loadTheme } from '@shikijs/compat';
+// import { getHighlighter } from 'shiki';
 import rehypeExternalLinks from 'rehype-external-links';
 import path from 'path';
 import { bundleMDX } from 'mdx-bundler';
@@ -56,11 +57,27 @@ export const rehypePlugins = [
   [
     rehypePrettyCode,
     {
+      // theme: 'github-dark',
+      // theme: {
+      //   dark: 'github-dark',
+      //   light: 'github-light',
+      // },
       getHighlighter: async () => {
         // @ts-ignore
         const theme = await loadTheme(path.join(process.cwd(), '/src/lib/themes/dark.json'));
+        // const darkTheme = await loadTheme('github-dark-dimmed');
+        // const lightTheme = await loadTheme('github-light');
         // @ts-ignore
         return await getHighlighter({ theme });
+        // return await getHighlighter({ theme: darkTheme });
+        // return await getHighlighter({ themes: ['github-dark-dimmed', 'github-dark'] });
+        // return await getHighlighter({ themes: [darkTheme, lightTheme] });
+        // return await getHighlighter({
+        //   theme: {
+        //     light: 'github-light',
+        //     dark: 'github-dark',
+        //   },
+        // });
       },
       // @ts-ignore
       onVisitLine(node) {

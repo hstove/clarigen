@@ -1,0 +1,209 @@
+---
+title: Unit Testing API Reference
+---
+
+To learn more about writing unit tests using Clarigen, check out the [quick start guide](/docs/unit-tests/quick-start).
+
+Jump to a section:
+
+- [Read-only functions](#calling-read-only-functions)
+- [Public functions](#calling-public-functions)
+- [Filtering events](#filtering-events)
+
+## Importing Simnet Contracts and Accounts
+
+A "simnet" is an environment where you can interact with your contracts without running a full Stacks chain. When using Clarinet and Clarinet SDK to write tests, you're using a simnet.
+
+Clarigen automatically includes your simnet contracts and accounts.
+
+To get your simnet contracts and accounts, you can import them and use `projectFactory` to configure your contracts for simnet:
+
+```ts
+import { project, accounts } from './clarigen-types';
+import { projectFactory } from '@clarigen/core';
+
+const contracts = projectFactory(project, 'simnet');
+```
+
+## Calling read-only functions
+
+Clarigen provides helper functions to make strongly typed read-only function calls.
+
+In these examples, assume a contract with a `validate-number` and `get-rate` function like so:
+
+```clarity
+;; Return ok if `num` greater than or equal to 100
+(define-read-only (validate-number (num uint))
+  (if (>= num u100) (ok num) (err "Number must be greater than 100"))
+)
+
+(define-read-only (get-rate)
+  (begin
+    (print { "rate": u555 })
+    (ok u555)
+  )
+)
+```
+
+### `ro` ("read-only")
+
+If you want to receive the full response, including events, you can use `ro`:
+
+```ts
+const rateReceipt = ro(contract.getRate());
+expect(rateReceipt.value).toEqual(555n);
+// rateReceipt.events is the list of events emitted by the contract call
+expect(rateReceipt.events.length).toEqual(1n);
+
+const validation = ro(contract.getRate(100));
+//validation.value.value has the type `bigint | string`
+expect(validation.value.value).toEqual(100n);
+expect(validation.value.isOk).toBe(true);
+```
+
+The return type of `ro` is:
+
+```ts
+{
+  value: T;
+  result: ClarityValue;
+  events: CoreNodeEvent[];
+}
+```
+
+### `rov` ("read-only value")
+
+If you only care about the return value of the contract call, you can use `rov`:
+
+```ts
+const rate = rov(contract.getRate());
+expect(rate).toEqual(555n);
+
+const validationResponse = rov(contract.validateNumber(100));
+// `validationResponse.value` has the type `bigint | string`
+expect(validationResponse.value).toEqual(100n);
+```
+
+### `rovOk` and `rovErr`
+
+For functions that return a `response`, you can use `rovOk` and `rovErr` to assert that the response is either `ok` or `err` and return the inner value:
+
+<Collapsible className="mt-3">
+  <CollapsibleTrigger>
+    <Text variant="small">
+      Show example Clarity function:<CaretSortIcon className="w-6 h-6 inline" style={{ display: 'inline-block', height: '18px', width: '18px' }}/>
+    </Text>
+  </CollapsibleTrigger>
+
+  <CollapsibleContent>
+
+```clarity
+(define-read-only (validate-number (num uint))
+  (if (>= num u100) (ok num) (err "Number must be greater than 100"))
+)
+```
+
+  </CollapsibleContent>
+</Collapsible>
+
+```ts
+const okResult = rovOk(contract.validateNumber(101));
+// okResult is 101n
+
+const errResult = rovErr(contract.validateNumber(99));
+// errResult is "Number must be greater than 100"
+
+rovOk(contract.validateNumber(99)); // throws an error
+rovErr(contract.validateNumber(101)); // throws an error
+```
+
+## Calling public functions
+
+When making transactions, you provide two arguments:
+
+1. The function call payload
+2. The sender (`string`) address
+
+For these examples, assume an `increment` function that looks like this:
+
+```clarity
+(define-data-var counter uint u0)
+
+(define-public (increment (amount uint))
+  (if (< 5 amount)
+    (begin
+      (var-set counter (+ (var-get counter) amount))
+      (ok amount)
+    )
+    (err false)
+  )
+)
+```
+
+### Transaction receipt type
+
+When calling public functions, the return type is:
+
+```ts
+{
+  value: T;
+  events: CoreNodeEvent[];
+  result: ClarityValue;
+}
+```
+
+### `tx`
+
+```ts
+const receipt = tx(contract.increment(1), alice);
+// result.events is a list of events emitted
+if (receipt.value.isOk) {
+  // receipt.value.value is the `ok` type
+} else {
+  // receipt.value.value is the `err` type
+}
+```
+
+### `txOk` and `txErr`
+
+If you want to automatically throw an error and get the inner value of the `ok` or `err` type, you can use `txOk` and `txErr`:
+
+```ts
+const okResult = txOk(contract.increment(3), alice);
+expect(okResult).toEqual(3n);
+
+const errResult = txErr(contract.increment(10), alice);
+expect(errResult).toEqual(false);
+
+txOk(contract.increment(10), alice); // throws an error
+txErr(contract.increment(3), alice); // throws an error
+```
+
+## Filtering events
+
+If you want to get specific events from a receipt, you can use `filterEvents` from `@clarigen/test`.
+
+```ts
+import { CoreNodeEventType } from '@clarigen/core';
+import { filterEvents } from '@clarigen/test';
+
+const printEvents = filterEvents(receipt.events, CoreNodeEventType.ContractEvent);
+// `printEvents` has the type `SmartContractEvent[]`
+
+const tokenTransfers = filterEvents(receipt.events, CoreNodeEventType.FtTransferEvent);
+// `tokenTransfers` has the type `FtTransferEvent[]`
+```
+
+You can combine this with `cvToValue` from `@clarigen/core` to easily verify `print` events:
+
+```ts
+import { CoreNodeEventType, cvToValue } from '@clarigen/core';
+import { filterEvents } from '@clarigen/test';
+
+const print = printEvents[0];
+const printData = cvToValue(print.data.value);
+expect(printData).toEqual({
+  topic: 'mint',
+  amount: 100n,
+});
+```

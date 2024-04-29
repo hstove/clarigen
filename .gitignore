@@ -17,7 +17,7 @@ tsconfig.tsbuildinfo
 demo-project/docs
 deprecated/claridocs/test/docs
 tmp/
-docs
+/docs
 lerna-debug.log
 *.native-bin
 installer/

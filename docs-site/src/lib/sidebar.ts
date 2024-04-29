@@ -54,6 +54,14 @@ export const docsSidebar: SidebarNavItem[] = [
         title: 'Detailed testing example',
         href: '/docs/unit-tests/example',
       },
+      {
+        title: 'API Reference',
+        href: '/docs/unit-tests/api',
+      },
+      {
+        title: 'Maps and Variables',
+        href: '/docs/unit-tests/maps-variables',
+      },
     ],
   },
   {

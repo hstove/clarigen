@@ -3,7 +3,7 @@ sidebar_label: Overview
 title: Clarigen
 ---
 
-Clarigen is a developer tool that automatically generates TypeScript-friendly clients that can interact with [Clarity](https://clarity-lang.org) smart contracts.
+Clarigen is a developer tool that automatically generates TypeScript code that makes it easy to interact with [Clarity](https://clarity-lang.org) smart contracts.
 
 There are two huge benefits to using Clarigen:
 
@@ -27,7 +27,7 @@ When writing contract tests with Clarinet:
   </TabsList>
   <TabsContent value="with">
 
-When using Clarigen, all of your function's arguments and results are strictly type. In this example, passing a non-integer to `increment` will result in a TypeScript error.
+When using Clarigen, all of your function's arguments and results are strictly typed. In this example, passing a non-integer to `increment` will result in a TypeScript error.
 
 ```ts
 const alice = accounts.wallet_1.address; // `wallet_1` is typed

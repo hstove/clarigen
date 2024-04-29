@@ -27,6 +27,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CodeBlockWrapper } from '@/components/code-block-wrapper';
 import { CopyButton, CopyNpmCommandButton } from '@/components/copy-button';
 import { Button } from '@/components/ui/button';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Text } from '@components/text';
+import { CaretSortIcon } from '@radix-ui/react-icons';
 
 const components = {
   Accordion,
@@ -254,6 +257,11 @@ const components = {
   Link: ({ className, ...props }: React.ComponentProps<typeof Link>) => (
     <Link className={cn('font-medium underline underline-offset-4', className)} {...props} />
   ),
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+  Text,
+  CaretSortIcon,
   // LinkedCard: ({ className, ...props }: React.ComponentProps<typeof Link>) => (
   //   <Link
   //     className={cn(

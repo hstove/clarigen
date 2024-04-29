@@ -1,0 +1,54 @@
+---
+title: Maps and Values
+---
+
+Clarigen makes it easy to get values from your contract's maps and variables.
+
+Assume a contract with the following data:
+
+```clarity
+(define-data-var counter uint u0)
+
+(define-map balances principal uint)
+
+(define-map allowed-callers
+  {
+    account: principal,
+    contract: principal
+  }
+  bool
+)
+```
+
+## Getting variables
+
+`varGet` is used to get the value of a variable.
+
+```ts
+import { varGet } from '@clarigen/test';
+
+const counter = await varGet(contract.identifier, counter.variables.counter);
+
+expect(counter).toEqual(0n);
+```
+
+## Getting map entries
+
+`mapGet` is used to get the value of a map entry.
+
+When getting a map entry, the type of the result is always `T | null`.
+
+```ts
+import { mapGet } from '@clarigen/test';
+
+const balance = mapGet(contract.identifier, contract.maps.balances, alice);
+
+expect(balance).toEqual(0n);
+
+const allowed = mapGet(contract.identifier, contract.maps.allowedCallers, {
+  account: alice,
+  contract: contract.identifier,
+});
+
+expect(allowed).toEqual(null);
+```
