@@ -1,5 +1,5 @@
 import type { Session, SessionContract } from '../session';
-import { getContractName } from '@clarigen/core';
+import { getContractName, getTypeString } from '@clarigen/core';
 import {
   ClaridocContract,
   ClaridocFunction,
@@ -11,7 +11,6 @@ import {
   createContractDocInfo,
 } from './index';
 import { basename } from 'path';
-import { getTypeString } from '@stacks/transactions';
 import { sortContracts } from '../utils';
 
 export function generateMarkdown({

@@ -7,6 +7,7 @@ import {
   Jsonize,
   AbiTypeTo,
   AbiTupleTo,
+  getTypeString,
 } from '../src/clarity-types';
 import { ClarityAbiType } from '../src/abi-types';
 import {
@@ -28,7 +29,6 @@ import {
   tupleCV,
   uintCV,
   ClarityAbiType as StacksClarityAbiType,
-  getTypeString,
 } from '@stacks/transactions';
 import { project, contracts } from './generated/clarigen-types';
 import { StacksMocknet } from '@stacks/network';
@@ -207,7 +207,7 @@ type BnsTup = AbiTupleTo<(typeof bnsNftAsset)['type']>;
 
 type Contract = (typeof devnet)['tester'];
 
-type AA = AbiTypeTo<Contract['non_fungible_tokens'][0]['type']>;
+type AA = AbiTypeTo<Contract['non_fungible_tokens'][1]['type']>;
 
 type IfEquals<T, U, Y = unknown, N = never> = (<G>() => G extends T ? 1 : 2) extends <
   G

@@ -35,7 +35,8 @@ export async function getSession(config: Config): Promise<SessionWithVariables> 
     await Promise.all(
       [...interfaces.entries()].map(async ([contract_id, contract_interface]) => {
         if (
-          contract_id.startsWith(MAINNET_BURN_ADDRESS) ||
+          (contract_id.startsWith(MAINNET_BURN_ADDRESS) &&
+            config.esm?.include_boot_contracts !== true) ||
           contract_id.startsWith(TESTNET_BURN_ADDRESS)
         ) {
           return undefined;

@@ -20,6 +20,7 @@ const typesSchema = z
     outputs: z.array(z.string()).optional(),
     include_accounts: z.boolean().optional(),
     after: z.string().optional(),
+    include_boot_contracts: z.boolean().optional(),
   })
   .optional();
 

@@ -25,6 +25,7 @@ let assetName: Assets = 'incorrect-name';
 
 assetName = 'ft';
 assetName = 'nft';
+assetName = 'tuple-nft';
 
 // @ts-expect-error Invalid asset name
 assetName = 'not-asset';

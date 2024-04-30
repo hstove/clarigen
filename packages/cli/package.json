@@ -32,6 +32,7 @@
     "vitest": "1.5.0"
   },
   "dependencies": {
+    "@antfu/ni": "^0.21.12",
     "@clarigen/core": "workspace:*",
     "@hirosystems/clarinet-sdk": "2.6.0",
     "@hirosystems/clarinet-sdk-wasm": "2.6.0",
@@ -39,6 +40,7 @@
     "@stacks/transactions": "6.13.1",
     "chokidar": "^3.6.0",
     "clipanion": "4.0.0-rc.3",
+    "execa": "^8.0.1",
     "ora": "^8.0.1",
     "pino": "^8.20.0",
     "pino-pretty": "^11.0.0",

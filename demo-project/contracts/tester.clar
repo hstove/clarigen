@@ -2,6 +2,11 @@
 
 (define-non-fungible-token nft uint)
 
+(define-non-fungible-token tuple-nft {
+  a: uint,
+  b: bool
+})
+
 (define-fungible-token ft)
 
 (define-public (set-in-map (key uint) (val bool))
