@@ -51,7 +51,7 @@ export const DocsPage = ({ params }: DocPageProps) => {
         </div>
         <aside className="fixed top-14 z-30 -ml-2 hidden h-[calc(100vh-3.5rem)] w-full shrink-0 overflow-x-auto p-4 lg:sticky lg:block">
           <ScrollArea className="h-full">
-            <DocToc toc={post.toc as unknown as Toc} />
+            <DocToc toc={post.toc as Toc} />
           </ScrollArea>
         </aside>
       </div>

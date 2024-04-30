@@ -121,6 +121,7 @@ export async function compileMdx(markdown: string) {
   const result = await bundleMDX({
     source: markdown,
     mdxOptions: options => {
+      // @ts-ignore
       options.remarkPlugins = [...(options.remarkPlugins ?? []), ...remarkPlugins];
       // @ts-ignore
       options.rehypePlugins = [...(options.rehypePlugins ?? []), ...rehypePlugins];

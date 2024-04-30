@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Text } from '@components/text';
-import { allPosts, allExamples } from 'contentlayer/generated';
+import { allExamples } from 'contentlayer/generated';
 import {
   PageActions,
   PageHeader,

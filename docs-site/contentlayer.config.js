@@ -18,6 +18,15 @@ import path from 'path';
 import { rehypePlugins, remarkPlugins } from './src/lib/mdx-utils';
 import { extractTocHeadings } from './src/lib/remark-extract-toc';
 
+const Toc = defineNestedType(() => ({
+  name: 'Toc',
+  fields: {
+    value: { type: 'string' },
+    url: { type: 'string' },
+    depth: { type: 'number' },
+  },
+}));
+
 /** @type {import('contentlayer/source-files').ComputedFields} */
 const computedFields = {
   slug: {
@@ -32,7 +41,7 @@ const computedFields = {
     type: 'string',
     resolve: doc => doc._raw.flattenedPath.split('/').slice(1).join('/'),
   },
-  toc: { type: 'string', resolve: doc => extractTocHeadings(doc.body.raw) },
+  toc: { type: 'list', of: Toc, resolve: doc => extractTocHeadings(doc.body.raw) },
   // url: { type: 'string', resolve: post => `/docs/${post._raw.flattenedPath}` },
 };
 
