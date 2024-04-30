@@ -1,0 +1,53 @@
+{
+  "version": "2.0.1",
+  "license": "MIT",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./testnet": {
+      "import": "./dist/testnet.js",
+      "require": "./dist/testnet.cjs"
+    },
+    "./mainnet": {
+      "import": "./dist/mainnet.js",
+      "require": "./dist/mainnet.cjs"
+    }
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "bin": {
+    "clarigen": "./dist/run-cli.js"
+  },
+  "scripts": {
+    "start": "tsx src/run-cli.ts",
+    "dev": "tsup --watch",
+    "build": "shx rm -rf dist && tsup",
+    "test": "vitest run --passWithNoTests",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" && prettier --check \"./**/*.{ts,js}\"",
+    "format:fix": "prettier -w \"./**/*.{ts,js}\"",
+    "typecheck": "tsc --noEmit -p tsconfig-test.json",
+    "type-stubs": "clarigen"
+  },
+  "prettier": "@stacks/prettier-config",
+  "name": "@clarigen/boot",
+  "author": "Hank Stoever",
+  "devDependencies": {
+    "tsx": "^4.7.2",
+    "vitest": "1.5.0"
+  },
+  "dependencies": {
+    "@clarigen/core": "workspace:*",
+    "@clarigen/cli": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

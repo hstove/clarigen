@@ -81,7 +81,7 @@ export interface ClarityAbiVariable {
 }
 
 export type TypedAbiVariable<T> = ClarityAbiVariable & {
-  defaultValue: T;
+  // defaultValue: T;
 };
 
 export interface ClarityAbiMap {

@@ -1,0 +1,23 @@
+
+# Set to your project's Clarinet config file
+clarinet = "./Clarinet.toml"
+
+# Set where you'd like ESM types output.
+# Comment or remove section to skip ESM types
+[esm]
+# `output` can be a directory or a folder.
+# output = "esm/index.ts"
+# output = "test/generated/clarigen-types.ts"
+outputs = [
+  "src/clarigen-types.ts",
+]
+include_boot_contracts = true
+
+# `esm.after` - script to run after ESM types are generated.
+# examples:
+after = "pnpm prettier --loglevel error -w ./src/clarigen-types.ts"
+# after = "echo 'yay'"
+
+# Set where you'd like generated contract docs
+# Generate docs by running `clarigen docs`
+[docs]
