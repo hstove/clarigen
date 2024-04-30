@@ -14,25 +14,54 @@
   display: block;
 }
 
-[data-rehype-pretty-code-fragment] {
+[data-rehype-pretty-code-figure] {
   @apply relative text-white;
 }
 
-[data-rehype-pretty-code-fragment] code {
+[data-rehype-pretty-code-figure] code {
   @apply grid min-w-full break-words rounded-none border-0 bg-transparent p-0;
   counter-reset: line;
   box-decoration-break: clone;
 }
 
-[data-rehype-pretty-code-fragment] .line {
+[data-rehype-pretty-code-figure] pre {
+  background-color: var(--shiki-light-bg);
+  /* @apply px-3; */
+}
+
+.dark [data-rehype-pretty-code-figure] pre {
+  background-color: var(--shiki-dark-bg);
+}
+
+[data-rehype-pretty-code-figure] [data-line] {
   @apply px-4 min-h-[1rem] py-0.5 w-full inline-block;
 }
 
-[data-rehype-pretty-code-fragment] [data-line-numbers] .line {
+[data-rehype-pretty-code-figure] [data-line-numbers] [data-line] {
   @apply px-2;
 }
 
-[data-rehype-pretty-code-fragment] [data-line-numbers] > .line::before {
+.dark [data-rehype-pretty-code-figure],
+.dark [data-rehype-pretty-code-figure] span {
+  color: var(--shiki-dark);
+  background-color: var(--shiki-dark-bg);
+  /* Optional, if you also want font styles */
+  font-style: var(--shiki-dark-font-style);
+  font-weight: var(--shiki-dark-font-weight);
+  text-decoration: var(--shiki-dark-text-decoration);
+}
+
+[data-rehype-pretty-code-figure],
+[data-rehype-pretty-code-figure] span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+  /* Optional, if you also want font styles */
+  font-style: var(--shiki-light-font-style);
+  font-weight: var(--shiki-light-font-weight);
+  text-decoration: var(--shiki-light-text-decoration);
+}
+
+[data-rehype-pretty-code-figure] [data-line-numbers] > [data-line]::before {
   @apply text-zinc-50/40 text-xs;
   counter-increment: line;
   content: counter(line);
@@ -42,21 +71,13 @@
   text-align: right;
 }
 
-[data-rehype-pretty-code-fragment] .line--highlighted {
-  @apply bg-zinc-700/50;
-}
-
-[data-rehype-pretty-code-fragment] .line-highlighted span {
-  @apply relative;
-}
-
-[data-rehype-pretty-code-fragment] .word--highlighted {
+/* [data-rehype-pretty-code-figure] [data-highlighted-line] span {
   @apply rounded-md bg-zinc-700/50 border-zinc-700/70 p-1;
-}
+} */
 
-.dark [data-rehype-pretty-code-fragment] .word--highlighted {
-  @apply bg-zinc-900;
-}
+/* .dark [data-rehype-pretty-code-figure] [data-highlighted-line] span {
+  @apply bg-zinc-700/50;
+} */
 
 [data-rehype-pretty-code-title] {
   @apply mt-2 pt-6 px-4 text-sm font-medium;
@@ -66,26 +87,34 @@
   @apply mt-2;
 }
 
-.shiki {
+[data-rehype-pretty-code-figure] {
   @apply relative text-white;
 }
 
-.shiki code {
+[data-rehype-pretty-code-figure] code {
   @apply grid min-w-full break-words rounded-none border-0 bg-transparent p-0;
   counter-reset: line;
   box-decoration-break: clone;
 }
 
-.shiki .line {
+[data-rehype-pretty-code-figure] [data-line] {
   @apply px-4 min-h-[1rem] py-0.5 w-full inline-block;
 }
 
-.shiki [data-line-numbers] .line {
+[data-rehype-pretty-code-figure] [data-line-numbers] [data-line] {
   @apply px-2;
 }
 
-.shiki [data-line-numbers] > .line::before {
-  @apply text-zinc-50/40 text-xs;
+.dark [data-rehype-pretty-code-figure] [data-line-numbers] > [data-line]::before {
+  @apply text-zinc-50/40;
+}
+
+.light [data-rehype-pretty-code-figure] [data-line-numbers] > [data-line]::before {
+  @apply text-zinc-600;
+}
+
+[data-rehype-pretty-code-figure] [data-line-numbers] > [data-line]::before {
+  @apply text-xs;
   counter-increment: line;
   content: counter(line);
   display: inline-block;
@@ -94,31 +123,40 @@
   text-align: right;
 }
 
-.shiki .line--highlighted {
-  @apply bg-zinc-700/50;
+/** Highlighted line */
+
+.dark [data-rehype-pretty-code-figure] [data-highlighted-line],
+.dark [data-rehype-pretty-code-figure] [data-highlighted-line] span {
+  @apply bg-zinc-800;
+  /* @apply bg-orange-900; */
 }
 
-.shiki .line-highlighted span {
+.light [data-rehype-pretty-code-figure] [data-highlighted-line],
+.light [data-rehype-pretty-code-figure] [data-highlighted-line] span {
+  /* @apply bg-zinc-700/50; */
+  @apply bg-zinc-200;
+}
+
+[data-rehype-pretty-code-figure] [data-highlighted-line] span {
+  @apply relative rounded-md;
+  /* @apply bg-zinc-700/50 border-zinc-700/70; */
+}
+
+/* [data-rehype-pretty-code-figure] [data-highlighted-line] {
+  @apply bg-zinc-700/50;
+} */
+
+[data-rehype-pretty-code-figure] [data-highlighted-line] span {
   @apply relative;
 }
 
-.shiki .word--highlighted {
+/* [data-rehype-pretty-code-figure] [data-highlighted-line] span {
   @apply rounded-md bg-zinc-700/50 border-zinc-700/70 p-1;
-}
-
-.dark .shiki .word--highlighted {
-  @apply bg-zinc-900;
-}
-
-.dark .shiki,
-.dark .shiki span {
-  color: var(--shiki-dark) !important;
-  background-color: var(--shiki-dark-bg) !important;
-  /* Optional, if you also want font styles */
-  font-style: var(--shiki-dark-font-style) !important;
-  font-weight: var(--shiki-dark-font-weight) !important;
-  text-decoration: var(--shiki-dark-text-decoration) !important;
-}
+} */
+/* 
+[data-rehype-pretty-code-figure] [data-highlighted-line] span {
+  @apply rounded-md bg-zinc-700/50 border-zinc-700/70;
+} */
 
 [data-rehype-pretty-code-title] {
   @apply mt-2 pt-6 px-4 text-sm font-medium;

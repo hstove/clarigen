@@ -1,20 +1,6 @@
 import { Mdx } from '@/components/mdx-components';
-import { Text } from '@/components/text';
-import { compileMdx } from '@/lib/mdx-utils';
-import { Configuration, SmartContractsApi } from '@stacks/blockchain-api-client';
-import { TYPE_IMPORTS, generateContractMeta, generateMarkdown } from '@clarigen/cli';
-import { fetchContractSrcAbi } from '@/lib/stacks-api';
-import { ClarityAbi, toCamelCase } from '@clarigen/core';
-import { CopyButton, CopyWithText } from '@/components/copy-button';
-import escape from 'escape-html';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { ExternalLinkIcon } from '@radix-ui/react-icons';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CodeBlock } from '@/components/code-block';
 import { generateContractFiles } from '@/lib/code-gen';
-import { ContractToc } from '@/components/contract-toc';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { GeneratedContractFiles } from '@/components/generator/contract-files';
 
 export type ContractPageProps = {

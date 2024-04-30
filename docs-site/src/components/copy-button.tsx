@@ -99,10 +99,7 @@ export function CopyWithText({
     <Button
       size={size}
       variant={variant}
-      className={cn(
-        'relative z-10 text-zinc-50 hover:bg-zinc-700 hover:text-zinc-50 [&_svg]:size-3',
-        className
-      )}
+      className={cn('relative z-10 [&_svg]:size-3', className)}
       onClick={() => {
         copyToClipboardWithMeta(
           value,

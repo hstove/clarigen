@@ -29,3 +29,9 @@ export interface NpmCommands {
   __pnpmCommand__?: string;
   __bunCommand__?: string;
 }
+
+export type Toc = {
+  value: string;
+  depth: number;
+  url: string;
+}[];

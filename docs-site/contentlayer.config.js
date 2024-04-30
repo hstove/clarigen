@@ -16,6 +16,7 @@ import { getHighlighter, loadTheme } from '@shikijs/compat';
 import rehypeExternalLinks from 'rehype-external-links';
 import path from 'path';
 import { rehypePlugins, remarkPlugins } from './src/lib/mdx-utils';
+import { extractTocHeadings } from './src/lib/remark-extract-toc';
 
 /** @type {import('contentlayer/source-files').ComputedFields} */
 const computedFields = {
@@ -31,6 +32,7 @@ const computedFields = {
     type: 'string',
     resolve: doc => doc._raw.flattenedPath.split('/').slice(1).join('/'),
   },
+  toc: { type: 'string', resolve: doc => extractTocHeadings(doc.body.raw) },
   // url: { type: 'string', resolve: post => `/docs/${post._raw.flattenedPath}` },
 };
 
@@ -46,8 +48,8 @@ const LinksProperties = defineNestedType(() => ({
   },
 }));
 
-export const Post = defineDocumentType(() => ({
-  name: 'Post',
+export const Doc = defineDocumentType(() => ({
+  name: 'Doc',
   filePathPattern: `docs/**/*.mdx`,
   contentType: 'mdx',
   fields: {
@@ -67,7 +69,7 @@ export const Example = defineDocumentType(() => ({
 
 export default makeSource({
   contentDirPath: 'content',
-  documentTypes: [Post, Example],
+  documentTypes: [Doc, Example],
   mdx: {
     remarkPlugins: remarkPlugins,
     rehypePlugins: rehypePlugins,

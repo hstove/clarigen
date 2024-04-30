@@ -1,13 +1,13 @@
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 // @ts-ignore
-import rehypePrettyCode from 'rehype-pretty-code';
+import rehypePrettyCode, { Options as PrettyCodeOptions } from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import { codeImport } from 'remark-code-import';
 import remarkGfm from 'remark-gfm';
 import { visit } from 'unist-util-visit';
 import { rehypeComponent } from './rehype-component';
 import { rehypeNpmCommand } from './rehype-npm-command';
-import { getHighlighter, loadTheme } from '@shikijs/compat';
+// import { getHighlighter, loadTheme } from '@shikijs/compat';
 // import { getHighlighter } from 'shiki';
 import rehypeExternalLinks from 'rehype-external-links';
 import path from 'path';
@@ -15,6 +15,26 @@ import { bundleMDX } from 'mdx-bundler';
 import withToc from '@stefanprobst/rehype-extract-toc';
 import withTocExport from '@stefanprobst/rehype-extract-toc/mdx';
 import type { Toc } from '@stefanprobst/rehype-extract-toc';
+
+const rehypePrettyCodeOptions: PrettyCodeOptions = {
+  theme: {
+    dark: 'vitesse-dark',
+    light: 'vitesse-light',
+  },
+  onVisitLine(node) {
+    // Prevent lines from collapsing in `display: grid` mode, and allow empty
+    // lines to be copy/pasted
+    if (node.children.length === 0) {
+      node.children = [{ type: 'text', value: ' ' }];
+    }
+  },
+  onVisitHighlightedLine(node) {
+    node.properties.className?.push('line--highlighted');
+  },
+  onVisitHighlightedChars(node) {
+    node.properties.className = ['word--highlighted'];
+  },
+};
 
 export const remarkPlugins = [remarkGfm, codeImport];
 export const rehypePlugins = [
@@ -54,49 +74,7 @@ export const rehypePlugins = [
       }
     });
   },
-  [
-    rehypePrettyCode,
-    {
-      // theme: 'github-dark',
-      // theme: {
-      //   dark: 'github-dark',
-      //   light: 'github-light',
-      // },
-      getHighlighter: async () => {
-        // @ts-ignore
-        const theme = await loadTheme(path.join(process.cwd(), '/src/lib/themes/dark.json'));
-        // const darkTheme = await loadTheme('github-dark-dimmed');
-        // const lightTheme = await loadTheme('github-light');
-        // @ts-ignore
-        return await getHighlighter({ theme });
-        // return await getHighlighter({ theme: darkTheme });
-        // return await getHighlighter({ themes: ['github-dark-dimmed', 'github-dark'] });
-        // return await getHighlighter({ themes: [darkTheme, lightTheme] });
-        // return await getHighlighter({
-        //   theme: {
-        //     light: 'github-light',
-        //     dark: 'github-dark',
-        //   },
-        // });
-      },
-      // @ts-ignore
-      onVisitLine(node) {
-        // Prevent lines from collapsing in `display: grid` mode, and allow empty
-        // lines to be copy/pasted
-        if (node.children.length === 0) {
-          node.children = [{ type: 'text', value: ' ' }];
-        }
-      },
-      // @ts-ignore
-      onVisitHighlightedLine(node) {
-        node.properties.className.push('line--highlighted');
-      },
-      // @ts-ignore
-      onVisitHighlightedWord(node) {
-        node.properties.className = ['word--highlighted'];
-      },
-    },
-  ],
+  [rehypePrettyCode, rehypePrettyCodeOptions],
   // @ts-ignore
   () => tree => {
     visit(tree, node => {
