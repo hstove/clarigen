@@ -18,7 +18,7 @@ import type { Toc } from '@stefanprobst/rehype-extract-toc';
 
 const rehypePrettyCodeOptions: PrettyCodeOptions = {
   theme: {
-    dark: 'vitesse-dark',
+    dark: 'vitesse-black',
     light: 'vitesse-light',
   },
   onVisitLine(node) {
@@ -67,7 +67,7 @@ export const rehypePlugins = [
             codeEl.data.meta = codeEl.data.meta.replace(regex, '');
           }
         }
-
+        // console.log('In pre, setting rawString', codeEl.children?.[0].value);
         node.__rawString__ = codeEl.children?.[0].value;
         node.__src__ = node.properties?.__src__;
         node.__style__ = node.properties?.__style__;
@@ -78,8 +78,8 @@ export const rehypePlugins = [
   // @ts-ignore
   () => tree => {
     visit(tree, node => {
-      if (node?.type === 'element' && node?.tagName === 'div') {
-        if (!('data-rehype-pretty-code-fragment' in node.properties)) {
+      if (node?.type === 'element' && node?.tagName === 'figure') {
+        if (!('data-rehype-pretty-code-figure' in node.properties)) {
           return;
         }
 
