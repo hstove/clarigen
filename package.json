@@ -32,6 +32,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-tailwindcss": "^3.12.0",
     "husky": "^4.2.5",
+    "next": "14.2.2",
     "prettier": "^2.8.4",
     "shx": "^0.3.4",
     "tslib": "^2.1.0",
