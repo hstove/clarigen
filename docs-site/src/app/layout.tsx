@@ -7,6 +7,7 @@ import { Providers } from '@/components/providers';
 import { Header } from '@/components/header';
 import { ThemeProvider } from '@/components/theme-provider';
 import { fontMono, fontSans } from '@/lib/fonts';
+import NextTopLoader from 'nextjs-toploader';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -27,6 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <NextTopLoader />
       <body className={cn('bg-background min-h-screen font-sans antialiased', fontSans.className)}>
         <ThemeProvider defaultTheme="dark" attribute="class" enableSystem disableTransitionOnChange>
           {/* <div className="container"> */}
