@@ -27,8 +27,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <NextTopLoader />
+    <html lang="en" suppressHydrationWarning>
+      {/* <NextTopLoader /> */}
       <body className={cn('bg-background min-h-screen font-sans antialiased', fontSans.className)}>
         <ThemeProvider defaultTheme="dark" attribute="class" enableSystem disableTransitionOnChange>
           {/* <div className="container"> */}

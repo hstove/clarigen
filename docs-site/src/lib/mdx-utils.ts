@@ -67,7 +67,6 @@ export const rehypePlugins = [
             codeEl.data.meta = codeEl.data.meta.replace(regex, '');
           }
         }
-        // console.log('In pre, setting rawString', codeEl.children?.[0].value);
         node.__rawString__ = codeEl.children?.[0].value;
         node.__src__ = node.properties?.__src__;
         node.__style__ = node.properties?.__style__;
@@ -128,8 +127,6 @@ export async function compileMdx(markdown: string) {
       return options;
     },
   });
-
-  // console.log(Object.keys(result));
 
   // const toc = (result as any).tableOfContents as Toc;
 

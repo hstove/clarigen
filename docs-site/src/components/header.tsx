@@ -12,13 +12,16 @@ import { usePathname } from 'next/navigation';
 
 export const Header: React.FC<{ children?: React.ReactNode }> = () => {
   const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
   const pathname = usePathname();
   const logo = React.useMemo(() => {
+    if (!mounted) return <div className="size-6"></div>;
     if (resolvedTheme === 'dark') {
       return <Icons.logoDark className="size-6" />;
     }
     return <Icons.logoLight className="size-6" />;
-  }, [resolvedTheme]);
+  }, [resolvedTheme, mounted]);
   return (
     <header className="border-border/40 bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur">
       <div className="container flex h-14 max-w-screen-2xl items-center">
