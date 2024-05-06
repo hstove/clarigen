@@ -32,7 +32,7 @@ export default function RootLayout({
       <body className={cn('bg-background min-h-screen font-sans antialiased', fontSans.className)}>
         <ThemeProvider defaultTheme="dark" attribute="class" enableSystem disableTransitionOnChange>
           {/* <div className="container"> */}
-          <div className="flex flex-col">
+          <div className="flex flex-col pb-10">
             <Header />
             <Providers>
               <>{children}</>

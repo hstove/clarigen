@@ -33,7 +33,7 @@ export default async function Home() {
           </Button>
         </PageActions>
       </PageHeader>
-      <div className="flex flex-col gap-3">
+      <div className="mx-auto flex max-w-[980px] flex-col gap-3">
         <Text variant="h3">Want to see an example?</Text>
         <Tabs defaultValue="test">
           <TabsList>

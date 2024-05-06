@@ -6,7 +6,7 @@
     "outDir": "./dist",
     "rootDir": ".",
     "resolveJsonModule": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "skipLibCheck": true,

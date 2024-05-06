@@ -10,6 +10,7 @@ import type {
   ClarityAbiTypeBool,
 } from '@clarigen/core';
 import { contractsFactory } from '@clarigen/core';
+import { test, expect } from 'vitest';
 
 export type ClarityAbiType = ClarityAbiTypeTuple | ClarityAbiTypeUInt128 | ClarityAbiTypeBool;
 
@@ -76,3 +77,7 @@ const testContracts = {
 } as const;
 
 const { tester } = contractsFactory(testContracts, 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM');
+
+test('factory typings', () => {
+  expect(tester.identifier).toEqual('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.tester');
+});

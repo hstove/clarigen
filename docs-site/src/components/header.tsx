@@ -9,6 +9,7 @@ import { Icons } from './icons';
 import { ModeToggle } from './mode-toggle';
 import { useTheme } from 'next-themes';
 import { usePathname } from 'next/navigation';
+import { CommandMenu } from './search-menu';
 
 export const Header: React.FC<{ children?: React.ReactNode }> = () => {
   const { resolvedTheme } = useTheme();
@@ -52,7 +53,9 @@ export const Header: React.FC<{ children?: React.ReactNode }> = () => {
           </nav>
         </div>
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-          <div className="w-full flex-1 md:w-auto md:flex-none">{/* <CommandMenu /> */}</div>
+          <div className="w-full flex-1 md:w-auto md:flex-none">
+            <CommandMenu />
+          </div>
 
           <div className="flex items-center">
             <Link href="https://github.com/hstove/clarigen" target="_blank" rel="noreferrer">

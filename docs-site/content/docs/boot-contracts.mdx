@@ -1,0 +1,28 @@
+---
+title: Clarigen Boot Contracts
+---
+
+Stacks has a number of built-in contracts that are automatically deployed when a Stacks node is started. These include:
+
+- `pox-4` and other Proof-of-Transfer contracts
+- `bns`
+- `signers-voting` and other Nakamoto contracts
+
+Clarigen published a `@clarigen/boot` contract that includes the types for these contracts.
+
+## Getting started
+
+First, install the `@clarigen/boot` package:
+
+```bash
+npm install --save @clarigen/boot
+```
+
+You can then import the mainnet or testnet versions of these contracts:
+
+```ts
+// Import both
+import { mainnet, testnet } from '@clarigen/boot';
+
+console.log(mainnet.pox4.identifier);
+```

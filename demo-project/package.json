@@ -3,17 +3,20 @@
   "version": "2.0.1",
   "name": "demo-project",
   "scripts": {
-    "build": "shx rm -rf ./dist && tsup"
+    "build": "shx rm -rf ./dist && tsup",
+    "test": "vitest run"
   },
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "import": "./dist/index.mjs",
   "dependencies": {
+    "@clarigen/boot": "workspace:*",
     "@clarigen/core": "workspace:*",
     "@clarigen/test": "workspace:*",
     "@hirosystems/clarinet-sdk": "2.6.0",
     "@hirosystems/clarinet-sdk-wasm": "2.6.0",
+    "@stacks/transactions": "^6.13.1",
     "vitest-environment-clarinet": "^1.1.0"
   },
   "devDependencies": {
