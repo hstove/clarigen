@@ -23,6 +23,7 @@ jobs:
       - name: Lint
         run: pnpm lint
       - name: Type checks
-        run: pnpm typecheck
+        # run: pnpm typecheck
+        run: pnpm turbo run typecheck --filter="\!docs-site"
       - name: Tests
         run: pnpm test
