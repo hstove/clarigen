@@ -28,11 +28,11 @@ export function GeneratedContractFiles({
   usageNode: React.ReactNode;
   clarityNode: React.ReactNode;
 }) {
-  // const [loaded, setLoaded] = React.useState(false);
-  // React.useEffect(() => {
-  //   setLoaded(true);
-  // }, [setLoaded]);
-  // if (!loaded) return null;
+  const [loaded, setLoaded] = React.useState(false);
+  React.useEffect(() => {
+    setLoaded(true);
+  }, [setLoaded]);
+  if (!loaded) return null;
   return (
     <div className="w-full">
       <div className="items-between container flex w-full flex-col justify-between border-b py-4 md:flex-row">
