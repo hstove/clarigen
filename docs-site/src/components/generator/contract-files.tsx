@@ -1,4 +1,5 @@
 'use client';
+import React from 'react';
 import type { GeneratedContractFiles } from '@/lib/code-gen';
 // import { Mdx } from '@/components/mdx-components';
 import { Text } from '@/components/text';
@@ -11,6 +12,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 // import { CodeBlock } from '@/components/code-block';
 import { ContractToc } from '@/components/contract-toc';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Mdx } from '../mdx-components';
+import { CodeBlock } from '../code-block';
 
 export function GeneratedContractFiles({
   files,
@@ -25,6 +28,11 @@ export function GeneratedContractFiles({
   usageNode: React.ReactNode;
   clarityNode: React.ReactNode;
 }) {
+  const [loaded, setLoaded] = React.useState(false);
+  React.useEffect(() => {
+    setLoaded(true);
+  }, [setLoaded]);
+  if (!loaded) return null;
   return (
     <div className="w-full">
       <div className="items-between container flex w-full flex-col justify-between border-b py-4 md:flex-row">
@@ -78,6 +86,7 @@ export function GeneratedContractFiles({
                   </ScrollArea>
                 </aside>
                 {docsNode}
+                {/* <Mdx code={files.mdx} className="p-4" /> */}
               </div>
               {/* <div className="flex flex-col md:flex-row">
                 <Mdx code={files.mdx} className="p-4" />
@@ -90,12 +99,15 @@ export function GeneratedContractFiles({
             </TabsContent>
             <TabsContent value="types" className="p-4 pt-0">
               {typesNode}
+              {/* <CodeBlock code={files.types} language="typescript" showLineNumbers /> */}
             </TabsContent>
             <TabsContent value="usage" className="p-4 pt-0">
               {usageNode}
+              {/* <CodeBlock code={files.usage} language="typescript" showLineNumbers /> */}
             </TabsContent>
             <TabsContent value="clarity" className="p-4 pt-0">
               {clarityNode}
+              {/* <CodeBlock code={files.clarity} language="clarity" showLineNumbers /> */}
             </TabsContent>
           </div>
         </Tabs>

@@ -24,5 +24,5 @@
       "outputs": []
     }
   },
-  "globalEnv": ["NODE_ENV"]
+  "globalEnv": ["NODE_ENV", "NEXT_PUBLIC_STACKS_API_URL"]
 }

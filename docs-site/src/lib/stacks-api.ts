@@ -6,8 +6,10 @@ import pox4Interface from '@/fixtures/pox-4-interface.json';
 import pox4Source from '@/fixtures/pox-4-source.json';
 import { ClarityAbi } from '@clarigen/core';
 
+const apiUrlEnv = process.env.NEXT_PUBLIC_STACKS_API_URL;
+
 const mainnetApiConfig = new Configuration({
-  basePath: 'https://api.hiro.so',
+  basePath: apiUrlEnv ?? 'https://api.hiro.so',
 });
 
 // export async function fetchContractSrcAbi(contractId: string) {
