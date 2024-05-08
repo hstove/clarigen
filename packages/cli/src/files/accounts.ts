@@ -2,12 +2,13 @@ import { Session, SessionAccount } from '../session';
 
 export function generateAccountsCode(accounts: SessionAccount[]) {
   const sortedAccounts = sortAccounts(accounts);
-  return Object.fromEntries(
+  const namedAccounts = Object.fromEntries(
     sortedAccounts.map(a => {
       const { name, ...rest } = a;
       return [name, rest];
     })
   );
+  return `export const accounts = ${JSON.stringify(namedAccounts)} as const;`;
 }
 
 // Sort accounts alphabetically by their name.
