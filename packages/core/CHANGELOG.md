@@ -1,5 +1,11 @@
 # @clarigen/core
 
+## 2.0.5
+
+### Patch Changes
+
+- [`63cf6f3`](https://github.com/hstove/clarigen/commit/63cf6f34467658c15462cc72a645b93a85307fb1) Thanks [@hstove](https://github.com/hstove)! - Adds new error-code helpers, including `extractErrors` and `projectErrors`
+
 ## 2.0.4
 
 ## 2.0.3
