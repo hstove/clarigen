@@ -539,6 +539,36 @@ export const contracts = {
       >,
     },
     variables: {
+      ERR_ONE: {
+        name: 'ERR_ONE',
+        type: {
+          response: {
+            ok: 'none',
+            error: 'uint128',
+          },
+        },
+        access: 'constant',
+      } as TypedAbiVariable<Response<null, bigint>>,
+      ERR_TWO: {
+        name: 'ERR_TWO',
+        type: {
+          response: {
+            ok: 'none',
+            error: 'uint128',
+          },
+        },
+        access: 'constant',
+      } as TypedAbiVariable<Response<null, bigint>>,
+      errThree: {
+        name: 'err-three',
+        type: {
+          response: {
+            ok: 'none',
+            error: 'uint128',
+          },
+        },
+        access: 'constant',
+      } as TypedAbiVariable<Response<null, bigint>>,
       numVar: {
         name: 'num-var',
         type: 'uint128',
@@ -546,6 +576,18 @@ export const contracts = {
       } as TypedAbiVariable<bigint>,
     },
     constants: {
+      ERR_ONE: {
+        isOk: false,
+        value: 1n,
+      },
+      ERR_TWO: {
+        isOk: false,
+        value: 2n,
+      },
+      errThree: {
+        isOk: false,
+        value: 3n,
+      },
       numVar: 0n,
     },
     non_fungible_tokens: [

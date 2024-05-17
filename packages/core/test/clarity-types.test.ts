@@ -9,7 +9,7 @@ import {
   AbiTupleTo,
   getTypeString,
 } from '../src/clarity-types';
-import { ClarityAbiType } from '../src/abi-types';
+import { ClarityAbiType, ErrType, ResponseErr, TypedAbi } from '../src/abi-types';
 import {
   projectFactory,
   ro,
@@ -19,6 +19,10 @@ import {
   ApiOptionsJsonize,
   Response,
   ClarityAbiTypeNonFungibleToken,
+  extractErrors,
+  ErrorCodes,
+  ProjectErrors,
+  projectErrors,
 } from '../src';
 import {
   bufferCV,
@@ -116,6 +120,52 @@ describe('cvToJSON', () => {
     });
   });
 });
+
+type TesterErrors = ErrorCodes<typeof devnet.tester.constants>;
+
+type TesterErrorsP = ErrorCodes<typeof devnet.tester.constants>;
+
+type PErrors = ProjectErrors<typeof project>;
+
+type PTesterErrors = PErrors['tester'];
+
+describe('extracting errors', () => {
+  const contract = devnet.tester;
+
+  it('can extract a contracts errors', () => {
+    const errors = extractErrors(contract);
+    expect(errors.ERR_ONE).toEqual(1n);
+    expect(errors.ERR_TWO).toEqual(2n);
+    expect(errors.errThree).toEqual(3n);
+    expect(extractErrors(project.contracts.tester)).toEqual(errors);
+  });
+
+  it('can get project errors', () => {
+    const errors = projectErrors(project);
+    expect(errors.tester.ERR_ONE).toEqual(1n);
+    expect(errors.tester.ERR_TWO).toEqual(2n);
+    expect(errors.tester.errThree).toEqual(3n);
+    expect(errors.counter).toEqual({});
+  });
+});
+
+const errors = {
+  ERR_ONE: 1n,
+  errTwo: {
+    isOk: false,
+    value: 2n,
+  },
+  base: 123n,
+} as const;
+
+type E = ErrorCodes<typeof errors>;
+
+const testErrors: E = {
+  ERR_ONE: 1n,
+  errTwo: 2n,
+};
+
+type CounterErrors = ErrorCodes<typeof contracts.counter.constants>;
 
 // Jsonize
 type Tup = {

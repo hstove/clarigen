@@ -1,5 +1,9 @@
 (define-map simple-map uint bool)
 
+(define-constant ERR_ONE (err u1))
+(define-constant ERR_TWO (err u2))
+(define-constant err-three (err u3))
+
 (define-non-fungible-token nft uint)
 
 (define-non-fungible-token tuple-nft {

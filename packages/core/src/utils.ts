@@ -1,6 +1,8 @@
 import { contractPrincipalCV, ContractPrincipalCV } from '@stacks/transactions';
 import { Contract } from './types';
 import { hex } from '@scure/base';
+import { TypedAbi } from './abi-types';
+import { AllContracts } from './factory-types';
 
 export const TESTNET_BURN_ADDRESS = 'ST000000000000000000002AMW42H';
 export const MAINNET_BURN_ADDRESS = 'SP000000000000000000002Q6VF78';
@@ -68,3 +70,72 @@ export function bytesToAscii(bytes: Uint8Array) {
 }
 
 export const isNumber = (value: number | string): value is number => typeof value === 'number';
+
+// Error code helpers
+
+type ErrorKeyCheck<K> = K extends string
+  ? Lowercase<K> extends `err${string}`
+    ? K
+    : never
+  : never;
+
+export type ErrorCodes<C extends TypedAbi['constants']> = {
+  [K in keyof C as ErrorKeyCheck<K>]: C[K] extends {
+    isOk: boolean;
+    value: infer V;
+  }
+    ? V
+    : C[K];
+};
+
+export type ProjectErrors<
+  T extends {
+    contracts: AllContracts;
+  }
+> = {
+  [K in keyof T['contracts']]: ErrorCodes<T['contracts'][K]['constants']>;
+};
+
+export function extractErrors<T extends TypedAbi>(contract: T): ErrorCodes<T['constants']> {
+  const { constants } = contract;
+
+  const result: Partial<ErrorCodes<T['constants']>> = {};
+
+  for (const key in constants) {
+    if (key.toLowerCase().startsWith('err')) {
+      const value = constants[key];
+      if (
+        typeof value === 'object' &&
+        value &&
+        'isOk' in value &&
+        !value.isOk &&
+        'value' in value
+      ) {
+        result[key as keyof ErrorCodes<T['constants']>] = value.value as ErrorCodes<
+          T['constants']
+        >[keyof ErrorCodes<T['constants']>];
+      } else {
+        result[key as keyof ErrorCodes<T['constants']>] = value as ErrorCodes<
+          T['constants']
+        >[keyof ErrorCodes<T['constants']>];
+      }
+    }
+  }
+
+  return result as unknown as ErrorCodes<T['constants']>;
+}
+
+export function projectErrors<
+  T extends {
+    contracts: AllContracts;
+  }
+>(project: T): ProjectErrors<T> {
+  const { contracts } = project;
+  const result: Partial<ProjectErrors<T>> = {};
+
+  for (const key in contracts) {
+    result[key as keyof ProjectErrors<T>] = extractErrors(contracts[key]);
+  }
+
+  return result as unknown as ProjectErrors<T>;
+}
