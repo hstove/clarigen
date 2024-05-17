@@ -32,7 +32,11 @@ export async function watch(config: Config, cwd?: string) {
     const clarinetFolder = dirname(config.clarinetFile());
     const contractsFolder = join(clarinetFolder, '/contracts/**/*.clar');
     // First, generate the types
-    await generate(config);
+    try {
+      await generate(config);
+    } catch (error) {
+      logger.error({ error }, 'Error generating types');
+    }
     // const watchCwd = cwd || process.cwd();
     const relativeFolder = relative(cwd || process.cwd(), contractsFolder);
     logger.info(`Watching for changes in ${relativeFolder}`);
@@ -45,22 +49,26 @@ export async function watch(config: Config, cwd?: string) {
         start = Date.now();
         logger.info(`File ${path} has been changed. Generating types.`);
         running = true;
-        void generate(config).then(() => {
-          setTimeout(() => {
-            // Temporary hack because clarinet-sdk-wasm prints to stdout
-            process.stdout.moveCursor(0, -1);
-            process.stdout.clearLine(1);
-            const elapsed = Date.now() - start;
-            // process.stdout.moveCursor(0, -1);
-            // process.stdout.clearLine(1);
-            logger.info(
-              `Types generated (${(elapsed / 1000).toFixed(2)}s). Watching for changes...`
-            );
-            running = false;
-          });
+        void generate(config)
+          .catch(e => {
+            logger.error({ error: e }, 'Error generating types');
+          })
+          .then(() => {
+            setTimeout(() => {
+              // Temporary hack because clarinet-sdk-wasm prints to stdout
+              process.stdout.moveCursor(0, -1);
+              process.stdout.clearLine(1);
+              const elapsed = Date.now() - start;
+              // process.stdout.moveCursor(0, -1);
+              // process.stdout.clearLine(1);
+              logger.info(
+                `Types generated (${(elapsed / 1000).toFixed(2)}s). Watching for changes...`
+              );
+              running = false;
+            });
 
-          // spinner.succeed('Types generated');
-        });
+            // spinner.succeed('Types generated');
+          });
       }
       // await generate(config);
     });
