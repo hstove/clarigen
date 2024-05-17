@@ -70,7 +70,7 @@ export const contracts = {
   ${contractDefs.join(',\n')}
 } as const;
 
-${generateAccountsCode(session.accounts)}
+export const accounts = ${generateAccountsCode(session.accounts)} as const;
 
 ${generateIdentifiersCode(session)}
 

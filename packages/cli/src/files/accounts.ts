@@ -8,7 +8,8 @@ export function generateAccountsCode(accounts: SessionAccount[]) {
       return [name, rest];
     })
   );
-  return `export const accounts = ${JSON.stringify(namedAccounts)} as const;`;
+  // return `export const accounts = ${JSON.stringify(namedAccounts)} as const;`;
+  return JSON.stringify(namedAccounts);
 }
 
 // Sort accounts alphabetically by their name.
