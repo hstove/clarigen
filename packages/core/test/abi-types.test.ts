@@ -8,8 +8,8 @@ import type {
   // ClarityAbiType,
   ClarityAbiTypeUInt128,
   ClarityAbiTypeBool,
-} from '@clarigen/core';
-import { contractsFactory } from '@clarigen/core';
+} from '../src';
+import { contractsFactory } from '../src';
 import { test, expect } from 'vitest';
 
 export type ClarityAbiType = ClarityAbiTypeTuple | ClarityAbiTypeUInt128 | ClarityAbiTypeBool;
