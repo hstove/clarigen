@@ -13,7 +13,7 @@ import { mapVariables } from './files/variables';
 import { SessionContract, SessionWithVariables } from './session';
 
 export async function getSession(config: Config): Promise<SessionWithVariables> {
-  const simnet = await initSimnet(config.clarinetFile());
+  const simnet = await initSimnet(config.clarinetFile(), true);
   const interfaces = simnet.getContractsInterfaces();
   const accounts = simnet.getAccounts();
 

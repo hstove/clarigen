@@ -28,9 +28,11 @@ export async function generate(config: Config) {
 
 export async function watch(config: Config, cwd?: string) {
   // const ora = await import('ora');
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     const clarinetFolder = dirname(config.clarinetFile());
     const contractsFolder = join(clarinetFolder, '/contracts/**/*.clar');
+    // First, generate the types
+    await generate(config);
     // const watchCwd = cwd || process.cwd();
     const relativeFolder = relative(cwd || process.cwd(), contractsFolder);
     logger.info(`Watching for changes in ${relativeFolder}`);
