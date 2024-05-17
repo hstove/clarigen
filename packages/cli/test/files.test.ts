@@ -16,7 +16,6 @@ test('accounts are sorted before serialization', async () => {
     },
   ];
   const serialized = JSON.parse(generateAccountsCode(accounts));
-  console.log('serialized', serialized);
   expect(Object.keys(serialized)[0]).toEqual('wallet_1');
   expect(serialized.wallet_1).toEqual({
     balance: '200',
