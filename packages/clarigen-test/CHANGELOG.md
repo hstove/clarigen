@@ -1,5 +1,12 @@
 # @clarigen/test
 
+## 2.0.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @clarigen/core@2.0.3
+
 ## 2.0.2
 
 ### Patch Changes

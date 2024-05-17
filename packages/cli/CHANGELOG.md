@@ -1,5 +1,14 @@
 # @clarigen/cli
 
+## 2.0.3
+
+### Patch Changes
+
+- [`ee3a60f`](https://github.com/hstove/clarigen/commit/ee3a60fa03643331250d3245294c5366e6b33754) Thanks [@hstove](https://github.com/hstove)! - Fixes `clarigen --watch` by generating types automatically, and properly reloading the session when files change.
+
+- Updated dependencies []:
+  - @clarigen/core@2.0.3
+
 ## 2.0.2
 
 ### Patch Changes
