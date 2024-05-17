@@ -1,5 +1,14 @@
 # @clarigen/cli
 
+## 2.0.4
+
+### Patch Changes
+
+- [`1b6c0b1`](https://github.com/hstove/clarigen/commit/1b6c0b114fd3bbcc93ba0f40c783275d77f9cfaf) Thanks [@hstove](https://github.com/hstove)! - When in watch mode, contract errors will no longer exit the `clarigen --watch` command.
+
+- Updated dependencies []:
+  - @clarigen/core@2.0.4
+
 ## 2.0.3
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @clarigen/web
 
+## 2.0.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @clarigen/core@2.0.4
+
 ## 2.0.3
 
 ### Patch Changes
