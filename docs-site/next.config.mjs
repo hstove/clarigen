@@ -5,6 +5,15 @@ import { createContentlayerPlugin, withContentlayer } from 'next-contentlayer';
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  redirects() {
+    return [
+      {
+        source: '/docs',
+        destination: '/docs/intro',
+        // permanent: true,
+      },
+    ];
+  },
 };
 
 // const withContentlayer = createContentlayerPlugin({});
