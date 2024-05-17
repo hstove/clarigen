@@ -1,5 +1,13 @@
 # @clarigen/core
 
+## 2.0.2
+
+### Patch Changes
+
+- [`b00c618`](https://github.com/hstove/clarigen/commit/b00c6184d4d75ec839988c4f755601a5052853bc) Thanks [@hstove](https://github.com/hstove)! - Fixed a bug when serializing accounts
+
+* [`2846a13`](https://github.com/hstove/clarigen/commit/2846a1347ef6636a4f5228df91d39383697a6d8f) Thanks [@hstove](https://github.com/hstove)! - Fixed a type issue when an NFT's key was a tuple
+
 ## 2.0.1
 
 ### Patch Changes
