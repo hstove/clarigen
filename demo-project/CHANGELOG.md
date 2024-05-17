@@ -1,5 +1,14 @@
 # demo-project
 
+## 2.0.4
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @clarigen/boot@2.0.4
+  - @clarigen/test@2.0.4
+  - @clarigen/core@2.0.4
+
 ## 2.0.3
 
 ### Patch Changes
