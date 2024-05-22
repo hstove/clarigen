@@ -1,5 +1,12 @@
 # @clarigen/node
 
+## 2.0.6
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @clarigen/core@2.0.6
+
 ## 2.0.5
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @clarigen/cli
 
+## 2.0.6
+
+### Patch Changes
+
+- [`b23a777`](https://github.com/hstove/clarigen/commit/b23a7773b5d7eee33798537f60e845d82a847320) Thanks [@hstove](https://github.com/hstove)! - Adds the proper hashbang to the CLI .bin file
+
+- Updated dependencies []:
+  - @clarigen/core@2.0.6
+
 ## 2.0.5
 
 ### Patch Changes
