@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { Cli, Builtins } from 'clipanion';
 import { SessionInfoCommand } from './commands/session-info';
 import { DefaultCommand } from './commands/default-command';
