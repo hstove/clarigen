@@ -10,18 +10,20 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "import": "./dist/index.mjs",
+  "type": "module",
   "dependencies": {
     "@clarigen/boot": "workspace:*",
     "@clarigen/core": "workspace:*",
     "@clarigen/test": "workspace:*",
-    "@hirosystems/clarinet-sdk": "2.6.0",
-    "@hirosystems/clarinet-sdk-wasm": "2.6.0",
+    "@hirosystems/clarinet-sdk": "2.8.0",
+    "@hirosystems/clarinet-sdk-wasm": "2.8.0",
     "@stacks/transactions": "^6.13.1",
     "vitest-environment-clarinet": "^1.1.0"
   },
   "devDependencies": {
     "@types/node": "20.10.4",
-    "vitest": "1.0.4",
-    "vitest-environment-clarinet": "^1.1.0"
+    "vite": "^5.1.4",
+    "vitest": "1.3.1",
+    "vitest-environment-clarinet": "2.0.0"
   }
 }

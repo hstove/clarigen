@@ -50,31 +50,18 @@ plan:
     - id: 0
       transactions:
         - emulated-contract-publish:
-            contract-name: ft-trait
-            emulated-sender: SP3DX3H4FEYZJZ586MFBS25ZW3HZDMEW92260R2PR
-            path: ".requirements/requirements/SP3DX3H4FEYZJZ586MFBS25ZW3HZDMEW92260R2PR.ft-trait.clar"
+            contract-name: commission-trait
+            emulated-sender: ST3D03X5BHMNSAAW71NN7BQRMV4DW2G4JB3PXDYJG
+            path: "./.cache/requirements/ST3D03X5BHMNSAAW71NN7BQRMV4DW2G4JB3PXDYJG.commission-trait.clar"
             clarity-version: 1
         - emulated-contract-publish:
-            contract-name: restricted-token-trait
-            emulated-sender: SP3DX3H4FEYZJZ586MFBS25ZW3HZDMEW92260R2PR
-            path: ".requirements/requirements/SP3DX3H4FEYZJZ586MFBS25ZW3HZDMEW92260R2PR.restricted-token-trait.clar"
+            contract-name: sip-09
+            emulated-sender: ST3D03X5BHMNSAAW71NN7BQRMV4DW2G4JB3PXDYJG
+            path: "./.cache/requirements/ST3D03X5BHMNSAAW71NN7BQRMV4DW2G4JB3PXDYJG.sip-09.clar"
             clarity-version: 1
         - emulated-contract-publish:
-            contract-name: Wrapped-Bitcoin
-            emulated-sender: SP3DX3H4FEYZJZ586MFBS25ZW3HZDMEW92260R2PR
-            path: ".requirements/requirements/SP3DX3H4FEYZJZ586MFBS25ZW3HZDMEW92260R2PR.Wrapped-Bitcoin.clar"
+            contract-name: TB-test-3
+            emulated-sender: ST3D03X5BHMNSAAW71NN7BQRMV4DW2G4JB3PXDYJG
+            path: "./.cache/requirements/ST3D03X5BHMNSAAW71NN7BQRMV4DW2G4JB3PXDYJG.TB-test-3.clar"
             clarity-version: 1
       epoch: "2.1"
-    - id: 1
-      transactions:
-        - emulated-contract-publish:
-            contract-name: counter
-            emulated-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
-            path: contracts/counter.clar
-            clarity-version: 3
-        - emulated-contract-publish:
-            contract-name: tester
-            emulated-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
-            path: contracts/tester.clar
-            clarity-version: 3
-      epoch: "3.0"

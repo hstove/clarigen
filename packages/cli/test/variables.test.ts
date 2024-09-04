@@ -8,7 +8,7 @@ describe('variables', () => {
   let config: Config;
   let session: SessionWithVariables;
   beforeAll(async () => {
-    config = await Config.load(join(__dirname, '..'));
+    config = await Config.load(join(__dirname, '../../../demo-project'));
     session = await getSession(config);
   });
 

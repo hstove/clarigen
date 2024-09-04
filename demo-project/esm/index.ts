@@ -398,8 +398,8 @@ export const contracts = {
     },
     non_fungible_tokens: [],
     fungible_tokens: [],
-    epoch: 'Epoch21',
-    clarity_version: 'Clarity1',
+    epoch: 'Epoch30',
+    clarity_version: 'Clarity3',
     contractName: 'counter',
   },
   ftTrait: {
@@ -603,8 +603,8 @@ export const contracts = {
       },
     ],
     fungible_tokens: [{ name: 'ft' }],
-    epoch: 'Epoch21',
-    clarity_version: 'Clarity1',
+    epoch: 'Epoch30',
+    clarity_version: 'Clarity3',
     contractName: 'tester',
   },
 } as const;

@@ -1,0 +1,31 @@
+[project]
+name = 'dependency-test'
+description = 'dependency-test'
+authors = []
+telemetry = true
+cache_dir = './.cache'
+
+# [[project.requirements]]
+# contract_id = 'ST2T5JKWWP3FYYX4YRK8GK5BG2YCNGEAEY1JKX06E.pyth-oracle-v2'
+
+# [[project.requirements]]
+# contract_id = 'ST2T5JKWWP3FYYX4YRK8GK5BG2YCNGEAEY1JKX06E.pyth-store-v1'
+
+# [[project.requirements]]
+# contract_id = 'ST2T5JKWWP3FYYX4YRK8GK5BG2YCNGEAEY1JKX06E.pyth-pnau-decoder-v1'
+
+[[project.requirements]]
+contract_id = 'ST3D03X5BHMNSAAW71NN7BQRMV4DW2G4JB3PXDYJG.TB-test-3'
+
+[repl]
+clarity_wasm_mode = false
+show_timings = false
+
+[repl.analysis]
+# passes = ['check_checker']
+
+[repl.analysis.check_checker]
+strict = false
+trusted_sender = false
+trusted_caller = false
+callee_filter = false

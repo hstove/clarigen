@@ -4,6 +4,7 @@ import {
   MAINNET_BURN_ADDRESS,
   TESTNET_BURN_ADDRESS,
   getContractName,
+  hexToCvValue,
 } from '@clarigen/core';
 import { ClarityType, ClarityValue } from '@stacks/transactions';
 
@@ -18,14 +19,15 @@ export async function getSession(config: Config): Promise<SessionWithVariables> 
   const accounts = simnet.getAccounts();
 
   const allAccounts = [...accounts.entries()].map(([name, address]) => {
-    const result = simnet.runSnippet(`(stx-get-balance '${address})`) as ClarityValue;
-    if (result.type !== ClarityType.UInt) {
-      throw new Error(`Unexpected result type for \`(stx-get-balance \``);
+    const result = simnet.runSnippet(`(stx-get-balance '${address})`) as string;
+    const resultCV = hexToCvValue<bigint>(result);
+    if (typeof resultCV !== 'bigint') {
+      throw new Error(`Unexpected result type for \`(stx-get-balance \`, got ${resultCV}`);
     }
     return {
       name,
       address,
-      balance: result.value.toString(),
+      balance: resultCV.toString(),
     };
   });
 

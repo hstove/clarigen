@@ -1,6 +1,6 @@
 
 # Set to your project's Clarinet config file
-clarinet = "../../demo-project/Clarinet.toml"
+clarinet = "./Clarinet.toml"
 
 # Set where you'd like ESM types output.
 # Comment or remove section to skip ESM types
@@ -9,20 +9,17 @@ clarinet = "../../demo-project/Clarinet.toml"
 # output = "esm/index.ts"
 # output = "test/generated/clarigen-types.ts"
 outputs = [
-  "test/generated/clarigen-types.ts",
-  "../core/test/generated/clarigen-types.ts",
-  "../../demo-project/esm/index.ts",
-  "../clarigen-test/test/generated/clarigen-types.ts",
+  "src/clarigen-types.ts"
 ]
 
 # `esm.after` - script to run after ESM types are generated.
 # examples:
-after = "pnpm prettier --loglevel error -w ../*/test/generated/clarigen-types.ts ../../demo-project/esm/index.ts"
+# after = "pnpm prettier --loglevel error -w ../*/test/generated/clarigen-types.ts ../../demo-project/esm/index.ts"
 # after = "echo 'yay'"
 
 # Set where you'd like generated contract docs
 # Generate docs by running `clarigen docs`
 [docs]
 # `output` should be a folder
-output = "../../demo-project/docs"
-after = "pnpm prettier --loglevel error -w ../../demo-project/docs"
+output = "./docs"
+# after = "pnpm prettier --loglevel error -w ../../demo-project/docs"
