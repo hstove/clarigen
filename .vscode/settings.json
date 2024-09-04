@@ -8,5 +8,17 @@
     "**/dist/**/*": true
   },
   "deno.enable": false,
-  "tailwindCSS.experimental.configFile": "./docs-site/tailwind.config.ts"
+  "tailwindCSS.experimental.configFile": "./docs-site/tailwind.config.ts",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
