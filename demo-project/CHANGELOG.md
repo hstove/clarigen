@@ -1,5 +1,16 @@
 # demo-project
 
+## 2.1.1
+
+### Patch Changes
+
+- [`5b4c023`](https://github.com/hstove/clarigen/commit/5b4c0239ebe96be2ed8fa40159106d0637202edc) Thanks [@hstove](https://github.com/hstove)! - Fixes an issue with generating variables for Clarity version 3 contracts
+
+- Updated dependencies []:
+  - @clarigen/boot@2.1.1
+  - @clarigen/test@2.1.1
+  - @clarigen/core@2.1.1
+
 ## 2.1.0
 
 ### Minor Changes
