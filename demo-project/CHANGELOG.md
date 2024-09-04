@@ -1,5 +1,18 @@
 # demo-project
 
+## 2.1.0
+
+### Minor Changes
+
+- [`c0c0386`](https://github.com/hstove/clarigen/commit/c0c038690e8edafad4703b9abffdb1d1cefc741a) Thanks [@hstove](https://github.com/hstove)! - Updates `@hirosystems/clarinet-sdk` to work with Clarity version 3
+
+### Patch Changes
+
+- Updated dependencies [[`c0c0386`](https://github.com/hstove/clarigen/commit/c0c038690e8edafad4703b9abffdb1d1cefc741a)]:
+  - @clarigen/test@2.1.0
+  - @clarigen/boot@2.1.0
+  - @clarigen/core@2.1.0
+
 ## 2.0.6
 
 ### Patch Changes
