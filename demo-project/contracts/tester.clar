@@ -65,3 +65,7 @@
     (err u210)
   )
 )
+
+(define-read-only (get-tenure-info-test)
+  (get-tenure-info? burnchain-header-hash u1)
+)

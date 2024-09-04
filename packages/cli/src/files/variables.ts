@@ -47,7 +47,7 @@ export function getVariablesV2(contract: SessionContract, simnet: Simnet, verbos
       fakeId,
       fullSrc,
       {
-        clarityVersion: 2,
+        clarityVersion: 3,
       },
       deployer
     );

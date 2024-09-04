@@ -468,6 +468,12 @@ export const contracts = {
         args: [{ name: 'val', type: { 'string-ascii': { length: 33 } } }],
         outputs: { type: { 'string-ascii': { length: 33 } } },
       } as TypedAbiFunction<[val: TypedAbiArg<string, 'val'>], string>,
+      getTenureInfoTest: {
+        name: 'get-tenure-info-test',
+        access: 'read_only',
+        args: [],
+        outputs: { type: { optional: { buffer: { length: 32 } } } },
+      } as TypedAbiFunction<[], Uint8Array | null>,
       getTup: {
         name: 'get-tup',
         access: 'read_only',
@@ -575,21 +581,7 @@ export const contracts = {
         access: 'variable',
       } as TypedAbiVariable<bigint>,
     },
-    constants: {
-      ERR_ONE: {
-        isOk: false,
-        value: 1n,
-      },
-      ERR_TWO: {
-        isOk: false,
-        value: 2n,
-      },
-      errThree: {
-        isOk: false,
-        value: 3n,
-      },
-      numVar: 0n,
-    },
+    constants: {},
     non_fungible_tokens: [
       { name: 'nft', type: 'uint128' },
       {
