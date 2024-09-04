@@ -1,5 +1,13 @@
 # clarigen-docs
 
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [[`5b4c023`](https://github.com/hstove/clarigen/commit/5b4c0239ebe96be2ed8fa40159106d0637202edc)]:
+  - @clarigen/cli@2.1.1
+  - @clarigen/core@2.1.1
+
 ## 0.2.0
 
 ### Minor Changes
