@@ -1,5 +1,12 @@
 # @clarigen/node
 
+## 2.1.2
+
+### Patch Changes
+
+- Updated dependencies [[`6a957b5`](https://github.com/hstove/clarigen/commit/6a957b512738bba67c9b7aed1e222cc24919ae68)]:
+  - @clarigen/core@2.1.2
+
 ## 2.1.1
 
 ### Patch Changes
