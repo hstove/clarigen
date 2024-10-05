@@ -28,8 +28,7 @@
   "name": "@clarigen/cli",
   "author": "Hank Stoever",
   "devDependencies": {
-    "tsx": "^4.7.2",
-    "vitest": "1.5.0"
+    "tsx": "^4.7.2"
   },
   "dependencies": {
     "@antfu/ni": "^0.21.12",

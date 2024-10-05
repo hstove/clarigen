@@ -1,4 +1,3 @@
-
 {
   "name": "dependencies-tests",
   "version": "1.0.0",
@@ -17,8 +16,8 @@
     "@stacks/transactions": "^6.12.0",
     "chokidar-cli": "^3.0.0",
     "typescript": "^5.3.3",
-    "vite": "^5.1.4",
-    "vitest": "^1.3.1",
+    "vite": "^5.4.8",
+    "vitest": "^2.1.2",
     "vitest-environment-clarinet": "^2.0.0"
   }
 }

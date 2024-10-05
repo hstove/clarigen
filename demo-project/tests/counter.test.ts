@@ -1,3 +1,7 @@
+process.on('warning', warning => {
+  console.warn(warning);
+});
+
 import { CoreNodeEventType, cvToValue, projectFactory } from '@clarigen/core';
 import { accounts, project } from '../esm/index';
 import { rov, rovOk, txOk, txErr, ro, varGet, mapGet, filterEvents, tx } from '@clarigen/test';
