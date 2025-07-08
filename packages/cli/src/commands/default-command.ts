@@ -29,18 +29,20 @@ export async function generate(config: Config) {
 export async function watch(config: Config, cwd?: string) {
   // const ora = await import('ora');
   return new Promise(async (resolve, reject) => {
-    const clarinetFolder = dirname(config.clarinetFile());
-    const contractsFolder = join(clarinetFolder, '/contracts/**/*.clar');
     // First, generate the types
     try {
       await generate(config);
     } catch (error) {
       logger.error({ error }, 'Error generating types');
     }
-    // const watchCwd = cwd || process.cwd();
+    // default to watching the contracts folder
+    const clarinetFolder = dirname(config.clarinetFile());
+    const contractsFolder = join(clarinetFolder, '/contracts/**/*.clar');
     const relativeFolder = relative(cwd || process.cwd(), contractsFolder);
-    logger.info(`Watching for changes in ${relativeFolder}`);
-    const watcher = chokidar.watch(contractsFolder, { persistent: true, cwd: clarinetFolder });
+    const watchFolders = config.esm?.watch_folders ?? [];
+    watchFolders.push(relativeFolder);
+    logger.info(`Watching for changes in ${watchFolders}`);
+    const watcher = chokidar.watch(watchFolders, { persistent: true, cwd: clarinetFolder });
     let running = false;
     let start = 0;
     const isVerbose = logger.level !== 'info';

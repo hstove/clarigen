@@ -22,8 +22,8 @@
     "@stacks/eslint-config": "2.0.0",
     "@stacks/prettier-config": "0.0.9",
     "@types/node": "20.10.4",
-    "@typescript-eslint/parser": "^7.7.0",
     "@typescript-eslint/eslint-plugin": "7.7.1",
+    "@typescript-eslint/parser": "^7.7.0",
     "@vitest/coverage-v8": "^1.1.0",
     "eslint": "^8.41.0",
     "eslint-config-next": "13.3.0",
@@ -45,6 +45,8 @@
   },
   "dependencies": {
     "@changesets/cli": "^2.23.2",
+    "@clarigen/cli": "link:packages/cli",
+    "@clarigen/core": "link:packages/core",
     "jsonfile": "^6.1.0"
   },
   "resolutions": {
@@ -53,5 +55,11 @@
   },
   "overrides": {
     "whatwg-url": "^14.0.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "@clarigen/core": "link:packages/core",
+      "@clarigen/cli": "link:packages/cli"
+    }
   }
 }

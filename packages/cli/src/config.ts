@@ -21,6 +21,7 @@ const typesSchema = z
     include_accounts: z.boolean().optional(),
     after: z.string().optional(),
     include_boot_contracts: z.boolean().optional(),
+    watch_folders: z.array(z.string()).optional(),
   })
   .optional();
 

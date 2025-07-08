@@ -75,10 +75,12 @@ export function getVariablesV2(contract: SessionContract, simnet: Simnet, verbos
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return cvToValue(result, true);
   } catch (error) {
-    logger.error(`Error getting variables for ${getContractName(contract.contract_id, false)}`);
-    logger.error(`Source code: ${contract.source} with type ${String(typeof contract.source)}`);
-    logger.error(error);
-    logger.error(fullSrc);
+    logger.warn(
+      { err: error },
+      `Error getting variables for ${getContractName(contract.contract_id, false)}`
+    );
+    // logger.error(`Source code: ${contract.source} with type ${String(typeof contract.source)}`);
+    // logger.error(fullSrc);
     return {};
   }
 }
