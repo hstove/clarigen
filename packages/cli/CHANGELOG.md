@@ -1,5 +1,14 @@
 # @clarigen/cli
 
+## 2.1.3
+
+### Patch Changes
+
+- [`6edce37`](https://github.com/hstove/clarigen/commit/6edce3715479bfb2ac8d1be00338fa9a7531b6bd) Thanks [@hstove](https://github.com/hstove)! - You can now add `[watch_folders]` to your Clarigen config, which will let you watch different contracts folders for file changes when running `clarigen -w`.
+
+- Updated dependencies []:
+  - @clarigen/core@2.1.3
+
 ## 2.1.2
 
 ### Patch Changes

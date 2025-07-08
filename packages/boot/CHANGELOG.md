@@ -1,5 +1,13 @@
 # @clarigen/boot
 
+## 2.1.3
+
+### Patch Changes
+
+- Updated dependencies [[`6edce37`](https://github.com/hstove/clarigen/commit/6edce3715479bfb2ac8d1be00338fa9a7531b6bd)]:
+  - @clarigen/cli@2.1.3
+  - @clarigen/core@2.1.3
+
 ## 2.1.2
 
 ### Patch Changes
