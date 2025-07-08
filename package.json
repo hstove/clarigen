@@ -55,11 +55,5 @@
   },
   "overrides": {
     "whatwg-url": "^14.0.0"
-  },
-  "pnpm": {
-    "overrides": {
-      "@clarigen/core": "link:packages/core",
-      "@clarigen/cli": "link:packages/cli"
-    }
   }
 }
