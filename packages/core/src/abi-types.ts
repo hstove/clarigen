@@ -114,7 +114,8 @@ export type StacksEpochId =
   | 'Epoch23'
   | 'Epoch24'
   | 'Epoch25'
-  | 'Epoch30';
+  | 'Epoch30'
+  | 'Epoch31';
 export type ClarityVersion = 'Clarity1' | 'Clarity2';
 
 export interface ClarityAbi {

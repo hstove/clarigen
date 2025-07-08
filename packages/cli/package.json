@@ -33,8 +33,8 @@
   "dependencies": {
     "@antfu/ni": "^0.21.12",
     "@clarigen/core": "workspace:*",
-    "@hirosystems/clarinet-sdk": "2.8.0",
-    "@hirosystems/clarinet-sdk-wasm": "2.8.0",
+    "@hirosystems/clarinet-sdk": "2.16.0",
+    "@hirosystems/clarinet-sdk-wasm": "2.16.0",
     "@iarna/toml": "^2.2.5",
     "@stacks/transactions": "6.13.1",
     "chokidar": "^3.6.0",

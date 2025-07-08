@@ -15,7 +15,7 @@ cache_dir = './.cache'
 # contract_id = 'ST2T5JKWWP3FYYX4YRK8GK5BG2YCNGEAEY1JKX06E.pyth-pnau-decoder-v1'
 
 [[project.requirements]]
-contract_id = 'ST3D03X5BHMNSAAW71NN7BQRMV4DW2G4JB3PXDYJG.TB-test-3'
+contract_id = 'ST1F7QA2MDF17S807EPA36TSS8AMEFY4KA9TVGWXT.sbtc-deposit'
 
 [repl]
 clarity_wasm_mode = false
