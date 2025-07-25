@@ -5,7 +5,7 @@ import { Response, TypedAbiMap } from '../abi-types';
 import { ContractCall } from '../factory-types';
 import { mapFactory } from '../factory';
 import { callReadOnlyFunction } from './call-read-only';
-import { generateUrl, v2Endpoint } from './api-helpers';
+import { generateUrl, getHeaders, v2Endpoint } from './api-helpers';
 import { StacksNetwork, StacksNetworkName, networkFrom } from '@stacks/network';
 
 export interface ApiOptionsUrl {
@@ -24,6 +24,7 @@ export type ApiOptionsBase = {
   network: StacksNetwork | StacksNetworkName;
   tip?: string;
   latest?: boolean;
+  apiKey?: string;
 };
 
 export type ApiOptionsJsonize = ApiOptionsBase & {
@@ -63,6 +64,7 @@ export async function ro<O extends ApiOptions, T>(
     functionArgs: tx.functionArgs,
     tip,
     url: getApiUrl(options),
+    apiKey: options.apiKey,
   });
   if (options.json) {
     return cvToJSON(cv);
@@ -112,6 +114,7 @@ export async function fetchMapGet<Key, Val>(
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
+      ...getHeaders(options.apiKey),
     },
   });
   const data = (await res.json()) as { data: string };
@@ -145,14 +148,17 @@ type JsonIf<O extends ClientOptions, T> = JsonIfOption<O & ApiOptions, T>;
 
 export class ClarigenClient {
   public network: StacksNetwork | StacksNetworkName;
+  public apiKey?: string;
 
-  constructor(networkOrUrl: StacksNetwork | StacksNetworkName) {
+  constructor(networkOrUrl: StacksNetwork | StacksNetworkName, apiKey?: string) {
     this.network = networkOrUrl;
+    this.apiKey = apiKey;
   }
 
   private roOptions(options: ClientOptions): ApiOptions {
     return {
       network: this.network,
+      apiKey: this.apiKey,
       ...options,
     };
   }

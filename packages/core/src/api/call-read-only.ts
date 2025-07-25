@@ -12,6 +12,7 @@ export interface ReadOnlyOptions {
   // network?: StacksNetwork;
   url: string;
   tip?: string;
+  apiKey?: string;
 }
 
 /**
@@ -46,7 +47,7 @@ export async function callReadOnlyFunction<T extends ClarityValue>(
   const { contractAddress, functionArgs, senderAddress = contractAddress, url } = options;
 
   // const contractsApi = new
-  const apiResponse = await smartContractsApi(url).callReadOnlyFunction({
+  const apiResponse = await smartContractsApi(url, options.apiKey).callReadOnlyFunction({
     ...options,
     readOnlyFunctionArgs: {
       sender: senderAddress,

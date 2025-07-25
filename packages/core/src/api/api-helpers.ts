@@ -1,12 +1,32 @@
 import { SmartContractsApi, Configuration, TransactionsApi } from '@stacks/blockchain-api-client';
 import { isNumber } from '../utils';
 
-export function smartContractsApi(url: string) {
-  return new SmartContractsApi(new Configuration({ basePath: url }));
+export function getHeaders(apiKey?: string) {
+  const headers: Record<string, string> = {};
+  if (apiKey) {
+    headers['x-api-key'] = apiKey;
+  }
+  return headers;
 }
 
-export function transactionsApi(url: string) {
-  return new TransactionsApi(new Configuration({ basePath: url }));
+export function smartContractsApi(url: string, apiKey?: string) {
+  // const headers = apiKey ? { 'x-api-key': apiKey } : {};
+  const headers = getHeaders(apiKey);
+  return new SmartContractsApi(
+    new Configuration({
+      basePath: url,
+      headers,
+    })
+  );
+}
+
+export function transactionsApi(url: string, apiKey?: string) {
+  return new TransactionsApi(
+    new Configuration({
+      basePath: url,
+      headers: getHeaders(apiKey),
+    })
+  );
 }
 
 const isClientSide = typeof window !== 'undefined';
