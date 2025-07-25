@@ -1,5 +1,16 @@
 # @clarigen/cli
 
+## 3.0.0
+
+### Major Changes
+
+- [`c5d5e20`](https://github.com/hstove/clarigen/commit/c5d5e201108d027f2a0eaa38e762aeb2f1cc8880) Thanks [@hstove](https://github.com/hstove)! - This major release updates Stacks.JS to v7
+
+### Patch Changes
+
+- Updated dependencies [[`c5d5e20`](https://github.com/hstove/clarigen/commit/c5d5e201108d027f2a0eaa38e762aeb2f1cc8880)]:
+  - @clarigen/core@3.0.0
+
 ## 2.1.3
 
 ### Patch Changes
