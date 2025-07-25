@@ -581,7 +581,21 @@ export const contracts = {
         access: 'variable',
       } as TypedAbiVariable<bigint>,
     },
-    constants: {},
+    constants: {
+      ERR_ONE: {
+        isOk: false,
+        value: 1n,
+      },
+      ERR_TWO: {
+        isOk: false,
+        value: 2n,
+      },
+      errThree: {
+        isOk: false,
+        value: 3n,
+      },
+      numVar: 0n,
+    },
     non_fungible_tokens: [
       { name: 'nft', type: 'uint128' },
       {

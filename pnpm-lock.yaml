@@ -97,6 +97,9 @@ importers:
       '@clarigen/boot':
         specifier: workspace:*
         version: link:../packages/boot
+      '@clarigen/cli':
+        specifier: workspace:*
+        version: link:../packages/cli
       '@clarigen/core':
         specifier: workspace:*
         version: link:../packages/core
@@ -104,17 +107,17 @@ importers:
         specifier: workspace:*
         version: link:../packages/clarigen-test
       '@hirosystems/clarinet-sdk':
-        specifier: 2.8.0
-        version: 2.8.0(@types/node@20.10.4)
+        specifier: 3.3.0
+        version: 3.3.0
       '@hirosystems/clarinet-sdk-wasm':
-        specifier: 2.8.0
-        version: 2.8.0
+        specifier: 3.3.0
+        version: 3.3.0
       '@stacks/transactions':
-        specifier: ^6.13.1
-        version: 6.13.1
+        specifier: ^7.1.0
+        version: 7.1.0
       vitest-environment-clarinet:
-        specifier: ^1.1.0
-        version: 1.1.0(@hirosystems/clarinet-sdk@2.8.0(@types/node@20.10.4))(vitest@2.1.2(@types/node@20.10.4))
+        specifier: ^2.3.0
+        version: 2.3.0(@hirosystems/clarinet-sdk@3.3.0)(vitest@2.1.2(@types/node@20.10.4))
     devDependencies:
       '@types/node':
         specifier: 20.10.4
@@ -350,14 +353,14 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@hirosystems/clarinet-sdk':
-        specifier: 2.8.0
-        version: 2.8.0(@types/node@20.10.4)
+        specifier: 3.3.0
+        version: 3.3.0
       '@hirosystems/clarinet-sdk-wasm':
-        specifier: 2.8.0
-        version: 2.8.0
+        specifier: 3.3.0
+        version: 3.3.0
       '@stacks/transactions':
-        specifier: 6.13.0
-        version: 6.13.0
+        specifier: 7.1.0
+        version: 7.1.0
     devDependencies:
       '@types/node':
         specifier: 20.10.4
@@ -367,7 +370,7 @@ importers:
         version: 5.4.5
       vitest-environment-clarinet:
         specifier: 2.0.0
-        version: 2.0.0(@hirosystems/clarinet-sdk@2.8.0(@types/node@20.10.4))(vitest@3.2.4(@types/debug@4.1.12)(@types/node@20.10.4))
+        version: 2.0.0(@hirosystems/clarinet-sdk@3.3.0)(vitest@3.2.4(@types/debug@4.1.12)(@types/node@20.10.4))
 
   packages/cli:
     dependencies:
@@ -378,17 +381,17 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@hirosystems/clarinet-sdk':
-        specifier: 2.16.0
-        version: 2.16.0(@types/debug@4.1.12)(@types/node@20.10.4)
+        specifier: 3.3.0
+        version: 3.3.0
       '@hirosystems/clarinet-sdk-wasm':
-        specifier: 2.16.0
-        version: 2.16.0
+        specifier: 3.3.0
+        version: 3.3.0
       '@iarna/toml':
         specifier: ^2.2.5
         version: 2.2.5
       '@stacks/transactions':
-        specifier: 6.13.1
-        version: 6.13.1
+        specifier: 7.1.0
+        version: 7.1.0
       chokidar:
         specifier: ^3.6.0
         version: 3.6.0
@@ -430,17 +433,17 @@ importers:
         specifier: 7.10.0
         version: 7.10.0
       '@stacks/common':
-        specifier: ^6.13.0
-        version: 6.13.0
+        specifier: ^7.0.2
+        version: 7.0.2
       '@stacks/network':
-        specifier: ^6.16.0
-        version: 6.16.0
+        specifier: ^7.0.2
+        version: 7.0.2
       '@stacks/stacks-blockchain-api-types':
         specifier: 7.10.0
         version: 7.10.0
       '@stacks/transactions':
-        specifier: 6.13.1
-        version: 6.13.1
+        specifier: 7.1.0
+        version: 7.1.0
 
   packages/node:
     dependencies:
@@ -1232,21 +1235,20 @@ packages:
     engines: {node: '>=6'}
     hasBin: true
 
-  '@hirosystems/clarinet-sdk-wasm@2.16.0':
-    resolution: {integrity: sha512-d3CiXMOgLhgyvfbiL4nn0pTEyH0T0qYF9qlTegOw7avXmwwSQ1ZvnQxOQhPg7FyMfim2mnMtmyxmc7/I3v3S1g==}
-
   '@hirosystems/clarinet-sdk-wasm@2.8.0':
     resolution: {integrity: sha512-Lkr7YHzirierK50fTKTtVpXUvvUfPT+U70bDzB+13oK3NUtWG18zq6JNQ5A2NLWniU/szPJ4M9C63ba7+U091Q==}
 
-  '@hirosystems/clarinet-sdk@2.16.0':
-    resolution: {integrity: sha512-/JfNSU+u6Lr+Ca0h7KCka+Rs+1K8rs4ln8wfRyYUwsu8gEPWOVCqivVjXpbkAjPLbGxVilpVeTSKvadrClGg8A==}
-    engines: {node: '>=18.0.0'}
-    hasBin: true
+  '@hirosystems/clarinet-sdk-wasm@3.3.0':
+    resolution: {integrity: sha512-EiP2XPsXM5TWOvK3wrvPkmXCssNDx5ZaWU/w3l+6+HQ5r+PmArp90gSS3EdGqYz7YblghMzKD3CGq1VhWypPfw==}
 
   '@hirosystems/clarinet-sdk@2.8.0':
     resolution: {integrity: sha512-/xxct6Q+TB+WoD/Qc/Y4Oq4vgLybs4EmBWdqmVl7P9ocUxt39qTXpWHUg/AdprCtWHTe4WywmrNAiMHbf6Bc9w==}
     engines: {node: '>=18.0.0'}
     hasBin: true
+
+  '@hirosystems/clarinet-sdk@3.3.0':
+    resolution: {integrity: sha512-vETqR/UEf14q0JCfYbEuP1Cy4g1DOGMH6aWNu8Vd+FZ5V2DFGostTerzhUxsnxyMqIsTtRWSlwYdSsP4FoCCSQ==}
+    engines: {node: '>=18.0.0'}
 
   '@humanwhocodes/config-array@0.11.14':
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
@@ -2009,11 +2011,11 @@ packages:
   '@stacks/blockchain-api-client@7.10.0':
     resolution: {integrity: sha512-VQbJDJuHrj2TWDmYE2Tymqa6yMCvNkc8SXPeHgX1k1BuNKFe7HUHv1r4wA24cRpoTSpM14URJOscKLBaDyklpg==}
 
-  '@stacks/common@6.13.0':
-    resolution: {integrity: sha512-wwzyihjaSdmL6NxKvDeayy3dqM0L0Q2sawmdNtzJDi0FnXuJGm5PeapJj7bEfcI9XwI7Bw5jZoC6mCn9nc5YIw==}
-
   '@stacks/common@6.16.0':
     resolution: {integrity: sha512-PnzvhrdGRMVZvxTulitlYafSK4l02gPCBBoI9QEoTqgSnv62oaOXhYAUUkTMFKxdHW1seVEwZsrahuXiZPIAwg==}
+
+  '@stacks/common@7.0.2':
+    resolution: {integrity: sha512-+RSecHdkxOtswmE4tDDoZlYEuULpnTQVeDIG5eZ32opK8cFxf4EugAcK9CsIsHx/Se1yTEaQ21WGATmJGK84lQ==}
 
   '@stacks/eslint-config@2.0.0':
     resolution: {integrity: sha512-GrRiJE7nadre+wCGAkaxCmHGD8tEYOtVW/cjjMdh/H37yl3vGj/lX723MfiXj/YcQDJ1qs/8V9Rx9b4VsFp10Q==}
@@ -2026,6 +2028,9 @@ packages:
   '@stacks/network@6.16.0':
     resolution: {integrity: sha512-uqz9Nb6uf+SeyCKENJN+idt51HAfEeggQKrOMfGjpAeFgZV2CR66soB/ci9+OVQR/SURvasncAz2ScI1blfS8A==}
 
+  '@stacks/network@7.0.2':
+    resolution: {integrity: sha512-XzHnoWqku/jRrTgMXhmh3c+I0O9vDH24KlhzGDZtBu+8CGGyHNPAZzGwvoUShonMXrXjEnfO9IYQwV5aJhfv6g==}
+
   '@stacks/prettier-config@0.0.10':
     resolution: {integrity: sha512-MrYWGEgO/mYR8TOZIKknQEHbFQZ5VyAD/s8eF2Yxr6Lgalt2alVEh+6ODehVP2uepkyXPmJzLbaQYs8/L4E78Q==}
 
@@ -2035,11 +2040,11 @@ packages:
   '@stacks/stacks-blockchain-api-types@7.10.0':
     resolution: {integrity: sha512-LfDishvEsmDJ6OXfgohkOIIsLTwvKVn3NKELaWTaZndN2Pucsk3Uz8NPDhVM5Ij1rGjFGT2bwcHNoGE7k3GhxQ==}
 
-  '@stacks/transactions@6.13.0':
-    resolution: {integrity: sha512-xrx09qsXL/tWCkvAArzsFQqtZKDXyedjdVB9uX8xw+cQCi3xZ7r5MHMKzvEsTgJz3EO+MkQBXcvI1uzfuoqhcA==}
-
   '@stacks/transactions@6.13.1':
     resolution: {integrity: sha512-PWw2I+2Fj3CaFYQIoVcqQN6E2qGHNhFv03nuR0CxMq0sx8stPgYZbdzUlnlBcJQdsFiHrw3sPeqnXDZt+Hg5YQ==}
+
+  '@stacks/transactions@7.1.0':
+    resolution: {integrity: sha512-/4n5h+ka5N3mq16f1Zo0O0g2gyOYhaXFdGN8ifLz38NJmkjnCDXqi/ogB6NFNpSKGonyqyF5Vz1UPaQHwO8+IA==}
 
   '@stefanprobst/rehype-extract-toc@2.2.0':
     resolution: {integrity: sha512-/4UjstX8ploZklY8MmlOQoXB1jWIo3Go4MP0R39sbkoWuN6rJ7Zt6l4bjkDPM4hKsjoODh9SSKn2otlp3XL3/A==}
@@ -2745,6 +2750,10 @@ packages:
   cliui@8.0.1:
     resolution: {integrity: sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/8Sb+afLAkzAptFuMsod9HFokGNudZpi/oQV73hnVK+sR+5PVRMd+Dr7YQ==}
     engines: {node: '>=12'}
+
+  cliui@9.0.1:
+    resolution: {integrity: sha512-k7ndgKhwoQveBL+/1tqGJYNz097I7WOvwbmmU2AR5+magtbjPWQTS1C5vzGkBC8Ym8UWRzfKUzUUqFLypY4Q+w==}
+    engines: {node: '>=20'}
 
   clone@1.0.4:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
@@ -5597,6 +5606,10 @@ packages:
     resolution: {integrity: sha512-SEIJCWiX7Kg4c129n48aDRwLbFb2LJmXXFrWBG4NGaRtMQ3myKPKbwrD1BKqQn74oCoNMBVrfDEr5M9YxCsrkw==}
     engines: {node: '>=18'}
 
+  string-width@7.2.0:
+    resolution: {integrity: sha512-tsaTIkKW9b4N+AEj+SVA+WhJzV7/zMhcSu78mLKWSk7cXMOSHsBKFWUs0fWwq8QyK3MgJBQRX6Gbi4kYbdvGkQ==}
+    engines: {node: '>=18'}
+
   string.prototype.matchall@4.0.11:
     resolution: {integrity: sha512-NUdh0aDavY2og7IbBPenWqR9exH+E26Sv8e0/eTe1tltDGZL+GtBkDAnnyBtmekfK6/Dq3MkcGtzXFEd1LQrtg==}
     engines: {node: '>= 0.4'}
@@ -6247,17 +6260,17 @@ packages:
       terser:
         optional: true
 
-  vitest-environment-clarinet@1.1.0:
-    resolution: {integrity: sha512-abf6VPWVyzZ6Ynz3kNqKZGsJuS0MH5xKyJeR9dgE5Y4dQ34KaBoTeA2jzgamDUxyX1y+5/yA/SBQab4sZjX8Sg==}
-    peerDependencies:
-      '@hirosystems/clarinet-sdk': '1'
-      vitest: '1'
-
   vitest-environment-clarinet@2.0.0:
     resolution: {integrity: sha512-NW8Z0JPV/hwB1WkvGiGED9JmXsefPUjImJRbO3BEsxdL8qxA1y2EAwuqjfmvXYDeisQSnZGbfns7DN8eDxJnpg==}
     peerDependencies:
       '@hirosystems/clarinet-sdk': '2'
       vitest: ^1.3.1
+
+  vitest-environment-clarinet@2.3.0:
+    resolution: {integrity: sha512-SZLrQZ9CFzTIes54a2Sw1ijOa718yyFIEAd38IbpfHZL2gY8nwM/IqKsjCrVCcrD9+/hO83V0fTJoFqZR1262Q==}
+    peerDependencies:
+      '@hirosystems/clarinet-sdk': '>=2.14.0'
+      vitest: ^1.0.0 || ^2.0.0 || ^3.0.0
 
   vitest@1.5.0:
     resolution: {integrity: sha512-d8UKgR0m2kjdxDWX6911uwxout6GHS0XaGH1cksSIVVG8kRlE7G7aBw7myKQCvDI5dT4j7ZMa+l706BIORMDLw==}
@@ -6417,6 +6430,10 @@ packages:
     resolution: {integrity: sha512-si7QWI6zUMq56bESFvagtmzMdGOtoxfR+Sez11Mobfc7tm+VkUckk9bW2UeffTGVUbOksxmSw0AA2gs8g71NCQ==}
     engines: {node: '>=12'}
 
+  wrap-ansi@9.0.0:
+    resolution: {integrity: sha512-G8ura3S+3Z2G+mkgNRq8dqaFZAuxfsxpBB8OCTGRTCtp+l/v9nbFNmCUP1BZMts3G1142MsZfn6eeUKrr4PD1Q==}
+    engines: {node: '>=18'}
+
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
@@ -6485,6 +6502,10 @@ packages:
     resolution: {integrity: sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw==}
     engines: {node: '>=12'}
 
+  yargs-parser@22.0.0:
+    resolution: {integrity: sha512-rwu/ClNdSMpkSrUb+d6BRsSkLUq1fmfsY6TOpYzTwvwkg1/NRG85KBy3kq++A8LKQwX6lsu+aWad+2khvuXrqw==}
+    engines: {node: ^20.19.0 || ^22.12.0 || >=23}
+
   yargs@15.4.1:
     resolution: {integrity: sha512-aePbxDmcYW++PaqBsJ+HYUFwCdv4LVvdnhBy78E57PIor8/OVvhMrADFFEDh8DHDFRv/O9i3lPhsENjO7QX0+A==}
     engines: {node: '>=8'}
@@ -6496,6 +6517,10 @@ packages:
   yargs@17.7.2:
     resolution: {integrity: sha512-7dSzzRQ++CKnNI/krKnYRV7JKKPUXMEh61soaHKg9mrWEhzFWhFnxPxGl+69cD1Ou63C13NUPCnmIcrvqCuM6w==}
     engines: {node: '>=12'}
+
+  yargs@18.0.0:
+    resolution: {integrity: sha512-4UEqdc2RYGHZc7Doyqkrqiln3p9X2DZVxaGbwhn2pi7MrRagKaOcIKe8L3OxYcbhXLgLFUS3zAYuQjKBQgmuNg==}
+    engines: {node: ^20.19.0 || ^22.12.0 || >=23}
 
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
@@ -7296,36 +7321,9 @@ snapshots:
       protobufjs: 7.2.6
       yargs: 17.7.2
 
-  '@hirosystems/clarinet-sdk-wasm@2.16.0': {}
-
   '@hirosystems/clarinet-sdk-wasm@2.8.0': {}
 
-  '@hirosystems/clarinet-sdk@2.16.0(@types/debug@4.1.12)(@types/node@20.10.4)':
-    dependencies:
-      '@hirosystems/clarinet-sdk-wasm': 2.16.0
-      '@stacks/transactions': 6.13.1
-      kolorist: 1.8.0
-      prompts: 2.4.2
-      vitest: 3.2.4(@types/debug@4.1.12)(@types/node@20.10.4)
-      yargs: 17.7.2
-    transitivePeerDependencies:
-      - '@edge-runtime/vm'
-      - '@types/debug'
-      - '@types/node'
-      - '@vitest/browser'
-      - '@vitest/ui'
-      - encoding
-      - happy-dom
-      - jsdom
-      - less
-      - lightningcss
-      - msw
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
+  '@hirosystems/clarinet-sdk-wasm@3.3.0': {}
 
   '@hirosystems/clarinet-sdk@2.8.0(@types/node@20.10.4)':
     dependencies:
@@ -7351,6 +7349,16 @@ snapshots:
       - sugarss
       - supports-color
       - terser
+
+  '@hirosystems/clarinet-sdk@3.3.0':
+    dependencies:
+      '@hirosystems/clarinet-sdk-wasm': 3.3.0
+      '@stacks/transactions': 7.1.0
+      kolorist: 1.8.0
+      prompts: 2.4.2
+      yargs: 18.0.0
+    transitivePeerDependencies:
+      - encoding
 
   '@humanwhocodes/config-array@0.11.14':
     dependencies:
@@ -8121,15 +8129,12 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@stacks/common@6.13.0':
-    dependencies:
-      '@types/bn.js': 5.1.5
-      '@types/node': 18.19.3
-
   '@stacks/common@6.16.0':
     dependencies:
       '@types/bn.js': 5.1.5
       '@types/node': 18.19.3
+
+  '@stacks/common@7.0.2': {}
 
   '@stacks/eslint-config@2.0.0(eslint-plugin-import@2.29.1)(eslint-plugin-prettier@5.1.3(eslint-config-prettier@8.10.0(eslint@8.57.0))(eslint@8.57.0)(prettier@2.8.4))(eslint-plugin-unused-imports@3.1.0(@typescript-eslint/eslint-plugin@7.7.1(@typescript-eslint/parser@7.7.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0))(eslint@8.57.0)(typescript@5.4.5)':
     dependencies:
@@ -8155,6 +8160,13 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
+  '@stacks/network@7.0.2':
+    dependencies:
+      '@stacks/common': 7.0.2
+      cross-fetch: 3.1.8
+    transitivePeerDependencies:
+      - encoding
+
   '@stacks/prettier-config@0.0.10':
     dependencies:
       prettier: 2.5.1
@@ -8165,23 +8177,23 @@ snapshots:
 
   '@stacks/stacks-blockchain-api-types@7.10.0': {}
 
-  '@stacks/transactions@6.13.0':
-    dependencies:
-      '@noble/hashes': 1.1.5
-      '@noble/secp256k1': 1.7.1
-      '@stacks/common': 6.13.0
-      '@stacks/network': 6.16.0
-      c32check: 2.0.0
-      lodash.clonedeep: 4.5.0
-    transitivePeerDependencies:
-      - encoding
-
   '@stacks/transactions@6.13.1':
     dependencies:
       '@noble/hashes': 1.1.5
       '@noble/secp256k1': 1.7.1
       '@stacks/common': 6.16.0
       '@stacks/network': 6.16.0
+      c32check: 2.0.0
+      lodash.clonedeep: 4.5.0
+    transitivePeerDependencies:
+      - encoding
+
+  '@stacks/transactions@7.1.0':
+    dependencies:
+      '@noble/hashes': 1.1.5
+      '@noble/secp256k1': 1.7.1
+      '@stacks/common': 7.0.2
+      '@stacks/network': 7.0.2
       c32check: 2.0.0
       lodash.clonedeep: 4.5.0
     transitivePeerDependencies:
@@ -8943,7 +8955,7 @@ snapshots:
       assertion-error: 2.0.1
       check-error: 2.1.1
       deep-eql: 5.0.2
-      loupe: 3.1.1
+      loupe: 3.1.4
       pathval: 2.0.0
 
   chalk@2.4.2:
@@ -9035,6 +9047,12 @@ snapshots:
       string-width: 4.2.3
       strip-ansi: 6.0.1
       wrap-ansi: 7.0.0
+
+  cliui@9.0.1:
+    dependencies:
+      string-width: 7.2.0
+      strip-ansi: 7.1.0
+      wrap-ansi: 9.0.0
 
   clone@1.0.4: {}
 
@@ -12753,6 +12771,12 @@ snapshots:
       get-east-asian-width: 1.2.0
       strip-ansi: 7.1.0
 
+  string-width@7.2.0:
+    dependencies:
+      emoji-regex: 10.3.0
+      get-east-asian-width: 1.2.0
+      strip-ansi: 7.1.0
+
   string.prototype.matchall@4.0.11:
     dependencies:
       call-bind: 1.0.7
@@ -13467,15 +13491,15 @@ snapshots:
       '@types/node': 20.10.4
       fsevents: 2.3.3
 
-  vitest-environment-clarinet@1.1.0(@hirosystems/clarinet-sdk@2.8.0(@types/node@20.10.4))(vitest@2.1.2(@types/node@20.10.4)):
+  vitest-environment-clarinet@2.0.0(@hirosystems/clarinet-sdk@3.3.0)(vitest@3.2.4(@types/debug@4.1.12)(@types/node@20.10.4)):
     dependencies:
-      '@hirosystems/clarinet-sdk': 2.8.0(@types/node@20.10.4)
-      vitest: 2.1.2(@types/node@20.10.4)
-
-  vitest-environment-clarinet@2.0.0(@hirosystems/clarinet-sdk@2.8.0(@types/node@20.10.4))(vitest@3.2.4(@types/debug@4.1.12)(@types/node@20.10.4)):
-    dependencies:
-      '@hirosystems/clarinet-sdk': 2.8.0(@types/node@20.10.4)
+      '@hirosystems/clarinet-sdk': 3.3.0
       vitest: 3.2.4(@types/debug@4.1.12)(@types/node@20.10.4)
+
+  vitest-environment-clarinet@2.3.0(@hirosystems/clarinet-sdk@3.3.0)(vitest@2.1.2(@types/node@20.10.4)):
+    dependencies:
+      '@hirosystems/clarinet-sdk': 3.3.0
+      vitest: 2.1.2(@types/node@20.10.4)
 
   vitest@1.5.0(@types/node@20.10.4):
     dependencies:
@@ -13686,6 +13710,12 @@ snapshots:
       string-width: 5.1.2
       strip-ansi: 7.1.0
 
+  wrap-ansi@9.0.0:
+    dependencies:
+      ansi-styles: 6.2.1
+      string-width: 7.2.0
+      strip-ansi: 7.1.0
+
   wrappy@1.0.2: {}
 
   ws@8.11.0: {}
@@ -13716,6 +13746,8 @@ snapshots:
   yargs-parser@21.0.1: {}
 
   yargs-parser@21.1.1: {}
+
+  yargs-parser@22.0.0: {}
 
   yargs@15.4.1:
     dependencies:
@@ -13750,6 +13782,15 @@ snapshots:
       string-width: 4.2.3
       y18n: 5.0.8
       yargs-parser: 21.1.1
+
+  yargs@18.0.0:
+    dependencies:
+      cliui: 9.0.1
+      escalade: 3.1.1
+      get-caller-file: 2.0.5
+      string-width: 7.2.0
+      y18n: 5.0.8
+      yargs-parser: 22.0.0
 
   yocto-queue@0.1.0: {}
 

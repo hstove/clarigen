@@ -24,9 +24,6 @@ import {
   StandardPrincipalCV as MSPrincipalCV,
   serializeCV as serializeCVMS,
   deserializeCV as deserializeCVMS,
-  ClarityAbiFunction,
-  ClarityType,
-  StacksMessageType,
 } from '@stacks/transactions';
 import * as Hiro from '@stacks/transactions';
 
@@ -82,7 +79,7 @@ it('works fine for all Hiro clarity types', () => {
   cvConvert(Hiro.stringAsciiCV('asdf'));
   cvConvert(Hiro.stringUtf8CV('asdf'));
   cvConvert(Hiro.optionalCVOf(boolCV(true)));
-  cvConvert(Hiro.bufferCV(Buffer.from('asdf')));
+  cvConvert(Hiro.bufferCV(Uint8Array.from([1, 2, 3])));
   cvConvert(Hiro.responseOkCV(boolCV(true)));
   cvConvert(Hiro.responseErrorCV(boolCV(true)));
   cvConvert(Hiro.listCV([boolCV(true)]));

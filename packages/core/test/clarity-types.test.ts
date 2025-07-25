@@ -35,7 +35,6 @@ import {
   ClarityAbiType as StacksClarityAbiType,
 } from '@stacks/transactions';
 import { project, contracts } from './generated/clarigen-types';
-import { StacksMocknet } from '@stacks/network';
 import { expect, it, test, describe } from 'vitest';
 
 const devnet = projectFactory(project, 'devnet');
@@ -208,13 +207,13 @@ type Fn = (typeof devnet)['tester']['mergeTuple'];
 async function fakeRoApiJson() {
   const res = await ro(devnet.tester.mergeTuple({ i: { minHeight: 1n } }), {
     json: true,
-    network: new StacksMocknet(),
+    network: 'mocknet',
   });
   return res;
 }
 async function fakeRoApi(json: boolean) {
   const res = await ro(devnet.tester.mergeTuple({ i: { minHeight: 1n } }), {
-    network: new StacksMocknet(),
+    network: 'mocknet',
     json,
   });
   return res;

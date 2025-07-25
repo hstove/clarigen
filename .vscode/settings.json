@@ -9,6 +9,7 @@
   },
   "deno.enable": false,
   "tailwindCSS.experimental.configFile": "./docs-site/tailwind.config.ts",
+  "biome.enabled": false,
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },

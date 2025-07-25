@@ -44,7 +44,7 @@ import {
   StacksEpochId,
   ClarityVersion,
 } from './abi-types';
-import { toCamelCase, toKebabCase, bytesToHex, bytesToAscii } from './utils';
+import { toCamelCase, toKebabCase, bytesToHex, bytesToAscii, hexToBytes } from './utils';
 
 export function ok<T, Err = never>(value: T): ResponseOk<T, Err> {
   return {
@@ -79,14 +79,7 @@ export interface ClarityAbi extends _ClarityAbi {
 }
 
 export function principalToString(principal: PrincipalCV): string {
-  if (principal.type === ClarityType.PrincipalStandard) {
-    return addressToString(principal.address);
-  } else if (principal.type === ClarityType.PrincipalContract) {
-    const address = addressToString(principal.address);
-    return `${address}.${principal.contractName.content}`;
-  } else {
-    throw new Error(`Unexpected principal data: ${JSON.stringify(principal)}`);
-  }
+  return principal.value;
 }
 
 /**
@@ -104,7 +97,7 @@ export function cvToValue<T = any>(val: ClarityValue, returnResponse = false): T
     case ClarityType.UInt:
       return val.value as unknown as T;
     case ClarityType.Buffer:
-      return val.buffer as unknown as T;
+      return hexToBytes(val.value) as unknown as T;
     case ClarityType.OptionalNone:
       return null as unknown as T;
     case ClarityType.OptionalSome:
@@ -120,9 +113,9 @@ export function cvToValue<T = any>(val: ClarityValue, returnResponse = false): T
       return principalToString(val) as unknown as T;
     case ClarityType.List:
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return val.list.map(v => cvToValue(v)) as unknown as T;
+      return val.value.map(v => cvToValue(v)) as unknown as T;
     case ClarityType.Tuple:
-      const tupleReduced = Object.entries(val.data).reduce((acc, [key, val]) => {
+      const tupleReduced = Object.entries(val.value).reduce((acc, [key, val]) => {
         const keyFixed = toCamelCase(key);
         return {
           ...acc,
@@ -131,9 +124,9 @@ export function cvToValue<T = any>(val: ClarityValue, returnResponse = false): T
       }, {} as Record<string, any>);
       return tupleReduced as unknown as T;
     case ClarityType.StringASCII:
-      return val.data as unknown as T;
+      return val.value as unknown as T;
     case ClarityType.StringUTF8:
-      return val.data as unknown as T;
+      return val.value as unknown as T;
   }
 }
 
@@ -243,12 +236,12 @@ export function cvToString(val: ClarityValue, encoding: 'tryAscii' | 'hex' = 'he
       return `u${val.value.toString()}`;
     case ClarityType.Buffer:
       if (encoding === 'tryAscii') {
-        const str = bytesToAscii(val.buffer);
+        const str = bytesToAscii(hexToBytes(val.value));
         if (/[ -~]/.test(str)) {
           return JSON.stringify(str);
         }
       }
-      return `0x${bytesToHex(val.buffer)}`;
+      return `0x${val.value}`;
     case ClarityType.OptionalNone:
       return 'none';
     case ClarityType.OptionalSome:
@@ -261,15 +254,15 @@ export function cvToString(val: ClarityValue, encoding: 'tryAscii' | 'hex' = 'he
     case ClarityType.PrincipalContract:
       return `'${principalToString(val)}`;
     case ClarityType.List:
-      return `(list ${val.list.map(v => cvToString(v, encoding)).join(' ')})`;
+      return `(list ${val.value.map(v => cvToString(v, encoding)).join(' ')})`;
     case ClarityType.Tuple:
-      return `(tuple ${Object.keys(val.data)
-        .map(key => `(${key} ${cvToString(val.data[key], encoding)})`)
+      return `(tuple ${Object.keys(val.value)
+        .map(key => `(${key} ${cvToString(val.value[key], encoding)})`)
         .join(' ')})`;
     case ClarityType.StringASCII:
-      return `"${val.data}"`;
+      return `"${val.value}"`;
     case ClarityType.StringUTF8:
-      return `u"${val.data}"`;
+      return `u"${val.value}"`;
   }
 }
 
@@ -290,7 +283,7 @@ export function cvToJSON<T = any>(val: ClarityValue, returnResponse = false): T 
     case ClarityType.UInt:
       return `${val.value}` as unknown as T;
     case ClarityType.Buffer:
-      return bytesToHex(val.buffer) as unknown as T;
+      return val.value as unknown as T;
     case ClarityType.OptionalNone:
       return null as unknown as T;
     case ClarityType.OptionalSome:
@@ -306,9 +299,9 @@ export function cvToJSON<T = any>(val: ClarityValue, returnResponse = false): T 
       return principalToString(val) as unknown as T;
     case ClarityType.List:
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return val.list.map(v => cvToJSON(v)) as unknown as T;
+      return val.value.map(v => cvToJSON(v)) as unknown as T;
     case ClarityType.Tuple:
-      const tupleReduced = Object.entries(val.data).reduce((acc, [key, val]) => {
+      const tupleReduced = Object.entries(val.value).reduce((acc, [key, val]) => {
         const keyFixed = toCamelCase(key);
         return {
           ...acc,
@@ -317,9 +310,9 @@ export function cvToJSON<T = any>(val: ClarityValue, returnResponse = false): T 
       }, {} as Record<string, any>);
       return tupleReduced as unknown as T;
     case ClarityType.StringASCII:
-      return val.data as unknown as T;
+      return val.value as unknown as T;
     case ClarityType.StringUTF8:
-      return val.data as unknown as T;
+      return val.value as unknown as T;
   }
 }
 

@@ -1,14 +1,12 @@
-import { AssetInfo } from '@stacks/transactions';
+// import { AssetInfo } from '@stacks/transactions';
 import { IntegerType } from '@stacks/common';
 import {
-  createAssetInfo as _createAssetInfo,
   FungibleConditionCode,
-  makeContractFungiblePostCondition,
-  makeContractNonFungiblePostCondition,
-  makeStandardFungiblePostCondition,
-  makeStandardNonFungiblePostCondition,
   NonFungibleConditionCode,
   PostCondition,
+  NonFungiblePostCondition,
+  Pc,
+  FungiblePostCondition,
 } from '@stacks/transactions';
 import type { ClarityAbiType, TypedAbi } from './abi-types';
 import { AbiTypeTo, CVInput, parseToCV, ReadonlyTuple } from './clarity-types';
@@ -26,19 +24,19 @@ export type AssetNames<T extends AbiWithAssets> =
 export function createAssetInfo<T extends AbiWithAssets>(
   contract: T,
   asset: AssetNames<T>
-): AssetInfo {
+): `${string}.${string}::${string}` {
+  const [addr, name] = contract.identifier.split('.');
   if (!('identifier' in contract)) {
     throw new Error('Invalid contract');
   }
-  const [addr, name] = contract.identifier.split('.');
   for (const nft of contract.non_fungible_tokens) {
     if (nft.name === asset) {
-      return _createAssetInfo(addr, name, nft.name);
+      return `${addr}.${name}::${nft.name}`;
     }
   }
   for (const ft of contract.fungible_tokens) {
     if (ft.name === asset) {
-      return _createAssetInfo(addr, name, ft.name);
+      return `${addr}.${name}::${ft.name}`;
     }
   }
   throw new Error(`Invalid asset: "${asset}" is not an asset in contract.`);
@@ -55,33 +53,36 @@ export type NftAssetType<T extends AbiWithAssets> = T['non_fungible_tokens'][0] 
 export function makeNonFungiblePostCondition<T extends AbiWithAssets>(
   contract: T,
   sender: string,
-  condition: NonFungibleConditionCode,
+  condition: 'sent' | 'not-sent',
   value: NftAssetType<T>
-): PostCondition {
-  const [addr, name] = sender.split('.');
+): NonFungiblePostCondition {
   const [nftType] = contract.non_fungible_tokens;
   const asset = createAssetInfo(contract, nftType.name);
   const abiType = nftType.type;
   const cv = parseToCV(value as CVInput, abiType);
-  if (typeof name === 'undefined') {
-    return makeStandardNonFungiblePostCondition(addr, condition, asset, cv);
-  } else {
-    return makeContractNonFungiblePostCondition(addr, name, condition, asset, cv);
-  }
+  return {
+    type: 'nft-postcondition',
+    address: sender,
+    condition,
+    asset,
+    assetId: cv,
+  };
 }
 
 export function makeFungiblePostCondition<T extends AbiWithAssets>(
   contract: T,
   sender: string,
-  condition: FungibleConditionCode,
-  amount: IntegerType
-): PostCondition {
+  condition: 'eq' | 'gt' | 'gte' | 'lt' | 'lte',
+  amount: number | bigint | string
+): FungiblePostCondition {
   const [addr, name] = sender.split('.');
   const [ftType] = contract.fungible_tokens;
   const asset = createAssetInfo(contract, ftType.name);
-  if (typeof name === 'undefined') {
-    return makeStandardFungiblePostCondition(addr, condition, amount, asset);
-  } else {
-    return makeContractFungiblePostCondition(addr, name, condition, amount, asset);
-  }
+  return {
+    type: 'ft-postcondition',
+    address: sender,
+    condition,
+    asset,
+    amount,
+  };
 }

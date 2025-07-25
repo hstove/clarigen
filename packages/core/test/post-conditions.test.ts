@@ -32,12 +32,6 @@ assetName = 'not-asset';
 
 const [deployer, contractName] = contract.identifier.split('.');
 
-test('can create NFT asset info', () => {
-  const assetInfo = createAssetInfo(contract, 'nft');
-  expect(assetInfo.assetName).toEqual(createLPString('nft'));
-  expect(assetInfo.contractName).toEqual(createLPString(contractName));
-});
-
 test('throw if invalid asset name', () => {
   expect(() => {
     // @ts-expect-error Invalid asset name
@@ -49,11 +43,11 @@ test('throw if invalid asset name', () => {
 const _nftId: NftAssetType<typeof contract> = 'asdf';
 
 test('can create post condition', () => {
-  const pc = makeNonFungiblePostCondition(contract, deployer, NonFungibleConditionCode.Sends, 1n);
-  if (pc.conditionCode !== NonFungibleConditionCode.Sends) {
+  const pc = makeNonFungiblePostCondition(contract, deployer, 'sent', 1n);
+  if (pc.condition !== 'sent') {
     throw new Error('invalid');
   }
-  expect(pc.assetName).toEqual(uintCV(1));
+  expect(pc.assetId).toEqual(uintCV(1));
 });
 
 test('correct type errors', () => {
@@ -61,7 +55,7 @@ test('correct type errors', () => {
     makeNonFungiblePostCondition(
       contract,
       deployer,
-      NonFungibleConditionCode.Sends,
+      'sent',
       // @ts-expect-error Should fail types
       'asdf'
     );
@@ -69,12 +63,11 @@ test('correct type errors', () => {
 });
 
 test('works for ft', () => {
-  const pc = makeFungiblePostCondition(contract, deployer, FungibleConditionCode.Equal, 100);
-  if (pc.conditionCode !== FungibleConditionCode.Equal) {
+  const pc = makeFungiblePostCondition(contract, deployer, 'eq', 100);
+  if (pc.type !== 'ft-postcondition') {
     throw new Error('Invalid');
   }
-  if (pc.conditionType !== PostConditionType.Fungible) {
-    throw 'Invalid';
+  if (pc.condition !== 'eq') {
+    throw new Error('Invalid');
   }
-  expect(pc.assetInfo.assetName).toEqual(createLPString('ft'));
 });
