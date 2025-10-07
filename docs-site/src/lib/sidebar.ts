@@ -41,6 +41,10 @@ export const docsSidebar: SidebarNavItem[] = [
         title: 'Contract documentation generator',
         href: '/docs/documentation',
       },
+      {
+        title: 'llms.txt',
+        href: '/llms.txt',
+      },
     ],
   },
   {
@@ -61,6 +65,11 @@ export const docsSidebar: SidebarNavItem[] = [
       {
         title: 'Maps and Variables',
         href: '/docs/unit-tests/maps-variables',
+      },
+      {
+        title: 'llms.txt',
+        href: '/llms/unit-tests.txt',
+        external: true,
       },
     ],
   },
@@ -94,6 +103,11 @@ export const docsSidebar: SidebarNavItem[] = [
       {
         title: 'Node',
         href: '/docs/apps/node',
+      },
+      {
+        title: 'llms.txt',
+        href: '/llms/apps.txt',
+        external: true,
       },
     ],
   },

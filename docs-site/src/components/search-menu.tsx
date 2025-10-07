@@ -24,16 +24,19 @@ import {
 const commandItems = docsSidebar.map(group => {
   const { items, ...rest } = group;
   return {
-    items: group.items.map(navItem => {
-      const doc = allDocs.find(doc => doc.slug === navItem.href);
-      if (!doc) {
-        throw new Error(`Could not find doc for ${navItem.href}`);
-      }
-      return {
-        doc,
-        ...navItem,
-      };
-    }),
+    items: group.items
+      .map(navItem => {
+        const doc = allDocs.find(doc => doc.slug === navItem.href);
+        if (!doc) {
+          return null;
+          // throw new Error(`Could not find doc for ${navItem.href}`);
+        }
+        return {
+          doc,
+          ...navItem,
+        };
+      })
+      .filter(i => i !== null),
     ...rest,
   };
 });
