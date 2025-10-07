@@ -1,43 +1,22 @@
-import { allDocs } from 'contentlayer/generated';
+import { allExamples } from 'contentlayer/generated';
+import { NextRequest } from 'next/server';
 
-export async function GET(request: Request) {
-  const slugs = [
-    'getting-started',
-    'intro',
-    'cli',
-    'configuration',
-    'documentation',
-    'unit-tests/quick-start',
-    'unit-tests/example',
-    'unit-tests/api',
-    'unit-tests/maps-variables',
-    'apps/quick-start',
-    'apps/read-only-functions',
-    'apps/transactions',
-    'apps/factory',
-    'apps/deployments',
-    'apps/post-conditions',
-    'apps/node',
-  ];
+export async function GET(request: NextRequest) {
+  const url = new URL(request.nextUrl.href);
+  const doc = allExamples.find(ex => ex.slug === '/examples/llms-txt');
 
-  const docs = slugs.map(s => {
-    const doc = allDocs.find(d => d.slug === `/docs/${s}`);
-    if (!doc) {
-      throw new Error(`Missing doc: ${s}`);
-    }
+  if (!doc) {
+    throw new Error('LLMS TXT example not found');
+  }
 
-    return doc;
+  // replace (/llms*) with (${url}/llms*)
+  const withFullUrls = doc.body.raw.replace(/(\/llms.*?)/g, match => {
+    return `${url.origin}${match}`;
   });
 
-  const mdChunks = docs.map(d => {
-    return `# ${d.title}
-
-${d.body.raw}
-    `;
+  return new Response(withFullUrls, {
+    headers: {
+      'Content-Type': 'text/plain; charset=utf-8',
+    },
   });
-
-  return new Response(`# Clarigen
-
-${mdChunks}
-`);
 }

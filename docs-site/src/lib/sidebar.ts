@@ -68,7 +68,7 @@ export const docsSidebar: SidebarNavItem[] = [
       },
       {
         title: 'llms.txt',
-        href: '/llms/unit-tests.txt',
+        href: '/llms/unit-tests.md',
         external: true,
       },
     ],
@@ -106,7 +106,7 @@ export const docsSidebar: SidebarNavItem[] = [
       },
       {
         title: 'llms.txt',
-        href: '/llms/apps.txt',
+        href: '/llms/apps.md',
         external: true,
       },
     ],

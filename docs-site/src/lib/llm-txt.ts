@@ -1,16 +1,6 @@
 import { allDocs } from 'contentlayer/generated';
 
-export async function GET(request: Request) {
-  const slugs = [
-    'apps/quick-start',
-    'apps/read-only-functions',
-    'apps/transactions',
-    'apps/factory',
-    'apps/deployments',
-    'apps/post-conditions',
-    'apps/node',
-  ];
-
+export function generateLlmTxt(slugs: string[]) {
   const docs = slugs.map(s => {
     const doc = allDocs.find(d => d.slug === `/docs/${s}`);
     if (!doc) {
@@ -27,8 +17,15 @@ ${d.body.raw}
     `;
   });
 
-  return new Response(`# Using Clarigen
+  return new Response(
+    `# Using Clarigen
 
 ${mdChunks}
-`);
+`,
+    {
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+      },
+    }
+  );
 }

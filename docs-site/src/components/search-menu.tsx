@@ -111,17 +111,19 @@ export function CommandMenu({ ...props }: DialogProps) {
           {commandItems.map(group => (
             <React.Fragment key={group.title}>
               <CommandGroup heading={group.title}>
-                {group.items.map(navItem => (
-                  <CommandItem
-                    key={navItem.href}
-                    value={`${group.title}/${navItem.title}`}
-                    onSelect={() => {
-                      runCommand(() => router.push(navItem.href as string));
-                    }}
-                  >
-                    {navItem.doc.title}
-                  </CommandItem>
-                ))}
+                {group.items.map(navItem =>
+                  navItem === null ? null : (
+                    <CommandItem
+                      key={navItem.href}
+                      value={`${group.title}/${navItem.title}`}
+                      onSelect={() => {
+                        runCommand(() => router.push(navItem.href as string));
+                      }}
+                    >
+                      {navItem.doc.title}
+                    </CommandItem>
+                  )
+                )}
               </CommandGroup>
               <CommandSeparator />
             </React.Fragment>
