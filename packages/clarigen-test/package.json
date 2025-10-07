@@ -24,14 +24,18 @@
   "author": "Hank Stoever",
   "type": "module",
   "devDependencies": {
+    "@hirosystems/clarinet-sdk": "3.7.0",
+    "@hirosystems/clarinet-sdk-wasm": "3.7.0",
     "@types/node": "20.10.4",
     "vitest-environment-clarinet": "2.0.0",
     "typescript": "5.4.5"
   },
+  "peerDependencies": {
+    "@hirosystems/clarinet-sdk": "^3.7.0",
+    "@hirosystems/clarinet-sdk-wasm": "^3.7.0"
+  },
   "dependencies": {
     "@clarigen/core": "workspace:*",
-    "@hirosystems/clarinet-sdk": "3.7.0",
-    "@hirosystems/clarinet-sdk-wasm": "3.7.0",
     "@stacks/transactions": "7.1.0"
   },
   "publishConfig": {

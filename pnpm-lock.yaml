@@ -352,16 +352,16 @@ importers:
       '@clarigen/core':
         specifier: workspace:*
         version: link:../core
+      '@stacks/transactions':
+        specifier: 7.1.0
+        version: 7.1.0
+    devDependencies:
       '@hirosystems/clarinet-sdk':
         specifier: 3.7.0
         version: 3.7.0
       '@hirosystems/clarinet-sdk-wasm':
         specifier: 3.7.0
         version: 3.7.0
-      '@stacks/transactions':
-        specifier: 7.1.0
-        version: 7.1.0
-    devDependencies:
       '@types/node':
         specifier: 20.10.4
         version: 20.10.4
@@ -380,12 +380,6 @@ importers:
       '@clarigen/core':
         specifier: workspace:*
         version: link:../core
-      '@hirosystems/clarinet-sdk':
-        specifier: 3.7.0
-        version: 3.7.0
-      '@hirosystems/clarinet-sdk-wasm':
-        specifier: 3.7.0
-        version: 3.7.0
       '@iarna/toml':
         specifier: ^2.2.5
         version: 2.2.5
@@ -420,6 +414,12 @@ importers:
         specifier: ^3.22.5
         version: 3.22.5
     devDependencies:
+      '@hirosystems/clarinet-sdk':
+        specifier: 3.7.0
+        version: 3.7.0
+      '@hirosystems/clarinet-sdk-wasm':
+        specifier: 3.7.0
+        version: 3.7.0
       tsx:
         specifier: ^4.7.2
         version: 4.7.2
