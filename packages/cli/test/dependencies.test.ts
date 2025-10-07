@@ -3,7 +3,10 @@ import { getSession } from '../src/clarinet-sdk';
 import { test, describe, expect } from 'vitest';
 import { Config } from '../src/config';
 
-test.skip('getting a session with a project that has testnet requirements', async () => {
+test('getting a session with a project that has testnet requirements', async () => {
+  if (process.env.CI) {
+    return;
+  }
   const config = await Config.load('./test/dependencies');
   // console.log('config', config);
   const session = await getSession(config);
