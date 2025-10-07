@@ -1,5 +1,16 @@
 # @clarigen/test
 
+## 3.1.0
+
+### Minor Changes
+
+- [`ad49850`](https://github.com/hstove/clarigen/commit/ad49850a9f6c973b7f4fc84443582c386a00fa69) Thanks [@hstove](https://github.com/hstove)! - Updates internal versions of `@hirosystems/clarinet-sdk`
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @clarigen/core@3.1.0
+
 ## 3.0.0
 
 ### Major Changes
