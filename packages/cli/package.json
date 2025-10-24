@@ -1,5 +1,5 @@
 {
-  "version": "3.1.0",
+  "version": "3.2.0",
   "license": "MIT",
   "types": "./dist/index.d.ts",
   "module": "./dist/index.js",
@@ -28,13 +28,13 @@
   "name": "@clarigen/cli",
   "author": "Hank Stoever",
   "devDependencies": {
-    "@hirosystems/clarinet-sdk": "3.7.0",
-    "@hirosystems/clarinet-sdk-wasm": "3.7.0",
+    "@hirosystems/clarinet-sdk": "3.8.1",
+    "@hirosystems/clarinet-sdk-wasm": "3.8.1",
     "tsx": "^4.7.2"
   },
   "peerDependencies": {
-    "@hirosystems/clarinet-sdk": "^3.7.0",
-    "@hirosystems/clarinet-sdk-wasm": "^3.7.0"
+    "@hirosystems/clarinet-sdk": "^3.8.1",
+    "@hirosystems/clarinet-sdk-wasm": "^3.8.1"
   },
   "dependencies": {
     "@antfu/ni": "^0.21.12",

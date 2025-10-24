@@ -1,5 +1,5 @@
 {
-  "version": "3.1.0",
+  "version": "3.2.0",
   "license": "MIT",
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
@@ -24,19 +24,19 @@
   "author": "Hank Stoever",
   "type": "module",
   "devDependencies": {
-    "@hirosystems/clarinet-sdk": "3.7.0",
-    "@hirosystems/clarinet-sdk-wasm": "3.7.0",
+    "@hirosystems/clarinet-sdk": "3.8.1",
+    "@hirosystems/clarinet-sdk-wasm": "3.8.1",
     "@types/node": "20.10.4",
-    "vitest-environment-clarinet": "2.0.0",
+    "vitest-environment-clarinet": "2.3.0",
     "typescript": "5.4.5"
   },
   "peerDependencies": {
-    "@hirosystems/clarinet-sdk": "^3.7.0",
-    "@hirosystems/clarinet-sdk-wasm": "^3.7.0"
+    "@hirosystems/clarinet-sdk": "^3.8.1",
+    "@hirosystems/clarinet-sdk-wasm": "^3.8.1"
   },
   "dependencies": {
     "@clarigen/core": "workspace:*",
-    "@stacks/transactions": "7.1.0"
+    "@stacks/transactions": "7.2.0"
   },
   "publishConfig": {
     "access": "public"

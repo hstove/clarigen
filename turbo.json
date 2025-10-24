@@ -1,6 +1,11 @@
 {
-  "baseBranch": "origin/main",
-  "pipeline": {
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [
+    "NODE_ENV",
+    "NEXT_PUBLIC_STACKS_API_URL",
+    "CI"
+  ],
+  "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", "installer/**"]
@@ -11,10 +16,12 @@
     },
     "lint": {
       "outputs": [],
-      "parallel": true
+      "cache": true,
+      "persistent": true
     },
     "dev": {
-      "cache": false
+      "cache": false,
+      "persistent": true
     },
     "typecheck": {
       "dependsOn": ["^build"],
@@ -23,6 +30,5 @@
     "publish:dev": {
       "outputs": []
     }
-  },
-  "globalEnv": ["NODE_ENV", "NEXT_PUBLIC_STACKS_API_URL", "CI"]
+  }
 }
