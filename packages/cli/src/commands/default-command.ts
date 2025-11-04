@@ -6,7 +6,7 @@ import { generateBaseFile } from '../files/base';
 import { afterESM, generateESMFile } from '../files/esm';
 import { BaseCommand } from './base-command';
 import chokidar from 'chokidar';
-import { dirname, join, relative } from 'path';
+import { dirname, join, relative } from 'node:path';
 
 export async function generate(config: Config) {
   const session = await getSession(config);
