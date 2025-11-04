@@ -1,19 +1,29 @@
-import { z } from 'zod';
+import { type } from 'arktype';
 import { readFile } from 'fs/promises';
-import { parse } from '@iarna/toml';
 
-export const ClarinetConfigSchema = z.object({
-  project: z.object({
-    requirements: z.array(z.object({ contract_id: z.string() })).optional(),
-    cache_location: z.object({ path: z.string() }).optional(),
+export const ClarinetConfig = type({
+  project: type({
+    requirements: type({
+      contract_id: type('string').describe('Contract ID'),
+    })
+      .array()
+      .describe('Project requirements')
+      .optional(),
+    cache_location: type({
+      path: type('string').describe('Cache location path'),
+    }).optional(),
   }),
-  contracts: z.record(z.string(), z.object({ path: z.string() })).optional(),
+  contracts: type({
+    '[string]': type({
+      path: type('string').describe('Contract path'),
+    }),
+  }),
 });
 
-export type ClarinetConfig = z.infer<typeof ClarinetConfigSchema>;
+export type ClarinetConfig = typeof ClarinetConfig.infer;
 
 export async function getClarinetConfig(path: string): Promise<ClarinetConfig> {
   const file = await readFile(path, 'utf-8');
-  const config = ClarinetConfigSchema.parse(parse(file));
+  const config = ClarinetConfig.assert(file);
   return config;
 }

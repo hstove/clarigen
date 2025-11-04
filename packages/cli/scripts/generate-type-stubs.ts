@@ -1,4 +1,5 @@
 import { readFile, writeFile } from 'fs/promises';
+import { ConfigFile } from '../src/config';
 
 async function run() {
   const tomlInit = (await readFile('./scripts/init-config.toml', 'utf-8')).replaceAll('`', '\\`');
@@ -24,6 +25,10 @@ ${tomlInit}
 export const version = '${version}';
 `;
   await writeFile('./src/generated/version.ts', versionCode, 'utf-8');
+
+  const configSchema = ConfigFile.toJsonSchema();
+
+  await writeFile('./scripts/config-schema.json', JSON.stringify(configSchema, null, 2), 'utf-8');
 }
 
 run()

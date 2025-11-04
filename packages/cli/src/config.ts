@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { type } from 'arktype';
 import { log, logger } from './logger';
 import { fileExists, writeFile } from './utils';
 import { ClarinetConfig, getClarinetConfig } from './clarinet-config';
@@ -14,32 +14,28 @@ export enum OutputType {
   Docs = 'docs',
 }
 
-const typesSchema = z
-  .object({
-    output: z.string().optional(),
-    outputs: z.array(z.string()).optional(),
-    include_accounts: z.boolean().optional(),
-    after: z.string().optional(),
-    include_boot_contracts: z.boolean().optional(),
-    watch_folders: z.array(z.string()).optional(),
-  })
-  .optional();
+const typesSchema = type({
+  'output?': type('string').describe('Path to the output file'),
+  'outputs?': type('string[]').describe('Paths to the output files'),
+  'include_accounts?': type('boolean').describe('Include accounts in the output'),
+  'after?': type('string').describe('Script to run after the output is generated'),
+  'include_boot_contracts?': type('boolean').describe('Include boot contracts in the output'),
+  'watch_folders?': type('string[]').describe('Folders to watch for changes'),
+}).optional();
 
-export const ConfigFileSchema = z.object({
-  clarinet: z.string(),
+export const ConfigFile = type({
+  clarinet: type('string').describe('Path to the Clarinet config file'),
   [OutputType.ESM]: typesSchema,
   [OutputType.ESM_OLD]: typesSchema,
-  [OutputType.Docs]: z
-    .object({
-      output: z.string().optional(),
-      outputs: z.array(z.string()).optional(),
-      exclude: z.array(z.string()).optional(),
-      after: z.string().optional(),
-    })
-    .optional(),
+  [OutputType.Docs]: type({
+    'output?': type('string').describe('Path to docs output folder. Defaults to ./docs'),
+    'outputs?': type('string[]').describe('Paths to docs output folders'),
+    'exclude?': type('string[]').describe('Contracts to exclude from docs generation'),
+    'after?': type('string').describe('Script to run after docs are generated'),
+  }).optional(),
 });
 
-export type ConfigFile = z.infer<typeof ConfigFileSchema>;
+export type ConfigFile = typeof ConfigFile.infer;
 
 export const defaultConfigFile: ConfigFile = {
   clarinet: './Clarinet.toml',
@@ -136,16 +132,12 @@ export async function getConfig(cwd?: string): Promise<ConfigFile> {
   if (await fileExists(path)) {
     const toml = await readFile(path, 'utf-8');
     const parsedToml = parse(toml);
-    const parseResult = ConfigFileSchema.safeParse(parsedToml);
-    if (parseResult.success) {
-      sessionConfig = parseResult.data;
-    } else {
-      logger.error('Error parsing Clarigen.toml:');
-      parseResult.error.errors.forEach(e => {
-        logger.error(`${e.path.join('.')}: ${e.message}`);
-      });
-      throw new Error('Error parsing Clarigen.toml');
+    const parsed = ConfigFile(parsedToml);
+    if (parsed instanceof type.errors) {
+      logger.error(`Error parsing Clarigen config: ${parsed.summary}`);
+      throw new Error(`Error parsing Clarigen config: ${parsed.summary}`);
     }
+    sessionConfig = parsed;
   } else {
     sessionConfig = defaultConfigFile;
   }

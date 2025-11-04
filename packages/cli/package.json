@@ -41,6 +41,7 @@
     "@clarigen/core": "workspace:*",
     "@iarna/toml": "^2.2.5",
     "@stacks/transactions": "7.1.0",
+    "arktype": "^2.1.25",
     "chokidar": "^3.6.0",
     "clipanion": "4.0.0-rc.3",
     "execa": "^8.0.1",
@@ -48,8 +49,7 @@
     "pino": "^8.20.0",
     "pino-pretty": "^11.0.0",
     "smol-toml": "^1.1.4",
-    "yaml": "^2.4.1",
-    "zod": "^3.22.5"
+    "yaml": "^2.4.1"
   },
   "publishConfig": {
     "access": "public"

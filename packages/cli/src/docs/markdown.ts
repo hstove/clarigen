@@ -220,8 +220,8 @@ export function generateReadme(session: Session, excluded: Record<string, boolea
     contractLines.push(line);
   });
   const fileContents = `# Contracts
-  
-  ${contractLines.join('\n')}
+
+${contractLines.join('\n')}
   `;
 
   return fileContents;

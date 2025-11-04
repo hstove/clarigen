@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "clarinet": {
+      "type": "string",
+      "description": "Path to the Clarinet config file"
+    },
+    "docs": {
+      "type": "object",
+      "properties": {
+        "after": {
+          "type": "string",
+          "description": "Script to run after docs are generated"
+        },
+        "exclude": {
+          "type": "array",
+          "description": "Contracts to exclude from docs generation",
+          "items": {
+            "type": "string"
+          }
+        },
+        "output": {
+          "type": "string",
+          "description": "Path to docs output folder. Defaults to ./docs"
+        },
+        "outputs": {
+          "type": "array",
+          "description": "Paths to docs output folders",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "esm": {
+      "type": "object",
+      "properties": {
+        "after": {
+          "type": "string",
+          "description": "Script to run after the output is generated"
+        },
+        "include_accounts": {
+          "type": "boolean",
+          "description": "Include accounts in the output"
+        },
+        "include_boot_contracts": {
+          "type": "boolean",
+          "description": "Include boot contracts in the output"
+        },
+        "output": {
+          "type": "string",
+          "description": "Path to the output file"
+        },
+        "outputs": {
+          "type": "array",
+          "description": "Paths to the output files",
+          "items": {
+            "type": "string"
+          }
+        },
+        "watch_folders": {
+          "type": "array",
+          "description": "Folders to watch for changes",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "types": {
+      "type": "object",
+      "properties": {
+        "after": {
+          "type": "string",
+          "description": "Script to run after the output is generated"
+        },
+        "include_accounts": {
+          "type": "boolean",
+          "description": "Include accounts in the output"
+        },
+        "include_boot_contracts": {
+          "type": "boolean",
+          "description": "Include boot contracts in the output"
+        },
+        "output": {
+          "type": "string",
+          "description": "Path to the output file"
+        },
+        "outputs": {
+          "type": "array",
+          "description": "Paths to the output files",
+          "items": {
+            "type": "string"
+          }
+        },
+        "watch_folders": {
+          "type": "array",
+          "description": "Folders to watch for changes",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "clarinet"
+  ]
+}
