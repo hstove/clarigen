@@ -1,5 +1,16 @@
 # @clarigen/node
 
+## 3.2.0
+
+### Minor Changes
+
+- [`4e395db`](https://github.com/hstove/clarigen/commit/4e395db083ff919afdda82566e2c00ec645a0252) Thanks [@hstove](https://github.com/hstove)! - Updates dependencies to support Clarity 4. Additionally, this fixes a bug when using contracts that include Clarity 4 code.
+
+### Patch Changes
+
+- Updated dependencies [[`4e395db`](https://github.com/hstove/clarigen/commit/4e395db083ff919afdda82566e2c00ec645a0252)]:
+  - @clarigen/core@3.2.0
+
 ## 3.1.1
 
 ### Patch Changes
