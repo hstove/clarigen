@@ -27,7 +27,7 @@ jobs:
       - name: Build packages
         run: pnpm build:packages
       - name: Generate type stubs
-        run: pnpm turbo run type-stubs
+        run: pnpm turbo run type-stubs --filter=@clarigen/cli
       - name: Type checks
         # run: pnpm typecheck
         run: pnpm turbo run typecheck --filter="\!docs-site"
