@@ -1,5 +1,6 @@
 import { type } from 'arktype';
 import { readFile } from 'fs/promises';
+import { parse } from '@iarna/toml';
 
 export const ClarinetConfig = type({
   project: type({
@@ -17,13 +18,13 @@ export const ClarinetConfig = type({
     '[string]': type({
       path: type('string').describe('Contract path'),
     }),
-  }),
+  }).optional(),
 });
 
 export type ClarinetConfig = typeof ClarinetConfig.infer;
 
 export async function getClarinetConfig(path: string): Promise<ClarinetConfig> {
   const file = await readFile(path, 'utf-8');
-  const config = ClarinetConfig.assert(file);
+  const config = ClarinetConfig.assert(parse(file));
   return config;
 }
