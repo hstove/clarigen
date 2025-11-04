@@ -1,5 +1,12 @@
 # @clarigen/web
 
+## 3.1.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @clarigen/core@3.1.1
+
 ## 3.1.0
 
 ### Patch Changes

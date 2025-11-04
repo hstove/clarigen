@@ -1,5 +1,14 @@
 # @clarigen/cli
 
+## 3.1.1
+
+### Patch Changes
+
+- [`5313660`](https://github.com/hstove/clarigen/commit/53136607f22629189121058fb3d9126cc146d800) Thanks [@hstove](https://github.com/hstove)! - Fixes an indentation bug in the generated docs README file, and adds JSON schema
+
+- Updated dependencies []:
+  - @clarigen/core@3.1.1
+
 ## 3.1.0
 
 ### Minor Changes
