@@ -9,6 +9,21 @@ import {
 } from '@clarigen/core';
 import { serialize } from './base';
 
+function clarityVersionForContract(contract: SessionContract) {
+  switch (contract.contract_interface.clarity_version) {
+    case 'Clarity1':
+      return 1;
+    case 'Clarity2':
+      return 2;
+    case 'Clarity3':
+      return 3;
+    case 'Clarity4':
+      return 4;
+    default:
+      return 3;
+  }
+}
+
 export function getVariablesV2(contract: SessionContract, simnet: Simnet, verbose?: boolean) {
   const [deployer] = contract.contract_id.split('.');
   const fakeId = `${getContractName(contract.contract_id)}-vars`;
@@ -47,7 +62,7 @@ export function getVariablesV2(contract: SessionContract, simnet: Simnet, verbos
       fakeId,
       fullSrc,
       {
-        clarityVersion: 3,
+        clarityVersion: clarityVersionForContract(contract),
       },
       deployer
     );

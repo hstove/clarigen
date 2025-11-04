@@ -11,8 +11,8 @@ contract_id = "SP3DX3H4FEYZJZ586MFBS25ZW3HZDMEW92260R2PR.Wrapped-Bitcoin"
 
 [contracts.tester]
 path = "contracts/tester.clar"
-clarity_version = 3
-epoch = 3.0
+clarity_version = 4
+epoch = 3.3
 
 [contracts.counter]
 path = "contracts/counter.clar"

@@ -58,6 +58,7 @@ genesis:
     - pox-4
     - signers
     - signers-voting
+    - costs-4
 plan:
   batches:
     - id: 0
@@ -85,9 +86,12 @@ plan:
             emulated-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
             path: contracts/counter.clar
             clarity-version: 3
+      epoch: "3.0"
+    - id: 2
+      transactions:
         - emulated-contract-publish:
             contract-name: tester
             emulated-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
             path: contracts/tester.clar
-            clarity-version: 3
-      epoch: "3.0"
+            clarity-version: 4
+      epoch: "3.3"

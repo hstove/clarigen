@@ -1,7 +1,9 @@
 import { initSimnet } from '@hirosystems/clarinet-sdk';
 import {
   ClarityAbi,
+  ClarityVersion,
   MAINNET_BURN_ADDRESS,
+  StacksEpochId,
   TESTNET_BURN_ADDRESS,
   getContractName,
   hexToCvValue,
@@ -53,7 +55,11 @@ export async function getSession(config: Config): Promise<SessionWithVariables> 
 
         return {
           contract_id,
-          contract_interface,
+          contract_interface: {
+            ...contract_interface,
+            epoch: contract_interface.epoch as StacksEpochId,
+            clarity_version: contract_interface.clarity_version as ClarityVersion,
+          },
           source: source ?? '',
         };
       })

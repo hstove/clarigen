@@ -69,3 +69,5 @@
 (define-read-only (get-tenure-info-test)
   (get-tenure-info? burnchain-header-hash u1)
 )
+
+(define-read-only (clarity-4-test) stacks-block-time)

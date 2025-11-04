@@ -456,6 +456,12 @@ export const contracts = {
         args: [{ name: 'num', type: 'uint128' }],
         outputs: { type: { response: { ok: 'bool', error: 'none' } } },
       } as TypedAbiFunction<[num: TypedAbiArg<number | bigint, 'num'>], Response<boolean, null>>,
+      clarity4Test: {
+        name: 'clarity-4-test',
+        access: 'read_only',
+        args: [],
+        outputs: { type: 'uint128' },
+      } as TypedAbiFunction<[], bigint>,
       echo: {
         name: 'echo',
         access: 'read_only',
@@ -609,8 +615,8 @@ export const contracts = {
       },
     ],
     fungible_tokens: [{ name: 'ft' }],
-    epoch: 'Epoch30',
-    clarity_version: 'Clarity3',
+    epoch: 'Epoch33',
+    clarity_version: 'Clarity4',
     contractName: 'tester',
   },
 } as const;

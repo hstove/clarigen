@@ -12,7 +12,7 @@
     "publish-local": "pnpm build:packages && pnpm publish -r",
     "publish-changesets": "pnpm build:packages && pnpm changeset publish",
     "preinstall": "npx only-allow pnpm",
-    "demo-types": "pnpm --filter @clarigen/cli start",
+    "demo-types": "pnpm --filter @clarigen/cli start ../../demo-project",
     "clarigen": "pnpm --filter @clarigen/cli start",
     "dev:web": "pnpm --filter clarigen-docs dev"
   },
@@ -41,7 +41,7 @@
     "typedoc": "0.25.13",
     "typescript": "5.4.5",
     "vite": "^5.4.8",
-    "vitest": "2.1.2"
+    "vitest": "4.0.7"
   },
   "dependencies": {
     "@changesets/cli": "^2.23.2",
