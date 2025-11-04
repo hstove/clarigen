@@ -20,6 +20,7 @@ import { vitestSetupFilePath, getClarinetVitestsArgv } from '@hirosystems/clarin
 
 export default defineConfig({
   test: {
+    isolate: false,
     environment: 'clarinet', // use vitest-environment-clarinet
     singleThread: true,
     setupFiles: [
