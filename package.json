@@ -12,7 +12,7 @@
     "publish-local": "pnpm build:packages && pnpm publish -r",
     "publish-changesets": "pnpm build:packages && pnpm changeset publish",
     "preinstall": "npx only-allow pnpm",
-    "version": "pnpm changeset version && pnpm build",
+    "version": "pnpm changeset version && pnpm build && git add . && git commit -m 'chore: post-version build'",
     "demo-types": "pnpm --filter @clarigen/cli start",
     "clarigen": "pnpm --filter @clarigen/cli start",
     "dev:web": "pnpm --filter clarigen-docs dev"
