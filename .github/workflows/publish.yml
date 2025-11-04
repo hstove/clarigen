@@ -26,6 +26,8 @@ jobs:
         run: pnpm install
       - name: Build packages
         run: pnpm build:packages
+      - name: Generate type stubs
+        run: pnpm turbo run type-stubs
       - name: Type checks
         # run: pnpm typecheck
         run: pnpm turbo run typecheck --filter="\!docs-site"
@@ -39,7 +41,6 @@ jobs:
         uses: changesets/action@v1
         with:
           publish: pnpm publish-changesets
-          version: pnpm version
           commitMode: github-api
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

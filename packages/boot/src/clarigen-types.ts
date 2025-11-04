@@ -7604,7 +7604,7 @@ export const contracts = {
     constants: {},
     non_fungible_tokens: [],
     fungible_tokens: [],
-    epoch: 'Epoch20',
+    epoch: 'Epoch2_05',
     clarity_version: 'Clarity1',
     contractName: 'costs-2',
   },

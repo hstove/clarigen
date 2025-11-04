@@ -17,7 +17,7 @@
   "scripts": {
     "start": "tsx src/run-cli.ts",
     "dev": "tsup --watch",
-    "build": "pnpm type-stubs && shx rm -rf dist && tsup",
+    "build": "tsup",
     "test": "vitest run --passWithNoTests",
     "lint": "eslint \"src/**/*.{ts,tsx}\" && prettier --check \"./**/*.{ts,js}\"",
     "format:fix": "prettier -w \"./**/*.{ts,js}\"",

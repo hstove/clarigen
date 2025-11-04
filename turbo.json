@@ -22,6 +22,9 @@
     },
     "publish:dev": {
       "outputs": []
+    },
+    "type-stubs": {
+      "outputs": []
     }
   },
   "globalEnv": ["NODE_ENV", "NEXT_PUBLIC_STACKS_API_URL", "CI"]
