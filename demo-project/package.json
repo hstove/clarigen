@@ -16,10 +16,10 @@
     "@clarigen/core": "workspace:*",
     "@clarigen/test": "workspace:*",
     "@clarigen/cli": "workspace:*",
-    "@hirosystems/clarinet-sdk": "3.8.1",
-    "@hirosystems/clarinet-sdk-wasm": "3.8.1",
-    "@stacks/transactions": "^7.1.0",
-    "vitest-environment-clarinet": "2.5.0"
+    "@stacks/clarinet-sdk": "3.9.1",
+    "@stacks/clarinet-sdk-wasm": "3.9.1",
+    "@stacks/transactions": "^7.2.0",
+    "vitest-environment-clarinet": "3.0.1"
   },
   "devDependencies": {
     "@types/node": "20.10.4",

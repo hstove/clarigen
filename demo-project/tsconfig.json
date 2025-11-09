@@ -13,7 +13,7 @@
     "types": ["node"]
   },
   "include": [
-    "@hirosystems/clarinet-sdk/vitest-helpers/src/global",
+    "@stacks/clarinet-sdk/vitest-helpers/src/global",
     // "@clarigen/test",
     "./tests/**/*.ts"
   ]

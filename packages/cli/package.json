@@ -28,13 +28,13 @@
   "name": "@clarigen/cli",
   "author": "Hank Stoever",
   "devDependencies": {
-    "@hirosystems/clarinet-sdk": "3.8.1",
-    "@hirosystems/clarinet-sdk-wasm": "3.8.1",
+    "@stacks/clarinet-sdk": "3.9.1",
+    "@stacks/clarinet-sdk-wasm": "3.9.1",
     "tsx": "^4.7.2"
   },
   "peerDependencies": {
-    "@hirosystems/clarinet-sdk": "^3.8.1",
-    "@hirosystems/clarinet-sdk-wasm": "^3.8.1"
+    "@stacks/clarinet-sdk": "^3.9.1",
+    "@stacks/clarinet-sdk-wasm": "^3.9.1"
   },
   "dependencies": {
     "@antfu/ni": "^0.21.12",

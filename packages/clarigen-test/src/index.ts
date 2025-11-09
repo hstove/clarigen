@@ -10,7 +10,7 @@ import {
   rawClarityToValue,
   Response,
 } from '@clarigen/core';
-import { Simnet, ParsedTransactionResult } from '@hirosystems/clarinet-sdk';
+import { Simnet, ParsedTransactionResult } from '@stacks/clarinet-sdk';
 import { cvConvertHiro, cvConvertMS, validateResponse } from './utils';
 import { CoreNodeEvent } from './events';
 import { ClarityType } from '@stacks/transactions';
