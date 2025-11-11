@@ -31,7 +31,7 @@
     "@stacks/clarinet-sdk": "3.9.2",
     "@stacks/clarinet-sdk-wasm": "3.9.2",
     "tsx": "^4.7.2",
-    "vitest": "4.0.8"
+    "vitest": "3.2.4"
   },
   "peerDependencies": {
     "@stacks/clarinet-sdk": "^3.9.2",

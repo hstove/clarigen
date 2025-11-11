@@ -22,8 +22,8 @@ export default defineConfig({
   test: {
     environment: 'clarinet', // use vitest-environment-clarinet
     pool: 'forks',
-    isolate: true,
-    maxWorkers: 1,
+    isolate: false,
+    // maxWorkers: 1,
     setupFiles: [
       vitestSetupFilePath,
       // custom setup files can be added here

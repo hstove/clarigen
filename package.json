@@ -40,7 +40,7 @@
     "turbo": "1.2.5",
     "typedoc": "0.25.13",
     "typescript": "5.4.5",
-    "vitest": "4.0.8"
+    "vitest": "3.2.4"
   },
   "dependencies": {
     "@changesets/cli": "^2.23.2",

@@ -30,7 +30,7 @@
     "vitest-environment-clarinet": "3.0.2",
     "tsx": "^4.8.1",
     "typescript": "5.4.5",
-    "vitest": "4.0.8"
+    "vitest": "3.2.4"
   },
   "peerDependencies": {
     "@stacks/clarinet-sdk": "^3.9.2",
