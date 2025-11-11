@@ -1,5 +1,16 @@
 # @clarigen/cli
 
+## 4.0.0
+
+### Major Changes
+
+- [#22](https://github.com/hstove/clarigen/pull/22) [`7638a7f`](https://github.com/hstove/clarigen/commit/7638a7f621e62048a55d4a0eda6da99fd825cfc7) Thanks [@BowTiedRadone](https://github.com/BowTiedRadone)! - This release updates all dependencies to use `@stacks/clarinet-sdk`, whereas before it was `@hirosystems/clarinet-sdk`. As such, this is a breaking change. See also https://github.com/stx-labs/clarinet/discussions/2055
+
+### Patch Changes
+
+- Updated dependencies [[`7638a7f`](https://github.com/hstove/clarigen/commit/7638a7f621e62048a55d4a0eda6da99fd825cfc7)]:
+  - @clarigen/core@4.0.0
+
 ## 3.2.0
 
 ### Minor Changes
