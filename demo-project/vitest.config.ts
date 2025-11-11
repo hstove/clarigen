@@ -1,6 +1,4 @@
-/// <reference types="vitest" />
-
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import { vitestSetupFilePath, getClarinetVitestsArgv } from '@stacks/clarinet-sdk/vitest';
 
 /*
@@ -22,11 +20,6 @@ export default defineConfig({
   test: {
     isolate: true,
     environment: 'clarinet', // use vitest-environment-clarinet
-    pool: 'forks',
-    poolOptions: {
-      threads: { singleThread: true },
-      forks: { singleFork: true },
-    },
     setupFiles: [
       vitestSetupFilePath,
       // custom setup files can be added here
@@ -34,6 +27,7 @@ export default defineConfig({
     environmentOptions: {
       clarinet: {
         ...getClarinetVitestsArgv(),
+        initBeforeEach: false,
         // add or override options
       },
     },

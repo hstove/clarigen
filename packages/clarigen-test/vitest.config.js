@@ -1,6 +1,6 @@
 /// <reference types="vitest" />
 
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import { vitestSetupFilePath, getClarinetVitestsArgv } from '@stacks/clarinet-sdk/vitest';
 
 /*

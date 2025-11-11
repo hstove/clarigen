@@ -19,13 +19,11 @@
     "@stacks/clarinet-sdk": "3.9.2",
     "@stacks/clarinet-sdk-wasm": "3.9.2",
     "@stacks/transactions": "^7.2.0"
-
   },
   "devDependencies": {
     "@types/node": "20.10.4",
     "tsx": "^4.7.2",
-    "vite": "^5.1.4",
-    "vitest": "3.2.4",
+    "vitest": "4.0.8",
     "vitest-environment-clarinet": "3.0.2"
   }
 }
