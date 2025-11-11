@@ -24,19 +24,21 @@
   "author": "Hank Stoever",
   "type": "module",
   "devDependencies": {
-    "@hirosystems/clarinet-sdk": "3.8.1",
-    "@hirosystems/clarinet-sdk-wasm": "3.8.1",
-    "@types/node": "20.10.4",
-    "vitest-environment-clarinet": "2.5.0",
-    "typescript": "5.4.5"
+    "@stacks/clarinet-sdk": "3.9.2",
+    "@stacks/clarinet-sdk-wasm": "3.9.2",
+    "@types/node": "24.2.0",
+    "vitest-environment-clarinet": "3.0.2",
+    "tsx": "^4.8.1",
+    "typescript": "5.4.5",
+    "vitest": "3.2.4"
   },
   "peerDependencies": {
-    "@hirosystems/clarinet-sdk": "^3.8.1",
-    "@hirosystems/clarinet-sdk-wasm": "^3.8.1"
+    "@stacks/clarinet-sdk": "^3.9.2",
+    "@stacks/clarinet-sdk-wasm": "^3.9.2"
   },
   "dependencies": {
     "@clarigen/core": "workspace:*",
-    "@stacks/transactions": "7.1.0"
+    "@stacks/transactions": "7.2.0"
   },
   "publishConfig": {
     "access": "public"

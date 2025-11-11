@@ -14,8 +14,7 @@
   "dependencies": {
     "@clarigen/cli": "workspace:*",
     "@clarigen/core": "workspace:*",
-    "@hirosystems/clarinet-sdk": "3.8.1",
-    "@hirosystems/clarinet-sdk-wasm": "3.8.1",
+    "@stacks/clarinet-sdk": "3.9.2",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-collapsible": "^1.0.3",
     "@radix-ui/react-dialog": "^1.0.5",

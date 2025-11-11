@@ -5,7 +5,6 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "resolveJsonModule": true,
-    "moduleResolution": "Node",
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "skipLibCheck": true,
