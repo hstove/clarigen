@@ -21,8 +21,8 @@
     "@stacks/transactions": "^7.2.0"
   },
   "devDependencies": {
-    "@types/node": "20.10.4",
-    "tsx": "^4.7.2",
+    "@types/node": "24.2.0",
+    "tsx": "^4.8.1",
     "vitest": "4.0.8",
     "vitest-environment-clarinet": "3.0.2"
   }

@@ -26,9 +26,11 @@
   "devDependencies": {
     "@stacks/clarinet-sdk": "3.9.2",
     "@stacks/clarinet-sdk-wasm": "3.9.2",
-    "@types/node": "20.10.4",
+    "@types/node": "24.2.0",
     "vitest-environment-clarinet": "3.0.2",
-    "typescript": "5.4.5"
+    "tsx": "^4.8.1",
+    "typescript": "5.4.5",
+    "vitest": "4.0.8"
   },
   "peerDependencies": {
     "@stacks/clarinet-sdk": "^3.9.2",
