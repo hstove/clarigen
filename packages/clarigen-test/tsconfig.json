@@ -10,10 +10,7 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "skipLibCheck": true,
-    "types": ["node"]
+    "types": ["node", "@stacks/clarinet-sdk/vitest-helpers/src/global"]
   },
-  "include": [
-    "@stacks/clarinet-sdk/vitest-helpers/src/global",
-    "./src/**/*"
-  ]
+  "include": ["./src/**/*"]
 }

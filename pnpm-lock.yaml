@@ -107,17 +107,14 @@ importers:
         specifier: workspace:*
         version: link:../packages/clarigen-test
       '@stacks/clarinet-sdk':
-        specifier: 3.9.1
-        version: 3.9.1
+        specifier: 3.9.2
+        version: 3.9.2
       '@stacks/clarinet-sdk-wasm':
-        specifier: 3.9.1
-        version: 3.9.1
+        specifier: 3.9.2
+        version: 3.9.2
       '@stacks/transactions':
         specifier: ^7.2.0
         version: 7.2.0
-      vitest-environment-clarinet:
-        specifier: 3.0.1
-        version: 3.0.1(@stacks/clarinet-sdk@3.9.1)(vitest@3.2.4(@types/debug@4.1.12)(@types/node@20.10.4))
     devDependencies:
       '@types/node':
         specifier: 20.10.4
@@ -131,6 +128,9 @@ importers:
       vitest:
         specifier: 3.2.4
         version: 3.2.4(@types/debug@4.1.12)(@types/node@20.10.4)
+      vitest-environment-clarinet:
+        specifier: 3.0.2
+        version: 3.0.2(@stacks/clarinet-sdk@3.9.2)(vitest@3.2.4(@types/debug@4.1.12)(@types/node@20.10.4))
 
   docs-site:
     dependencies:
@@ -174,11 +174,8 @@ importers:
         specifier: 7.10.0
         version: 7.10.0
       '@stacks/clarinet-sdk':
-        specifier: 3.9.1
-        version: 3.9.1
-      '@stacks/clarinet-sdk-wasm':
-        specifier: 3.9.1
-        version: 3.9.1
+        specifier: 3.9.2
+        version: 3.9.2
       '@stacks/network':
         specifier: ^6.16.0
         version: 6.16.0
@@ -353,15 +350,15 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@stacks/transactions':
-        specifier: 7.1.0
-        version: 7.1.0
+        specifier: 7.2.0
+        version: 7.2.0
     devDependencies:
       '@stacks/clarinet-sdk':
-        specifier: 3.9.1
-        version: 3.9.1
+        specifier: 3.9.2
+        version: 3.9.2
       '@stacks/clarinet-sdk-wasm':
-        specifier: 3.9.1
-        version: 3.9.1
+        specifier: 3.9.2
+        version: 3.9.2
       '@types/node':
         specifier: 20.10.4
         version: 20.10.4
@@ -369,8 +366,8 @@ importers:
         specifier: 5.4.5
         version: 5.4.5
       vitest-environment-clarinet:
-        specifier: 2.5.0
-        version: 2.5.0(@hirosystems/clarinet-sdk@3.8.1)(vitest@4.0.7(@types/debug@4.1.12)(@types/node@20.10.4)(jiti@1.21.0))
+        specifier: 3.0.2
+        version: 3.0.2(@stacks/clarinet-sdk@3.9.2)(vitest@4.0.7(@types/debug@4.1.12)(@types/node@20.10.4)(jiti@1.21.0))
 
   packages/cli:
     dependencies:
@@ -415,11 +412,11 @@ importers:
         version: 2.4.1
     devDependencies:
       '@stacks/clarinet-sdk':
-        specifier: 3.9.1
-        version: 3.9.1
+        specifier: 3.9.2
+        version: 3.9.2
       '@stacks/clarinet-sdk-wasm':
-        specifier: 3.9.1
-        version: 3.9.1
+        specifier: 3.9.2
+        version: 3.9.2
       tsx:
         specifier: ^4.7.2
         version: 4.7.2
@@ -1397,13 +1394,6 @@ packages:
     engines: {node: '>=6'}
     hasBin: true
 
-  '@hirosystems/clarinet-sdk-wasm@3.8.1':
-    resolution: {integrity: sha512-Eat1Jjc11WgRWn2A4r3uDCIUciv9xaftW55R8kRNyans4ewoPS/s0j0i2EJS/F37sAHCsEejGI4wj3RjzGtrHw==}
-
-  '@hirosystems/clarinet-sdk@3.8.1':
-    resolution: {integrity: sha512-CFD8lLaqHI4Lht2rEkmyoHhBpLNVs0lBc5UtBrpVAglpUSCMkLNfVLSSIeBi07zpfkjJTVmJHLP36FVXr4vfMA==}
-    engines: {node: '>=18.0.0'}
-
   '@humanwhocodes/config-array@0.11.14':
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
     engines: {node: '>=10.10.0'}
@@ -2270,11 +2260,11 @@ packages:
   '@stacks/blockchain-api-client@7.10.0':
     resolution: {integrity: sha512-VQbJDJuHrj2TWDmYE2Tymqa6yMCvNkc8SXPeHgX1k1BuNKFe7HUHv1r4wA24cRpoTSpM14URJOscKLBaDyklpg==}
 
-  '@stacks/clarinet-sdk-wasm@3.9.1':
-    resolution: {integrity: sha512-bH29fHcpklJz4ltQgSN2qu9RCZqTgsvsuQBUBHqxp2l8GwAWwl7/FpeHMM9aqC23u2Y+RNFNWydQ+4T/G5ECLQ==}
+  '@stacks/clarinet-sdk-wasm@3.9.2':
+    resolution: {integrity: sha512-bS0uq/0SeJDRQTApyjqr0fjULj/qocnkqFVQ0DknHnv73nChACzMy0xjbsMIHXyatXgQFQozt1wfaPbrZqj76A==}
 
-  '@stacks/clarinet-sdk@3.9.1':
-    resolution: {integrity: sha512-8WiSgRCZHM4K4nqdL4ju2ZEiABdBFShAOQ7p9+5PZ6B2+spSD6OBRorJtWCt6GqCYNtbTBl3GiFHWf3S0JCNfg==}
+  '@stacks/clarinet-sdk@3.9.2':
+    resolution: {integrity: sha512-NTNUdc5hip8rFwlB6VGj9XC5ohwO3sho4qBqZfY/zVIMpZi7oWnSa/VwK1PqkJiw6vPCpcZ9fyft5nztinTIgg==}
     engines: {node: '>=18.0.0'}
 
   '@stacks/common@6.16.0':
@@ -6485,17 +6475,11 @@ packages:
       yaml:
         optional: true
 
-  vitest-environment-clarinet@2.5.0:
-    resolution: {integrity: sha512-qQ/ArCz4s0SSs9XdBQ+xU8jazDTTpJJaEWDnq6UuNtNi9ETIljmRd/09s4im53O8+P+wMwqVPnUMOvJFZtCDTw==}
-    peerDependencies:
-      '@hirosystems/clarinet-sdk': '>=2.14.0'
-      vitest: ^1.0.0 || ^2.0.0 || ^3.0.0
-
-  vitest-environment-clarinet@3.0.1:
-    resolution: {integrity: sha512-0d9aRWdi9c9rIxfRYVoiKJN7VVPvIOhbSV75juq/Lyw8IqfQs94sLW7mjVlbQLjUL/tXz0e5vhU0Hjt/lS3QjA==}
+  vitest-environment-clarinet@3.0.2:
+    resolution: {integrity: sha512-zuK2KTOw2iISG9nsxO1kH3FPHBQT3fe96NJkYUb5CZqsRKcMetTPxTYiF+Sw+Y4WjSPc9bWmv1hY4o8A49ci3w==}
     peerDependencies:
       '@stacks/clarinet-sdk': '>=3.8.1'
-      vitest: ^4.0.0
+      vitest: ^1.0.0 || ^2.0.0 || ^3.0.0 || ^4.0.0
 
   vitest@3.2.4:
     resolution: {integrity: sha512-LUCP5ev3GURDysTWiP47wRRUpLKMOfPh+yKTx3kVIEiu5KOMeqzpnYNsKyOoVrULivR8tLcks4+lga33Whn90A==}
@@ -7597,18 +7581,6 @@ snapshots:
       protobufjs: 7.2.6
       yargs: 17.7.2
 
-  '@hirosystems/clarinet-sdk-wasm@3.8.1': {}
-
-  '@hirosystems/clarinet-sdk@3.8.1':
-    dependencies:
-      '@hirosystems/clarinet-sdk-wasm': 3.8.1
-      '@stacks/transactions': 7.2.0
-      kolorist: 1.8.0
-      prompts: 2.4.2
-      yargs: 18.0.0
-    transitivePeerDependencies:
-      - encoding
-
   '@humanwhocodes/config-array@0.11.14':
     dependencies:
       '@humanwhocodes/object-schema': 2.0.3
@@ -8438,11 +8410,11 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@stacks/clarinet-sdk-wasm@3.9.1': {}
+  '@stacks/clarinet-sdk-wasm@3.9.2': {}
 
-  '@stacks/clarinet-sdk@3.9.1':
+  '@stacks/clarinet-sdk@3.9.2':
     dependencies:
-      '@stacks/clarinet-sdk-wasm': 3.9.1
+      '@stacks/clarinet-sdk-wasm': 3.9.2
       '@stacks/transactions': 7.2.0
       kolorist: 1.8.0
       prompts: 2.4.2
@@ -9858,7 +9830,7 @@ snapshots:
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1)(eslint@8.57.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.7.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
       eslint-plugin-react: 7.34.1(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@8.57.0)
@@ -10016,33 +9988,6 @@ snapshots:
       eslint: 8.57.0
       eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@7.7.0(eslint@8.57.0)(typescript@5.4.5))(eslint-plugin-import@2.29.1)(eslint@8.57.0)
     transitivePeerDependencies:
-      - supports-color
-
-  eslint-plugin-import@2.29.1(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0):
-    dependencies:
-      array-includes: 3.1.8
-      array.prototype.findlastindex: 1.2.5
-      array.prototype.flat: 1.3.2
-      array.prototype.flatmap: 1.3.2
-      debug: 3.2.7
-      doctrine: 2.1.0
-      eslint: 8.57.0
-      eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.8.1(@typescript-eslint/parser@5.62.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
-      hasown: 2.0.2
-      is-core-module: 2.13.1
-      is-glob: 4.0.3
-      minimatch: 3.1.2
-      object.fromentries: 2.0.8
-      object.groupby: 1.0.3
-      object.values: 1.2.0
-      semver: 6.3.1
-      tsconfig-paths: 3.15.0
-    optionalDependencies:
-      '@typescript-eslint/parser': 5.62.0(eslint@8.57.0)(typescript@5.4.5)
-    transitivePeerDependencies:
-      - eslint-import-resolver-typescript
-      - eslint-import-resolver-webpack
       - supports-color
 
   eslint-plugin-import@2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0):
@@ -13768,15 +13713,15 @@ snapshots:
       fsevents: 2.3.3
       jiti: 1.21.0
 
-  vitest-environment-clarinet@2.5.0(@hirosystems/clarinet-sdk@3.8.1)(vitest@4.0.7(@types/debug@4.1.12)(@types/node@20.10.4)(jiti@1.21.0)):
+  vitest-environment-clarinet@3.0.2(@stacks/clarinet-sdk@3.9.2)(vitest@3.2.4(@types/debug@4.1.12)(@types/node@20.10.4)):
     dependencies:
-      '@hirosystems/clarinet-sdk': 3.8.1
-      vitest: 4.0.7(@types/debug@4.1.12)(@types/node@20.10.4)(jiti@1.21.0)
-
-  vitest-environment-clarinet@3.0.1(@stacks/clarinet-sdk@3.9.1)(vitest@3.2.4(@types/debug@4.1.12)(@types/node@20.10.4)):
-    dependencies:
-      '@stacks/clarinet-sdk': 3.9.1
+      '@stacks/clarinet-sdk': 3.9.2
       vitest: 3.2.4(@types/debug@4.1.12)(@types/node@20.10.4)
+
+  vitest-environment-clarinet@3.0.2(@stacks/clarinet-sdk@3.9.2)(vitest@4.0.7(@types/debug@4.1.12)(@types/node@20.10.4)(jiti@1.21.0)):
+    dependencies:
+      '@stacks/clarinet-sdk': 3.9.2
+      vitest: 4.0.7(@types/debug@4.1.12)(@types/node@20.10.4)(jiti@1.21.0)
 
   vitest@3.2.4(@types/debug@4.1.12)(@types/node@20.10.4):
     dependencies:
