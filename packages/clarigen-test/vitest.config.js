@@ -20,13 +20,14 @@ import { vitestSetupFilePath, getClarinetVitestsArgv } from '@stacks/clarinet-sd
 
 export default defineConfig({
   test: {
-    isolate: true,
     environment: 'clarinet', // use vitest-environment-clarinet
     pool: 'forks',
     poolOptions: {
       threads: { singleThread: true },
       forks: { singleFork: true },
     },
+    isolate: false,
+    maxWorkers: 1,
     setupFiles: [
       vitestSetupFilePath,
       // custom setup files can be added here
