@@ -1,5 +1,11 @@
 # @clarigen/core
 
+## 4.0.1
+
+### Patch Changes
+
+- [`7804793`](https://github.com/hstove/clarigen/commit/7804793d08085946fe26eae94eec4ec5189ee54f) Thanks [@hstove](https://github.com/hstove)! - Adds a `headers` configuration option to the `ClarigenClient` constructor
+
 ## 4.0.0
 
 ### Major Changes
