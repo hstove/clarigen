@@ -34,18 +34,18 @@ const client = new ClarigenClient(STACKS_MAINNET);
 
 If you have a Hiro Platform API key, you can use the optional `apiKey` argument in the `ClarigenClient` constructor:
 
-````ts
+```ts
 import { ClarigenClient } from '@clarigen/core';
 
-const client = new ClarigenClient("mainnet", myApiKey);
+const client = new ClarigenClient('mainnet', myApiKey);
 ```
 
 Or for other headers, you can use the `headers` argument:
 
 ```ts
-new ClarigenClient("mainnet", myApiKey, {
-  "my-custom-header": "hello",
-})
+new ClarigenClient('mainnet', myApiKey, {
+  'my-custom-header': 'hello',
+});
 ```
 
 ## Using `ClarigenClient`
@@ -70,7 +70,7 @@ export async function getOwner(id: number | bigint) {
   }
   throw new Error(`Unexpected error: ${response.value}`);
 }
-````
+```
 
 ### `roOk`
 
