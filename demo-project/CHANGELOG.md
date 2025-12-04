@@ -1,5 +1,15 @@
 # demo-project
 
+## 4.0.1
+
+### Patch Changes
+
+- Updated dependencies [[`7804793`](https://github.com/hstove/clarigen/commit/7804793d08085946fe26eae94eec4ec5189ee54f)]:
+  - @clarigen/core@4.0.1
+  - @clarigen/boot@4.0.1
+  - @clarigen/test@4.0.1
+  - @clarigen/cli@4.0.1
+
 ## 4.0.0
 
 ### Major Changes
