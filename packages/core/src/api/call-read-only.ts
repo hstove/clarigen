@@ -13,6 +13,7 @@ export interface ReadOnlyOptions {
   url: string;
   tip?: string;
   apiKey?: string;
+  headers?: Record<string, string>;
 }
 
 /**
@@ -29,10 +30,6 @@ export function parseReadOnlyResponse<T extends ClarityValue>(
   }
 }
 
-// export type ReadOnlyOptions = Omit<ReadOnlyFunctionOptions, 'network'> & {
-//   url: string;
-// };
-
 /**
  * Calls a read only function from a contract interface
  *
@@ -46,8 +43,11 @@ export async function callReadOnlyFunction<T extends ClarityValue>(
 ): Promise<T> {
   const { contractAddress, functionArgs, senderAddress = contractAddress, url } = options;
 
-  // const contractsApi = new
-  const apiResponse = await smartContractsApi(url, options.apiKey).callReadOnlyFunction({
+  const apiResponse = await smartContractsApi(
+    url,
+    options.apiKey,
+    options.headers
+  ).callReadOnlyFunction({
     ...options,
     readOnlyFunctionArgs: {
       sender: senderAddress,

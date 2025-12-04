@@ -25,6 +25,7 @@ export type ApiOptionsBase = {
   tip?: string;
   latest?: boolean;
   apiKey?: string;
+  headers?: Record<string, string>;
 };
 
 export type ApiOptionsJsonize = ApiOptionsBase & {
@@ -65,6 +66,7 @@ export async function ro<O extends ApiOptions, T>(
     tip,
     url: getApiUrl(options),
     apiKey: options.apiKey,
+    headers: options.headers,
   });
   if (options.json) {
     return cvToJSON(cv);
@@ -114,7 +116,7 @@ export async function fetchMapGet<Key, Val>(
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      ...getHeaders(options.apiKey),
+      ...getHeaders(options.apiKey, options.headers),
     },
   });
   const data = (await res.json()) as { data: string };
@@ -148,17 +150,20 @@ type JsonIf<O extends ClientOptions, T> = JsonIfOption<O & ApiOptions, T>;
 
 export class ClarigenClient {
   public network: StacksNetwork | StacksNetworkName;
-  public apiKey?: string;
 
-  constructor(networkOrUrl: StacksNetwork | StacksNetworkName, apiKey?: string) {
+  constructor(
+    networkOrUrl: StacksNetwork | StacksNetworkName,
+    public apiKey?: string,
+    public headers?: Record<string, string>
+  ) {
     this.network = networkOrUrl;
-    this.apiKey = apiKey;
   }
 
   private roOptions(options: ClientOptions): ApiOptions {
     return {
       network: this.network,
       apiKey: this.apiKey,
+      headers: this.headers,
       ...options,
     };
   }

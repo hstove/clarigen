@@ -1,17 +1,22 @@
 import { SmartContractsApi, Configuration, TransactionsApi } from '@stacks/blockchain-api-client';
 import { isNumber } from '../utils';
 
-export function getHeaders(apiKey?: string) {
-  const headers: Record<string, string> = {};
+export function getHeaders(apiKey?: string, headersOverride: Record<string, string> = {}) {
+  const headers: Record<string, string> = {
+    ...headersOverride,
+  };
   if (apiKey) {
     headers['x-api-key'] = apiKey;
   }
   return headers;
 }
 
-export function smartContractsApi(url: string, apiKey?: string) {
-  // const headers = apiKey ? { 'x-api-key': apiKey } : {};
-  const headers = getHeaders(apiKey);
+export function smartContractsApi(
+  url: string,
+  apiKey?: string,
+  headersOverride?: Record<string, string>
+) {
+  const headers = getHeaders(apiKey, headersOverride);
   return new SmartContractsApi(
     new Configuration({
       basePath: url,
@@ -20,11 +25,15 @@ export function smartContractsApi(url: string, apiKey?: string) {
   );
 }
 
-export function transactionsApi(url: string, apiKey?: string) {
+export function transactionsApi(
+  url: string,
+  apiKey?: string,
+  headersOverride?: Record<string, string>
+) {
   return new TransactionsApi(
     new Configuration({
       basePath: url,
-      headers: getHeaders(apiKey),
+      headers: getHeaders(apiKey, headersOverride),
     })
   );
 }

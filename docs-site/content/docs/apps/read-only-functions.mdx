@@ -27,11 +27,25 @@ Or, using a `StacksNetwork` instance:
 
 ```ts
 import { ClarigenClient } from '@clarigen/core';
-import { StacksMainnet } from '@stacks/network';
+import { STACKS_MAINNET } from '@stacks/network';
 
-const network = new StacksMainnet();
+const client = new ClarigenClient(STACKS_MAINNET);
+```
 
-const client = new ClarigenClient(network);
+If you have a Hiro Platform API key, you can use the optional `apiKey` argument in the `ClarigenClient` constructor:
+
+````ts
+import { ClarigenClient } from '@clarigen/core';
+
+const client = new ClarigenClient("mainnet", myApiKey);
+```
+
+Or for other headers, you can use the `headers` argument:
+
+```ts
+new ClarigenClient("mainnet", myApiKey, {
+  "my-custom-header": "hello",
+})
 ```
 
 ## Using `ClarigenClient`
@@ -56,7 +70,7 @@ export async function getOwner(id: number | bigint) {
   }
   throw new Error(`Unexpected error: ${response.value}`);
 }
-```
+````
 
 ### `roOk`
 
@@ -145,13 +159,11 @@ Or using `network`:
 ```ts
 import { ro } from '@clarigen/core';
 import { nftContract } from './clarigen-contracts';
-import { StacksMainnet } from '@stacks/network';
-
-const network = new StacksMainnet();
+import { STACKS_MAINNET } from '@stacks/network';
 
 export function getOwner(id: bigint) {
   return ro(nftContract.getOwner(id), {
-    network,
+    network: STACKS_MAINNET,
   });
 }
 ```
