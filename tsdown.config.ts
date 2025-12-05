@@ -5,6 +5,7 @@ export const defaultConfig: UserConfig = {
   entry: ['src/index.ts'],
   minify: true,
   outDir: 'dist',
+  exports: true,
   dts: true,
   // splitting: true,
   format: ['esm', 'cjs'],

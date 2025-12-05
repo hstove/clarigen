@@ -2,8 +2,8 @@
   "version": "4.0.1",
   "private": true,
   "license": "MIT",
-  "types": "./dist/index.d.ts",
-  "main": "./dist/index.js",
+  "types": "./dist/index.d.cts",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "import": "./dist/index.mjs",
   "files": [
@@ -30,5 +30,12 @@
   "devDependencies": {},
   "publishConfig": {
     "access": "public"
+  },
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    },
+    "./package.json": "./package.json"
   }
 }

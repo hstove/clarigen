@@ -6,8 +6,8 @@
     "build": "shx rm -rf ./dist && tsdown",
     "test": "vitest run"
   },
-  "types": "./dist/index.d.ts",
-  "main": "./dist/index.js",
+  "types": "./dist/index.d.cts",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "import": "./dist/index.mjs",
   "type": "module",
@@ -25,5 +25,12 @@
     "tsx": "^4.8.1",
     "vitest": "3.2.4",
     "vitest-environment-clarinet": "3.0.2"
+  },
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    },
+    "./package.json": "./package.json"
   }
 }
