@@ -1,5 +1,14 @@
 # @clarigen/test
 
+## 4.0.2-alpha.1
+
+### Patch Changes
+
+- [`f38fc64`](https://github.com/hstove/clarigen/commit/f38fc64f6aa60347d44beda6b0a445027ad2f28a) Thanks [@hstove](https://github.com/hstove)! - Adds `cost` to logged contract calls
+
+- Updated dependencies [[`f38fc64`](https://github.com/hstove/clarigen/commit/f38fc64f6aa60347d44beda6b0a445027ad2f28a)]:
+  - @clarigen/core@4.0.2-alpha.1
+
 ## 4.0.2-alpha.0
 
 ### Patch Changes
