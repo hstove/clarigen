@@ -9,9 +9,9 @@ import {
   mapFactory,
   rawClarityToValue,
   Response,
-  ContractCallTransaction,
   cvToString,
 } from '@clarigen/core';
+import type { ContractCallTransaction } from '@clarigen/core/deployment';
 import { Simnet, ParsedTransactionResult } from '@stacks/clarinet-sdk';
 import { cvConvertHiro, cvConvertMS, validateResponse } from './utils';
 import { CoreNodeEvent } from './events';

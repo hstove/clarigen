@@ -8,8 +8,8 @@ import {
   getDeploymentContract,
   getDeploymentTxPath,
   getIdentifierForDeploymentTx,
-  DeploymentTransaction,
-} from '@clarigen/core';
+  type DeploymentTransaction,
+} from '@clarigen/core/deployment';
 import { DeploymentPlan, SimnetDeploymentPlan } from '@clarigen/core';
 import { getContractName } from '@clarigen/core';
 import { cwdRelative, sortContracts } from '../utils';

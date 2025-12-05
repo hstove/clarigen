@@ -50,5 +50,6 @@ export async function CodeBlock({
   //     />
   //   </code>
   // );
+  // @ts-ignore
   return <MarkdownWrapper markdown={markdown} className={className} {...props} />;
 }

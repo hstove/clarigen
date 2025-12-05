@@ -1,8 +1,8 @@
 {
   "version": "4.0.1",
   "license": "MIT",
-  "types": "./dist/index.d.ts",
-  "main": "./dist/index.js",
+  "types": "./dist/index.d.cts",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "import": "./dist/index.mjs",
   "files": [
@@ -12,9 +12,9 @@
     "node": ">=10"
   },
   "scripts": {
-    "start": "tsup --watch",
-    "dev": "tsup --watch",
-    "build": "tsup",
+    "start": "tsdown --watch",
+    "dev": "tsdown --watch",
+    "build": "tsdown",
     "test": "vitest run",
     "lint": "eslint \"src/**/*.{ts,tsx}\" && prettier --check \"./**/*.{ts,js}\"",
     "typecheck": "tsc --noEmit -p tsconfig-test.json",
@@ -35,5 +35,16 @@
   "devDependencies": {},
   "publishConfig": {
     "access": "public"
+  },
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    },
+    "./deployment": {
+      "require": "./dist/deployment.cjs",
+      "import": "./dist/deployment.mjs"
+    },
+    "./package.json": "./package.json"
   }
 }

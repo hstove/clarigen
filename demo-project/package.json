@@ -3,7 +3,7 @@
   "version": "4.0.1",
   "name": "demo-project",
   "scripts": {
-    "build": "shx rm -rf ./dist && tsup",
+    "build": "shx rm -rf ./dist && tsdown",
     "test": "vitest run"
   },
   "types": "./dist/index.d.ts",

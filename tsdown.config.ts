@@ -1,17 +1,17 @@
-import { Options, defineConfig } from 'tsup';
+import { type UserConfig, defineConfig } from 'tsdown';
 
-export const defaultConfig: Options = {
+export const defaultConfig: UserConfig = {
   target: 'node16',
   entry: ['src/index.ts'],
   minify: true,
   outDir: 'dist',
   dts: true,
-  splitting: true,
+  // splitting: true,
   format: ['esm', 'cjs'],
 };
 
-export function makeConfig(opts: Partial<Options> = {}) {
-  const config: Options = {
+export function makeConfig(opts: Partial<UserConfig> = {}) {
+  const config: UserConfig = {
     ...defaultConfig,
     ...opts,
   };
