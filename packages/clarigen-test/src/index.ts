@@ -45,6 +45,7 @@ function logTxCall({
         'expected-sender': sender,
         parameters: args.map(arg => cvToString(arg, 'hex')),
         method: functionName,
+        cost: '10000000',
       },
     };
     console.log('------------ DEPLOYMENT TX ------------');

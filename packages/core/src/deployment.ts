@@ -20,6 +20,7 @@ export interface ContractPublishTransaction {
     'contract-name': string;
     'expected-sender': string;
     path: string;
+    cost: string;
   };
 }
 
@@ -29,6 +30,7 @@ export interface ContractCallTransaction {
     'expected-sender': string;
     parameters: Readonly<string[]>;
     method: string;
+    cost: string;
   };
 }
 
