@@ -11,6 +11,7 @@
     "@clarigen/web": "4.0.1"
   },
   "changesets": [
+    "green-tips-type",
     "silver-rings-run"
   ]
 }
