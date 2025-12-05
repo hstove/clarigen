@@ -10,5 +10,7 @@
     "@clarigen/core": "4.0.1",
     "@clarigen/web": "4.0.1"
   },
-  "changesets": []
+  "changesets": [
+    "silver-rings-run"
+  ]
 }
