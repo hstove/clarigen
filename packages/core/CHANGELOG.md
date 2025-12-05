@@ -1,5 +1,11 @@
 # @clarigen/core
 
+## 4.0.2-alpha.0
+
+### Patch Changes
+
+- [`0730fac`](https://github.com/hstove/clarigen/commit/0730facf8c3c2119e1ccc046553b0a008c8d9ac8) Thanks [@hstove](https://github.com/hstove)! - Adds the ability to log a deployment `contract-call` as YAML with `process.env.LOG_TX_CALLS`
+
 ## 4.0.1
 
 ### Patch Changes

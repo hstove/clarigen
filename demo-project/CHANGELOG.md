@@ -1,5 +1,15 @@
 # demo-project
 
+## 4.0.2-alpha.0
+
+### Patch Changes
+
+- Updated dependencies [[`0730fac`](https://github.com/hstove/clarigen/commit/0730facf8c3c2119e1ccc046553b0a008c8d9ac8)]:
+  - @clarigen/test@4.0.2-alpha.0
+  - @clarigen/cli@4.0.2-alpha.0
+  - @clarigen/core@4.0.2-alpha.0
+  - @clarigen/boot@4.0.2-alpha.0
+
 ## 4.0.1
 
 ### Patch Changes
