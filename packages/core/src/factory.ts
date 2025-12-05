@@ -7,8 +7,8 @@ import {
   getContractTxs,
   getDeploymentContract,
   getDeploymentTxPath,
-  getIdentifier,
-  Transaction,
+  getIdentifierForDeploymentTx,
+  DeploymentTransaction,
 } from './deployment';
 import { CVInput, parseToCV, transformArgsToCV } from './clarity-types';
 import { toCamelCase } from './utils';
@@ -137,9 +137,9 @@ export function deploymentFactory<T extends AllContracts>(
   deployer: DeploymentPlan
 ): ContractFactory<T> {
   const result = {} as Partial<ContractFactory<T>>;
-  const txs = getContractTxs(deployer.plan.batches as Batch<Transaction>[]);
+  const txs = getContractTxs(deployer.plan.batches as Batch<DeploymentTransaction>[]);
   txs.forEach(tx => {
-    const id = getIdentifier(tx);
+    const id = getIdentifierForDeploymentTx(tx);
     const [contractAddress, contractFileName] = id.split('.');
     const contractName = toCamelCase(contractFileName) as keyof T;
     const def = contracts[contractName] as TypedAbi;

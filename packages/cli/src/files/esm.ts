@@ -4,14 +4,13 @@ import { Config } from '../config';
 import { parse } from 'yaml';
 import {
   Batch,
-  DeploymentPlan,
   getContractTxs,
   getDeploymentContract,
   getDeploymentTxPath,
-  getIdentifier,
-  SimnetDeploymentPlan,
-  Transaction,
-} from '../deployments';
+  getIdentifierForDeploymentTx,
+  DeploymentTransaction,
+} from '@clarigen/core';
+import { DeploymentPlan, SimnetDeploymentPlan } from '@clarigen/core';
 import { getContractName } from '@clarigen/core';
 import { cwdRelative, sortContracts } from '../utils';
 import { Session } from '../session';
@@ -111,7 +110,7 @@ export function collectContractDeployments(
           try {
             const contractName = contract.contract_id.split('.')[1];
             const tx = getDeploymentContract(contractName, deployment);
-            const id = getIdentifier(tx);
+            const id = getIdentifierForDeploymentTx(tx);
             return [network, id];
           } catch (_) {
             return [network, null];
@@ -149,9 +148,9 @@ export function collectDeploymentFiles(
 ) {
   if (!deployments.simnet) return [];
   const simnet = deployments.simnet as SimnetDeploymentPlan;
-  const txs = getContractTxs(simnet.plan.batches as Batch<Transaction>[]);
+  const txs = getContractTxs(simnet.plan.batches as Batch<DeploymentTransaction>[]);
   const entries = txs.map(tx => {
-    const id = getIdentifier(tx);
+    const id = getIdentifierForDeploymentTx(tx);
     const contractFile = getDeploymentTxPath(tx);
     return {
       identifier: id,

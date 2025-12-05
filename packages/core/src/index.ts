@@ -19,6 +19,6 @@ export * from './api';
 export * from './abi-types';
 export * from './factory';
 export * from './factory-types';
-export type { DeploymentPlan, SimnetDeploymentPlan } from './deployment';
+export * from './deployment';
 export * from './post-conditions';
 export * from './raw-clarity';

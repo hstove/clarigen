@@ -1,0 +1,14 @@
+{
+  "mode": "pre",
+  "tag": "alpha",
+  "initialVersions": {
+    "demo-project": "4.0.1",
+    "clarigen-docs": "1.0.1",
+    "@clarigen/boot": "4.0.1",
+    "@clarigen/test": "4.0.1",
+    "@clarigen/cli": "4.0.1",
+    "@clarigen/core": "4.0.1",
+    "@clarigen/web": "4.0.1"
+  },
+  "changesets": []
+}

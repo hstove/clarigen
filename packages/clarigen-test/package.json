@@ -27,10 +27,10 @@
     "@stacks/clarinet-sdk": "3.9.2",
     "@stacks/clarinet-sdk-wasm": "3.9.2",
     "@types/node": "24.2.0",
-    "vitest-environment-clarinet": "3.0.2",
     "tsx": "^4.8.1",
     "typescript": "5.4.5",
-    "vitest": "3.2.4"
+    "vitest": "3.2.4",
+    "vitest-environment-clarinet": "3.0.2"
   },
   "peerDependencies": {
     "@stacks/clarinet-sdk": "^3.9.2",
@@ -38,7 +38,8 @@
   },
   "dependencies": {
     "@clarigen/core": "workspace:*",
-    "@stacks/transactions": "7.2.0"
+    "@stacks/transactions": "7.2.0",
+    "yaml": "^2.4.1"
   },
   "publishConfig": {
     "access": "public"

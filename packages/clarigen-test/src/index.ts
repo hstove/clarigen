@@ -9,10 +9,14 @@ import {
   mapFactory,
   rawClarityToValue,
   Response,
+  ContractCallTransaction,
+  cvToString,
 } from '@clarigen/core';
 import { Simnet, ParsedTransactionResult } from '@stacks/clarinet-sdk';
 import { cvConvertHiro, cvConvertMS, validateResponse } from './utils';
 import { CoreNodeEvent } from './events';
+import { stringify } from 'yaml';
+import { ClarityValue } from '@stacks/transactions';
 export * from './events';
 export * from './utils';
 
@@ -23,6 +27,32 @@ export type TransactionResult<R> = Omit<ParsedTransactionResult, 'events'> & {
 
 export type AnyResponse = Response<unknown, unknown>;
 
+function logTxCall({
+  contractId,
+  sender,
+  args,
+  functionName,
+}: {
+  contractId: string;
+  sender: string;
+  args: ClarityValue[];
+  functionName: string;
+}) {
+  if (process.env.LOG_TX_CALLS) {
+    const contractCallTx: ContractCallTransaction = {
+      'contract-call': {
+        'contract-id': contractId,
+        'expected-sender': sender,
+        parameters: args.map(arg => cvToString(arg, 'hex')),
+        method: functionName,
+      },
+    };
+    console.log('------------ DEPLOYMENT TX ------------');
+    console.log(stringify(contractCallTx, { indent: 2 }));
+    console.log('------------ END DEPLOYMENT TX ------------');
+  }
+}
+
 export function txOk<A extends UnknownArgs, R extends AnyResponse>(
   tx: ContractCallTyped<A, R>,
   sender: string
@@ -31,6 +61,7 @@ export function txOk<A extends UnknownArgs, R extends AnyResponse>(
   const contractId = `${tx.contractAddress}.${tx.contractName}`;
   const receipt = simnet.callPublicFn(contractId, tx.function.name, args, sender);
   const value = validateResponse<OkType<R>>(receipt.result, true);
+  logTxCall({ contractId, sender, args, functionName: tx.function.name });
 
   return {
     ...receipt,
@@ -47,6 +78,7 @@ export function txErr<A extends UnknownArgs, R extends AnyResponse>(
   const contractId = `${tx.contractAddress}.${tx.contractName}`;
   const receipt = simnet.callPublicFn(contractId, tx.function.name, args, sender);
   const value = validateResponse<ErrType<R>>(receipt.result, false);
+  logTxCall({ contractId, sender, args, functionName: tx.function.name });
 
   return {
     ...receipt,
@@ -63,6 +95,7 @@ export function tx<A extends UnknownArgs, R extends AnyResponse>(
   const contractId = `${tx.contractAddress}.${tx.contractName}`;
   const receipt = simnet.callPublicFn(contractId, tx.function.name, args, sender);
   const value = validateResponse<R>(receipt.result);
+  logTxCall({ contractId, sender, args, functionName: tx.function.name });
 
   return {
     ...receipt,

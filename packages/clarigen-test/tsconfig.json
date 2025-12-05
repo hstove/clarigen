@@ -10,5 +10,5 @@
     "skipLibCheck": true,
     "types": ["node", "./node_modules/@stacks/clarinet-sdk/vitest-helpers/src/global"]
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*", "./node_modules/@stacks/clarinet-sdk/vitest-helpers/src/global.d.ts",]
 }

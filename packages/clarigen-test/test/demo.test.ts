@@ -25,9 +25,11 @@ describe('using clarigen/test', () => {
     // console.log(data);
   });
   it('can call public functions', () => {
+    process.env.LOG_TX_CALLS = 'true';
     const receipt = txOk(tester.printPub(), deployer);
     expect(receipt.value).toEqual(true);
     expect(receipt.events.length).toEqual(3);
+    delete process.env.LOG_TX_CALLS;
   });
 
   it('throws with err for txOk', () => {

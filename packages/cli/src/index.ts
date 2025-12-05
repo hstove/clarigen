@@ -8,5 +8,4 @@ export * from './files/base';
 export * from './files/esm';
 export * from './clarinet-config';
 export * from './declaration';
-export * from './deployments';
 export * from './utils';
