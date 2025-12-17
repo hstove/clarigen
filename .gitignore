@@ -64,3 +64,5 @@ next-env.d.ts
 
 .contentlayer
 deprecated
+
+history
