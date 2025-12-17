@@ -9,16 +9,10 @@ export function useContractAbi(network: NETWORK, contractId: string) {
   });
 }
 
-export function useContractFunction(
-  network: NETWORK,
-  contractId: string,
-  functionName: string
-) {
+export function useContractFunction(network: NETWORK, contractId: string, functionName: string) {
   const query = useContractAbi(network, contractId);
 
-  const func = query.data?.functions.find(
-    (f) => f.name === functionName && f.access !== 'private'
-  );
+  const func = query.data?.functions.find(f => f.name === functionName && f.access !== 'private');
 
   return {
     ...query,
@@ -29,7 +23,7 @@ export function useContractFunction(
 export function useContractFunctions(network: NETWORK, contractId: string) {
   const query = useContractAbi(network, contractId);
 
-  const functions = query.data?.functions.filter((f) => f.access !== 'private');
+  const functions = query.data?.functions.filter(f => f.access !== 'private');
 
   return {
     ...query,
