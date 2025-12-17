@@ -208,19 +208,19 @@ Added URL state management using nuqs so form values sync bidirectionally with U
 
 **Parser mapping**:
 
-| Clarity Type       | nuqs Parser      | Serialization           |
-| ------------------ | ---------------- | ----------------------- |
-| `uint128`          | parseAsString    | Direct string           |
-| `int128`           | parseAsString    | Direct string           |
-| `bool`             | parseAsBoolean   | `true`/`false`          |
-| `principal`        | parseAsString    | Direct string           |
-| `trait_reference`  | parseAsString    | Direct string           |
-| `(buff N)`         | parseAsString    | Hex string              |
-| `(string-ascii N)` | parseAsString    | Direct string           |
-| `(string-utf8 N)`  | parseAsString    | Direct string           |
-| `(optional T)`     | parseAsOptional  | JSON with isNone flag   |
-| `(list N T)`       | parseAsList      | JSON array              |
-| `{tuple ...}`      | parseAsTuple     | JSON object             |
+| Clarity Type       | nuqs Parser     | Serialization         |
+| ------------------ | --------------- | --------------------- |
+| `uint128`          | parseAsString   | Direct string         |
+| `int128`           | parseAsString   | Direct string         |
+| `bool`             | parseAsBoolean  | `true`/`false`        |
+| `principal`        | parseAsString   | Direct string         |
+| `trait_reference`  | parseAsString   | Direct string         |
+| `(buff N)`         | parseAsString   | Hex string            |
+| `(string-ascii N)` | parseAsString   | Direct string         |
+| `(string-utf8 N)`  | parseAsString   | Direct string         |
+| `(optional T)`     | parseAsOptional | JSON with isNone flag |
+| `(list N T)`       | parseAsList     | JSON array            |
+| `{tuple ...}`      | parseAsTuple    | JSON object           |
 
 **Hook API**:
 
@@ -305,18 +305,18 @@ Implemented conversion of form values to ClarityValue types on form submission, 
 
 ### Type conversions handled
 
-| Form Value | Clarity Type | Transformation |
-| --- | --- | --- |
-| `string` | uint128/int128 | Direct to `parseToCV` |
-| `boolean` | bool | Direct to `parseToCV` |
-| `string` | principal | Direct to `parseToCV` |
-| `string` | trait_reference | Direct to `parseToCV` |
-| `string` (hex) | buffer | Convert to `Uint8Array` via `hexToBytes` |
-| `string` | string-ascii/utf8 | Direct to `parseToCV` |
-| `{ isNone, value }` | optional | Convert to `null` or inner value |
-| `array` | list | Recursively convert items |
-| `object` | tuple | Recursively convert members |
-| `{ isOk, value }` | response | Use `responseOkCV` or `responseErrorCV` |
+| Form Value          | Clarity Type      | Transformation                           |
+| ------------------- | ----------------- | ---------------------------------------- |
+| `string`            | uint128/int128    | Direct to `parseToCV`                    |
+| `boolean`           | bool              | Direct to `parseToCV`                    |
+| `string`            | principal         | Direct to `parseToCV`                    |
+| `string`            | trait_reference   | Direct to `parseToCV`                    |
+| `string` (hex)      | buffer            | Convert to `Uint8Array` via `hexToBytes` |
+| `string`            | string-ascii/utf8 | Direct to `parseToCV`                    |
+| `{ isNone, value }` | optional          | Convert to `null` or inner value         |
+| `array`             | list              | Recursively convert items                |
+| `object`            | tuple             | Recursively convert members              |
+| `{ isOk, value }`   | response          | Use `responseOkCV` or `responseErrorCV`  |
 
 ### Route integration
 
@@ -342,3 +342,34 @@ Arguments (Clarity notation): [u1000000, 'SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0K
 ### Files modified
 
 - `web/src/routes/tx.$network.$contractAddress.$functionName.tsx` - integrated conversion and error handling
+
+## Completed: Task 6 - Transaction Submission with Stacks Connect
+
+### What was done
+
+Implemented transaction submission via Stacks wallet integration. The form now broadcasts real transactions to the network using `@stacks/connect`.
+
+### Implementation details
+
+**Wallet integration**:
+
+- Uses `request('stx_callContract', ...)` from `@stacks/connect`
+- Converts form arguments to hex-encoded Clarity values using `cvToHex` for the wallet request
+- Supports mainnet/testnet/devnet based on URL network parameter
+
+**State persistence**:
+
+- Transaction ID (`txid`) is captured from the wallet response
+- Capturing `txid` triggers a URL state update using `nuqs`
+- On page reload, the `txid` in the URL is used to show the submission status
+
+**UI updates**:
+
+- Added a "Transaction Submitted" alert box when a `txid` is present in the URL
+- Displays the raw transaction ID for verification
+- Provides a direct link to the Hiro Stacks Explorer for the specific transaction and network
+
+### Files modified
+
+- `web/src/hooks/use-tx-url-state.ts` - added `txid` to URL state parsers
+- `web/src/routes/tx.$network.$contractAddress.$functionName.tsx` - integrated `stx_callContract` and submission UI

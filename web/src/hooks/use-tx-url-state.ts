@@ -155,7 +155,9 @@ type FunctionArg = { name: string; type: ClarityAbiType };
 
 export function useTxUrlState(args: FunctionArg[]) {
   const parsers = useMemo(() => {
-    const result: Record<string, ParserType> = {};
+    const result: Record<string, ParserType> = {
+      txid: parseAsString.withDefault(''),
+    };
     for (const arg of args) {
       result[arg.name] = getParserForType(arg.type);
     }
@@ -166,6 +168,8 @@ export function useTxUrlState(args: FunctionArg[]) {
 
   return {
     urlState: urlState as Record<string, unknown>,
-    setUrlState: setUrlState as (values: Record<string, unknown>) => Promise<URLSearchParams>,
+    setUrlState: setUrlState as (
+      values: Partial<Record<string, unknown>>
+    ) => Promise<URLSearchParams>,
   };
 }

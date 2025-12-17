@@ -1,7 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useEffect, useMemo, useState } from 'react';
 import { NETWORK, Network } from '@/lib/constants';
-import { type ClarityAbiType, getTypeString, cvToString } from '@clarigen/core';
+import { type ClarityAbiType, getTypeString } from '@clarigen/core';
+import { cvToHex } from '@stacks/transactions';
+import { request } from '@stacks/connect';
 import { type } from 'arktype';
 import { useAppForm } from '@/hooks/form';
 import { fieldContext } from '@/hooks/form-context';
@@ -18,7 +20,9 @@ function parseNetwork(network: string): NETWORK | null {
   return result;
 }
 
-function parseContractAddress(contractAddress: string): { address: string; contractName: string } | null {
+function parseContractAddress(
+  contractAddress: string
+): { address: string; contractName: string } | null {
   const parts = contractAddress.split('.');
   if (parts.length !== 2) return null;
   const [address, contractName] = parts;
@@ -73,11 +77,7 @@ function TxBuilderPage() {
   }
 
   return (
-    <TxBuilderContent
-      network={network}
-      contractId={contractAddress}
-      functionName={functionName}
-    />
+    <TxBuilderContent network={network} contractId={contractAddress} functionName={functionName} />
   );
 }
 
@@ -135,6 +135,7 @@ type TxBuilderFormProps = {
 function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
   const { urlState, setUrlState } = useTxUrlState(func.args);
   const [conversionError, setConversionError] = useState<string | null>(null);
+  const txid = urlState.txid as string | undefined;
 
   // Compute initial values only once based on URL state at mount time
   const initialValues = useMemo(() => {
@@ -149,20 +150,23 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
 
   const form = useAppForm({
     defaultValues: initialValues,
-    onSubmit: ({ value }) => {
+    onSubmit: async ({ value }) => {
       setConversionError(null);
       try {
         const clarityArgs = formValuesToFunctionArgs(value, func.args);
-        console.log('Form submitted:', value);
-        console.log('ClarityValue arguments:', clarityArgs);
-        console.log(
-          'Arguments (Clarity notation):',
-          clarityArgs.map((cv) => cvToString(cv))
-        );
+        const response = await request('stx_callContract', {
+          contract: contractId as `${string}.${string}`,
+          functionName: func.name,
+          functionArgs: clarityArgs.map(arg => cvToHex(arg)),
+        });
+
+        if (response.txid) {
+          await setUrlState({ txid: response.txid });
+        }
       } catch (error) {
-        const message = error instanceof Error ? error.message : 'Failed to convert form values';
+        const message = error instanceof Error ? error.message : 'Failed to submit transaction';
         setConversionError(message);
-        console.error('Conversion error:', error);
+        console.error('Submission error:', error);
       }
     },
   });
@@ -179,22 +183,35 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
     <div className="container mx-auto p-6 max-w-2xl">
       <div className="space-y-4">
         <div>
-          <span className="text-xs uppercase tracking-wide text-muted-foreground">
-            {network}
-          </span>
+          <span className="text-xs uppercase tracking-wide text-muted-foreground">{network}</span>
           <h1 className="text-2xl font-bold">{contractId}</h1>
         </div>
+
+        {txid && (
+          <div className="p-4 border border-blue-200 bg-blue-50 rounded-lg dark:bg-blue-900/20 dark:border-blue-800">
+            <h3 className="text-sm font-semibold text-blue-900 dark:text-blue-100 mb-1">
+              Transaction Submitted
+            </h3>
+            <p className="text-xs font-mono break-all text-blue-800 dark:text-blue-200">{txid}</p>
+            <a
+              href={`https://explorer.hiro.so/txid/${txid}?chain=${network}`}
+              target="_blank"
+              rel="noreferrer"
+              className="text-xs text-blue-600 dark:text-blue-400 underline mt-2 inline-block font-medium hover:text-blue-800 dark:hover:text-blue-300"
+            >
+              View on Explorer
+            </a>
+          </div>
+        )}
 
         <div className="border rounded-lg p-4">
           <h2 className="text-lg font-semibold mb-4">
             {func.name}
-            <span className="ml-2 text-xs text-muted-foreground">
-              ({func.access})
-            </span>
+            <span className="ml-2 text-xs text-muted-foreground">({func.access})</span>
           </h2>
 
           <form
-            onSubmit={(e) => {
+            onSubmit={e => {
               e.preventDefault();
               form.handleSubmit();
             }}
@@ -204,9 +221,9 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
                 {func.args.length === 0 ? (
                   <p className="text-sm text-muted-foreground">No arguments</p>
                 ) : (
-                  func.args.map((arg) => (
+                  func.args.map(arg => (
                     <form.Field key={arg.name} name={arg.name as never}>
-                      {(field) => (
+                      {field => (
                         <fieldContext.Provider value={field}>
                           <ClarityField
                             name={arg.name}
