@@ -135,6 +135,13 @@ type TxBuilderFormProps = {
 function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
   const { urlState, setUrlState } = useTxUrlState(func.args);
   const [conversionError, setConversionError] = useState<string | null>(null);
+  const [readResult, setReadResult] = useState<{
+    okay: boolean;
+    result?: string;
+    value?: any;
+    clarity?: string;
+    error?: string;
+  } | null>(null);
   const txid = urlState.txid as string | undefined;
 
   // Compute initial values only once based on URL state at mount time
@@ -146,22 +153,43 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
     }
     return values;
     // eslint-disable-next-line react-hooks/exhaustive-deps -- only compute on mount
-  }, [func.args]);
+  }, [func.args, urlState]);
 
   const form = useAppForm({
     defaultValues: initialValues,
     onSubmit: async ({ value }) => {
       setConversionError(null);
+      setReadResult(null);
       try {
-        const clarityArgs = formValuesToFunctionArgs(value, func.args);
-        const response = await request('stx_callContract', {
-          contract: contractId as `${string}.${string}`,
-          functionName: func.name,
-          functionArgs: clarityArgs.map(arg => cvToHex(arg)),
-        });
+        if (func.access === 'read_only') {
+          const query = new URLSearchParams();
+          for (const arg of func.args) {
+            const val = value[arg.name];
+            if (val !== null && typeof val === 'object') {
+              query.set(arg.name, JSON.stringify(val));
+            } else {
+              query.set(arg.name, String(val ?? ''));
+            }
+          }
+          const response = await fetch(
+            `/read/${network}/${contractId}/${func.name}?${query.toString()}`
+          );
+          const result = await response.json();
+          setReadResult(result);
+          if (!result.okay) {
+            setConversionError(result.error || 'Failed to call function');
+          }
+        } else {
+          const clarityArgs = formValuesToFunctionArgs(value, func.args);
+          const response = await request('stx_callContract', {
+            contract: contractId as `${string}.${string}`,
+            functionName: func.name,
+            functionArgs: clarityArgs.map(arg => cvToHex(arg)),
+          });
 
-        if (response.txid) {
-          await setUrlState({ txid: response.txid });
+          if (response.txid) {
+            await setUrlState({ txid: response.txid });
+          }
         }
       } catch (error) {
         const message = error instanceof Error ? error.message : 'Failed to submit transaction';
@@ -210,6 +238,30 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
             <span className="ml-2 text-xs text-muted-foreground">({func.access})</span>
           </h2>
 
+          {readResult && readResult.okay && (
+            <div className="mb-6 p-4 border rounded-lg bg-muted/30 space-y-3">
+              <div className="flex items-center justify-between">
+                <h3 className="text-sm font-semibold">Function Result</h3>
+                <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">
+                  Success
+                </span>
+              </div>
+              <div className="font-mono text-sm p-3 bg-background border rounded-md break-all shadow-sm">
+                {readResult.clarity}
+              </div>
+              {typeof readResult.value !== 'undefined' && (
+                <div className="space-y-1">
+                  <span className="text-[10px] text-muted-foreground font-medium uppercase">
+                    JSON Value
+                  </span>
+                  <pre className="text-xs p-3 bg-background border rounded-md overflow-auto max-h-60 shadow-sm">
+                    {JSON.stringify(readResult.value, null, 2)}
+                  </pre>
+                </div>
+              )}
+            </div>
+          )}
+
           <form
             onSubmit={e => {
               e.preventDefault();
@@ -242,9 +294,17 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
                   </div>
                 )}
 
-                <Button type="submit" className="w-full mt-4">
-                  Build Transaction
-                </Button>
+                <form.Subscribe selector={state => state.isSubmitting}>
+                  {(isSubmitting: boolean) => (
+                    <Button type="submit" className="w-full mt-4" disabled={isSubmitting}>
+                      {isSubmitting
+                        ? 'Processing...'
+                        : func.access === 'read_only'
+                        ? 'Call Function'
+                        : 'Build Transaction'}
+                    </Button>
+                  )}
+                </form.Subscribe>
               </FieldGroup>
             </form.AppForm>
           </form>

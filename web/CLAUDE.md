@@ -43,5 +43,6 @@ Example of using the `TextField` component in a form:
 - You can use the playwriter tool when you need to debug the app.
   - If you're debugging the tx builder, try this route for a good complex example: http://localhost:3000/tx/testnet/ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.tester/complex-args
   - A good "simple" example: http://localhost:3000/tx/mainnet/SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9.token-abtc/transfer
+- To debug transaction stuff, the contract @demo-project/contracts/tester.clar is deployed to testnet at `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.tester`.
 - When you've made some progress on the overall "tx builder" feature, make sure you update the `web/history/tx-builder-progress.md` file to reflect your changes.
   - Also, if you need that context, feel free to read it!
