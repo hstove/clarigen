@@ -46,6 +46,7 @@
     "isomorphic-ws": "^5.0.0",
     "lucide-react": "^0.544.0",
     "nitro": "latest",
+    "nuqs": "^2.8.5",
     "openapi-fetch": "^0.15.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
