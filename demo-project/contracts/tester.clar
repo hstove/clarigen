@@ -1,4 +1,7 @@
-(define-map simple-map uint bool)
+(define-map simple-map
+  uint
+  bool
+)
 
 (define-constant ERR_ONE (err u1))
 (define-constant ERR_TWO (err u2))
@@ -8,12 +11,15 @@
 
 (define-non-fungible-token tuple-nft {
   a: uint,
-  b: bool
+  b: bool,
 })
 
 (define-fungible-token ft)
 
-(define-public (set-in-map (key uint) (val bool))
+(define-public (set-in-map
+    (key uint)
+    (val bool)
+  )
   (ok (map-set simple-map key val))
 )
 
@@ -35,7 +41,10 @@
 )
 
 (define-read-only (ro-resp (return-err bool))
-  (if return-err (err u100) (ok "asdf"))
+  (if return-err
+    (err u100)
+    (ok "asdf")
+  )
 )
 
 (define-public (print-pub)
@@ -47,13 +56,13 @@
   )
 )
 
-(define-read-only (get-tup) {
-  a: u1,
-  bool-prop: true,
-  tuple-prop: {
-    sub-prop: "asdf"
+(define-read-only (get-tup)
+  {
+    a: u1,
+    bool-prop: true,
+    tuple-prop: { sub-prop: "asdf" },
   }
-})
+)
 
 (define-read-only (merge-tuple (i { min-height: uint }))
   (merge i { max-height: u100000 })
@@ -70,4 +79,26 @@
   (get-tenure-info? burnchain-header-hash u1)
 )
 
-(define-read-only (clarity-4-test) stacks-block-time)
+(define-read-only (clarity-4-test)
+  stacks-block-time
+)
+
+(define-public (complex-args
+    (a uint)
+    (b int)
+    (c bool)
+    (d principal)
+    (f (buff 10))
+    (g (string-ascii 10))
+    (h (string-utf8 10))
+    (i (optional uint))
+    (j (list 10 uint))
+    (k {
+      a: uint,
+      b: bool,
+    })
+    (l (response uint uint))
+    (m (optional uint))
+  )
+  (ok true)
+)

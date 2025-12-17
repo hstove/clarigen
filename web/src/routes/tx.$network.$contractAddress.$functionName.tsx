@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { NETWORK, Network } from '@/lib/constants';
 import { type ClarityAbiType, getTypeString } from '@clarigen/core';
 import { type } from 'arktype';
@@ -9,6 +9,7 @@ import { ClarityField } from '@/components/tx-builder';
 import { Button } from '@/components/ui/button';
 import { FieldGroup } from '@/components/ui/field';
 import { useContractFunction } from '@/hooks/use-contract-abi';
+import { useTxUrlState } from '@/hooks/use-tx-url-state';
 
 function parseNetwork(network: string): NETWORK | null {
   const result = Network(network);
@@ -131,20 +132,33 @@ type TxBuilderFormProps = {
 };
 
 function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
-  const defaultValues = useMemo(() => {
+  const { urlState, setUrlState } = useTxUrlState(func.args);
+
+  // Compute initial values only once based on URL state at mount time
+  const initialValues = useMemo(() => {
     const values: Record<string, unknown> = {};
     for (const arg of func.args) {
-      values[arg.name] = getDefaultValue(arg.type);
+      const urlValue = urlState[arg.name];
+      values[arg.name] = urlValue !== undefined ? urlValue : getDefaultValue(arg.type);
     }
     return values;
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only compute on mount
   }, [func.args]);
 
   const form = useAppForm({
-    defaultValues,
+    defaultValues: initialValues,
     onSubmit: ({ value }) => {
       console.log('Form submitted:', value);
     },
   });
+
+  // Sync form changes to URL
+  useEffect(() => {
+    return form.store.subscribe(() => {
+      const formValues = form.store.state.values;
+      setUrlState(formValues);
+    });
+  }, [form.store, setUrlState]);
 
   return (
     <div className="container mx-auto p-6 max-w-2xl">

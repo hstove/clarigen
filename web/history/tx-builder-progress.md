@@ -187,6 +187,64 @@ We added `web/src/hooks/use-stacks.ts` to handle the wallet connection.
 - Moved tx builder data loading to client-side TanStack Query hooks; the route no longer fetches ABI via the loader and instead uses `useContractFunction` inside the component.
 - Added inline loading/error/invalid-state handling for the tx builder page, keeping the form initialization keyed to the fetched function.
 
-## Next: Task 4 - URL State & Validation
+## Completed: Task 4 - URL State with nuqs
 
-Persist form values in URL query params using nuqs and add Clarity-specific validation.
+### What was done
+
+Added URL state management using nuqs so form values sync bidirectionally with URL query params. Users can now share pre-filled transaction links.
+
+### File created
+
+`web/src/hooks/use-tx-url-state.ts`
+
+### Implementation details
+
+**Custom parsers for Clarity types**:
+
+- `parseAsOptional` - Handles `{ isNone: boolean, value: unknown }` structure
+- `parseAsList` - JSON serialization for array values
+- `parseAsTuple` - JSON serialization for object values
+- Primitives use built-in `parseAsString` and `parseAsBoolean`
+
+**Parser mapping**:
+
+| Clarity Type       | nuqs Parser      | Serialization           |
+| ------------------ | ---------------- | ----------------------- |
+| `uint128`          | parseAsString    | Direct string           |
+| `int128`           | parseAsString    | Direct string           |
+| `bool`             | parseAsBoolean   | `true`/`false`          |
+| `principal`        | parseAsString    | Direct string           |
+| `trait_reference`  | parseAsString    | Direct string           |
+| `(buff N)`         | parseAsString    | Hex string              |
+| `(string-ascii N)` | parseAsString    | Direct string           |
+| `(string-utf8 N)`  | parseAsString    | Direct string           |
+| `(optional T)`     | parseAsOptional  | JSON with isNone flag   |
+| `(list N T)`       | parseAsList      | JSON array              |
+| `{tuple ...}`      | parseAsTuple     | JSON object             |
+
+**Hook API**:
+
+```ts
+const { urlState, setUrlState } = useTxUrlState(func.args);
+```
+
+- `urlState` - Current values from URL query params
+- `setUrlState` - Update URL with new form values
+
+**Route integration**:
+
+- Form initializes with URL state values (falls back to defaults)
+- Form changes sync to URL via `form.store.subscribe()`
+- Initial values computed once on mount to avoid re-initialization loops
+
+### Example URLs
+
+```
+/tx/mainnet/SP.../transfer?amount=1000&recipient=SP...
+/tx/testnet/ST.../mint?enabled=true
+```
+
+### Files modified
+
+- Created: `web/src/hooks/use-tx-url-state.ts`
+- Modified: `web/src/routes/tx.$network.$contractAddress.$functionName.tsx` - integrated URL state hook
