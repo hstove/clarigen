@@ -3,7 +3,7 @@
   "mode": "file-router",
   "typescript": true,
   "tailwind": true,
-  "packageManager": "bun",
+  "packageManager": "pnpm",
   "addOnOptions": {},
   "git": true,
   "version": 1,
@@ -11,8 +11,9 @@
   "chosenAddOns": [
     "nitro",
     "start",
+    "shadcn",
+    "oRPC",
     "form",
-    "tanstack-query",
-    "shadcn"
+    "tanstack-query"
   ]
 }
