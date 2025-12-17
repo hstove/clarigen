@@ -3,4 +3,5 @@ packages:
   - '!**/test/**'
   - 'demo-project'
   - 'docs-site'
+  - 'web'
 hoist: false
