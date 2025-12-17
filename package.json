@@ -39,7 +39,7 @@
     "tsdown": "^0.17.0",
     "turbo": "1.2.5",
     "typedoc": "0.25.13",
-    "typescript": "5.4.5",
+    "typescript": "5.9.3",
     "vitest": "3.2.4"
   },
   "dependencies": {
@@ -47,7 +47,7 @@
     "jsonfile": "^6.1.0"
   },
   "resolutions": {
-    "typescript": "5.4.5",
+    "typescript": "5.9.3",
     "whatwg-url": "^14.0.0"
   },
   "overrides": {
