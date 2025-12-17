@@ -185,6 +185,7 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
             contract: contractId as `${string}.${string}`,
             functionName: func.name,
             functionArgs: clarityArgs.map(arg => cvToHex(arg)),
+            postConditionMode: 'allow',
           });
 
           if (response.txid) {
