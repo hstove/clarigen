@@ -1,9 +1,10 @@
-import { createClient } from '@stacks/blockchain-api-client';
+import createClient from 'openapi-fetch';
+import type { paths } from '../types/stacks-blockchain-api';
 import { NETWORK } from './constants';
 import { ClarityAbi } from '@stacks/transactions';
 
 export function getStacksApi(network: NETWORK) {
-  return createClient({
+  return createClient<paths>({
     baseUrl: network === 'mainnet' ? 'https://api.hiro.so' : 'https://api.testnet.hiro.so',
   });
 }
