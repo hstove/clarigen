@@ -1,9 +1,11 @@
 import { cvToHex, hexToCV } from '@stacks/transactions';
+export { cvToHex, hexToCV };
 import { StacksTransactionWire, broadcastTransaction } from '@stacks/transactions';
 import { cvToJSON, cvToValue, expectErr, expectOk, Jsonize } from '../clarity-types';
 import { Response, TypedAbiMap } from '../abi-types';
 import { ContractCall } from '../factory-types';
 import { mapFactory } from '../factory';
+export * from './call-read-only';
 import { callReadOnlyFunction } from './call-read-only';
 import { generateUrl, getHeaders, v2Endpoint } from './api-helpers';
 import { StacksNetwork, StacksNetworkName, networkFrom } from '@stacks/network';
@@ -186,3 +188,5 @@ export class ClarigenClient {
     return roErr(tx, this.roOptions(options || {})) as Promise<JsonIf<O, T>>;
   }
 }
+
+export * from './url-parsing';

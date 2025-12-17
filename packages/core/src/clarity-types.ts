@@ -19,6 +19,7 @@ import {
   bufferCV,
   parseToCV as _parseToCV,
 } from '@stacks/transactions';
+
 import {
   Response,
   ResponseOk,
@@ -39,11 +40,35 @@ import {
   ClarityAbiMap,
   ClarityAbiFunction,
   ClarityAbiType,
+  ClarityAbiArg,
   TypedAbiFunction,
   TypedAbiArg,
   StacksEpochId,
   ClarityVersion,
 } from './abi-types';
+export type {
+  ClarityAbiTypeUInt128,
+  ClarityAbiTypeBool,
+  ClarityAbiTypeBuffer,
+  ClarityAbiTypeInt128,
+  ClarityAbiTypeList,
+  ClarityAbiTypeNone,
+  ClarityAbiTypeOptional,
+  ClarityAbiTypePrimitive,
+  ClarityAbiTypePrincipal,
+  ClarityAbiTypeResponse,
+  ClarityAbiTypeStringAscii,
+  ClarityAbiTypeStringUtf8,
+  ClarityAbiTypeTraitReference,
+  ClarityAbiMap,
+  ClarityAbiFunction,
+  ClarityAbiType,
+  ClarityAbiArg,
+  TypedAbiFunction,
+  TypedAbiArg,
+  StacksEpochId,
+  ClarityVersion,
+};
 import { toCamelCase, toKebabCase, bytesToHex, bytesToAscii, hexToBytes } from './utils';
 
 export function ok<T, Err = never>(value: T): ResponseOk<T, Err> {

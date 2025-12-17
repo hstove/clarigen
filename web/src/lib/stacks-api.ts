@@ -4,13 +4,16 @@ import { NETWORK } from './constants';
 import { ClarityAbi } from '@stacks/transactions';
 import { format } from 'dnum';
 
+export function getStacksApiUrl(network: NETWORK) {
+  return network === 'mainnet'
+    ? 'https://api.hiro.so'
+    : network === 'devnet'
+    ? 'http://localhost:3999'
+    : 'https://api.testnet.hiro.so';
+}
+
 export function getStacksApi(network: NETWORK) {
-  const baseUrl =
-    network === 'mainnet'
-      ? 'https://api.hiro.so'
-      : network === 'devnet'
-        ? 'http://localhost:3999'
-        : 'https://api.testnet.hiro.so';
+  const baseUrl = getStacksApiUrl(network);
 
   return createClient<paths>({
     baseUrl,

@@ -373,3 +373,45 @@ Implemented transaction submission via Stacks wallet integration. The form now b
 
 - `web/src/hooks/use-tx-url-state.ts` - added `txid` to URL state parsers
 - `web/src/routes/tx.$network.$contractAddress.$functionName.tsx` - integrated `stx_callContract` and submission UI
+
+## Completed: Task 7 - Read-only API Route with Shared URL Parsing
+
+### What was done
+
+Implemented a server-side GET API route for executing read-only functions, sharing the same URL parameter parsing logic as the Transaction Builder UI.
+
+### Key implementation details
+
+**Shared URL Parsing Logic**:
+
+- Created `packages/core/src/api/url-parsing.ts` to host shared logic between front-end and back-end.
+- Moved `formValueToCV` and related utilities from `web/` to `@clarigen/core`.
+- Added `parseQueryValue` and `queryToFunctionArgs` for server-side parsing of raw query parameters.
+
+**API Route**:
+
+- Created `web/src/routes/read.$network.$contractAddress.$functionName.ts`.
+- Path: `/read/$network/$contractAddress/$functionName`
+- Example: `/read/mainnet/SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9.token-abtc/get-balance?address=SP123...`
+- Returns a JSON response with:
+  - `okay`: boolean success flag
+  - `result`: hex-encoded Clarity Value
+  - `value`: JSON representation (with bigints as strings)
+  - `clarity`: Clarity notation string
+
+**Documentation**:
+
+- Created `web/history/url-mapping.md` documenting the mapping of URL states to Clarity values for future reference and consistency.
+
+### Files created
+
+- `packages/core/src/api/url-parsing.ts`
+- `web/src/routes/read.$network.$contractAddress.$functionName.ts`
+- `web/history/url-mapping.md`
+
+### Files modified
+
+- `packages/core/src/clarity-types.ts` - exported additional CV utilities
+- `packages/core/src/api/index.ts` - exported new URL parsing module
+- `web/src/lib/clarity-form-utils.ts` - refactored to use shared logic from `@clarigen/core`
+- `web/src/lib/stacks-api.ts` - added `getStacksApiUrl` helper
