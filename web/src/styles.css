@@ -8,6 +8,8 @@
 
 @import "@fontsource-variable/inter";
 
+@import "@fontsource/ibm-plex-mono";
+
 @custom-variant dark (&:is(.dark *));
 
 body {
@@ -197,6 +199,7 @@ code {
   --color-sidebar-ring: var(--sidebar-ring);
   --font-sans:
     'Inter Variable', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
   --radius-2xl:
     calc(var(--radius) + 8px);
   --radius-3xl:

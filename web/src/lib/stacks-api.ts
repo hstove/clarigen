@@ -2,6 +2,7 @@ import createClient from 'openapi-fetch';
 import type { paths } from '../types/stacks-blockchain-api';
 import { NETWORK } from './constants';
 import { ClarityAbi } from '@stacks/transactions';
+import { format } from 'dnum';
 
 export function getStacksApi(network: NETWORK) {
   return createClient<paths>({
@@ -33,4 +34,26 @@ export async function getContractAbi(network: NETWORK, contractId: string) {
   }
   const abi = JSON.parse(abiStr) as ClarityAbi;
   return abi;
+}
+
+export async function getStxBalance(network: NETWORK, address: string) {
+  const client = getStacksApi(network);
+  const { data, error, response } = await client.GET(
+    '/extended/v2/addresses/{principal}/balances/stx',
+    {
+      params: {
+        path: {
+          principal: address,
+        },
+      },
+    }
+  );
+  if (!data) {
+    throw new Error(`Failed to get STX balance. Status ${response.status}. ${error?.message}`);
+  }
+  const { balance } = data;
+  return {
+    balance,
+    balanceFormatted: format([BigInt(balance), 6]),
+  };
 }

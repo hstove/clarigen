@@ -135,3 +135,47 @@ For example: `bd create --help` shows `--parent`, `--deps`, `--assignee`, etc.
 - ❌ Do NOT use external issue trackers
 - ❌ Do NOT duplicate tracking systems
 - ❌ Do NOT clutter repo root with planning documents
+
+<skills_system priority="1">
+
+## Available Skills
+
+<!-- SKILLS_TABLE_START -->
+<usage>
+When users ask you to perform tasks, check if any of the available skills below can help complete the task more effectively. Skills provide specialized capabilities and domain knowledge.
+
+How to use skills:
+- Invoke: Bash("openskills read <skill-name>")
+- The skill content will load with detailed instructions on how to complete the task
+- Base directory provided in output for resolving bundled resources (references/, scripts/, assets/)
+
+Usage notes:
+- Only use skills listed in <available_skills> below
+- Do not invoke a skill that is already loaded in your context
+- Each skill invocation is stateless
+</usage>
+
+<available_skills>
+
+<skill>
+<name>dnum</name>
+<description>Handle cryptocurrency amounts and big decimals using dnum. Use when working with token amounts, prices, blockchain decimals (e.g. 18 decimals for ETH), or any bigint arithmetic with decimal precision.</description>
+<location>global</location>
+</skill>
+
+<skill>
+<name>stacks-connect</name>
+<description>`@stacks/connect` is a library for connecting Stacks wallets to web apps.</description>
+<location>global</location>
+</skill>
+
+<skill>
+<name>tanstack-form</name>
+<description>TanStack Form for React - powerful form management with TypeScript support, headless UI components, validation, and more</description>
+<location>global</location>
+</skill>
+
+</available_skills>
+<!-- SKILLS_TABLE_END -->
+
+</skills_system>

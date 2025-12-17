@@ -3,37 +3,45 @@
 ## Completed: Task 1 - Route Setup
 
 ### What was done
+
 Created the tx builder route at `web/src/routes/tx.$network.$contractAddress.$functionName.tsx`
 
 ### Key implementation details
 
 **Route path**: `/tx/$network/$contractAddress/$functionName`
+
 - Example: `/tx/mainnet/SP120SBRBQJ00MCWS7TM5R8WJNTTKD5K0HFRC2CNE.usdcx-v1/transfer`
 
 **Param validation**:
+
 - `network`: Validated against arktype `Network` type, only allows 'mainnet' | 'testnet' (devnet excluded)
 - `contractAddress`: Must contain exactly one `.` separator (e.g., `SP123.contract-name`)
 - `functionName`: Validated against fetched ABI, must be public or read_only (not private)
 
 **Loader**:
+
 - Fetches contract ABI via `getContractAbi(network, contractId)` from `@/lib/stacks-api`
 - Finds matching function in `abi.functions`
 - Returns `{ network, contractId, contract, func, abi }` to component
 - Throws `notFound()` for invalid params
 
 **Component**:
+
 - Basic scaffold showing network, contract ID, function name, and argument types
 - Uses `getTypeString()` from `@clarigen/core` to display Clarity types
 
 ### Dependencies added
+
 - `@clarigen/core` added as workspace dependency to web package
 
 ### Files modified
+
 - Created: `web/src/routes/tx.$network.$contractAddress.$functionName.tsx`
 - Modified: `web/src/components/Header.tsx` (removed stale demo links)
 - Modified: `web/package.json` (added @clarigen/core)
 
 ### Related code references
+
 - ABI types: `packages/core/src/abi-types.ts`
 - Type checkers & parseToCV: `packages/core/src/clarity-types.ts`
 - Stacks API helpers: `web/src/lib/stacks-api.ts`
@@ -42,30 +50,36 @@ Created the tx builder route at `web/src/routes/tx.$network.$contractAddress.$fu
 ## Completed: Task 2 - ABI Fetching Hook
 
 ### What was done
+
 Created TanStack Query hooks for fetching contract ABI and extracting function metadata.
 
 ### File created
+
 `web/src/hooks/use-contract-abi.ts`
 
 ### Hooks exported
 
 **useContractAbi(network, contractId)**
+
 - Fetches the full contract ABI using TanStack Query
 - Query key: `['contractAbi', network, contractId]`
 - Returns the standard useQuery result with `data` as `ClarityAbi`
 
 **useContractFunction(network, contractId, functionName)**
+
 - Uses `useContractAbi` internally
 - Finds and returns a single function by name
 - Filters out private functions (only returns public/read_only)
 - Returns `{ data: ClarityAbiFunction | undefined, isLoading, error, ... }`
 
 **useContractFunctions(network, contractId)**
+
 - Uses `useContractAbi` internally
 - Returns all non-private functions from the contract
 - Useful for function picker/selector components
 
 ### Notes
+
 - The ABI types come from `@stacks/transactions` (via `getContractAbi` return type)
 - The route loader already fetches ABI server-side; these hooks are for client-side re-fetching or other components
 - No type predicates used to avoid conflicts between `@clarigen/core` and `@stacks/transactions` type definitions
@@ -73,9 +87,11 @@ Created TanStack Query hooks for fetching contract ABI and extracting function m
 ## Completed: Task 3 - Clarity Type Form Field Components
 
 ### What was done
+
 Created form input components for each Clarity type, enabling dynamic form generation based on contract ABI.
 
 ### Directory structure
+
 ```
 web/src/components/tx-builder/
 ├── index.ts                    # Re-exports ClarityField
@@ -94,48 +110,54 @@ web/src/components/tx-builder/
 
 ### Type → Component mapping
 
-| Clarity Type | Component | Notes |
-|-------------|-----------|-------|
-| `uint128` | NumberField | Text input with numeric inputMode |
-| `int128` | NumberField | Same as uint, with signed flag |
-| `bool` | BoolField | Switch toggle |
-| `principal` | PrincipalField | Text input for SP.../ST... addresses |
-| `trait_reference` | PrincipalField | Same with requireContract flag |
-| `(buff N)` | BufferField | Hex input with byte length display |
-| `(string-ascii N)` | StringAsciiField | Text with maxLength + char count |
-| `(string-utf8 N)` | StringUtf8Field | Same as ASCII |
-| `(optional T)` | OptionalField | Toggle for none + recursive ClarityField |
-| `(list N T)` | ListField | Add/remove buttons + recursive fields |
-| `{tuple ...}` | TupleField | Nested FieldGroup with recursive fields |
+| Clarity Type       | Component        | Notes                                    |
+| ------------------ | ---------------- | ---------------------------------------- |
+| `uint128`          | NumberField      | Text input with numeric inputMode        |
+| `int128`           | NumberField      | Same as uint, with signed flag           |
+| `bool`             | BoolField        | Switch toggle                            |
+| `principal`        | PrincipalField   | Text input for SP.../ST... addresses     |
+| `trait_reference`  | PrincipalField   | Same with requireContract flag           |
+| `(buff N)`         | BufferField      | Hex input with byte length display       |
+| `(string-ascii N)` | StringAsciiField | Text with maxLength + char count         |
+| `(string-utf8 N)`  | StringUtf8Field  | Same as ASCII                            |
+| `(optional T)`     | OptionalField    | Toggle for none + recursive ClarityField |
+| `(list N T)`       | ListField        | Add/remove buttons + recursive fields    |
+| `{tuple ...}`      | TupleField       | Nested FieldGroup with recursive fields  |
 
 ### Key implementation details
 
 **ClarityField dispatcher** (`clarity-field.tsx`):
+
 - Uses type checkers from `@clarigen/core` (isClarityAbiPrimitive, isClarityAbiBuffer, etc.)
 - Renders appropriate field component based on ClarityAbiType
 - Recursive for nested types (optional, list, tuple)
 
 **Complex fields (optional, list, tuple)**:
+
 - Use both `useFieldContext()` and `useFormContext()` from TanStack Form
 - Nested fields created via `form.Field` with dynamic name paths (e.g., `${field.name}.value`)
 - ListField uses `field.pushValue()` and `field.removeValue()` for array manipulation
 
 **UI components used**:
+
 - Input, Button, Switch from `@/components/ui/`
 - Field, FieldLabel, FieldError, FieldDescription, FieldGroup from `@/components/ui/field`
 
 ### Route integration
 
 Updated `tx.$network.$contractAddress.$functionName.tsx`:
+
 - Uses `useAppForm` with dynamic defaultValues computed from function args
 - Wraps form in `form.AppForm` for context
 - Renders ClarityField for each function argument
 - Form submission logs values to console (ready for transaction building)
 
 ### Dependencies added
+
 - `viem` - for hex utilities in buffer handling
 
 ### Files created
+
 - `web/src/components/tx-builder/clarity-field.tsx`
 - `web/src/components/tx-builder/index.ts`
 - `web/src/components/tx-builder/fields/number-field.tsx`
@@ -149,8 +171,15 @@ Updated `tx.$network.$contractAddress.$functionName.tsx`:
 - `web/src/components/tx-builder/fields/tuple-field.tsx`
 
 ### Files modified
+
 - `web/src/routes/tx.$network.$contractAddress.$functionName.tsx` - integrated form with ClarityField
 - `web/package.json` - added viem dependency
+
+## Stacks wallet connection
+
+In the header component (`web/src/components/header.tsx`), we added the `WalletButton` component.
+
+We added `web/src/hooks/use-stacks.ts` to handle the wallet connection.
 
 ## Next: Task 4 - URL State & Validation
 
