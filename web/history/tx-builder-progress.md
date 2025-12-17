@@ -278,3 +278,67 @@ Nested form fields (optional values, tuple members, list items) displayed `[obje
 - `web/src/components/tx-builder/fields/list-field.tsx`
 - `web/src/hooks/use-tx-url-state.ts`
 - `web/src/routes/tx.$network.$contractAddress.$functionName.tsx` (cleanup)
+
+## Completed: Task 5 - Form Value to ClarityValue Conversion
+
+### What was done
+
+Implemented conversion of form values to ClarityValue types on form submission, enabling the tx builder to produce properly encoded arguments ready for transaction building.
+
+### File created
+
+`web/src/lib/clarity-form-utils.ts`
+
+### Functions exported
+
+**formValueToCV(value, type)**
+
+- Converts a single form value to a ClarityValue using the ABI type
+- Handles response types directly (since `parseToCV` doesn't support them)
+- Delegates to `parseToCV` from `@clarigen/core` for other types after transformation
+
+**formValuesToFunctionArgs(formValues, args)**
+
+- Converts all form values to an array of ClarityValues based on function ABI
+- Returns array in the same order as the args definition
+- Ready for use with `makeContractCall`
+
+### Type conversions handled
+
+| Form Value | Clarity Type | Transformation |
+| --- | --- | --- |
+| `string` | uint128/int128 | Direct to `parseToCV` |
+| `boolean` | bool | Direct to `parseToCV` |
+| `string` | principal | Direct to `parseToCV` |
+| `string` | trait_reference | Direct to `parseToCV` |
+| `string` (hex) | buffer | Convert to `Uint8Array` via `hexToBytes` |
+| `string` | string-ascii/utf8 | Direct to `parseToCV` |
+| `{ isNone, value }` | optional | Convert to `null` or inner value |
+| `array` | list | Recursively convert items |
+| `object` | tuple | Recursively convert members |
+| `{ isOk, value }` | response | Use `responseOkCV` or `responseErrorCV` |
+
+### Route integration
+
+Updated `tx.$network.$contractAddress.$functionName.tsx`:
+
+- Form `onSubmit` handler now converts values to ClarityValues
+- Added error state for conversion failures
+- Displays conversion errors in UI
+- Logs both raw form values and Clarity notation to console
+
+### Example output
+
+```
+Form submitted: {amount: 1000000, sender: SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9, ...}
+ClarityValue arguments: [Object, Object, Object, Object]
+Arguments (Clarity notation): [u1000000, 'SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9, ..., none]
+```
+
+### Files created
+
+- `web/src/lib/clarity-form-utils.ts`
+
+### Files modified
+
+- `web/src/routes/tx.$network.$contractAddress.$functionName.tsx` - integrated conversion and error handling

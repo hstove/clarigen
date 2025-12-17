@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { NETWORK, Network } from '@/lib/constants';
-import { type ClarityAbiType, getTypeString } from '@clarigen/core';
+import { type ClarityAbiType, getTypeString, cvToString } from '@clarigen/core';
 import { type } from 'arktype';
 import { useAppForm } from '@/hooks/form';
 import { fieldContext } from '@/hooks/form-context';
@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { FieldGroup } from '@/components/ui/field';
 import { useContractFunction } from '@/hooks/use-contract-abi';
 import { useTxUrlState } from '@/hooks/use-tx-url-state';
+import { formValuesToFunctionArgs } from '@/lib/clarity-form-utils';
 
 function parseNetwork(network: string): NETWORK | null {
   const result = Network(network);
@@ -133,6 +134,7 @@ type TxBuilderFormProps = {
 
 function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
   const { urlState, setUrlState } = useTxUrlState(func.args);
+  const [conversionError, setConversionError] = useState<string | null>(null);
 
   // Compute initial values only once based on URL state at mount time
   const initialValues = useMemo(() => {
@@ -148,7 +150,20 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
   const form = useAppForm({
     defaultValues: initialValues,
     onSubmit: ({ value }) => {
-      console.log('Form submitted:', value);
+      setConversionError(null);
+      try {
+        const clarityArgs = formValuesToFunctionArgs(value, func.args);
+        console.log('Form submitted:', value);
+        console.log('ClarityValue arguments:', clarityArgs);
+        console.log(
+          'Arguments (Clarity notation):',
+          clarityArgs.map((cv) => cvToString(cv))
+        );
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Failed to convert form values';
+        setConversionError(message);
+        console.error('Conversion error:', error);
+      }
     },
   });
 
@@ -202,6 +217,12 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
                       )}
                     </form.Field>
                   ))
+                )}
+
+                {conversionError && (
+                  <div className="p-3 text-sm text-destructive bg-destructive/10 rounded-md">
+                    {conversionError}
+                  </div>
                 )}
 
                 <Button type="submit" className="w-full mt-4">
