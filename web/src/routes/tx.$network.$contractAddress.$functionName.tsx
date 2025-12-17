@@ -1,7 +1,6 @@
-import { createFileRoute, notFound } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { useMemo } from 'react';
 import { NETWORK, Network } from '@/lib/constants';
-import { getContractAbi } from '@/lib/stacks-api';
 import { type ClarityAbiType, getTypeString } from '@clarigen/core';
 import { type } from 'arktype';
 import { useAppForm } from '@/hooks/form';
@@ -9,11 +8,11 @@ import { fieldContext } from '@/hooks/form-context';
 import { ClarityField } from '@/components/tx-builder';
 import { Button } from '@/components/ui/button';
 import { FieldGroup } from '@/components/ui/field';
+import { useContractFunction } from '@/hooks/use-contract-abi';
 
 function parseNetwork(network: string): NETWORK | null {
   const result = Network(network);
   if (result instanceof type.errors) return null;
-  if (result === 'devnet') return null;
   return result;
 }
 
@@ -26,34 +25,6 @@ function parseContractAddress(contractAddress: string): { address: string; contr
 }
 
 export const Route = createFileRoute('/tx/$network/$contractAddress/$functionName')({
-  loader: async ({ params }) => {
-    const network = parseNetwork(params.network);
-    if (!network) {
-      throw notFound();
-    }
-
-    const contract = parseContractAddress(params.contractAddress);
-    if (!contract) {
-      throw notFound();
-    }
-
-    const abi = await getContractAbi(network, params.contractAddress);
-    const func = abi.functions.find(
-      (f) => f.name === params.functionName && f.access !== 'private'
-    );
-
-    if (!func) {
-      throw notFound();
-    }
-
-    return {
-      network,
-      contractId: params.contractAddress,
-      contract,
-      func,
-      abi,
-    };
-  },
   component: TxBuilderPage,
 });
 
@@ -87,8 +58,79 @@ function getDefaultValue(type: ClarityAbiType): unknown {
 }
 
 function TxBuilderPage() {
-  const { network, contractId, func } = Route.useLoaderData();
+  const { network: networkParam, contractAddress, functionName } = Route.useParams();
+  const network = parseNetwork(networkParam);
+  const contract = parseContractAddress(contractAddress);
 
+  if (!network || !contract) {
+    return (
+      <div className="container mx-auto p-6 max-w-2xl">
+        <p className="text-sm text-destructive">Invalid transaction URL.</p>
+      </div>
+    );
+  }
+
+  return (
+    <TxBuilderContent
+      network={network}
+      contractId={contractAddress}
+      functionName={functionName}
+    />
+  );
+}
+
+type TxBuilderContentProps = {
+  network: NETWORK;
+  contractId: string;
+  functionName: string;
+};
+
+function TxBuilderContent({ network, contractId, functionName }: TxBuilderContentProps) {
+  const { data: func, isLoading, error } = useContractFunction(network, contractId, functionName);
+
+  if (isLoading) {
+    return (
+      <div className="container mx-auto p-6 max-w-2xl">
+        <p className="text-sm text-muted-foreground">Loading contract function…</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container mx-auto p-6 max-w-2xl">
+        <p className="text-sm text-destructive">Failed to load contract data.</p>
+      </div>
+    );
+  }
+
+  if (!func) {
+    return (
+      <div className="container mx-auto p-6 max-w-2xl">
+        <p className="text-sm text-destructive">
+          Function not found or not accessible on this contract.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <TxBuilderForm
+      key={`${network}-${contractId}-${func.name}`}
+      network={network}
+      contractId={contractId}
+      func={func}
+    />
+  );
+}
+
+type TxBuilderFormProps = {
+  network: NETWORK;
+  contractId: string;
+  func: { name: string; access: string; args: { name: string; type: ClarityAbiType }[] };
+};
+
+function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
   const defaultValues = useMemo(() => {
     const values: Record<string, unknown> = {};
     for (const arg of func.args) {

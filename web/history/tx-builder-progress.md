@@ -181,6 +181,12 @@ In the header component (`web/src/components/header.tsx`), we added the `WalletB
 
 We added `web/src/hooks/use-stacks.ts` to handle the wallet connection.
 
+## Completed: clarigen-qfp - Client-side fetching & devnet support
+
+- Added devnet support by allowing the `devnet` network param and pointing Stacks API requests to `http://localhost:3999` when selected.
+- Moved tx builder data loading to client-side TanStack Query hooks; the route no longer fetches ABI via the loader and instead uses `useContractFunction` inside the component.
+- Added inline loading/error/invalid-state handling for the tx builder page, keeping the form initialization keyed to the fetched function.
+
 ## Next: Task 4 - URL State & Validation
 
 Persist form values in URL query params using nuqs and add Clarity-specific validation.

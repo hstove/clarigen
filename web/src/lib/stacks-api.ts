@@ -5,8 +5,15 @@ import { ClarityAbi } from '@stacks/transactions';
 import { format } from 'dnum';
 
 export function getStacksApi(network: NETWORK) {
+  const baseUrl =
+    network === 'mainnet'
+      ? 'https://api.hiro.so'
+      : network === 'devnet'
+        ? 'http://localhost:3999'
+        : 'https://api.testnet.hiro.so';
+
   return createClient<paths>({
-    baseUrl: network === 'mainnet' ? 'https://api.hiro.so' : 'https://api.testnet.hiro.so',
+    baseUrl,
   });
 }
 
