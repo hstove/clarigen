@@ -1,6 +1,6 @@
 import type { ClarityAbiType } from '@clarigen/core';
 import { useStore } from '@tanstack/react-form';
-import { useFieldContext, useFormContext } from '@/hooks/form-context';
+import { fieldContext, useFieldContext, useFormContext } from '@/hooks/form-context';
 import { Button } from '@/components/ui/button';
 import { FieldGroup, FieldLabel, FieldDescription } from '@/components/ui/field';
 import { ClarityField } from '../clarity-field';
@@ -49,12 +49,14 @@ export function ListField({ name, label, itemType, maxLength }: ListFieldProps) 
         <div key={index} className="flex gap-2 items-start">
           <div className="flex-1">
             <form.Field name={`${field.name}[${index}]` as never}>
-              {() => (
-                <ClarityField
-                  name={`${name}[${index}]`}
-                  type={itemType}
-                  label={`Item ${index + 1}`}
-                />
+              {(itemField) => (
+                <fieldContext.Provider value={itemField}>
+                  <ClarityField
+                    name={`${name}[${index}]`}
+                    type={itemType}
+                    label={`Item ${index + 1}`}
+                  />
+                </fieldContext.Provider>
               )}
             </form.Field>
           </div>

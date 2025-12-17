@@ -1,5 +1,5 @@
 import type { ClarityAbiType } from '@clarigen/core';
-import { useFieldContext, useFormContext } from '@/hooks/form-context';
+import { fieldContext, useFieldContext, useFormContext } from '@/hooks/form-context';
 import { FieldGroup, FieldLabel } from '@/components/ui/field';
 import { ClarityField } from '../clarity-field';
 
@@ -23,12 +23,14 @@ export function TupleField({ name, label, members }: TupleFieldProps) {
       {label && <FieldLabel>{label}</FieldLabel>}
       {members.map((member) => (
         <form.Field key={member.name} name={`${field.name}.${member.name}` as never}>
-          {() => (
-            <ClarityField
-              name={`${name}.${member.name}`}
-              type={member.type}
-              label={member.name}
-            />
+          {(memberField) => (
+            <fieldContext.Provider value={memberField}>
+              <ClarityField
+                name={`${name}.${member.name}`}
+                type={member.type}
+                label={member.name}
+              />
+            </fieldContext.Provider>
           )}
         </form.Field>
       ))}

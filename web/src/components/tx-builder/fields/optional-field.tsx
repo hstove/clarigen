@@ -1,6 +1,6 @@
 import type { ClarityAbiType } from '@clarigen/core';
 import { useStore } from '@tanstack/react-form';
-import { useFieldContext, useFormContext } from '@/hooks/form-context';
+import { fieldContext, useFieldContext, useFormContext } from '@/hooks/form-context';
 import { Switch as ShadcnSwitch } from '@/components/ui/switch';
 import { Field, FieldLabel, FieldGroup } from '@/components/ui/field';
 import { ClarityField } from '../clarity-field';
@@ -9,6 +9,35 @@ interface OptionalFieldProps {
   name: string;
   label?: string;
   innerType: ClarityAbiType;
+}
+
+function getDefaultValueForType(type: ClarityAbiType): unknown {
+  if (typeof type === 'string') {
+    switch (type) {
+      case 'bool':
+        return false;
+      case 'uint128':
+      case 'int128':
+      case 'principal':
+      case 'trait_reference':
+        return '';
+      case 'none':
+        return null;
+    }
+  }
+  if ('buffer' in type) return '';
+  if ('string-ascii' in type) return '';
+  if ('string-utf8' in type) return '';
+  if ('optional' in type) return { isNone: true, value: null };
+  if ('list' in type) return [];
+  if ('tuple' in type) {
+    const obj: Record<string, unknown> = {};
+    for (const member of type.tuple) {
+      obj[member.name] = getDefaultValueForType(member.type);
+    }
+    return obj;
+  }
+  return '';
 }
 
 export function OptionalField({ name, label, innerType }: OptionalFieldProps) {
@@ -23,9 +52,11 @@ export function OptionalField({ name, label, innerType }: OptionalFieldProps) {
           id={`${name}-toggle`}
           checked={!isNone}
           onCheckedChange={(checked) => {
+            const currentValue = field.state.value?.value;
+            const defaultValue = getDefaultValueForType(innerType);
             field.handleChange({
               isNone: !checked,
-              value: field.state.value?.value,
+              value: currentValue ?? defaultValue,
             });
           }}
         />
@@ -33,7 +64,11 @@ export function OptionalField({ name, label, innerType }: OptionalFieldProps) {
       </Field>
       {!isNone && (
         <form.Field name={`${field.name}.value` as never}>
-          {() => <ClarityField name={`${name}.value`} type={innerType} />}
+          {(valueField) => (
+            <fieldContext.Provider value={valueField}>
+              <ClarityField name={`${name}.value`} type={innerType} />
+            </fieldContext.Provider>
+          )}
         </form.Field>
       )}
     </FieldGroup>

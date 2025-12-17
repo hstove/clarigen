@@ -19,7 +19,12 @@ const parseAsOptional = createParser({
     try {
       const parsed = JSON.parse(value);
       if (typeof parsed === 'object' && parsed !== null && 'isNone' in parsed) {
-        return parsed as OptionalValue;
+        const opt = parsed as OptionalValue;
+        // Treat {isNone: false, value: null} as none - invalid state
+        if (!opt.isNone && opt.value === null) {
+          return { isNone: true, value: null };
+        }
+        return opt;
       }
       return { isNone: false, value: parsed };
     } catch {

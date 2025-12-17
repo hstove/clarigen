@@ -248,3 +248,33 @@ const { urlState, setUrlState } = useTxUrlState(func.args);
 
 - Created: `web/src/hooks/use-tx-url-state.ts`
 - Modified: `web/src/routes/tx.$network.$contractAddress.$functionName.tsx` - integrated URL state hook
+
+## Completed: Bug Fix - Nested Field Context
+
+### Problem
+
+Nested form fields (optional values, tuple members, list items) displayed `[object Object]` instead of their actual values when loaded from URL state.
+
+### Root Causes
+
+1. **Missing `fieldContext.Provider`**: In `TupleField`, `OptionalField`, and `ListField`, the nested `form.Field` components created new field instances but didn't provide them to React context. Child components using `useFieldContext()` received the parent field's value instead of the nested field's value.
+
+2. **Invalid optional state from URL**: The `parseAsOptional` parser could return `{isNone: false, value: null}` which is semantically invalid - "has a value" but "value is null".
+
+### Fixes Applied
+
+**Field context propagation** - Added `fieldContext.Provider` wrapper in nested field render functions:
+
+- `tuple-field.tsx`: Wrap each tuple member's `ClarityField` with its field context
+- `optional-field.tsx`: Wrap the `.value` nested field with its field context
+- `list-field.tsx`: Wrap each list item's `ClarityField` with its field context
+
+**Optional parser validation** - Modified `parseAsOptional` in `use-tx-url-state.ts` to treat `{isNone: false, value: null}` as `{isNone: true, value: null}`, converting the invalid state to "none".
+
+### Files modified
+
+- `web/src/components/tx-builder/fields/tuple-field.tsx`
+- `web/src/components/tx-builder/fields/optional-field.tsx`
+- `web/src/components/tx-builder/fields/list-field.tsx`
+- `web/src/hooks/use-tx-url-state.ts`
+- `web/src/routes/tx.$network.$contractAddress.$functionName.tsx` (cleanup)
