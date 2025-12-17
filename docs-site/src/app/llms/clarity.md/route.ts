@@ -1,12 +1,12 @@
 export const revalidate = 3600; // 1 hour
 
 export async function GET(request: Request) {
-  const slugs = ['reference/types.md', 'reference/functions.md', 'reference/keywords.md'];
+  const slugs = ['types.md', 'functions.md', 'keywords.md'];
 
   const docs = await Promise.all(
     slugs.map(async slug => {
       const doc = await fetch(
-        `https://raw.githubusercontent.com/stacks-network/docs/refs/heads/master/${slug}`
+        `https://raw.githubusercontent.com/stacks-network/docs/refs/heads/master/docs/reference/clarity/${slug}`
       );
 
       return doc.text();

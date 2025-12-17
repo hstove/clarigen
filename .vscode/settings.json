@@ -31,5 +31,11 @@
   },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "workbench.editor.customLabels.patterns": {
+    "**/app/**/route.ts": "${dirname}/route.ts",
+    "**/app/**/route.tsx": "${dirname}/route.tsx",
+    "**/app/**/page.tsx": "${dirname} - page.tsx"
+    // Add other file conventions as needed (layout.tsx, error.tsx, etc.)
   }
 }
