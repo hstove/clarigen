@@ -2,7 +2,7 @@ import createClient from 'openapi-fetch';
 import type { paths } from '../types/stacks-blockchain-api';
 import { StacksTransaction } from '../types/stacks-transaction';
 import { NETWORK } from './constants';
-import { ClarityAbi } from '@stacks/transactions';
+import { ClarityAbi } from '@clarigen/core';
 import { format } from 'dnum';
 
 export function getStacksApiUrl(network: NETWORK) {
@@ -39,12 +39,14 @@ export async function getContractInfo(network: NETWORK, contractId: string) {
 
 export async function getContractAbi(network: NETWORK, contractId: string) {
   const contractInfo = await getContractInfo(network, contractId);
-  const abiStr = contractInfo.abi;
+  return parseContractAbi(contractInfo.abi);
+}
+
+export function parseContractAbi(abiStr: string | null): ClarityAbi {
   if (!abiStr) {
     throw new Error('Expected ABI');
   }
-  const abi = JSON.parse(abiStr) as ClarityAbi;
-  return abi;
+  return JSON.parse(abiStr) as ClarityAbi;
 }
 
 export async function getStxBalance(network: NETWORK, address: string) {

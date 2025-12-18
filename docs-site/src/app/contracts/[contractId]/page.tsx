@@ -19,8 +19,11 @@ export default async function ContractPage({ params }: ContractPageProps) {
     <GeneratedContractFiles
       files={files}
       docsNode={<Mdx code={files.mdx} className="p-4" />}
+      // @ts-ignore
       typesNode={<CodeBlock code={files.types} language="typescript" showLineNumbers />}
+      // @ts-ignore
       usageNode={<CodeBlock code={files.usage} language="typescript" showLineNumbers />}
+      // @ts-ignore
       clarityNode={<CodeBlock code={files.clarity} language="clarity" showLineNumbers />}
       // usageNode={<Mdx code={files.us} className="p-4" />}
     />

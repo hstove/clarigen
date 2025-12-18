@@ -1,12 +1,38 @@
+import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getContractAbi } from '@/lib/stacks-api';
+import { getContractInfo, parseContractAbi } from '@/lib/stacks-api';
 import type { NETWORK } from '@/lib/constants';
+import type { ClarityAbi } from '@clarigen/core';
+
+export function useContractInfo(network: NETWORK, contractId: string) {
+  return useQuery({
+    queryKey: ['contractInfo', network, contractId],
+    queryFn: () => getContractInfo(network, contractId),
+  });
+}
 
 export function useContractAbi(network: NETWORK, contractId: string) {
-  return useQuery({
-    queryKey: ['contractAbi', network, contractId],
-    queryFn: () => getContractAbi(network, contractId),
-  });
+  const query = useContractInfo(network, contractId);
+  const { abi, error } = useMemo(() => {
+    if (!query.data) {
+      return { abi: undefined, error: undefined };
+    }
+    if (!query.data.abi) {
+      return { abi: undefined, error: new Error('Expected ABI') };
+    }
+    try {
+      return { abi: parseContractAbi(query.data.abi), error: undefined };
+    } catch (err) {
+      const parsedError = err instanceof Error ? err : new Error('Failed to parse ABI');
+      return { abi: undefined, error: parsedError };
+    }
+  }, [query.data]);
+
+  return {
+    ...query,
+    data: abi as ClarityAbi | undefined,
+    error: query.error ?? error,
+  };
 }
 
 export function useContractFunction(network: NETWORK, contractId: string, functionName: string) {
