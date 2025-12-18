@@ -18,10 +18,30 @@ import { usePostConditionsUrlState } from '@/hooks/use-post-conditions-url-state
 import { useTransaction } from '@/hooks/use-transaction';
 import { formValuesToFunctionArgs, txArgsToFormValues } from '@/lib/clarity-form-utils';
 import { buildPostConditions } from '@/lib/post-conditions';
+import { saveFormHistory } from '@/lib/value-history';
 import { ContextPanel } from '@/components/tx-builder/context-panel';
 import { PostConditionsField } from '@/components/tx-builder/post-conditions-field';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { Link } from '@tanstack/react-router';
+
+function serializeValueForHistory(value: unknown): string | null {
+  if (value === null || value === undefined) return null;
+
+  // Optional type with none selected - skip
+  if (typeof value === 'object' && 'isNone' in value) {
+    const optValue = value as { isNone: boolean; value: unknown };
+    if (optValue.isNone) return null;
+    return serializeValueForHistory(optValue.value);
+  }
+
+  // Skip complex types (arrays/lists, nested tuples)
+  if (Array.isArray(value)) return null;
+  if (typeof value === 'object') return null;
+
+  // Primitives: convert to string
+  const str = String(value);
+  return str.trim() === '' ? null : str;
+}
 
 function parseNetwork(network: string): NETWORK | null {
   const result = Network(network);
@@ -253,6 +273,23 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
     onSubmit: async ({ value }) => {
       setConversionError(null);
       setReadResult(null);
+
+      const saveHistory = () => {
+        const argsToSave = func.args
+          .map(arg => {
+            const serialized = serializeValueForHistory(value[arg.name]);
+            if (serialized === null) return null;
+            return {
+              name: arg.name,
+              type: getTypeString(arg.type),
+              value: serialized,
+            };
+          })
+          .filter((arg): arg is NonNullable<typeof arg> => arg !== null);
+
+        saveFormHistory(contractId, func.name, argsToSave);
+      };
+
       try {
         if (func.access === 'read_only') {
           const query = new URLSearchParams();
@@ -269,7 +306,9 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
           );
           const result = await response.json();
           setReadResult(result);
-          if (!result.okay) {
+          if (result.okay) {
+            saveHistory();
+          } else {
             setConversionError(result.error || 'Failed to call function');
           }
         } else {
@@ -284,6 +323,7 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
           });
 
           if (response.txid) {
+            saveHistory();
             await setUrlState({ txid: response.txid });
           }
         }
@@ -338,6 +378,7 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
               txError={txError}
               network={network}
               contractId={contractId}
+              functionName={func.name}
             />
           </div>
 

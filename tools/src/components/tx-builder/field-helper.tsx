@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useFocusedField, type FocusedField } from '@/hooks/use-focused-field';
 import {
   isClarityAbiPrimitive,
@@ -11,8 +12,10 @@ import {
 } from '@clarigen/core';
 import { UintHelper } from './helpers/uint-helper';
 import { PrincipalHelper as PrincipalHelperComponent } from './helpers/principal-helper';
+import { HistoryHelper } from './helpers/history-helper';
 import { X } from 'lucide-react';
 import type { NETWORK } from '@/lib/constants';
+import { cn } from '@/lib/utils';
 
 function getFieldTypeCategory(field: FocusedField): string {
   const { type } = field;
@@ -191,8 +194,44 @@ function NoFieldFocused() {
   return <p className="text-xs text-muted-foreground">Focus a field to see contextual help.</p>;
 }
 
-export function FieldHelper({ network, contractId }: { network: NETWORK; contractId: string }) {
+type TabId = 'tools' | 'recent';
+
+function TabButton({
+  id,
+  label,
+  active,
+  onClick,
+}: {
+  id: TabId;
+  label: string;
+  active: boolean;
+  onClick: (id: TabId) => void;
+}) {
+  return (
+    <button
+      type="button"
+      className={cn(
+        'px-3 py-1.5 font-mono text-xs transition-colors',
+        active
+          ? 'border-b-2 border-primary text-foreground'
+          : 'text-muted-foreground hover:text-foreground'
+      )}
+      onClick={() => onClick(id)}
+    >
+      {label}
+    </button>
+  );
+}
+
+interface FieldHelperProps {
+  network: NETWORK;
+  contractId: string;
+  functionName: string;
+}
+
+export function FieldHelper({ network, contractId, functionName }: FieldHelperProps) {
   const { focusedField, setFocusedField } = useFocusedField();
+  const [activeTab, setActiveTab] = useState<TabId>('tools');
 
   return (
     <div className="border border-border bg-card h-full">
@@ -209,11 +248,37 @@ export function FieldHelper({ network, contractId }: { network: NETWORK; contrac
           </button>
         )}
       </div>
+
+      {focusedField && (
+        <div className="flex border-b border-border">
+          <TabButton
+            id="tools"
+            label="tools"
+            active={activeTab === 'tools'}
+            onClick={setActiveTab}
+          />
+          <TabButton
+            id="recent"
+            label="recent"
+            active={activeTab === 'recent'}
+            onClick={setActiveTab}
+          />
+        </div>
+      )}
+
       <div className="p-4">
         {focusedField ? (
           <div className="space-y-4">
             <div className="font-mono text-sm font-medium">{focusedField.name}</div>
-            <FieldHelperContent field={focusedField} network={network} contractId={contractId} />
+            {activeTab === 'tools' ? (
+              <FieldHelperContent field={focusedField} network={network} contractId={contractId} />
+            ) : (
+              <HistoryHelper
+                contractId={contractId}
+                functionName={functionName}
+                field={focusedField}
+              />
+            )}
           </div>
         ) : (
           <NoFieldFocused />

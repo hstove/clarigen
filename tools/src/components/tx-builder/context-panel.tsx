@@ -10,6 +10,7 @@ interface ContextPanelProps {
   txError: Error | null;
   network: NETWORK;
   contractId: string;
+  functionName: string;
 }
 
 function TxStatusLoading({ txid, network }: { txid: string; network: NETWORK }) {
@@ -38,7 +39,14 @@ function TxStatusError({ txid, network }: { txid: string; network: NETWORK }) {
   );
 }
 
-export function ContextPanel({ txid, tx, txError, network, contractId }: ContextPanelProps) {
+export function ContextPanel({
+  txid,
+  tx,
+  txError,
+  network,
+  contractId,
+  functionName,
+}: ContextPanelProps) {
   // Result mode: show transaction status
   if (txid) {
     if (tx) {
@@ -51,5 +59,5 @@ export function ContextPanel({ txid, tx, txError, network, contractId }: Context
   }
 
   // Builder mode: show field helper
-  return <FieldHelper network={network} contractId={contractId} />;
+  return <FieldHelper network={network} contractId={contractId} functionName={functionName} />;
 }
