@@ -12,12 +12,13 @@ import { ClarityField } from '@/components/tx-builder';
 import { getClarityValidators } from '@/lib/clarity-validators';
 import { Button } from '@/components/ui/button';
 import { FieldGroup } from '@/components/ui/field';
-import { useContractFunction } from '@/hooks/use-contract-abi';
+import { useContractFunction, useContractFunctions } from '@/hooks/use-contract-abi';
 import { useTxUrlState } from '@/hooks/use-tx-url-state';
 import { useTransaction } from '@/hooks/use-transaction';
 import { formValuesToFunctionArgs, txArgsToFormValues } from '@/lib/clarity-form-utils';
 import { ContextPanel } from '@/components/tx-builder/context-panel';
 import { Breadcrumbs } from '@/components/breadcrumbs';
+import { Link } from '@tanstack/react-router';
 
 function parseNetwork(network: string): NETWORK | null {
   const result = Network(network);
@@ -94,11 +95,11 @@ function TxBuilderContent({ network, contractId, functionName }: TxBuilderConten
 
   if (!func) {
     return (
-      <div className="container mx-auto p-6 max-w-2xl">
-        <p className="text-sm text-destructive">
-          Function not found or not accessible on this contract.
-        </p>
-      </div>
+      <FunctionNotFound
+        network={network}
+        contractId={contractId}
+        requestedFunction={functionName}
+      />
     );
   }
 
@@ -109,6 +110,88 @@ function TxBuilderContent({ network, contractId, functionName }: TxBuilderConten
       contractId={contractId}
       func={func}
     />
+  );
+}
+
+function FunctionNotFound({
+  network,
+  contractId,
+  requestedFunction,
+}: {
+  network: NETWORK;
+  contractId: string;
+  requestedFunction: string;
+}) {
+  const { data: functions, isLoading } = useContractFunctions(network, contractId);
+
+  return (
+    <div className="mx-auto max-w-6xl px-6 py-8">
+      <div className="space-y-6 mb-6">
+        <Breadcrumbs network={network} contractId={contractId} functionName={requestedFunction} />
+        <div className="space-y-2">
+          <h1 className="font-mono text-lg font-medium tracking-tight">{contractId}</h1>
+          <p className="text-sm text-destructive font-mono">
+            Function "{requestedFunction}" not found.
+          </p>
+        </div>
+      </div>
+
+      <div className="border border-border bg-card">
+        <div className="border-b border-border px-4 py-3">
+          <h2 className="font-mono text-sm font-medium">Available Functions</h2>
+        </div>
+        <div className="p-4">
+          {isLoading ? (
+            <p className="text-sm text-muted-foreground font-mono italic">Loading functions...</p>
+          ) : !functions || functions.length === 0 ? (
+            <p className="text-sm text-muted-foreground font-mono italic">No functions found.</p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <h3 className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider mb-2">
+                  Public Functions
+                </h3>
+                <ul className="space-y-1">
+                  {functions
+                    .filter(f => f.access === 'public')
+                    .map(f => (
+                      <li key={f.name}>
+                        <Link
+                          to="/tx/$network/$contractAddress/$functionName"
+                          params={{ network, contractAddress: contractId, functionName: f.name }}
+                          className="text-sm font-mono text-primary hover:underline"
+                        >
+                          {f.name}
+                        </Link>
+                      </li>
+                    ))}
+                </ul>
+              </div>
+              <div>
+                <h3 className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider mb-2">
+                  Read-Only Functions
+                </h3>
+                <ul className="space-y-1">
+                  {functions
+                    .filter(f => f.access === 'read_only')
+                    .map(f => (
+                      <li key={f.name}>
+                        <Link
+                          to="/tx/$network/$contractAddress/$functionName"
+                          params={{ network, contractAddress: contractId, functionName: f.name }}
+                          className="text-sm font-mono text-primary hover:underline"
+                        >
+                          {f.name}
+                        </Link>
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 
