@@ -2,6 +2,7 @@ import type { ClarityAbiType } from '@clarigen/core';
 import { fieldContext, useFieldContext, useFormContext } from '@/hooks/form-context';
 import { FieldGroup, FieldLabel } from '@/components/ui/field';
 import { ClarityField } from '../clarity-field';
+import { getClarityValidators } from '@/lib/clarity-validators';
 
 interface TupleMember {
   name: string;
@@ -23,7 +24,11 @@ export function TupleField({ name, label, members, disabled }: TupleFieldProps) 
     <FieldGroup className="border border-border p-4 bg-muted/10">
       {label && <FieldLabel className="font-mono text-xs">{label}</FieldLabel>}
       {members.map(member => (
-        <form.Field key={member.name} name={`${field.name}.${member.name}` as never}>
+        <form.Field
+          key={member.name}
+          name={`${field.name}.${member.name}` as never}
+          validators={getClarityValidators(member.type)}
+        >
           {memberField => (
             <fieldContext.Provider value={memberField}>
               <ClarityField

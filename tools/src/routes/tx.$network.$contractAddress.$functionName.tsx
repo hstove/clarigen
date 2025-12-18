@@ -9,6 +9,7 @@ import { useAppForm } from '@/hooks/form';
 import { fieldContext } from '@/hooks/form-context';
 import { FocusedFieldProvider } from '@/hooks/use-focused-field';
 import { ClarityField } from '@/components/tx-builder';
+import { getClarityValidators } from '@/lib/clarity-validators';
 import { Button } from '@/components/ui/button';
 import { FieldGroup } from '@/components/ui/field';
 import { useContractFunction } from '@/hooks/use-contract-abi';
@@ -278,7 +279,11 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
                         <p className="text-sm text-muted-foreground font-mono">( no arguments )</p>
                       ) : (
                         func.args.map(arg => (
-                          <form.Field key={arg.name} name={arg.name as never}>
+                          <form.Field
+                            key={arg.name}
+                            name={arg.name as never}
+                            validators={getClarityValidators(arg.type)}
+                          >
                             {field => (
                               <fieldContext.Provider value={field}>
                                 <ClarityField
@@ -312,10 +317,19 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
                         clone to new
                       </Button>
                     ) : (
-                      <form.Subscribe selector={state => state.isSubmitting}>
-                        {(isSubmitting: boolean) => (
-                          <Button type="submit" className="w-full" disabled={isSubmitting}>
-                            {isSubmitting
+                      <form.Subscribe
+                        selector={state => ({
+                          isSubmitting: state.isSubmitting,
+                          canSubmit: state.canSubmit,
+                        })}
+                      >
+                        {(state: { isSubmitting: boolean; canSubmit: boolean }) => (
+                          <Button
+                            type="submit"
+                            className="w-full"
+                            disabled={state.isSubmitting || !state.canSubmit}
+                          >
+                            {state.isSubmitting
                               ? 'processing...'
                               : func.access === 'read_only'
                               ? 'call function'

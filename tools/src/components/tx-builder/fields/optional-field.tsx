@@ -4,6 +4,7 @@ import { fieldContext, useFieldContext, useFormContext } from '@/hooks/form-cont
 import { Switch as ShadcnSwitch } from '@/components/ui/switch';
 import { Field, FieldLabel, FieldGroup } from '@/components/ui/field';
 import { ClarityField } from '../clarity-field';
+import { getClarityValidators } from '@/lib/clarity-validators';
 
 interface OptionalFieldProps {
   name: string;
@@ -67,7 +68,10 @@ export function OptionalField({ name, label, innerType, disabled }: OptionalFiel
         </FieldLabel>
       </Field>
       {!isNone && (
-        <form.Field name={`${field.name}.value` as never}>
+        <form.Field
+          name={`${field.name}.value` as never}
+          validators={getClarityValidators(innerType)}
+        >
           {valueField => (
             <fieldContext.Provider value={valueField}>
               <ClarityField name={`${name}.value`} type={innerType} disabled={disabled} />

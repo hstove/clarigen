@@ -4,6 +4,7 @@ import { fieldContext, useFieldContext, useFormContext } from '@/hooks/form-cont
 import { Button } from '@/components/ui/button';
 import { FieldGroup, FieldLabel, FieldDescription } from '@/components/ui/field';
 import { ClarityField } from '../clarity-field';
+import { getClarityValidators } from '@/lib/clarity-validators';
 
 interface ListFieldProps {
   name: string;
@@ -51,7 +52,10 @@ export function ListField({ name, label, itemType, maxLength, disabled }: ListFi
       {items.map((_, index) => (
         <div key={index} className="flex gap-2 items-start">
           <div className="flex-1">
-            <form.Field name={`${field.name}[${index}]` as never}>
+            <form.Field
+              name={`${field.name}[${index}]` as never}
+              validators={getClarityValidators(itemType)}
+            >
               {itemField => (
                 <fieldContext.Provider value={itemField}>
                   <ClarityField

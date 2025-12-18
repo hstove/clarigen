@@ -66,3 +66,6 @@ next-env.d.ts
 deprecated
 
 tmp
+
+# bv (beads viewer) local config and caches
+.bv/
