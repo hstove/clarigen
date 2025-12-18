@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite dev --port 3000",
+    "dev": "vite dev --port 2527",
+    "dev:tee": "unbuffer pnpm dev | tee tmp/dev-server.log",
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
