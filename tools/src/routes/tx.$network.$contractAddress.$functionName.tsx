@@ -8,7 +8,7 @@ import { type } from 'arktype';
 import { useAppForm } from '@/hooks/form';
 import { fieldContext } from '@/hooks/form-context';
 import { FocusedFieldProvider } from '@/hooks/use-focused-field';
-import { ClarityField } from '@/components/tx-builder';
+import { ClarityField, NetworkMismatchBanner } from '@/components/tx-builder';
 import { getClarityValidators } from '@/lib/clarity-validators';
 import { Button } from '@/components/ui/button';
 import { FieldGroup } from '@/components/ui/field';
@@ -88,6 +88,11 @@ function TxBuilderContent({ network, contractId, functionName }: TxBuilderConten
   if (error) {
     return (
       <div className="container mx-auto p-6 max-w-2xl">
+        <NetworkMismatchBanner
+          network={network}
+          contractId={contractId}
+          functionName={functionName}
+        />
         <p className="text-sm text-destructive">Failed to load contract data.</p>
       </div>
     );
@@ -126,6 +131,11 @@ function FunctionNotFound({
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-8">
+      <NetworkMismatchBanner
+        network={network}
+        contractId={contractId}
+        functionName={requestedFunction}
+      />
       <div className="space-y-6 mb-6">
         <Breadcrumbs network={network} contractId={contractId} functionName={requestedFunction} />
         <div className="space-y-2">
@@ -298,6 +308,9 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
   return (
     <FocusedFieldProvider>
       <div className="mx-auto max-w-6xl px-6 py-8">
+        {/* Network mismatch warning */}
+        <NetworkMismatchBanner network={network} contractId={contractId} functionName={func.name} />
+
         {/* Header */}
         <div className="space-y-6 mb-6">
           <Breadcrumbs network={network} contractId={contractId} functionName={func.name} />
