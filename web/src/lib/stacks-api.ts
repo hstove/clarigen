@@ -1,5 +1,6 @@
 import createClient from 'openapi-fetch';
 import type { paths } from '../types/stacks-blockchain-api';
+import { StacksTransaction } from '../types/stacks-transaction';
 import { NETWORK } from './constants';
 import { ClarityAbi } from '@stacks/transactions';
 import { format } from 'dnum';
@@ -66,4 +67,22 @@ export async function getStxBalance(network: NETWORK, address: string) {
     balance,
     balanceFormatted: format([BigInt(balance), 6]),
   };
+}
+
+export async function getTransaction(
+  network: NETWORK,
+  txId: string
+): Promise<typeof StacksTransaction.infer> {
+  const client = getStacksApi(network);
+  const { data, error, response } = await client.GET('/extended/v1/tx/{tx_id}', {
+    params: {
+      path: {
+        tx_id: txId,
+      },
+    },
+  });
+  if (!data) {
+    throw new Error(`Failed to get transaction. Status ${response.status}. ${error?.message}`);
+  }
+  return StacksTransaction.assert(data);
 }
