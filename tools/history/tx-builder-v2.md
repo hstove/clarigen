@@ -122,3 +122,40 @@ Created focus tracking system with context-aware field helpers:
 - `string-ascii-field.tsx` - Added `type` prop and focus handlers
 - `string-utf8-field.tsx` - Added `type` prop and focus handlers
 - `clarity-field.tsx` - Now passes `type` to all primitive field components
+
+### Principal Field Quick-Fill Buttons (completed 2025-12-18)
+
+Enhanced the principal field helper with interactive quick-fill functionality:
+
+**Key files:**
+
+- `src/components/tx-builder/helpers/principal-helper.tsx` - New component with quick-fill buttons
+- `src/components/tx-builder/field-helper.tsx` - Updated to use new PrincipalHelper
+- `src/components/tx-builder/context-panel.tsx` - Updated to pass contractId prop
+- `src/routes/tx.$network.$contractAddress.$functionName.tsx` - Updated to pass contractId to ContextPanel
+
+**Features:**
+
+- **Connect Wallet Button**: If no wallet is connected, shows a button to connect
+- **Your Address Button**: Quick-fill with the user's connected wallet address
+  - Automatically uses mainnet (SP...) or testnet (ST...) address based on route network
+  - Shows address preview below the button
+- **Contract Address Button**: Quick-fill with the current contract's address
+  - Shows address preview below the button
+  - Useful for self-referential contract calls
+
+**Implementation details:**
+
+- Uses `useAccount()` hook to get wallet connection status and addresses
+- PrincipalHelper receives `network` and `contractId` props from the route
+- Field helpers now accept an optional `setValue` function via focused field context
+- When `setValue` is available, the enhanced helper with buttons is shown
+- Falls back to basic info-only helper when `setValue` is not available
+- `principal-field.tsx` now passes `field.handleChange` to `useFieldFocusHandlers`
+
+**User experience:**
+
+- Single click to fill in common addresses
+- No typing or copy/paste needed
+- Network-aware address conversion for wallet addresses
+- Visual feedback with address previews

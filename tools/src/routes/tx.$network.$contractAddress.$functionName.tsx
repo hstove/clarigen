@@ -326,7 +326,13 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6">
           {/* Context Panel - shows first on mobile, second on desktop */}
           <div className="lg:order-2 lg:sticky lg:top-6 lg:self-start">
-            <ContextPanel txid={txid} tx={tx} txError={txError} network={network} />
+            <ContextPanel
+              txid={txid}
+              tx={tx}
+              txError={txError}
+              network={network}
+              contractId={contractId}
+            />
           </div>
 
           {/* Primary: Function Form */}

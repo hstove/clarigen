@@ -22,7 +22,7 @@ export function PrincipalField({
 }: PrincipalFieldProps) {
   const field = useFieldContext<string>();
   const errors = useStore(field.store, state => state.meta.errors);
-  const { onFocus } = useFieldFocusHandlers(name, type);
+  const { onFocus } = useFieldFocusHandlers(name, type, field.handleChange);
 
   return (
     <Field>

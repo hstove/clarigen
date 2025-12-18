@@ -10,7 +10,9 @@ import {
   getTypeString,
 } from '@clarigen/core';
 import { UintHelper } from './helpers/uint-helper';
+import { PrincipalHelper as PrincipalHelperComponent } from './helpers/principal-helper';
 import { X } from 'lucide-react';
+import type { NETWORK } from '@/lib/constants';
 
 function getFieldTypeCategory(field: FocusedField): string {
   const { type } = field;
@@ -63,7 +65,28 @@ function NumberHelper({ field }: { field: FocusedField }) {
   );
 }
 
-function PrincipalHelper({ field }: { field: FocusedField }) {
+function PrincipalHelper({
+  field,
+  network,
+  contractId,
+}: {
+  field: FocusedField;
+  network: NETWORK;
+  contractId: string;
+}) {
+  // Use the enhanced helper if setValue is available
+  if (field.setValue) {
+    return (
+      <PrincipalHelperComponent
+        field={field}
+        onApply={field.setValue}
+        network={network}
+        contractId={contractId}
+      />
+    );
+  }
+
+  // Fallback to basic helper
   const isContract = field.type === 'trait_reference';
   return (
     <div className="space-y-3">
@@ -135,7 +158,15 @@ function DefaultHelper({ field }: { field: FocusedField }) {
   );
 }
 
-function FieldHelperContent({ field }: { field: FocusedField }) {
+function FieldHelperContent({
+  field,
+  network,
+  contractId,
+}: {
+  field: FocusedField;
+  network: NETWORK;
+  contractId: string;
+}) {
   const category = getFieldTypeCategory(field);
 
   switch (category) {
@@ -143,7 +174,7 @@ function FieldHelperContent({ field }: { field: FocusedField }) {
       return <NumberHelper field={field} />;
     case 'principal':
     case 'trait':
-      return <PrincipalHelper field={field} />;
+      return <PrincipalHelper field={field} network={network} contractId={contractId} />;
     case 'buffer':
       return <BufferHelper field={field} />;
     case 'string-ascii':
@@ -160,7 +191,7 @@ function NoFieldFocused() {
   return <p className="text-xs text-muted-foreground">Focus a field to see contextual help.</p>;
 }
 
-export function FieldHelper() {
+export function FieldHelper({ network, contractId }: { network: NETWORK; contractId: string }) {
   const { focusedField, setFocusedField } = useFocusedField();
 
   return (
@@ -182,7 +213,7 @@ export function FieldHelper() {
         {focusedField ? (
           <div className="space-y-4">
             <div className="font-mono text-sm font-medium">{focusedField.name}</div>
-            <FieldHelperContent field={focusedField} />
+            <FieldHelperContent field={focusedField} network={network} contractId={contractId} />
           </div>
         ) : (
           <NoFieldFocused />
