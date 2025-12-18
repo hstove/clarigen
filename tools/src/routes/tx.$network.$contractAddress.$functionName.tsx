@@ -14,9 +14,12 @@ import { Button } from '@/components/ui/button';
 import { FieldGroup } from '@/components/ui/field';
 import { useContractFunction, useContractFunctions } from '@/hooks/use-contract-abi';
 import { useTxUrlState } from '@/hooks/use-tx-url-state';
+import { usePostConditionsUrlState } from '@/hooks/use-post-conditions-url-state';
 import { useTransaction } from '@/hooks/use-transaction';
 import { formValuesToFunctionArgs, txArgsToFormValues } from '@/lib/clarity-form-utils';
+import { buildPostConditions } from '@/lib/post-conditions';
 import { ContextPanel } from '@/components/tx-builder/context-panel';
+import { PostConditionsField } from '@/components/tx-builder/post-conditions-field';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { Link } from '@tanstack/react-router';
 
@@ -213,6 +216,7 @@ type TxBuilderFormProps = {
 
 function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
   const { urlState, setUrlState } = useTxUrlState(func.args);
+  const { postConditions, setPostConditions } = usePostConditionsUrlState();
   const [conversionError, setConversionError] = useState<string | null>(null);
   const [readResult, setReadResult] = useState<{
     okay: boolean;
@@ -270,11 +274,13 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
           }
         } else {
           const clarityArgs = formValuesToFunctionArgs(value, func.args);
+          const builtPostConditions = buildPostConditions(postConditions.conditions);
           const response = await request('stx_callContract', {
             contract: contractId as `${string}.${string}`,
             functionName: func.name,
             functionArgs: clarityArgs.map(arg => cvToHex(arg)),
-            postConditionMode: 'allow',
+            postConditionMode: postConditions.mode,
+            postConditions: builtPostConditions,
           });
 
           if (response.txid) {
@@ -407,6 +413,25 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
                       )}
                     </FieldGroup>
                   </div>
+
+                  {/* Post-conditions section - only for public functions */}
+                  {func.access === 'public' && (
+                    <details className="border-t border-border">
+                      <summary className="px-4 py-3 cursor-pointer hover:bg-muted/30 flex items-center justify-between">
+                        <span className="font-mono text-xs font-medium">Post-Conditions</span>
+                        <span className="text-[10px] text-muted-foreground">
+                          {postConditions.conditions.length} defined
+                        </span>
+                      </summary>
+                      <div className="px-4 pb-4">
+                        <PostConditionsField
+                          value={postConditions}
+                          onChange={setPostConditions}
+                          disabled={!!txid}
+                        />
+                      </div>
+                    </details>
+                  )}
 
                   <div className="border-t border-border p-4 bg-muted/20">
                     {txid ? (
