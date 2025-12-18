@@ -46,3 +46,4 @@ Example of using the `TextField` component in a form:
 - When you've made some progress on the overall "tx builder" feature, make sure you update the `web/history/tx-builder-progress.md` file to reflect your changes.
   - Also, if you need that context, feel free to read it!
 - You can _usually_ tail the dev server logs at `tmp/dev-server.log` ie `tail -n 100 tmp/dev-server.log`.
+- When designing UI, follow the "Design System" notes in `./UI-DESIGN.md`.

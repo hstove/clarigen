@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
-    "build:packages": "turbo run build --filter=!clarigen-docs",
+    "build:packages": "turbo run build --filter=!clarigen-docs --filter=!web-tools",
     "lint": "turbo run lint --continue",
     "lint:fix": "eslint --fix packages/**/*.{ts,js} && prettier --write \"packages/**/*.{ts,js}\"",
     "test": "turbo run test --continue",

@@ -281,9 +281,9 @@ export function cvToString(val: ClarityValue, encoding: 'tryAscii' | 'hex' = 'he
     case ClarityType.List:
       return `(list ${val.value.map(v => cvToString(v, encoding)).join(' ')})`;
     case ClarityType.Tuple:
-      return `(tuple ${Object.keys(val.value)
-        .map(key => `(${key} ${cvToString(val.value[key], encoding)})`)
-        .join(' ')})`;
+      return `{ ${Object.keys(val.value)
+        .map(key => `${key}: ${cvToString(val.value[key], encoding)}`)
+        .join(', ')} }`;
     case ClarityType.StringASCII:
       return `"${val.value}"`;
     case ClarityType.StringUTF8:
@@ -494,7 +494,7 @@ export function getTypeString(val: ClarityAbiType): string {
   } else if (isClarityAbiOptional(val)) {
     return `(optional ${getTypeString(val.optional)})`;
   } else if (isClarityAbiTuple(val)) {
-    return `(tuple ${val.tuple.map(t => `(${t.name} ${getTypeString(t.type)})`).join(' ')})`;
+    return `{ ${val.tuple.map(t => `${t.name}: ${getTypeString(t.type)}`).join(', ')} }`;
   } else if (isClarityAbiList(val)) {
     return `(list ${val.list.length} ${getTypeString(val.list.type)})`;
   } else {
