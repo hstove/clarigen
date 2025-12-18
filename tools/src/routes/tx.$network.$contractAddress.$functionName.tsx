@@ -13,7 +13,7 @@ import { FieldGroup } from '@/components/ui/field';
 import { useContractFunction } from '@/hooks/use-contract-abi';
 import { useTxUrlState } from '@/hooks/use-tx-url-state';
 import { useTransaction } from '@/hooks/use-transaction';
-import { formValuesToFunctionArgs } from '@/lib/clarity-form-utils';
+import { formValuesToFunctionArgs, txArgsToFormValues } from '@/lib/clarity-form-utils';
 import { TransactionStatus } from '@/components/tx-builder/transaction-status';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 
@@ -130,16 +130,24 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
 
   const { data: tx, error: txError } = useTransaction(network, txid);
 
-  // Compute initial values only once based on URL state at mount time
+  const txValues = useMemo(() => {
+    if (tx && 'contract_call' in tx && tx.contract_call.function_args) {
+      return txArgsToFormValues(tx.contract_call.function_args);
+    }
+    return null;
+  }, [tx]);
+
+  // Compute initial values only once based on URL state or tx args
   const initialValues = useMemo(() => {
+    if (txValues) return txValues;
     const values: Record<string, unknown> = {};
     for (const arg of func.args) {
       const urlValue = urlState[arg.name];
       values[arg.name] = urlValue !== undefined ? urlValue : getDefaultValue(arg.type);
     }
     return values;
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- only compute on mount
-  }, [func.args, urlState]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only compute on mount or when tx loaded
+  }, [func.args, urlState, txValues]);
 
   const form = useAppForm({
     defaultValues: initialValues,
@@ -188,11 +196,19 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
 
   // Sync form changes to URL
   useEffect(() => {
+    if (txid) return; // Don't sync to URL if we're viewing a transaction
     return form.store.subscribe(() => {
       const formValues = form.store.state.values;
       setUrlState(formValues);
     });
-  }, [form.store, setUrlState]);
+  }, [form.store, setUrlState, txid]);
+
+  // Update form values if tx loaded
+  useEffect(() => {
+    if (txValues) {
+      form.reset(txValues);
+    }
+  }, [txValues, form]);
 
   return (
     <div className="mx-auto max-w-2xl px-6 py-8">
@@ -301,6 +317,7 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
                               name={arg.name}
                               type={arg.type}
                               label={`${arg.name}: ${getTypeString(arg.type)}`}
+                              disabled={!!txid}
                             />
                           </fieldContext.Provider>
                         )}
@@ -317,17 +334,28 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
               </div>
 
               <div className="border-t border-border p-4 bg-muted/20">
-                <form.Subscribe selector={state => state.isSubmitting}>
-                  {(isSubmitting: boolean) => (
-                    <Button type="submit" className="w-full" disabled={isSubmitting}>
-                      {isSubmitting
-                        ? 'Processing...'
-                        : func.access === 'read_only'
-                        ? 'Call Function'
-                        : 'Build Transaction'}
-                    </Button>
-                  )}
-                </form.Subscribe>
+                {txid ? (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full"
+                    onClick={() => setUrlState({ txid: null })}
+                  >
+                    Clone to New
+                  </Button>
+                ) : (
+                  <form.Subscribe selector={state => state.isSubmitting}>
+                    {(isSubmitting: boolean) => (
+                      <Button type="submit" className="w-full" disabled={isSubmitting}>
+                        {isSubmitting
+                          ? 'Processing...'
+                          : func.access === 'read_only'
+                          ? 'Call Function'
+                          : 'Build Transaction'}
+                      </Button>
+                    )}
+                  </form.Subscribe>
+                )}
               </div>
             </form.AppForm>
           </form>

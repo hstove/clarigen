@@ -22,40 +22,59 @@ export interface ClarityFieldProps {
   name: string;
   type: ClarityAbiType;
   label?: string;
+  disabled?: boolean;
 }
 
-export function ClarityField({ name, type, label }: ClarityFieldProps) {
+export function ClarityField({ name, type, label, disabled }: ClarityFieldProps) {
   if (isClarityAbiPrimitive(type)) {
     switch (type) {
       case 'uint128':
-        return <NumberField name={name} label={label} signed={false} />;
+        return <NumberField name={name} label={label} signed={false} disabled={disabled} />;
       case 'int128':
-        return <NumberField name={name} label={label} signed={true} />;
+        return <NumberField name={name} label={label} signed={true} disabled={disabled} />;
       case 'bool':
-        return <BoolField name={name} label={label} />;
+        return <BoolField name={name} label={label} disabled={disabled} />;
       case 'principal':
-        return <PrincipalField name={name} label={label} />;
+        return <PrincipalField name={name} label={label} disabled={disabled} />;
       case 'trait_reference':
-        return <PrincipalField name={name} label={label} requireContract />;
+        return <PrincipalField name={name} label={label} requireContract disabled={disabled} />;
       case 'none':
         return null;
     }
   }
 
   if (isClarityAbiBuffer(type)) {
-    return <BufferField name={name} label={label} maxLength={type.buffer.length} />;
+    return (
+      <BufferField name={name} label={label} maxLength={type.buffer.length} disabled={disabled} />
+    );
   }
 
   if (isClarityAbiStringAscii(type)) {
-    return <StringAsciiField name={name} label={label} maxLength={type['string-ascii'].length} />;
+    return (
+      <StringAsciiField
+        name={name}
+        label={label}
+        maxLength={type['string-ascii'].length}
+        disabled={disabled}
+      />
+    );
   }
 
   if (isClarityAbiStringUtf8(type)) {
-    return <StringUtf8Field name={name} label={label} maxLength={type['string-utf8'].length} />;
+    return (
+      <StringUtf8Field
+        name={name}
+        label={label}
+        maxLength={type['string-utf8'].length}
+        disabled={disabled}
+      />
+    );
   }
 
   if (isClarityAbiOptional(type)) {
-    return <OptionalField name={name} label={label} innerType={type.optional} />;
+    return (
+      <OptionalField name={name} label={label} innerType={type.optional} disabled={disabled} />
+    );
   }
 
   if (isClarityAbiList(type)) {
@@ -65,12 +84,13 @@ export function ClarityField({ name, type, label }: ClarityFieldProps) {
         label={label}
         itemType={type.list.type}
         maxLength={type.list.length}
+        disabled={disabled}
       />
     );
   }
 
   if (isClarityAbiTuple(type)) {
-    return <TupleField name={name} label={label} members={type.tuple} />;
+    return <TupleField name={name} label={label} members={type.tuple} disabled={disabled} />;
   }
 
   return (

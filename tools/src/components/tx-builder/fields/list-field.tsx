@@ -10,12 +10,13 @@ interface ListFieldProps {
   label?: string;
   itemType: ClarityAbiType;
   maxLength: number;
+  disabled?: boolean;
 }
 
-export function ListField({ name, label, itemType, maxLength }: ListFieldProps) {
+export function ListField({ name, label, itemType, maxLength, disabled }: ListFieldProps) {
   const form = useFormContext();
   const field = useFieldContext<unknown[]>();
-  const items = useStore(field.store, (state) => state.value ?? []);
+  const items = useStore(field.store, state => state.value ?? []);
 
   const addItem = () => {
     if (items.length < maxLength) {
@@ -31,15 +32,17 @@ export function ListField({ name, label, itemType, maxLength }: ListFieldProps) 
     <FieldGroup className="border border-border p-4 bg-muted/10">
       <div className="flex items-center justify-between">
         <FieldLabel className="font-mono text-xs">{label ?? name}</FieldLabel>
-        <Button
-          type="button"
-          variant="outline"
-          size="xs"
-          onClick={addItem}
-          disabled={items.length >= maxLength}
-        >
-          + add
-        </Button>
+        {!disabled && (
+          <Button
+            type="button"
+            variant="outline"
+            size="xs"
+            onClick={addItem}
+            disabled={items.length >= maxLength}
+          >
+            + add
+          </Button>
+        )}
       </div>
       <FieldDescription className="font-mono">
         List of {maxLength} items ({items.length}/{maxLength})
@@ -49,26 +52,29 @@ export function ListField({ name, label, itemType, maxLength }: ListFieldProps) 
         <div key={index} className="flex gap-2 items-start">
           <div className="flex-1">
             <form.Field name={`${field.name}[${index}]` as never}>
-              {(itemField) => (
+              {itemField => (
                 <fieldContext.Provider value={itemField}>
                   <ClarityField
                     name={`${name}[${index}]`}
                     type={itemType}
                     label={`[${index}]`}
+                    disabled={disabled}
                   />
                 </fieldContext.Provider>
               )}
             </form.Field>
           </div>
-          <Button
-            type="button"
-            variant="ghost"
-            size="xs"
-            onClick={() => removeItem(index)}
-            className="mt-6"
-          >
-            ×
-          </Button>
+          {!disabled && (
+            <Button
+              type="button"
+              variant="ghost"
+              size="xs"
+              onClick={() => removeItem(index)}
+              className="mt-6"
+            >
+              ×
+            </Button>
+          )}
         </div>
       ))}
     </FieldGroup>

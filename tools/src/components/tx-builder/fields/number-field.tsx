@@ -7,11 +7,12 @@ interface NumberFieldProps {
   name: string;
   label?: string;
   signed: boolean;
+  disabled?: boolean;
 }
 
-export function NumberField({ name, label, signed }: NumberFieldProps) {
+export function NumberField({ name, label, signed, disabled }: NumberFieldProps) {
   const field = useFieldContext<string>();
-  const errors = useStore(field.store, (state) => state.meta.errors);
+  const errors = useStore(field.store, state => state.meta.errors);
 
   return (
     <Field>
@@ -23,16 +24,17 @@ export function NumberField({ name, label, signed }: NumberFieldProps) {
         value={field.state.value}
         placeholder={signed ? 'int' : 'uint'}
         onBlur={field.handleBlur}
-        onChange={(e) => field.handleChange(e.target.value)}
+        onChange={e => field.handleChange(e.target.value)}
         inputMode="numeric"
         className="font-mono"
+        disabled={disabled}
       />
       <FieldDescription className="font-mono">
         {signed ? 'Signed 128-bit integer' : 'Unsigned 128-bit integer'}
       </FieldDescription>
       {field.state.meta.isTouched && errors.length > 0 && (
         <FieldError className="font-mono">
-          {errors.map((e) => (typeof e === 'string' ? e : e.message)).join(', ')}
+          {errors.map(e => (typeof e === 'string' ? e : e.message)).join(', ')}
         </FieldError>
       )}
     </Field>

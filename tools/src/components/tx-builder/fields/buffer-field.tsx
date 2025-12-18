@@ -7,11 +7,12 @@ interface BufferFieldProps {
   name: string;
   label?: string;
   maxLength: number;
+  disabled?: boolean;
 }
 
-export function BufferField({ name, label, maxLength }: BufferFieldProps) {
+export function BufferField({ name, label, maxLength, disabled }: BufferFieldProps) {
   const field = useFieldContext<string>();
-  const errors = useStore(field.store, (state) => state.meta.errors);
+  const errors = useStore(field.store, state => state.meta.errors);
 
   const hexValue = field.state.value ?? '';
   const normalized = hexValue.startsWith('0x') ? hexValue.slice(2) : hexValue;
@@ -27,15 +28,16 @@ export function BufferField({ name, label, maxLength }: BufferFieldProps) {
         value={field.state.value}
         placeholder="0x... or hex bytes"
         onBlur={field.handleBlur}
-        onChange={(e) => field.handleChange(e.target.value)}
+        onChange={e => field.handleChange(e.target.value)}
         className="font-mono"
+        disabled={disabled}
       />
       <FieldDescription className="font-mono">
         Hex-encoded buffer, max {maxLength} bytes ({byteLength}/{maxLength})
       </FieldDescription>
       {field.state.meta.isTouched && errors.length > 0 && (
         <FieldError className="font-mono">
-          {errors.map((e) => (typeof e === 'string' ? e : e.message)).join(', ')}
+          {errors.map(e => (typeof e === 'string' ? e : e.message)).join(', ')}
         </FieldError>
       )}
     </Field>

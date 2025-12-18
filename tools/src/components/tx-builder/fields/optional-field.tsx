@@ -9,6 +9,7 @@ interface OptionalFieldProps {
   name: string;
   label?: string;
   innerType: ClarityAbiType;
+  disabled?: boolean;
 }
 
 function getDefaultValueForType(type: ClarityAbiType): unknown {
@@ -40,10 +41,10 @@ function getDefaultValueForType(type: ClarityAbiType): unknown {
   return '';
 }
 
-export function OptionalField({ name, label, innerType }: OptionalFieldProps) {
+export function OptionalField({ name, label, innerType, disabled }: OptionalFieldProps) {
   const form = useFormContext();
   const field = useFieldContext<{ isNone: boolean; value: unknown }>();
-  const isNone = useStore(field.store, (state) => state.value?.isNone ?? true);
+  const isNone = useStore(field.store, state => state.value?.isNone ?? true);
 
   return (
     <FieldGroup>
@@ -51,7 +52,7 @@ export function OptionalField({ name, label, innerType }: OptionalFieldProps) {
         <ShadcnSwitch
           id={`${name}-toggle`}
           checked={!isNone}
-          onCheckedChange={(checked) => {
+          onCheckedChange={checked => {
             const currentValue = field.state.value?.value;
             const defaultValue = getDefaultValueForType(innerType);
             field.handleChange({
@@ -59,6 +60,7 @@ export function OptionalField({ name, label, innerType }: OptionalFieldProps) {
               value: currentValue ?? defaultValue,
             });
           }}
+          disabled={disabled}
         />
         <FieldLabel htmlFor={`${name}-toggle`} className="font-mono text-xs">
           {label ?? name} (optional)
@@ -66,9 +68,9 @@ export function OptionalField({ name, label, innerType }: OptionalFieldProps) {
       </Field>
       {!isNone && (
         <form.Field name={`${field.name}.value` as never}>
-          {(valueField) => (
+          {valueField => (
             <fieldContext.Provider value={valueField}>
-              <ClarityField name={`${name}.value`} type={innerType} />
+              <ClarityField name={`${name}.value`} type={innerType} disabled={disabled} />
             </fieldContext.Provider>
           )}
         </form.Field>

@@ -7,11 +7,12 @@ interface PrincipalFieldProps {
   name: string;
   label?: string;
   requireContract?: boolean;
+  disabled?: boolean;
 }
 
-export function PrincipalField({ name, label, requireContract }: PrincipalFieldProps) {
+export function PrincipalField({ name, label, requireContract, disabled }: PrincipalFieldProps) {
   const field = useFieldContext<string>();
-  const errors = useStore(field.store, (state) => state.meta.errors);
+  const errors = useStore(field.store, state => state.meta.errors);
 
   return (
     <Field>
@@ -23,8 +24,9 @@ export function PrincipalField({ name, label, requireContract }: PrincipalFieldP
         value={field.state.value}
         placeholder={requireContract ? 'SP123...ABC.contract-name' : 'SP123...ABC'}
         onBlur={field.handleBlur}
-        onChange={(e) => field.handleChange(e.target.value)}
+        onChange={e => field.handleChange(e.target.value)}
         className="font-mono"
+        disabled={disabled}
       />
       <FieldDescription className="font-mono">
         {requireContract
@@ -33,7 +35,7 @@ export function PrincipalField({ name, label, requireContract }: PrincipalFieldP
       </FieldDescription>
       {field.state.meta.isTouched && errors.length > 0 && (
         <FieldError className="font-mono">
-          {errors.map((e) => (typeof e === 'string' ? e : e.message)).join(', ')}
+          {errors.map(e => (typeof e === 'string' ? e : e.message)).join(', ')}
         </FieldError>
       )}
     </Field>
