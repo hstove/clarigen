@@ -14,7 +14,8 @@
     "preinstall": "npx only-allow pnpm",
     "demo-types": "pnpm --filter @clarigen/cli start ../../demo-project",
     "clarigen": "pnpm --filter @clarigen/cli start",
-    "dev:web": "pnpm --filter clarigen-docs dev"
+    "dev:web": "pnpm --filter clarigen-docs dev",
+    "dev:tools": "pnpm --filter web-tools dev:tee"
   },
   "prettier": "@stacks/prettier-config",
   "devDependencies": {

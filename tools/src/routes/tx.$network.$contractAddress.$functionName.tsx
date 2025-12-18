@@ -15,6 +15,7 @@ import { useTxUrlState } from '@/hooks/use-tx-url-state';
 import { useTransaction } from '@/hooks/use-transaction';
 import { formValuesToFunctionArgs } from '@/lib/clarity-form-utils';
 import { TransactionStatus } from '@/components/tx-builder/transaction-status';
+import { Breadcrumbs } from '@/components/breadcrumbs';
 
 function parseNetwork(network: string): NETWORK | null {
   const result = Network(network);
@@ -215,13 +216,12 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
   return (
     <div className="mx-auto max-w-2xl px-6 py-8">
       <div className="space-y-6">
+        {/* Breadcrumbs */}
+        <Breadcrumbs network={network} contractId={contractId} functionName={func.name} />
+
         {/* Contract Header */}
         <div className="space-y-2">
           <div className="flex items-center gap-2 font-mono text-xs">
-            <span className="border border-border bg-muted px-1.5 py-0.5 text-muted-foreground">
-              {network}
-            </span>
-            <span className="text-muted-foreground">/</span>
             <span className="text-muted-foreground">{func.access}</span>
           </div>
           <h1 className="font-mono text-lg font-medium tracking-tight">{contractId}</h1>
