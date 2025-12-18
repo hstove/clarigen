@@ -9,6 +9,7 @@ import {
   isClarityAbiTuple,
   getTypeString,
 } from '@clarigen/core';
+import { UintHelper } from './helpers/uint-helper';
 
 function getFieldTypeCategory(field: FocusedField): string {
   const { type } = field;
@@ -40,6 +41,12 @@ function getFieldTypeCategory(field: FocusedField): string {
 }
 
 function NumberHelper({ field }: { field: FocusedField }) {
+  // Use UintHelper if setValue function is available
+  if (field.setValue) {
+    return <UintHelper field={field} onApply={field.setValue} />;
+  }
+
+  // Fallback to basic helper if no setValue available (shouldn't happen in normal flow)
   const isSigned = field.type === 'int128';
   return (
     <div className="space-y-3">

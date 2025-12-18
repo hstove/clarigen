@@ -4,6 +4,7 @@ import type { ClarityAbiType } from '@clarigen/core';
 export interface FocusedField {
   name: string;
   type: ClarityAbiType;
+  setValue?: (value: string) => void;
 }
 
 interface FocusedFieldContextValue {
@@ -31,12 +32,16 @@ export function useFocusedField() {
   return context;
 }
 
-export function useFieldFocusHandlers(name: string, type: ClarityAbiType) {
+export function useFieldFocusHandlers(
+  name: string,
+  type: ClarityAbiType,
+  setValue?: (value: string) => void
+) {
   const { setFocusedField } = useFocusedField();
 
   const onFocus = useCallback(() => {
-    setFocusedField({ name, type });
-  }, [setFocusedField, name, type]);
+    setFocusedField({ name, type, setValue });
+  }, [setFocusedField, name, type, setValue]);
 
   const onBlur = useCallback(() => {
     setFocusedField(null);

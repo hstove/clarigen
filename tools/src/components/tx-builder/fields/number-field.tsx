@@ -16,7 +16,7 @@ interface NumberFieldProps {
 export function NumberField({ name, label, signed, disabled, type }: NumberFieldProps) {
   const field = useFieldContext<string>();
   const errors = useStore(field.store, state => state.meta.errors);
-  const { onFocus, onBlur } = useFieldFocusHandlers(name, type);
+  const { onFocus, onBlur } = useFieldFocusHandlers(name, type, value => field.handleChange(value));
 
   return (
     <Field>
