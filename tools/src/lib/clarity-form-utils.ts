@@ -1,11 +1,46 @@
 import { ClarityValue, hexToCV, ClarityType } from '@stacks/transactions';
-import { ClarityAbiArg, formValueToCV, principalToString } from '@clarigen/core';
+import { ClarityAbiArg, formValueToCV, principalToString, ClarityAbiType } from '@clarigen/core';
 
 /**
  * Converts a single form value to a ClarityValue using the ABI type.
  * @deprecated Use formValueToCV from @clarigen/core
  */
 export { formValueToCV };
+
+export function getDefaultValueForType(type: ClarityAbiType): unknown {
+  if (typeof type === 'string') {
+    switch (type) {
+      case 'bool':
+        return false;
+      case 'uint128':
+      case 'int128':
+      case 'principal':
+      case 'trait_reference':
+        return '';
+      case 'none':
+        return null;
+    }
+  }
+  if ('buffer' in type) return '';
+  if ('string-ascii' in type) return '';
+  if ('string-utf8' in type) return '';
+  if ('optional' in type) return { isNone: true, value: null };
+  if ('response' in type)
+    return {
+      isOk: true,
+      ok: getDefaultValueForType(type.response.ok),
+      err: getDefaultValueForType(type.response.error),
+    };
+  if ('list' in type) return [];
+  if ('tuple' in type) {
+    const obj: Record<string, unknown> = {};
+    for (const member of type.tuple) {
+      obj[member.name] = getDefaultValueForType(member.type);
+    }
+    return obj;
+  }
+  return '';
+}
 
 /**
  * Converts all form values to an array of ClarityValues based on the function's ABI args.
@@ -40,8 +75,9 @@ export function cvToFormValue(val: ClarityValue): unknown {
     case ClarityType.OptionalSome:
       return { isNone: false, value: cvToFormValue(val.value) };
     case ClarityType.ResponseErr:
+      return { isOk: false, ok: null, err: cvToFormValue(val.value) };
     case ClarityType.ResponseOk:
-      return cvToFormValue(val.value);
+      return { isOk: true, ok: cvToFormValue(val.value), err: null };
     case ClarityType.PrincipalStandard:
     case ClarityType.PrincipalContract:
       return principalToString(val);

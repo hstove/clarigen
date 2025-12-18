@@ -7,6 +7,7 @@ import {
   isClarityAbiOptional,
   isClarityAbiList,
   isClarityAbiTuple,
+  isClarityAbiResponse,
 } from '@clarigen/core';
 import { NumberField } from './fields/number-field';
 import { BoolField } from './fields/bool-field';
@@ -15,6 +16,7 @@ import { BufferField } from './fields/buffer-field';
 import { StringAsciiField } from './fields/string-ascii-field';
 import { StringUtf8Field } from './fields/string-utf8-field';
 import { OptionalField } from './fields/optional-field';
+import { ResponseField } from './fields/response-field';
 import { ListField } from './fields/list-field';
 import { TupleField } from './fields/tuple-field';
 
@@ -94,6 +96,18 @@ export function ClarityField({ name, type, label, disabled }: ClarityFieldProps)
   if (isClarityAbiOptional(type)) {
     return (
       <OptionalField name={name} label={label} innerType={type.optional} disabled={disabled} />
+    );
+  }
+
+  if (isClarityAbiResponse(type)) {
+    return (
+      <ResponseField
+        name={name}
+        label={label}
+        okType={type.response.ok}
+        errType={type.response.error}
+        disabled={disabled}
+      />
     );
   }
 

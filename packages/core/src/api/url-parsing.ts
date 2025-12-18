@@ -13,7 +13,7 @@ import {
 import { hexToBytes } from '../utils';
 
 export type OptionalFormValue = { isNone: boolean; value: unknown };
-export type ResponseFormValue = { isOk: boolean; value: unknown };
+export type ResponseFormValue = { isOk: boolean; value?: unknown; ok?: unknown; err?: unknown };
 
 export function isOptionalFormValue(value: unknown): value is OptionalFormValue {
   return (
@@ -91,7 +91,8 @@ export function formValueToCV(value: unknown, type: ClarityAbiType): ClarityValu
       throw new Error('Response type requires { isOk: boolean, value: unknown } form value');
     }
     const innerType = value.isOk ? type.response.ok : type.response.error;
-    const innerCV = formValueToCV(value.value, innerType);
+    const innerValue = value.isOk ? value.ok ?? value.value : value.err ?? value.value;
+    const innerCV = formValueToCV(innerValue, innerType);
     return value.isOk ? responseOkCV(innerCV) : responseErrorCV(innerCV);
   }
 
