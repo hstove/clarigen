@@ -19,6 +19,7 @@ import { useTransaction } from '@/hooks/use-transaction';
 import { formValuesToFunctionArgs, txArgsToFormValues } from '@/lib/clarity-form-utils';
 import { buildPostConditions } from '@/lib/post-conditions';
 import { saveFormHistory } from '@/lib/value-history';
+import { addVisitedFunction } from '@/lib/visited-history';
 import { ContextPanel } from '@/components/tx-builder/context-panel';
 import { PostConditionsField } from '@/components/tx-builder/post-conditions-field';
 import { Breadcrumbs } from '@/components/breadcrumbs';
@@ -99,6 +100,10 @@ type TxBuilderContentProps = {
 
 function TxBuilderContent({ network, contractId, functionName }: TxBuilderContentProps) {
   const { data: func, isLoading, error } = useContractFunction(network, contractId, functionName);
+
+  useEffect(() => {
+    addVisitedFunction(contractId, functionName, network);
+  }, [contractId, functionName, network]);
 
   if (isLoading) {
     return (

@@ -1,7 +1,7 @@
 import { type } from 'arktype';
 
 const STORAGE_KEY = 'clarigen:visited:functions';
-const MAX_ITEMS = 50;
+const MAX_ITEMS = 100;
 const CURRENT_VERSION = 1 as const;
 
 const VisitedFunction = type({
@@ -9,7 +9,7 @@ const VisitedFunction = type({
   functionName: 'string | null',
   network: 'string',
   lastVisited: 'number',
-  version: `${CURRENT_VERSION}`,
+  'version?': `${CURRENT_VERSION}`,
 });
 
 export type VisitedFunction = typeof VisitedFunction.infer;

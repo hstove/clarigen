@@ -1,8 +1,10 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
+import { useEffect } from 'react';
 import { NETWORK, Network } from '@/lib/constants';
 import { type } from 'arktype';
 import { useContractFunctions } from '@/hooks/use-contract-abi';
 import { Breadcrumbs } from '@/components/breadcrumbs';
+import { addVisitedFunction } from '@/lib/visited-history';
 
 function parseNetwork(network: string): NETWORK | null {
   const result = Network(network);
@@ -28,6 +30,10 @@ type ContractOverviewContentProps = {
 
 function ContractOverviewContent({ network, contractId }: ContractOverviewContentProps) {
   const { data: functions, isLoading, error } = useContractFunctions(network, contractId);
+
+  useEffect(() => {
+    addVisitedFunction(contractId, null, network);
+  }, [contractId, network]);
 
   if (isLoading) {
     return (

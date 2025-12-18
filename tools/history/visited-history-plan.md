@@ -43,7 +43,7 @@ function getVisitedContracts(): string[]; // Derived from functions, unique cont
 
 **Design decisions:**
 
-- Max 20 items in history.
+- Max 100 items in history.
 - Deduplicate on add: if (contract, function, network) already exists, update `lastVisited` and move to front.
 - Guard `localStorage` for SSR.
 
