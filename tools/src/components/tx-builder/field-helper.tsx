@@ -10,6 +10,7 @@ import {
   getTypeString,
 } from '@clarigen/core';
 import { UintHelper } from './helpers/uint-helper';
+import { X } from 'lucide-react';
 
 function getFieldTypeCategory(field: FocusedField): string {
   const { type } = field;
@@ -160,12 +161,22 @@ function NoFieldFocused() {
 }
 
 export function FieldHelper() {
-  const { focusedField } = useFocusedField();
+  const { focusedField, setFocusedField } = useFocusedField();
 
   return (
     <div className="border border-border bg-card h-full">
-      <div className="border-b border-border px-4 py-3 bg-muted/30">
+      <div className="border-b border-border px-4 py-3 bg-muted/30 flex items-center justify-between">
         <h3 className="font-mono text-sm font-medium text-muted-foreground">field helper</h3>
+        {focusedField && (
+          <button
+            type="button"
+            onClick={() => setFocusedField(null)}
+            className="text-muted-foreground hover:text-foreground transition-colors p-1 -m-1"
+            aria-label="Clear field helper"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        )}
       </div>
       <div className="p-4">
         {focusedField ? (

@@ -16,7 +16,7 @@ interface StringUtf8FieldProps {
 export function StringUtf8Field({ name, label, maxLength, disabled, type }: StringUtf8FieldProps) {
   const field = useFieldContext<string>();
   const errors = useStore(field.store, state => state.meta.errors);
-  const { onFocus, onBlur } = useFieldFocusHandlers(name, type);
+  const { onFocus } = useFieldFocusHandlers(name, type);
   const currentLength = field.state.value?.length ?? 0;
 
   return (
@@ -29,10 +29,7 @@ export function StringUtf8Field({ name, label, maxLength, disabled, type }: Stri
         value={field.state.value}
         placeholder="UTF-8 string"
         autoComplete="off"
-        onBlur={() => {
-          field.handleBlur();
-          onBlur();
-        }}
+        onBlur={field.handleBlur}
         onFocus={onFocus}
         onChange={e => field.handleChange(e.target.value)}
         maxLength={maxLength}

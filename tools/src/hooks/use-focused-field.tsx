@@ -43,9 +43,5 @@ export function useFieldFocusHandlers(
     setFocusedField({ name, type, setValue });
   }, [setFocusedField, name, type, setValue]);
 
-  const onBlur = useCallback(() => {
-    setFocusedField(null);
-  }, [setFocusedField]);
-
-  return { onFocus, onBlur };
+  return { onFocus };
 }

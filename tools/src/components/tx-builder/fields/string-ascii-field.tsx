@@ -22,7 +22,7 @@ export function StringAsciiField({
 }: StringAsciiFieldProps) {
   const field = useFieldContext<string>();
   const errors = useStore(field.store, state => state.meta.errors);
-  const { onFocus, onBlur } = useFieldFocusHandlers(name, type);
+  const { onFocus } = useFieldFocusHandlers(name, type);
   const currentLength = field.state.value?.length ?? 0;
 
   return (
@@ -35,10 +35,7 @@ export function StringAsciiField({
         value={field.state.value}
         placeholder="ASCII string"
         autoComplete="off"
-        onBlur={() => {
-          field.handleBlur();
-          onBlur();
-        }}
+        onBlur={field.handleBlur}
         onFocus={onFocus}
         onChange={e => field.handleChange(e.target.value)}
         maxLength={maxLength}

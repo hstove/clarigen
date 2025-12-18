@@ -15,7 +15,7 @@ interface BoolFieldProps {
 export function BoolField({ name, label, disabled, type }: BoolFieldProps) {
   const field = useFieldContext<boolean>();
   const errors = useStore(field.store, state => state.meta.errors);
-  const { onFocus, onBlur } = useFieldFocusHandlers(name, type);
+  const { onFocus } = useFieldFocusHandlers(name, type);
 
   return (
     <Field orientation="horizontal">
@@ -23,10 +23,7 @@ export function BoolField({ name, label, disabled, type }: BoolFieldProps) {
         id={name}
         checked={field.state.value}
         onCheckedChange={checked => field.handleChange(checked)}
-        onBlur={() => {
-          field.handleBlur();
-          onBlur();
-        }}
+        onBlur={field.handleBlur}
         onFocus={onFocus}
         disabled={disabled}
       />

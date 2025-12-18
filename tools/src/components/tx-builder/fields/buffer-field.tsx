@@ -16,7 +16,7 @@ interface BufferFieldProps {
 export function BufferField({ name, label, maxLength, disabled, type }: BufferFieldProps) {
   const field = useFieldContext<string>();
   const errors = useStore(field.store, state => state.meta.errors);
-  const { onFocus, onBlur } = useFieldFocusHandlers(name, type);
+  const { onFocus } = useFieldFocusHandlers(name, type);
 
   const hexValue = field.state.value ?? '';
   const normalized = hexValue.startsWith('0x') ? hexValue.slice(2) : hexValue;
@@ -32,10 +32,7 @@ export function BufferField({ name, label, maxLength, disabled, type }: BufferFi
         value={field.state.value}
         placeholder="0x... or hex bytes"
         autoComplete="off"
-        onBlur={() => {
-          field.handleBlur();
-          onBlur();
-        }}
+        onBlur={field.handleBlur}
         onFocus={onFocus}
         onChange={e => field.handleChange(e.target.value)}
         className="font-mono"
