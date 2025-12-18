@@ -60,7 +60,9 @@ export function OptionalField({ name, label, innerType }: OptionalFieldProps) {
             });
           }}
         />
-        <FieldLabel htmlFor={`${name}-toggle`}>{label ?? name} (optional)</FieldLabel>
+        <FieldLabel htmlFor={`${name}-toggle`} className="font-mono text-xs">
+          {label ?? name} (optional)
+        </FieldLabel>
       </Field>
       {!isNone && (
         <form.Field name={`${field.name}.value` as never}>

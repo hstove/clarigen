@@ -19,8 +19,8 @@ export function TupleField({ name, label, members }: TupleFieldProps) {
   const field = useFieldContext<Record<string, unknown>>();
 
   return (
-    <FieldGroup className="border rounded-lg p-4">
-      {label && <FieldLabel>{label}</FieldLabel>}
+    <FieldGroup className="border border-border p-4 bg-muted/10">
+      {label && <FieldLabel className="font-mono text-xs">{label}</FieldLabel>}
       {members.map((member) => (
         <form.Field key={member.name} name={`${field.name}.${member.name}` as never}>
           {(memberField) => (

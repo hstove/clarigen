@@ -211,13 +211,49 @@ code {
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
     @apply font-sans bg-background text-foreground;
   }
   html {
     @apply font-sans;
   }
 }
+
+/*
+ * =============================================================================
+ * DESIGN SYSTEM NOTES (for AI agents and developers)
+ * =============================================================================
+ *
+ * This app uses a TUI (Terminal UI) inspired aesthetic. Key principles:
+ *
+ * TYPOGRAPHY
+ * - Use `font-mono` for: labels, data values, inputs, technical content
+ * - Use `font-sans` (Inter) for: prose, descriptions, general UI text
+ * - Prefer `text-xs` for labels and metadata
+ * - Use lowercase for action buttons and status text ("connect", "confirmed")
+ *
+ * BORDERS & SHAPES
+ * - Sharp edges preferred (buttons already use rounded-none)
+ * - Use `border border-border` for containers
+ * - Use `border-dashed` for placeholder/empty states
+ *
+ * COLORS & STATUS
+ * - Success: text-green-600 dark:text-green-500, indicator: ●
+ * - Pending: text-blue-500, indicator: ◌ (with animate-pulse)
+ * - Error: text-destructive, indicator: ×
+ * - Muted labels: text-muted-foreground
+ *
+ * LAYOUT PATTERNS
+ * - Cards: border border-border bg-card with header/content/footer sections
+ * - Headers: border-b border-border px-4 py-3 bg-muted/30
+ * - Footers: border-t border-border px-4 py-3 bg-muted/20
+ * - Data rows: flex justify-between with label left, value right
+ *
+ * INTERACTIVE ELEMENTS
+ * - Links: text-primary hover:underline, prefix with → for external
+ * - Collapsible: use <details> with styled <summary>
+ * - Buttons: lowercase text, use size="xs" or size="sm" for secondary actions
+ *
+ * =============================================================================
+ */

@@ -213,83 +213,89 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
   }, [form.store, setUrlState]);
 
   return (
-    <div className="container mx-auto p-6 max-w-2xl">
-      <div className="space-y-4">
-        <div>
-          <span className="text-xs uppercase tracking-wide text-muted-foreground">{network}</span>
-          <h1 className="text-2xl font-bold">{contractId}</h1>
+    <div className="mx-auto max-w-2xl px-6 py-8">
+      <div className="space-y-6">
+        {/* Contract Header */}
+        <div className="space-y-2">
+          <div className="flex items-center gap-2 font-mono text-xs">
+            <span className="border border-border bg-muted px-1.5 py-0.5 text-muted-foreground">
+              {network}
+            </span>
+            <span className="text-muted-foreground">/</span>
+            <span className="text-muted-foreground">{func.access}</span>
+          </div>
+          <h1 className="font-mono text-lg font-medium tracking-tight">{contractId}</h1>
         </div>
 
+        {/* Transaction Status */}
         {txid && (
-          <div className="space-y-4">
+          <div>
             {tx ? (
               <TransactionStatus tx={tx} network={network} />
             ) : txError ? (
-              <div className="p-4 border border-destructive/20 bg-destructive/10 rounded-lg">
-                <h3 className="text-sm font-semibold text-destructive mb-1">
-                  Transaction Status Unavailable
-                </h3>
-                <p className="text-xs font-mono break-all text-destructive/80 mb-2">{txid}</p>
-                <p className="text-xs text-muted-foreground">
-                  The transaction might still be propagating to the network, or the API is
-                  unavailable.
-                </p>
+              <div className="border border-destructive/30 bg-destructive/5 p-4 space-y-2">
+                <div className="flex items-center gap-2 text-sm font-medium text-destructive">
+                  <span>×</span>
+                  <span>Transaction Status Unavailable</span>
+                </div>
+                <p className="text-xs font-mono break-all text-muted-foreground">{txid}</p>
                 <a
                   href={`https://explorer.hiro.so/txid/${txid}?chain=${network}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-xs text-blue-600 dark:text-blue-400 underline mt-2 inline-block font-medium hover:text-blue-800 dark:hover:text-blue-300"
+                  className="text-xs text-primary hover:underline inline-block"
                 >
-                  View on Explorer
+                  → View on Explorer
                 </a>
               </div>
             ) : (
-              <div className="p-4 border border-blue-200 bg-blue-50 rounded-lg dark:bg-blue-900/20 dark:border-blue-800 animate-pulse">
-                <h3 className="text-sm font-semibold text-blue-900 dark:text-blue-100 mb-1">
-                  Loading Transaction Status...
-                </h3>
-                <p className="text-xs font-mono break-all text-blue-800 dark:text-blue-200">
-                  {txid}
-                </p>
+              <div className="border border-border bg-muted/30 p-4 space-y-2 animate-pulse">
+                <div className="flex items-center gap-2 text-sm font-medium">
+                  <span className="text-muted-foreground">◌</span>
+                  <span>Loading transaction...</span>
+                </div>
+                <p className="text-xs font-mono break-all text-muted-foreground">{txid}</p>
                 <a
                   href={`https://explorer.hiro.so/txid/${txid}?chain=${network}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-xs text-blue-600 dark:text-blue-400 underline mt-2 inline-block font-medium hover:text-blue-800 dark:hover:text-blue-300"
+                  className="text-xs text-primary hover:underline inline-block"
                 >
-                  View on Explorer
+                  → View on Explorer
                 </a>
               </div>
             )}
           </div>
         )}
 
-        <div className="border rounded-lg p-4">
-          <h2 className="text-lg font-semibold mb-4">
-            {func.name}
-            <span className="ml-2 text-xs text-muted-foreground">({func.access})</span>
-          </h2>
+        {/* Function Form */}
+        <div className="border border-border bg-card">
+          <div className="border-b border-border px-4 py-3 flex items-center justify-between">
+            <h2 className="font-mono text-sm font-medium">{func.name}</h2>
+            <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">
+              {func.args.length} {func.args.length === 1 ? 'arg' : 'args'}
+            </span>
+          </div>
 
           {readResult && readResult.okay && (
-            <div className="mb-6 p-4 border rounded-lg bg-muted/30 space-y-3">
+            <div className="border-b border-border bg-muted/20 p-4 space-y-3">
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-semibold">Function Result</h3>
-                <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">
-                  Success
+                <span className="text-xs font-medium text-green-600 dark:text-green-500 flex items-center gap-1.5">
+                  <span>●</span> Result
                 </span>
               </div>
-              <div className="font-mono text-sm p-3 bg-background border rounded-md break-all shadow-sm">
+              <pre className="font-mono text-sm p-3 bg-background border border-border overflow-auto break-all">
                 {readResult.clarity}
-              </div>
+              </pre>
               {typeof readResult.value !== 'undefined' && (
-                <div className="space-y-1">
-                  <span className="text-[10px] text-muted-foreground font-medium uppercase">
+                <details className="group">
+                  <summary className="text-[10px] text-muted-foreground font-medium uppercase cursor-pointer hover:text-foreground">
                     JSON Value
-                  </span>
-                  <pre className="text-xs p-3 bg-background border rounded-md overflow-auto max-h-60 shadow-sm">
+                  </summary>
+                  <pre className="text-xs font-mono p-3 bg-background border border-border overflow-auto max-h-60 mt-2">
                     {JSON.stringify(readResult.value, null, 2)}
                   </pre>
-                </div>
+                </details>
               )}
             </div>
           )}
@@ -301,34 +307,38 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
             }}
           >
             <form.AppForm>
-              <FieldGroup>
-                {func.args.length === 0 ? (
-                  <p className="text-sm text-muted-foreground">No arguments</p>
-                ) : (
-                  func.args.map(arg => (
-                    <form.Field key={arg.name} name={arg.name as never}>
-                      {field => (
-                        <fieldContext.Provider value={field}>
-                          <ClarityField
-                            name={arg.name}
-                            type={arg.type}
-                            label={`${arg.name}: ${getTypeString(arg.type)}`}
-                          />
-                        </fieldContext.Provider>
-                      )}
-                    </form.Field>
-                  ))
-                )}
+              <div className="p-4">
+                <FieldGroup>
+                  {func.args.length === 0 ? (
+                    <p className="text-sm text-muted-foreground font-mono">( no arguments )</p>
+                  ) : (
+                    func.args.map(arg => (
+                      <form.Field key={arg.name} name={arg.name as never}>
+                        {field => (
+                          <fieldContext.Provider value={field}>
+                            <ClarityField
+                              name={arg.name}
+                              type={arg.type}
+                              label={`${arg.name}: ${getTypeString(arg.type)}`}
+                            />
+                          </fieldContext.Provider>
+                        )}
+                      </form.Field>
+                    ))
+                  )}
 
-                {conversionError && (
-                  <div className="p-3 text-sm text-destructive bg-destructive/10 rounded-md">
-                    {conversionError}
-                  </div>
-                )}
+                  {conversionError && (
+                    <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 font-mono">
+                      {conversionError}
+                    </div>
+                  )}
+                </FieldGroup>
+              </div>
 
+              <div className="border-t border-border p-4 bg-muted/20">
                 <form.Subscribe selector={state => state.isSubmitting}>
                   {(isSubmitting: boolean) => (
-                    <Button type="submit" className="w-full mt-4" disabled={isSubmitting}>
+                    <Button type="submit" className="w-full" disabled={isSubmitting}>
                       {isSubmitting
                         ? 'Processing...'
                         : func.access === 'read_only'
@@ -337,7 +347,7 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
                     </Button>
                   )}
                 </form.Subscribe>
-              </FieldGroup>
+              </div>
             </form.AppForm>
           </form>
         </div>

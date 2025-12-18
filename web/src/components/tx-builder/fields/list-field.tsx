@@ -28,20 +28,20 @@ export function ListField({ name, label, itemType, maxLength }: ListFieldProps) 
   };
 
   return (
-    <FieldGroup className="border rounded-lg p-4">
+    <FieldGroup className="border border-border p-4 bg-muted/10">
       <div className="flex items-center justify-between">
-        <FieldLabel>{label ?? name}</FieldLabel>
+        <FieldLabel className="font-mono text-xs">{label ?? name}</FieldLabel>
         <Button
           type="button"
           variant="outline"
-          size="sm"
+          size="xs"
           onClick={addItem}
           disabled={items.length >= maxLength}
         >
-          + Add
+          + add
         </Button>
       </div>
-      <FieldDescription>
+      <FieldDescription className="font-mono">
         List of {maxLength} items ({items.length}/{maxLength})
       </FieldDescription>
 
@@ -54,7 +54,7 @@ export function ListField({ name, label, itemType, maxLength }: ListFieldProps) 
                   <ClarityField
                     name={`${name}[${index}]`}
                     type={itemType}
-                    label={`Item ${index + 1}`}
+                    label={`[${index}]`}
                   />
                 </fieldContext.Provider>
               )}
@@ -63,7 +63,7 @@ export function ListField({ name, label, itemType, maxLength }: ListFieldProps) 
           <Button
             type="button"
             variant="ghost"
-            size="sm"
+            size="xs"
             onClick={() => removeItem(index)}
             className="mt-6"
           >

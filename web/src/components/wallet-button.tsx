@@ -14,9 +14,9 @@ export const WalletButton = () => {
 
   if (!stacksAddress) {
     return (
-      <Button size="sm" onClick={connect} data-icon="inline-start">
-        <Wallet className="size-4" />
-        Connect Wallet
+      <Button size="sm" variant="outline" onClick={connect}>
+        <Wallet className="size-3.5" data-icon="inline-start" />
+        connect
       </Button>
     );
   }
@@ -24,18 +24,13 @@ export const WalletButton = () => {
   const label = truncateAddress(stacksAddress) ?? 'Connected';
 
   return (
-    <div className="flex items-center gap-2">
-      <div className="flex items-center gap-2 rounded border border-white/10 bg-white/5 px-3 py-1 text-sm font-medium">
-        <Wallet className="size-4" />
-        <span>{label}</span>
+    <div className="flex items-center gap-2 font-mono">
+      <div className="flex items-center gap-2 border border-border bg-muted/50 px-2.5 py-1 text-xs">
+        <span className="text-green-600 dark:text-green-500">●</span>
+        <span className="text-muted-foreground">{label}</span>
       </div>
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={disconnect}
-        // className="border-white/30 text-white hover:bg-white/10 hover:text-white"
-      >
-        Disconnect
+      <Button variant="ghost" size="xs" onClick={disconnect}>
+        disconnect
       </Button>
     </div>
   );

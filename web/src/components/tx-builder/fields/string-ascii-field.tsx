@@ -16,7 +16,9 @@ export function StringAsciiField({ name, label, maxLength }: StringAsciiFieldPro
 
   return (
     <Field>
-      <FieldLabel htmlFor={name}>{label ?? name}</FieldLabel>
+      <FieldLabel htmlFor={name} className="font-mono text-xs">
+        {label ?? name}
+      </FieldLabel>
       <Input
         id={name}
         value={field.state.value}
@@ -24,12 +26,15 @@ export function StringAsciiField({ name, label, maxLength }: StringAsciiFieldPro
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
         maxLength={maxLength}
+        className="font-mono"
       />
-      <FieldDescription>
+      <FieldDescription className="font-mono">
         ASCII only, max {maxLength} characters ({currentLength}/{maxLength})
       </FieldDescription>
       {field.state.meta.isTouched && errors.length > 0 && (
-        <FieldError>{errors.map((e) => (typeof e === 'string' ? e : e.message)).join(', ')}</FieldError>
+        <FieldError className="font-mono">
+          {errors.map((e) => (typeof e === 'string' ? e : e.message)).join(', ')}
+        </FieldError>
       )}
     </Field>
   );

@@ -73,5 +73,9 @@ export function ClarityField({ name, type, label }: ClarityFieldProps) {
     return <TupleField name={name} label={label} members={type.tuple} />;
   }
 
-  return <div className="text-destructive text-sm">Unsupported type</div>;
+  return (
+    <div className="text-xs font-mono text-muted-foreground border border-dashed border-border p-3 bg-muted/20">
+      unsupported type: {JSON.stringify(type)}
+    </div>
+  );
 }

@@ -20,9 +20,13 @@ export function BoolField({ name, label }: BoolFieldProps) {
         onCheckedChange={(checked) => field.handleChange(checked)}
         onBlur={field.handleBlur}
       />
-      <FieldLabel htmlFor={name}>{label ?? name}</FieldLabel>
+      <FieldLabel htmlFor={name} className="font-mono text-xs">
+        {label ?? name}
+      </FieldLabel>
       {field.state.meta.isTouched && errors.length > 0 && (
-        <FieldError>{errors.map((e) => (typeof e === 'string' ? e : e.message)).join(', ')}</FieldError>
+        <FieldError className="font-mono">
+          {errors.map((e) => (typeof e === 'string' ? e : e.message)).join(', ')}
+        </FieldError>
       )}
     </Field>
   );
