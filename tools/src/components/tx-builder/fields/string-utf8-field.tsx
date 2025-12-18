@@ -1,5 +1,7 @@
 import { useStore } from '@tanstack/react-form';
+import type { ClarityAbiType } from '@clarigen/core';
 import { useFieldContext } from '@/hooks/form-context';
+import { useFieldFocusHandlers } from '@/hooks/use-focused-field';
 import { Input } from '@/components/ui/input';
 import { Field, FieldLabel, FieldError, FieldDescription } from '@/components/ui/field';
 
@@ -8,11 +10,13 @@ interface StringUtf8FieldProps {
   label?: string;
   maxLength: number;
   disabled?: boolean;
+  type: ClarityAbiType;
 }
 
-export function StringUtf8Field({ name, label, maxLength, disabled }: StringUtf8FieldProps) {
+export function StringUtf8Field({ name, label, maxLength, disabled, type }: StringUtf8FieldProps) {
   const field = useFieldContext<string>();
   const errors = useStore(field.store, state => state.meta.errors);
+  const { onFocus, onBlur } = useFieldFocusHandlers(name, type);
   const currentLength = field.state.value?.length ?? 0;
 
   return (
@@ -24,7 +28,11 @@ export function StringUtf8Field({ name, label, maxLength, disabled }: StringUtf8
         id={name}
         value={field.state.value}
         placeholder="UTF-8 string"
-        onBlur={field.handleBlur}
+        onBlur={() => {
+          field.handleBlur();
+          onBlur();
+        }}
+        onFocus={onFocus}
         onChange={e => field.handleChange(e.target.value)}
         maxLength={maxLength}
         className="font-mono"

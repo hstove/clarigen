@@ -1,5 +1,7 @@
 import { useStore } from '@tanstack/react-form';
+import type { ClarityAbiType } from '@clarigen/core';
 import { useFieldContext } from '@/hooks/form-context';
+import { useFieldFocusHandlers } from '@/hooks/use-focused-field';
 import { Switch as ShadcnSwitch } from '@/components/ui/switch';
 import { Field, FieldLabel, FieldError } from '@/components/ui/field';
 
@@ -7,11 +9,13 @@ interface BoolFieldProps {
   name: string;
   label?: string;
   disabled?: boolean;
+  type: ClarityAbiType;
 }
 
-export function BoolField({ name, label, disabled }: BoolFieldProps) {
+export function BoolField({ name, label, disabled, type }: BoolFieldProps) {
   const field = useFieldContext<boolean>();
   const errors = useStore(field.store, state => state.meta.errors);
+  const { onFocus, onBlur } = useFieldFocusHandlers(name, type);
 
   return (
     <Field orientation="horizontal">
@@ -19,7 +23,11 @@ export function BoolField({ name, label, disabled }: BoolFieldProps) {
         id={name}
         checked={field.state.value}
         onCheckedChange={checked => field.handleChange(checked)}
-        onBlur={field.handleBlur}
+        onBlur={() => {
+          field.handleBlur();
+          onBlur();
+        }}
+        onFocus={onFocus}
         disabled={disabled}
       />
       <FieldLabel htmlFor={name} className="font-mono text-xs">

@@ -67,7 +67,7 @@ Context panel shows helpers based on focused field type:
 
 1. ✅ Mode distinction (disabled form, clone button)
 2. ✅ Two-column layout + context panel
-3. Field helper infrastructure
+3. ✅ Field helper infrastructure
 4. Uint decimal converter
 5. Additional helpers (principal, buff)
 6. Enhanced transaction display
@@ -88,3 +88,37 @@ Layout changes in main route:
 - CSS grid: `grid-cols-1 lg:grid-cols-[1fr_400px] gap-6`
 - Context panel uses `lg:order-2 lg:sticky lg:top-6 lg:self-start` for sticky positioning on wide screens
 - On mobile, context panel appears above the form
+
+### Field Helper Infrastructure (completed 2025-12-18)
+
+Created focus tracking system with context-aware field helpers:
+
+**Key files:**
+
+- `src/hooks/use-focused-field.tsx` - React context and hooks for focus tracking
+- `src/components/tx-builder/field-helper.tsx` - Main helper component with type-specific helpers
+
+**Focus tracking:**
+
+- `FocusedFieldProvider` wraps the form to provide focus context
+- `useFieldFocusHandlers(name, type)` hook returns `onFocus`/`onBlur` handlers
+- Each primitive field component calls these handlers on input focus/blur
+- Nested fields (tuple members, list items) report their full path (e.g., `k.a`)
+
+**Field helpers by type:**
+
+- `uint`/`int`: Shows signed/unsigned info, decimal reminder for token amounts
+- `principal`: Shows address format (SP.../ST...) and contract format for traits
+- `buffer`: Shows max length, hex encoding instructions
+- `string-ascii`/`string-utf8`: Shows encoding and length constraints
+- `bool`: Shows toggle instructions
+
+**Updated field components:**
+
+- `number-field.tsx` - Added `type` prop and focus handlers
+- `principal-field.tsx` - Added `type` prop and focus handlers
+- `bool-field.tsx` - Added `type` prop and focus handlers
+- `buffer-field.tsx` - Added `type` prop and focus handlers
+- `string-ascii-field.tsx` - Added `type` prop and focus handlers
+- `string-utf8-field.tsx` - Added `type` prop and focus handlers
+- `clarity-field.tsx` - Now passes `type` to all primitive field components

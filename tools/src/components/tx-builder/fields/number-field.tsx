@@ -1,5 +1,7 @@
 import { useStore } from '@tanstack/react-form';
+import type { ClarityAbiType } from '@clarigen/core';
 import { useFieldContext } from '@/hooks/form-context';
+import { useFieldFocusHandlers } from '@/hooks/use-focused-field';
 import { Input } from '@/components/ui/input';
 import { Field, FieldLabel, FieldError, FieldDescription } from '@/components/ui/field';
 
@@ -8,11 +10,13 @@ interface NumberFieldProps {
   label?: string;
   signed: boolean;
   disabled?: boolean;
+  type: ClarityAbiType;
 }
 
-export function NumberField({ name, label, signed, disabled }: NumberFieldProps) {
+export function NumberField({ name, label, signed, disabled, type }: NumberFieldProps) {
   const field = useFieldContext<string>();
   const errors = useStore(field.store, state => state.meta.errors);
+  const { onFocus, onBlur } = useFieldFocusHandlers(name, type);
 
   return (
     <Field>
@@ -23,7 +27,11 @@ export function NumberField({ name, label, signed, disabled }: NumberFieldProps)
         id={name}
         value={field.state.value}
         placeholder={signed ? 'int' : 'uint'}
-        onBlur={field.handleBlur}
+        onBlur={() => {
+          field.handleBlur();
+          onBlur();
+        }}
+        onFocus={onFocus}
         onChange={e => field.handleChange(e.target.value)}
         inputMode="numeric"
         className="font-mono"

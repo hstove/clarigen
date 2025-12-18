@@ -2,27 +2,13 @@ import { StacksTransaction } from '@/types/stacks-transaction';
 import { NETWORK } from '@/lib/constants';
 import { TransactionStatus } from './transaction-status';
 import { ExplorerLink } from './explorer-link';
+import { FieldHelper } from './field-helper';
 
 interface ContextPanelProps {
   txid: string | undefined;
   tx: typeof StacksTransaction.infer | null | undefined;
   txError: Error | null;
   network: NETWORK;
-}
-
-function FieldHelperPlaceholder() {
-  return (
-    <div className="border border-border bg-card h-full">
-      <div className="border-b border-border px-4 py-3 bg-muted/30">
-        <h3 className="font-mono text-sm font-medium text-muted-foreground">field helper</h3>
-      </div>
-      <div className="p-4">
-        <p className="text-xs text-muted-foreground font-mono">
-          Focus a field to see contextual help.
-        </p>
-      </div>
-    </div>
-  );
 }
 
 function TxStatusLoading({ txid, network }: { txid: string; network: NETWORK }) {
@@ -63,6 +49,6 @@ export function ContextPanel({ txid, tx, txError, network }: ContextPanelProps) 
     return <TxStatusLoading txid={txid} network={network} />;
   }
 
-  // Builder mode: show field helper (placeholder for now)
-  return <FieldHelperPlaceholder />;
+  // Builder mode: show field helper
+  return <FieldHelper />;
 }

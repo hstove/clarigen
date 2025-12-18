@@ -7,6 +7,7 @@ import { request } from '@stacks/connect';
 import { type } from 'arktype';
 import { useAppForm } from '@/hooks/form';
 import { fieldContext } from '@/hooks/form-context';
+import { FocusedFieldProvider } from '@/hooks/use-focused-field';
 import { ClarityField } from '@/components/tx-builder';
 import { Button } from '@/components/ui/button';
 import { FieldGroup } from '@/components/ui/field';
@@ -211,123 +212,125 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
   }, [txValues, form]);
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-8">
-      {/* Header */}
-      <div className="space-y-6 mb-6">
-        <Breadcrumbs network={network} contractId={contractId} functionName={func.name} />
-        <div className="space-y-2">
-          <div className="flex items-center gap-2 font-mono text-xs">
-            <span className="text-muted-foreground">{func.access}</span>
-          </div>
-          <h1 className="font-mono text-lg font-medium tracking-tight">{contractId}</h1>
-        </div>
-      </div>
-
-      {/* Two-column layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6">
-        {/* Context Panel - shows first on mobile, second on desktop */}
-        <div className="lg:order-2 lg:sticky lg:top-6 lg:self-start">
-          <ContextPanel txid={txid} tx={tx} txError={txError} network={network} />
-        </div>
-
-        {/* Primary: Function Form */}
-        <div className="lg:order-1">
-          <div className="border border-border bg-card">
-            <div className="border-b border-border px-4 py-3 flex items-center justify-between">
-              <h2 className="font-mono text-sm font-medium">{func.name}</h2>
-              <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">
-                {func.args.length} {func.args.length === 1 ? 'arg' : 'args'}
-              </span>
+    <FocusedFieldProvider>
+      <div className="mx-auto max-w-6xl px-6 py-8">
+        {/* Header */}
+        <div className="space-y-6 mb-6">
+          <Breadcrumbs network={network} contractId={contractId} functionName={func.name} />
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 font-mono text-xs">
+              <span className="text-muted-foreground">{func.access}</span>
             </div>
+            <h1 className="font-mono text-lg font-medium tracking-tight">{contractId}</h1>
+          </div>
+        </div>
 
-            {readResult && readResult.okay && (
-              <div className="border-b border-border bg-muted/20 p-4 space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-medium text-green-600 dark:text-green-500 flex items-center gap-1.5">
-                    <span>●</span> Result
-                  </span>
-                </div>
-                <pre className="font-mono text-sm p-3 bg-background border border-border overflow-auto break-all whitespace-pre-wrap">
-                  {readResult.clarity}
-                </pre>
-                {typeof readResult.value !== 'undefined' && (
-                  <details className="group">
-                    <summary className="text-[10px] text-muted-foreground font-medium uppercase cursor-pointer hover:text-foreground">
-                      JSON Value
-                    </summary>
-                    <pre className="text-xs font-mono p-3 bg-background border border-border overflow-auto max-h-60 mt-2">
-                      {JSON.stringify(readResult.value, null, 2)}
-                    </pre>
-                  </details>
-                )}
+        {/* Two-column layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6">
+          {/* Context Panel - shows first on mobile, second on desktop */}
+          <div className="lg:order-2 lg:sticky lg:top-6 lg:self-start">
+            <ContextPanel txid={txid} tx={tx} txError={txError} network={network} />
+          </div>
+
+          {/* Primary: Function Form */}
+          <div className="lg:order-1">
+            <div className="border border-border bg-card">
+              <div className="border-b border-border px-4 py-3 flex items-center justify-between">
+                <h2 className="font-mono text-sm font-medium">{func.name}</h2>
+                <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">
+                  {func.args.length} {func.args.length === 1 ? 'arg' : 'args'}
+                </span>
               </div>
-            )}
 
-            <form
-              onSubmit={e => {
-                e.preventDefault();
-                form.handleSubmit();
-              }}
-            >
-              <form.AppForm>
-                <div className="p-4">
-                  <FieldGroup>
-                    {func.args.length === 0 ? (
-                      <p className="text-sm text-muted-foreground font-mono">( no arguments )</p>
-                    ) : (
-                      func.args.map(arg => (
-                        <form.Field key={arg.name} name={arg.name as never}>
-                          {field => (
-                            <fieldContext.Provider value={field}>
-                              <ClarityField
-                                name={arg.name}
-                                type={arg.type}
-                                label={`${arg.name}: ${getTypeString(arg.type)}`}
-                                disabled={!!txid}
-                              />
-                            </fieldContext.Provider>
-                          )}
-                        </form.Field>
-                      ))
-                    )}
-
-                    {conversionError && (
-                      <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 font-mono">
-                        {conversionError}
-                      </div>
-                    )}
-                  </FieldGroup>
-                </div>
-
-                <div className="border-t border-border p-4 bg-muted/20">
-                  {txid ? (
-                    <Button
-                      type="button"
-                      variant="outline"
-                      className="w-full"
-                      onClick={() => setUrlState({ txid: null })}
-                    >
-                      clone to new
-                    </Button>
-                  ) : (
-                    <form.Subscribe selector={state => state.isSubmitting}>
-                      {(isSubmitting: boolean) => (
-                        <Button type="submit" className="w-full" disabled={isSubmitting}>
-                          {isSubmitting
-                            ? 'processing...'
-                            : func.access === 'read_only'
-                            ? 'call function'
-                            : 'build transaction'}
-                        </Button>
-                      )}
-                    </form.Subscribe>
+              {readResult && readResult.okay && (
+                <div className="border-b border-border bg-muted/20 p-4 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-medium text-green-600 dark:text-green-500 flex items-center gap-1.5">
+                      <span>●</span> Result
+                    </span>
+                  </div>
+                  <pre className="font-mono text-sm p-3 bg-background border border-border overflow-auto break-all whitespace-pre-wrap">
+                    {readResult.clarity}
+                  </pre>
+                  {typeof readResult.value !== 'undefined' && (
+                    <details className="group">
+                      <summary className="text-[10px] text-muted-foreground font-medium uppercase cursor-pointer hover:text-foreground">
+                        JSON Value
+                      </summary>
+                      <pre className="text-xs font-mono p-3 bg-background border border-border overflow-auto max-h-60 mt-2">
+                        {JSON.stringify(readResult.value, null, 2)}
+                      </pre>
+                    </details>
                   )}
                 </div>
-              </form.AppForm>
-            </form>
+              )}
+
+              <form
+                onSubmit={e => {
+                  e.preventDefault();
+                  form.handleSubmit();
+                }}
+              >
+                <form.AppForm>
+                  <div className="p-4">
+                    <FieldGroup>
+                      {func.args.length === 0 ? (
+                        <p className="text-sm text-muted-foreground font-mono">( no arguments )</p>
+                      ) : (
+                        func.args.map(arg => (
+                          <form.Field key={arg.name} name={arg.name as never}>
+                            {field => (
+                              <fieldContext.Provider value={field}>
+                                <ClarityField
+                                  name={arg.name}
+                                  type={arg.type}
+                                  label={`${arg.name}: ${getTypeString(arg.type)}`}
+                                  disabled={!!txid}
+                                />
+                              </fieldContext.Provider>
+                            )}
+                          </form.Field>
+                        ))
+                      )}
+
+                      {conversionError && (
+                        <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 font-mono">
+                          {conversionError}
+                        </div>
+                      )}
+                    </FieldGroup>
+                  </div>
+
+                  <div className="border-t border-border p-4 bg-muted/20">
+                    {txid ? (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="w-full"
+                        onClick={() => setUrlState({ txid: null })}
+                      >
+                        clone to new
+                      </Button>
+                    ) : (
+                      <form.Subscribe selector={state => state.isSubmitting}>
+                        {(isSubmitting: boolean) => (
+                          <Button type="submit" className="w-full" disabled={isSubmitting}>
+                            {isSubmitting
+                              ? 'processing...'
+                              : func.access === 'read_only'
+                              ? 'call function'
+                              : 'build transaction'}
+                          </Button>
+                        )}
+                      </form.Subscribe>
+                    )}
+                  </div>
+                </form.AppForm>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </FocusedFieldProvider>
   );
 }

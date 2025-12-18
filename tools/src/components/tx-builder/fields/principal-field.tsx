@@ -1,5 +1,7 @@
 import { useStore } from '@tanstack/react-form';
+import type { ClarityAbiType } from '@clarigen/core';
 import { useFieldContext } from '@/hooks/form-context';
+import { useFieldFocusHandlers } from '@/hooks/use-focused-field';
 import { Input } from '@/components/ui/input';
 import { Field, FieldLabel, FieldError, FieldDescription } from '@/components/ui/field';
 
@@ -8,11 +10,19 @@ interface PrincipalFieldProps {
   label?: string;
   requireContract?: boolean;
   disabled?: boolean;
+  type: ClarityAbiType;
 }
 
-export function PrincipalField({ name, label, requireContract, disabled }: PrincipalFieldProps) {
+export function PrincipalField({
+  name,
+  label,
+  requireContract,
+  disabled,
+  type,
+}: PrincipalFieldProps) {
   const field = useFieldContext<string>();
   const errors = useStore(field.store, state => state.meta.errors);
+  const { onFocus, onBlur } = useFieldFocusHandlers(name, type);
 
   return (
     <Field>
@@ -23,7 +33,11 @@ export function PrincipalField({ name, label, requireContract, disabled }: Princ
         id={name}
         value={field.state.value}
         placeholder={requireContract ? 'SP123...ABC.contract-name' : 'SP123...ABC'}
-        onBlur={field.handleBlur}
+        onBlur={() => {
+          field.handleBlur();
+          onBlur();
+        }}
+        onFocus={onFocus}
         onChange={e => field.handleChange(e.target.value)}
         className="font-mono"
         disabled={disabled}

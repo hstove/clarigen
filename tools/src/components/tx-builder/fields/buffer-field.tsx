@@ -1,5 +1,7 @@
 import { useStore } from '@tanstack/react-form';
+import type { ClarityAbiType } from '@clarigen/core';
 import { useFieldContext } from '@/hooks/form-context';
+import { useFieldFocusHandlers } from '@/hooks/use-focused-field';
 import { Input } from '@/components/ui/input';
 import { Field, FieldLabel, FieldError, FieldDescription } from '@/components/ui/field';
 
@@ -8,11 +10,13 @@ interface BufferFieldProps {
   label?: string;
   maxLength: number;
   disabled?: boolean;
+  type: ClarityAbiType;
 }
 
-export function BufferField({ name, label, maxLength, disabled }: BufferFieldProps) {
+export function BufferField({ name, label, maxLength, disabled, type }: BufferFieldProps) {
   const field = useFieldContext<string>();
   const errors = useStore(field.store, state => state.meta.errors);
+  const { onFocus, onBlur } = useFieldFocusHandlers(name, type);
 
   const hexValue = field.state.value ?? '';
   const normalized = hexValue.startsWith('0x') ? hexValue.slice(2) : hexValue;
@@ -27,7 +31,11 @@ export function BufferField({ name, label, maxLength, disabled }: BufferFieldPro
         id={name}
         value={field.state.value}
         placeholder="0x... or hex bytes"
-        onBlur={field.handleBlur}
+        onBlur={() => {
+          field.handleBlur();
+          onBlur();
+        }}
+        onFocus={onFocus}
         onChange={e => field.handleChange(e.target.value)}
         className="font-mono"
         disabled={disabled}

@@ -29,15 +29,27 @@ export function ClarityField({ name, type, label, disabled }: ClarityFieldProps)
   if (isClarityAbiPrimitive(type)) {
     switch (type) {
       case 'uint128':
-        return <NumberField name={name} label={label} signed={false} disabled={disabled} />;
+        return (
+          <NumberField name={name} label={label} signed={false} disabled={disabled} type={type} />
+        );
       case 'int128':
-        return <NumberField name={name} label={label} signed={true} disabled={disabled} />;
+        return (
+          <NumberField name={name} label={label} signed={true} disabled={disabled} type={type} />
+        );
       case 'bool':
-        return <BoolField name={name} label={label} disabled={disabled} />;
+        return <BoolField name={name} label={label} disabled={disabled} type={type} />;
       case 'principal':
-        return <PrincipalField name={name} label={label} disabled={disabled} />;
+        return <PrincipalField name={name} label={label} disabled={disabled} type={type} />;
       case 'trait_reference':
-        return <PrincipalField name={name} label={label} requireContract disabled={disabled} />;
+        return (
+          <PrincipalField
+            name={name}
+            label={label}
+            requireContract
+            disabled={disabled}
+            type={type}
+          />
+        );
       case 'none':
         return null;
     }
@@ -45,7 +57,13 @@ export function ClarityField({ name, type, label, disabled }: ClarityFieldProps)
 
   if (isClarityAbiBuffer(type)) {
     return (
-      <BufferField name={name} label={label} maxLength={type.buffer.length} disabled={disabled} />
+      <BufferField
+        name={name}
+        label={label}
+        maxLength={type.buffer.length}
+        disabled={disabled}
+        type={type}
+      />
     );
   }
 
@@ -56,6 +74,7 @@ export function ClarityField({ name, type, label, disabled }: ClarityFieldProps)
         label={label}
         maxLength={type['string-ascii'].length}
         disabled={disabled}
+        type={type}
       />
     );
   }
@@ -67,6 +86,7 @@ export function ClarityField({ name, type, label, disabled }: ClarityFieldProps)
         label={label}
         maxLength={type['string-utf8'].length}
         disabled={disabled}
+        type={type}
       />
     );
   }
