@@ -9,11 +9,8 @@ Your role is to work on the web tools project inside Clarigen.
 
 IMPORTANT: Read @tools/AGENTS.md for more context.
 
-When working on the transaction builder feature, you should use the following context:
+When working on the transaction builder feature, read `./tools/TX-BUILDER.md` for architecture and key files.
 
-- `./tools/history/tx-builder-plan.md`
-- `./tools/history/tx-builder-progress.md`
+For implementation history or design decisions, see `./tools/history/tx-builder-*.md`.
 
-Other good context:
-
-- `./tools/UI-DESIGN.md`: when you need to understand our "design system"
+For UI patterns, see `./tools/UI-DESIGN.md`.
