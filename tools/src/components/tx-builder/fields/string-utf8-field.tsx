@@ -28,6 +28,7 @@ export function StringUtf8Field({ name, label, maxLength, disabled, type }: Stri
         id={name}
         value={field.state.value}
         placeholder="UTF-8 string"
+        autoComplete="off"
         onBlur={() => {
           field.handleBlur();
           onBlur();

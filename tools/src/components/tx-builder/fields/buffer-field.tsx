@@ -31,6 +31,7 @@ export function BufferField({ name, label, maxLength, disabled, type }: BufferFi
         id={name}
         value={field.state.value}
         placeholder="0x... or hex bytes"
+        autoComplete="off"
         onBlur={() => {
           field.handleBlur();
           onBlur();

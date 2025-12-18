@@ -27,6 +27,7 @@ export function NumberField({ name, label, signed, disabled, type }: NumberField
         id={name}
         value={field.state.value}
         placeholder={signed ? 'int' : 'uint'}
+        autoComplete="off"
         onBlur={() => {
           field.handleBlur();
           onBlur();

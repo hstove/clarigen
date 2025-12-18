@@ -33,6 +33,7 @@ export function PrincipalField({
         id={name}
         value={field.state.value}
         placeholder={requireContract ? 'SP123...ABC.contract-name' : 'SP123...ABC'}
+        autoComplete="off"
         onBlur={() => {
           field.handleBlur();
           onBlur();

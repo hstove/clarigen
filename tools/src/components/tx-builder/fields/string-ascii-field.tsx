@@ -34,6 +34,7 @@ export function StringAsciiField({
         id={name}
         value={field.state.value}
         placeholder="ASCII string"
+        autoComplete="off"
         onBlur={() => {
           field.handleBlur();
           onBlur();
