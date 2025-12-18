@@ -1,6 +1,7 @@
 import { StacksTransaction } from '@/types/stacks-transaction';
 import { NETWORK } from '@/lib/constants';
 import { format } from 'dnum';
+import { ExplorerLink } from './explorer-link';
 
 interface TransactionStatusProps {
   tx: typeof StacksTransaction.infer;
@@ -172,14 +173,7 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
 
       {/* Footer */}
       <div className="border-t border-border px-4 py-3 bg-muted/20">
-        <a
-          href={`https://explorer.hiro.so/txid/${tx.tx_id}?chain=${network}`}
-          target="_blank"
-          rel="noreferrer"
-          className="text-xs text-primary hover:underline font-mono"
-        >
-          → explorer
-        </a>
+        <ExplorerLink txid={tx.tx_id} network={network} />
       </div>
     </div>
   );

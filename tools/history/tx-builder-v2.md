@@ -65,9 +65,26 @@ Context panel shows helpers based on focused field type:
 
 ## Implementation Order
 
-1. Mode distinction (disabled form, clone button)
-2. Two-column layout + context panel
+1. ✅ Mode distinction (disabled form, clone button)
+2. ✅ Two-column layout + context panel
 3. Field helper infrastructure
 4. Uint decimal converter
 5. Additional helpers (principal, buff)
 6. Enhanced transaction display
+
+## Implementation Notes
+
+### Two-Column Layout (completed 2025-12-18)
+
+Created `ContextPanel` component (`src/components/tx-builder/context-panel.tsx`) that:
+
+- Shows `TransactionStatus` in Result mode (when `txid` present)
+- Shows field helper placeholder in Builder mode
+- Handles loading/error states for transaction fetching
+
+Layout changes in main route:
+
+- Container width changed from `max-w-2xl` to `max-w-6xl`
+- CSS grid: `grid-cols-1 lg:grid-cols-[1fr_400px] gap-6`
+- Context panel uses `lg:order-2 lg:sticky lg:top-6 lg:self-start` for sticky positioning on wide screens
+- On mobile, context panel appears above the form
