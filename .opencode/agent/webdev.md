@@ -1,8 +1,8 @@
 ---
 description: Agent for working on the web tools project inside Clarigen.
 tools:
-  beads*: true
-  playwriter*: true
+  beads_*: true
+  playwriter_*: true
 ---
 
 Your role is to work on the web tools project inside Clarigen.

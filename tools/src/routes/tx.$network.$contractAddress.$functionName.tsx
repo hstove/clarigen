@@ -23,16 +23,6 @@ function parseNetwork(network: string): NETWORK | null {
   return result;
 }
 
-function parseContractAddress(
-  contractAddress: string
-): { address: string; contractName: string } | null {
-  const parts = contractAddress.split('.');
-  if (parts.length !== 2) return null;
-  const [address, contractName] = parts;
-  if (!address || !contractName) return null;
-  return { address, contractName };
-}
-
 export const Route = createFileRoute('/tx/$network/$contractAddress/$functionName')({
   component: TxBuilderPage,
 });
@@ -68,16 +58,7 @@ function getDefaultValue(type: ClarityAbiType): unknown {
 
 function TxBuilderPage() {
   const { network: networkParam, contractAddress, functionName } = Route.useParams();
-  const network = parseNetwork(networkParam);
-  const contract = parseContractAddress(contractAddress);
-
-  if (!network || !contract) {
-    return (
-      <div className="container mx-auto p-6 max-w-2xl">
-        <p className="text-sm text-destructive">Invalid transaction URL.</p>
-      </div>
-    );
-  }
+  const network = parseNetwork(networkParam)!;
 
   return (
     <TxBuilderContent network={network} contractId={contractAddress} functionName={functionName} />

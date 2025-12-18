@@ -1,7 +1,7 @@
 ---
 description: Faster model for generating new tasks with `beads`.
 tools:
-  beads*: true
+  beads_*: true
 model: opencode/gemini-3-flash
 ---
 

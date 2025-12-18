@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiSplatRouteImport } from './routes/api.$'
 import { Route as TxNetworkContractAddressRouteImport } from './routes/tx.$network.$contractAddress'
 import { Route as ApiRpcSplatRouteImport } from './routes/api.rpc.$'
+import { Route as TxNetworkContractAddressIndexRouteImport } from './routes/tx.$network.$contractAddress.index'
 import { Route as TxNetworkContractAddressFunctionNameRouteImport } from './routes/tx.$network.$contractAddress.$functionName'
 import { Route as ReadNetworkContractAddressFunctionNameRouteImport } from './routes/read.$network.$contractAddress.$functionName'
 
@@ -37,6 +38,12 @@ const ApiRpcSplatRoute = ApiRpcSplatRouteImport.update({
   path: '/api/rpc/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TxNetworkContractAddressIndexRoute =
+  TxNetworkContractAddressIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => TxNetworkContractAddressRoute,
+  } as any)
 const TxNetworkContractAddressFunctionNameRoute =
   TxNetworkContractAddressFunctionNameRouteImport.update({
     id: '/$functionName',
@@ -57,14 +64,15 @@ export interface FileRoutesByFullPath {
   '/tx/$network/$contractAddress': typeof TxNetworkContractAddressRouteWithChildren
   '/read/$network/$contractAddress/$functionName': typeof ReadNetworkContractAddressFunctionNameRoute
   '/tx/$network/$contractAddress/$functionName': typeof TxNetworkContractAddressFunctionNameRoute
+  '/tx/$network/$contractAddress/': typeof TxNetworkContractAddressIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api/$': typeof ApiSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
-  '/tx/$network/$contractAddress': typeof TxNetworkContractAddressRouteWithChildren
   '/read/$network/$contractAddress/$functionName': typeof ReadNetworkContractAddressFunctionNameRoute
   '/tx/$network/$contractAddress/$functionName': typeof TxNetworkContractAddressFunctionNameRoute
+  '/tx/$network/$contractAddress': typeof TxNetworkContractAddressIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -74,6 +82,7 @@ export interface FileRoutesById {
   '/tx/$network/$contractAddress': typeof TxNetworkContractAddressRouteWithChildren
   '/read/$network/$contractAddress/$functionName': typeof ReadNetworkContractAddressFunctionNameRoute
   '/tx/$network/$contractAddress/$functionName': typeof TxNetworkContractAddressFunctionNameRoute
+  '/tx/$network/$contractAddress/': typeof TxNetworkContractAddressIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -84,14 +93,15 @@ export interface FileRouteTypes {
     | '/tx/$network/$contractAddress'
     | '/read/$network/$contractAddress/$functionName'
     | '/tx/$network/$contractAddress/$functionName'
+    | '/tx/$network/$contractAddress/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/api/$'
     | '/api/rpc/$'
-    | '/tx/$network/$contractAddress'
     | '/read/$network/$contractAddress/$functionName'
     | '/tx/$network/$contractAddress/$functionName'
+    | '/tx/$network/$contractAddress'
   id:
     | '__root__'
     | '/'
@@ -100,6 +110,7 @@ export interface FileRouteTypes {
     | '/tx/$network/$contractAddress'
     | '/read/$network/$contractAddress/$functionName'
     | '/tx/$network/$contractAddress/$functionName'
+    | '/tx/$network/$contractAddress/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -140,6 +151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiRpcSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tx/$network/$contractAddress/': {
+      id: '/tx/$network/$contractAddress/'
+      path: '/'
+      fullPath: '/tx/$network/$contractAddress/'
+      preLoaderRoute: typeof TxNetworkContractAddressIndexRouteImport
+      parentRoute: typeof TxNetworkContractAddressRoute
+    }
     '/tx/$network/$contractAddress/$functionName': {
       id: '/tx/$network/$contractAddress/$functionName'
       path: '/$functionName'
@@ -159,12 +177,14 @@ declare module '@tanstack/react-router' {
 
 interface TxNetworkContractAddressRouteChildren {
   TxNetworkContractAddressFunctionNameRoute: typeof TxNetworkContractAddressFunctionNameRoute
+  TxNetworkContractAddressIndexRoute: typeof TxNetworkContractAddressIndexRoute
 }
 
 const TxNetworkContractAddressRouteChildren: TxNetworkContractAddressRouteChildren =
   {
     TxNetworkContractAddressFunctionNameRoute:
       TxNetworkContractAddressFunctionNameRoute,
+    TxNetworkContractAddressIndexRoute: TxNetworkContractAddressIndexRoute,
   }
 
 const TxNetworkContractAddressRouteWithChildren =
