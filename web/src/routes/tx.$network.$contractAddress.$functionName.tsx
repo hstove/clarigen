@@ -12,7 +12,9 @@ import { Button } from '@/components/ui/button';
 import { FieldGroup } from '@/components/ui/field';
 import { useContractFunction } from '@/hooks/use-contract-abi';
 import { useTxUrlState } from '@/hooks/use-tx-url-state';
+import { useTransaction } from '@/hooks/use-transaction';
 import { formValuesToFunctionArgs } from '@/lib/clarity-form-utils';
+import { TransactionStatus } from '@/components/tx-builder/transaction-status';
 
 function parseNetwork(network: string): NETWORK | null {
   const result = Network(network);
@@ -144,6 +146,8 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
   } | null>(null);
   const txid = urlState.txid as string | undefined;
 
+  const { data: tx, error: txError } = useTransaction(network, txid);
+
   // Compute initial values only once based on URL state at mount time
   const initialValues = useMemo(() => {
     const values: Record<string, unknown> = {};
@@ -217,19 +221,46 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
         </div>
 
         {txid && (
-          <div className="p-4 border border-blue-200 bg-blue-50 rounded-lg dark:bg-blue-900/20 dark:border-blue-800">
-            <h3 className="text-sm font-semibold text-blue-900 dark:text-blue-100 mb-1">
-              Transaction Submitted
-            </h3>
-            <p className="text-xs font-mono break-all text-blue-800 dark:text-blue-200">{txid}</p>
-            <a
-              href={`https://explorer.hiro.so/txid/${txid}?chain=${network}`}
-              target="_blank"
-              rel="noreferrer"
-              className="text-xs text-blue-600 dark:text-blue-400 underline mt-2 inline-block font-medium hover:text-blue-800 dark:hover:text-blue-300"
-            >
-              View on Explorer
-            </a>
+          <div className="space-y-4">
+            {tx ? (
+              <TransactionStatus tx={tx} network={network} />
+            ) : txError ? (
+              <div className="p-4 border border-destructive/20 bg-destructive/10 rounded-lg">
+                <h3 className="text-sm font-semibold text-destructive mb-1">
+                  Transaction Status Unavailable
+                </h3>
+                <p className="text-xs font-mono break-all text-destructive/80 mb-2">{txid}</p>
+                <p className="text-xs text-muted-foreground">
+                  The transaction might still be propagating to the network, or the API is
+                  unavailable.
+                </p>
+                <a
+                  href={`https://explorer.hiro.so/txid/${txid}?chain=${network}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-xs text-blue-600 dark:text-blue-400 underline mt-2 inline-block font-medium hover:text-blue-800 dark:hover:text-blue-300"
+                >
+                  View on Explorer
+                </a>
+              </div>
+            ) : (
+              <div className="p-4 border border-blue-200 bg-blue-50 rounded-lg dark:bg-blue-900/20 dark:border-blue-800 animate-pulse">
+                <h3 className="text-sm font-semibold text-blue-900 dark:text-blue-100 mb-1">
+                  Loading Transaction Status...
+                </h3>
+                <p className="text-xs font-mono break-all text-blue-800 dark:text-blue-200">
+                  {txid}
+                </p>
+                <a
+                  href={`https://explorer.hiro.so/txid/${txid}?chain=${network}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-xs text-blue-600 dark:text-blue-400 underline mt-2 inline-block font-medium hover:text-blue-800 dark:hover:text-blue-300"
+                >
+                  View on Explorer
+                </a>
+              </div>
+            )}
           </div>
         )}
 
