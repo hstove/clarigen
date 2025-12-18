@@ -9,9 +9,9 @@ The goal is to parse `@param` and general function comments from the Clarity sou
 ### Core Parsing Logic
 
 The existing logic for parsing Clarity comments into structured JSON exists in:
-`packages/cli/src/docs/index.ts` -> `createContractDocInfo`
+`packages/docs/src/index.ts` -> `createContractDocInfo`
 
-This function takes `contractSrc` and `abi` and returns a `ClaridocContract` object. The `tools` package can import this directly from `@clarigen/cli`.
+This function takes `contractSrc` and `abi` and returns a `ClaridocContract` object. The `tools` package can import this directly from `@clarigen/docs`.
 
 This function contains:
 
@@ -32,7 +32,7 @@ The `docs-site` project uses this logic to generate its documentation:
 
 ## Implementation Plan
 
-1.  **Data Hook**: Create a hook (e.g., `useContractDocs`) in `tools` that fetches the contract source and parses it using `createContractDocInfo` from `@clarigen/cli`.
+1.  **Data Hook**: Create a hook (e.g., `useContractDocs`) in `tools` that fetches the contract source and parses it using `createContractDocInfo` from `@clarigen/docs`.
 2.  **UI Updates**:
     - Update `FieldHelper` to display parameter comments.
     - Update `ContractOverviewContent` to display function descriptions.

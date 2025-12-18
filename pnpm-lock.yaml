@@ -134,6 +134,9 @@ importers:
       '@clarigen/core':
         specifier: workspace:*
         version: link:../packages/core
+      '@clarigen/docs':
+        specifier: workspace:*
+        version: link:../packages/docs
       '@radix-ui/react-accordion':
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@18.2.25)(@types/react@18.2.79)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -380,6 +383,9 @@ importers:
       '@clarigen/core':
         specifier: workspace:*
         version: link:../core
+      '@clarigen/docs':
+        specifier: workspace:*
+        version: link:../docs
       '@iarna/toml':
         specifier: ^2.2.5
         version: 2.2.5
@@ -448,6 +454,12 @@ importers:
         specifier: 7.1.0
         version: 7.1.0
 
+  packages/docs:
+    dependencies:
+      '@clarigen/core':
+        specifier: workspace:*
+        version: link:../core
+
   packages/web:
     dependencies:
       '@clarigen/core':
@@ -465,6 +477,9 @@ importers:
       '@clarigen/core':
         specifier: workspace:*
         version: link:../packages/core
+      '@clarigen/docs':
+        specifier: workspace:*
+        version: link:../packages/docs
       '@fontsource-variable/inter':
         specifier: ^5.2.8
         version: 5.2.8

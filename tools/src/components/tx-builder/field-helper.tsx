@@ -16,6 +16,8 @@ import { HistoryHelper } from './helpers/history-helper';
 import { X } from 'lucide-react';
 import type { NETWORK } from '@/lib/constants';
 import { cn } from '@/lib/utils';
+import type { ClaridocFunction } from '@clarigen/docs';
+import { DocText } from './doc-text';
 
 function getFieldTypeCategory(field: FocusedField): string {
   const { type } = field;
@@ -227,11 +229,16 @@ interface FieldHelperProps {
   network: NETWORK;
   contractId: string;
   functionName: string;
+  functionDoc?: ClaridocFunction;
 }
 
-export function FieldHelper({ network, contractId, functionName }: FieldHelperProps) {
+export function FieldHelper({ network, contractId, functionName, functionDoc }: FieldHelperProps) {
   const { focusedField, setFocusedField } = useFocusedField();
   const [activeTab, setActiveTab] = useState<TabId>('tools');
+  const paramDocs = focusedField
+    ? functionDoc?.comments.params[focusedField.name]?.comments ?? []
+    : [];
+  const hasParamDocs = paramDocs.some(line => line.trim() !== '');
 
   return (
     <div className="border border-border bg-card h-full">
@@ -270,6 +277,11 @@ export function FieldHelper({ network, contractId, functionName }: FieldHelperPr
         {focusedField ? (
           <div className="space-y-4">
             <div className="font-mono text-sm font-medium">{focusedField.name}</div>
+            {hasParamDocs && (
+              <div className="border border-border/60 bg-muted/30 p-3">
+                <DocText text={paramDocs} />
+              </div>
+            )}
             {activeTab === 'tools' ? (
               <FieldHelperContent field={focusedField} network={network} contractId={contractId} />
             ) : (

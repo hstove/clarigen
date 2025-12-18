@@ -403,3 +403,18 @@ Integrated read-only function execution into the Transaction Builder UI. Functio
 ### Files modified
 
 - `web/src/routes/tx.$network.$contractAddress.$functionName.tsx` - integrated API execution, result display, and button state logic.
+
+## Completed: Contract overview function docs
+
+### What was done
+
+Added function description lines to the contract overview list, pulling from parsed Claridoc comments.
+
+### Implementation details
+
+- Uses `useContractDocs` to pull parsed documentation alongside ABI data.
+- Builds a name → description map and renders a short, clamped summary under each function.
+
+### Files modified
+
+- `tools/src/routes/tx.$network.$contractAddress.index.tsx` - show function doc summaries in public/read-only lists.

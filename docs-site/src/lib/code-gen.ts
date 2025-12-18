@@ -3,10 +3,10 @@ import { fetchContractSrcAbi } from '@/lib/stacks-api';
 import {
   SessionContract,
   TYPE_IMPORTS,
-  createContractDocInfo,
   generateContractMeta,
   generateMarkdown,
 } from '@clarigen/cli';
+import { createContractDocInfo } from '@clarigen/docs';
 import { ClarityAbi, toCamelCase } from '@clarigen/core';
 import escape from 'escape-html';
 import { compileMdx } from './mdx-utils';

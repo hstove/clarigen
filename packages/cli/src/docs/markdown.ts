@@ -7,9 +7,8 @@ import {
   ClaridocMap,
   ClaridocParam,
   ClaridocVariable,
-  // Comments,
   createContractDocInfo,
-} from './index';
+} from '@clarigen/docs';
 import { basename } from 'path';
 import { sortContracts } from '../utils';
 

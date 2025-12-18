@@ -3,6 +3,7 @@ import { NETWORK } from '@/lib/constants';
 import { TransactionStatus } from './transaction-status';
 import { ExplorerLink } from './explorer-link';
 import { FieldHelper } from './field-helper';
+import type { ClaridocFunction } from '@clarigen/docs';
 
 interface ContextPanelProps {
   txid: string | undefined;
@@ -11,6 +12,7 @@ interface ContextPanelProps {
   network: NETWORK;
   contractId: string;
   functionName: string;
+  functionDoc?: ClaridocFunction;
 }
 
 function TxStatusLoading({ txid, network }: { txid: string; network: NETWORK }) {
@@ -46,6 +48,7 @@ export function ContextPanel({
   network,
   contractId,
   functionName,
+  functionDoc,
 }: ContextPanelProps) {
   // Result mode: show transaction status
   if (txid) {
@@ -59,5 +62,12 @@ export function ContextPanel({
   }
 
   // Builder mode: show field helper
-  return <FieldHelper network={network} contractId={contractId} functionName={functionName} />;
+  return (
+    <FieldHelper
+      network={network}
+      contractId={contractId}
+      functionName={functionName}
+      functionDoc={functionDoc}
+    />
+  );
 }

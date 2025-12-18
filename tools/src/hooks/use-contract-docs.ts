@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { createContractDocInfo, type ClaridocContract } from '@clarigen/cli';
+import { createContractDocInfo, type ClaridocContract } from '@clarigen/docs';
 import { parseContractAbi } from '@/lib/stacks-api';
 import { useContractInfo } from '@/hooks/use-contract-abi';
 import type { NETWORK } from '@/lib/constants';

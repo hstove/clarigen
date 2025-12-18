@@ -36,12 +36,15 @@ function App() {
       ) : (
         <div className="grid gap-4">
           {groups.map(group => (
-            <div key={`${group.network}:${group.contractId}`} className="border border-border bg-card">
+            <div
+              key={`${group.network}:${group.contractId}`}
+              className="border border-border bg-card"
+            >
               <div className="border-b border-border px-4 py-3 bg-muted/30">
                 <div className="flex items-center justify-between gap-4">
                   <div className="space-y-1">
                     <Link
-                      to="/tx/$network/$contractAddress/"
+                      to="/tx/$network/$contractAddress"
                       params={{ network: group.network, contractAddress: group.contractId }}
                       className="font-mono text-sm font-medium text-primary hover:underline break-all"
                     >
@@ -59,7 +62,9 @@ function App() {
               <div className="p-4 space-y-2">
                 {group.entries.map(entry => (
                   <div
-                    key={`${entry.contractId}:${entry.functionName ?? 'overview'}:${entry.lastVisited}`}
+                    key={`${entry.contractId}:${entry.functionName ?? 'overview'}:${
+                      entry.lastVisited
+                    }`}
                     className="flex items-center justify-between gap-4 border border-border/60 bg-muted/10 px-3 py-2"
                   >
                     <div className="flex items-center gap-2 text-xs">
@@ -80,7 +85,7 @@ function App() {
                         </Link>
                       ) : (
                         <Link
-                          to="/tx/$network/$contractAddress/"
+                          to="/tx/$network/$contractAddress"
                           params={{ network: entry.network, contractAddress: entry.contractId }}
                           className="font-mono text-sm text-primary hover:underline"
                         >
@@ -105,12 +110,15 @@ function App() {
 type GroupedVisited = {
   contractId: string;
   network: string;
-  entries: { contractId: string; functionName: string | null; network: string; lastVisited: number }[];
+  entries: {
+    contractId: string;
+    functionName: string | null;
+    network: string;
+    lastVisited: number;
+  }[];
 };
 
-function groupVisitedByContract(
-  entries: GroupedVisited['entries']
-): GroupedVisited[] {
+function groupVisitedByContract(entries: GroupedVisited['entries']): GroupedVisited[] {
   const groups: GroupedVisited[] = [];
   const map = new Map<string, GroupedVisited>();
 

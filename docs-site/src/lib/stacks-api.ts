@@ -1,5 +1,6 @@
 'use server';
 import { Configuration, SmartContractsApi } from '@stacks/blockchain-api-client';
+// @ts-ignore
 import { cache } from 'react';
 import pox4Interface from '@/fixtures/pox-4-interface.json';
 import pox4Source from '@/fixtures/pox-4-source.json';

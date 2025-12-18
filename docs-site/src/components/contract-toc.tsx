@@ -2,7 +2,7 @@
 // import { ClarityAbi } from '@clarigen/core';
 import { textStyles, textVariants } from '@/lib/text-variants';
 import { cn } from '@/lib/utils';
-import { ClaridocContract, ClaridocItem } from '@clarigen/cli';
+import { ClaridocContract, ClaridocItem } from '@clarigen/docs';
 import { Text } from './text';
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible';
 import React from 'react';

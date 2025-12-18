@@ -13,6 +13,7 @@ import { getClarityValidators } from '@/lib/clarity-validators';
 import { Button } from '@/components/ui/button';
 import { FieldGroup } from '@/components/ui/field';
 import { useContractFunction, useContractFunctions } from '@/hooks/use-contract-abi';
+import { useContractDocs } from '@/hooks/use-contract-docs';
 import { useTxUrlState } from '@/hooks/use-tx-url-state';
 import { usePostConditionsUrlState } from '@/hooks/use-post-conditions-url-state';
 import { useTransaction } from '@/hooks/use-transaction';
@@ -24,6 +25,7 @@ import { ContextPanel } from '@/components/tx-builder/context-panel';
 import { PostConditionsField } from '@/components/tx-builder/post-conditions-field';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { Link } from '@tanstack/react-router';
+import { DocText } from '@/components/tx-builder/doc-text';
 
 function serializeValueForHistory(value: unknown): string | null {
   if (value === null || value === undefined) return null;
@@ -253,6 +255,13 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
   const txid = urlState.txid as string | undefined;
 
   const { data: tx, error: txError } = useTransaction(network, txid);
+  const { data: contractDocs } = useContractDocs(network, contractId);
+  const functionDoc = useMemo(
+    () => contractDocs?.functions.find(doc => doc.abi.name === func.name),
+    [contractDocs, func.name]
+  );
+  const functionDocText = functionDoc?.comments.text ?? [];
+  const hasFunctionDocs = functionDocText.some(line => line.trim() !== '');
 
   const txValues = useMemo(() => {
     if (tx && 'contract_call' in tx && tx.contract_call.function_args) {
@@ -384,6 +393,7 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
               network={network}
               contractId={contractId}
               functionName={func.name}
+              functionDoc={functionDoc}
             />
           </div>
 
@@ -396,6 +406,15 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
                   {func.args.length} {func.args.length === 1 ? 'arg' : 'args'}
                 </span>
               </div>
+
+              {hasFunctionDocs && (
+                <div className="border-b border-border bg-muted/20 px-4 py-3">
+                  <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider mb-2">
+                    Documentation
+                  </div>
+                  <DocText text={functionDocText} />
+                </div>
+              )}
 
               {readResult && readResult.okay && (
                 <div className="border-b border-border bg-muted/20 p-4 space-y-3">

@@ -50,6 +50,7 @@
   "dependencies": {
     "@antfu/ni": "^0.21.12",
     "@clarigen/core": "workspace:*",
+    "@clarigen/docs": "workspace:*",
     "@iarna/toml": "^2.2.5",
     "@stacks/transactions": "7.1.0",
     "arktype": "^2.1.25",

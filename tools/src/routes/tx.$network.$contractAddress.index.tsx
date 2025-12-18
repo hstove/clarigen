@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { NETWORK, Network } from '@/lib/constants';
 import { type } from 'arktype';
 import { useContractFunctions } from '@/hooks/use-contract-abi';
+import { useContractDocs } from '@/hooks/use-contract-docs';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { addVisitedFunction } from '@/lib/visited-history';
 
@@ -30,6 +31,16 @@ type ContractOverviewContentProps = {
 
 function ContractOverviewContent({ network, contractId }: ContractOverviewContentProps) {
   const { data: functions, isLoading, error } = useContractFunctions(network, contractId);
+  const { data: contractDocs } = useContractDocs(network, contractId);
+  const functionDescriptions = useMemo(() => {
+    if (!contractDocs) return new Map<string, string>();
+    return new Map(
+      contractDocs.functions.map(fn => {
+        const description = fn.comments.text.map(line => line.trim()).filter(Boolean).join(' ');
+        return [fn.abi.name, description];
+      })
+    );
+  }, [contractDocs]);
 
   useEffect(() => {
     addVisitedFunction(contractId, null, network);
@@ -101,6 +112,11 @@ function ContractOverviewContent({ network, contractId }: ContractOverviewConten
                   <div className="text-[10px] text-muted-foreground font-mono">
                     {func.args.length} {func.args.length === 1 ? 'arg' : 'args'}
                   </div>
+                  {functionDescriptions.get(func.name) ? (
+                    <div className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
+                      {functionDescriptions.get(func.name)}
+                    </div>
+                  ) : null}
                 </div>
                 <div className="text-muted-foreground group-hover:text-primary transition-colors">
                   →
@@ -138,6 +154,11 @@ function ContractOverviewContent({ network, contractId }: ContractOverviewConten
                   <div className="text-[10px] text-muted-foreground font-mono">
                     {func.args.length} {func.args.length === 1 ? 'arg' : 'args'}
                   </div>
+                  {functionDescriptions.get(func.name) ? (
+                    <div className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
+                      {functionDescriptions.get(func.name)}
+                    </div>
+                  ) : null}
                 </div>
                 <div className="text-muted-foreground group-hover:text-primary transition-colors">
                   →
