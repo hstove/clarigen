@@ -17,7 +17,15 @@ function StatusIndicator({ status }: { status: string }) {
   return <span className="text-destructive">×</span>;
 }
 
-function DataRow({ label, value, mono = false }: { label: string; value: React.ReactNode; mono?: boolean }) {
+function DataRow({
+  label,
+  value,
+  mono = false,
+}: {
+  label: string;
+  value: React.ReactNode;
+  mono?: boolean;
+}) {
   return (
     <div className="flex justify-between gap-4 text-xs py-1.5 border-b border-border/50 last:border-0">
       <span className="text-muted-foreground shrink-0">{label}</span>
@@ -37,7 +45,13 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
         <div className="flex items-center gap-2 text-sm font-medium font-mono">
           <StatusIndicator status={tx.tx_status} />
           <span>
-            {isPending ? 'pending' : isSuccess ? 'confirmed' : 'failed'}
+            {isPending
+              ? 'pending'
+              : isSuccess
+              ? 'confirmed'
+              : tx.tx_status === 'abort_by_post_condition'
+              ? 'post-condition failure'
+              : 'failed'}
           </span>
         </div>
         <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">
@@ -72,7 +86,7 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
           <div className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">
             Result
           </div>
-          <pre className="font-mono text-sm p-3 bg-muted/30 border border-border overflow-auto break-all">
+          <pre className="font-mono text-sm p-3 bg-muted/30 border border-border overflow-auto break-all whitespace-pre-wrap">
             {tx.tx_result.repr}
           </pre>
         </div>
@@ -81,7 +95,7 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
       {/* VM Error */}
       {'block_height' in tx && tx.vm_error && (
         <div className="border-t border-destructive/30 bg-destructive/5 px-4 py-3">
-          <pre className="text-sm text-destructive font-mono break-all">
+          <pre className="text-sm text-destructive font-mono break-all whitespace-pre-wrap">
             {tx.vm_error}
           </pre>
         </div>
@@ -94,9 +108,7 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
             <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">
               Events
             </span>
-            <span className="text-[10px] font-mono text-muted-foreground">
-              {tx.events.length}
-            </span>
+            <span className="text-[10px] font-mono text-muted-foreground">{tx.events.length}</span>
           </summary>
           <div className="px-4 pb-3 space-y-2">
             {tx.events.map((event, i) => (
@@ -132,7 +144,8 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
                 {event.event_type === 'non_fungible_token_asset' && (
                   <div className="space-y-1">
                     <div>
-                      {event.asset.asset_event_type} {event.asset.asset_id} ({event.asset.value.repr})
+                      {event.asset.asset_event_type} {event.asset.asset_id} (
+                      {event.asset.value.repr})
                     </div>
                     <div className="text-[10px] text-muted-foreground">
                       <div>from: {event.asset.sender}</div>
@@ -143,8 +156,8 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
                 {event.event_type === 'stx_lock' && (
                   <div className="space-y-1">
                     <div>
-                      locked {format([BigInt(event.stx_lock_event.locked_amount), 6])} STX until block{' '}
-                      {event.stx_lock_event.unlock_height}
+                      locked {format([BigInt(event.stx_lock_event.locked_amount), 6])} STX until
+                      block {event.stx_lock_event.unlock_height}
                     </div>
                     <div className="text-[10px] text-muted-foreground">
                       address: {event.stx_lock_event.locked_address}

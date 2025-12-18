@@ -10,7 +10,7 @@ interface BreadcrumbsProps {
 
 export function Breadcrumbs({ network, contractId, functionName }: BreadcrumbsProps) {
   return (
-    <nav className="flex items-center gap-1.5 font-mono text-xs text-muted-foreground">
+    <nav className="flex flex-wrap items-center gap-1.5 font-mono text-xs text-muted-foreground">
       <Link to="/" className="hover:text-primary transition-colors">
         Clarigen Tools
       </Link>

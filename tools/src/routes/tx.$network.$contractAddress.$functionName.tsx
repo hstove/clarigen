@@ -265,7 +265,7 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
                   <span>●</span> Result
                 </span>
               </div>
-              <pre className="font-mono text-sm p-3 bg-background border border-border overflow-auto break-all">
+              <pre className="font-mono text-sm p-3 bg-background border border-border overflow-auto break-all whitespace-pre-wrap">
                 {readResult.clarity}
               </pre>
               {typeof readResult.value !== 'undefined' && (
