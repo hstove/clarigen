@@ -1,19 +1,11 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  // Theme configuration
-  "theme": "opencode",
   // "model": "anthropic/claude-sonnet-4-5",
   "autoupdate": true,
+  "tools": {
+    "beads*": true,
+  },
   "mcp": {
-    "beads": {
-      "command": ["beads-mcp"],
-      "enabled": true,
-      "type": "local"
-    },
-    "context7": {
-      "type": "remote",
-      "enabled": true,
-      "url": "https://mcp.context7.com/mcp"
-    }
+
   }
 }

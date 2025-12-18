@@ -25,32 +25,12 @@ bd sync               # Sync with git
 
 ### Quick Start
 
-**Check for ready work:**
+Use the MCP tool `beads` to manage issues.
 
-```bash
-bd ready --json
-```
-
-**Create new issues:**
-
-```bash
-bd create "Issue title" -t bug|feature|task -p 0-4 --json
-bd create "Issue title" -p 1 --deps discovered-from:bd-123 --json
-bd create "Subtask" --parent <epic-id> --json  # Hierarchical subtask (gets ID like epic-id.1)
-```
-
-**Claim and update:**
-
-```bash
-bd update bd-42 --status in_progress --json
-bd update bd-42 --priority 1 --json
-```
-
-**Complete work:**
-
-```bash
-bd close bd-42 --reason "Completed" --json
-```
+- Check for ready work
+- Update the status of your task
+- Create tasks
+- Close them when you're done
 
 ### Issue Types
 
@@ -78,14 +58,6 @@ bd close bd-42 --reason "Completed" --json
 5. **Complete**: `bd close <id> --reason "Done"`
 6. **Commit together**: Always commit the `.beads/issues.jsonl` file together with the code changes so issue state stays in sync with code state
 
-### Auto-Sync
-
-bd automatically syncs with git:
-
-- Exports to `.beads/issues.jsonl` after changes (5s debounce)
-- Imports from JSONL when newer (e.g., after `git pull`)
-- No manual export/import needed!
-
 ### Managing AI-Generated Planning Documents
 
 AI assistants often create planning and design documents during development:
@@ -103,13 +75,6 @@ AI assistants often create planning and design documents during development:
 - Keep the repository root clean and focused on permanent project files
 - Only access `history/` when explicitly asked to review past planning
 
-**Example .gitignore entry (optional):**
-
-```
-# AI planning documents (ephemeral)
-history/
-```
-
 **Benefits:**
 
 - ✅ Clean repository root
@@ -117,11 +82,6 @@ history/
 - ✅ Easy to exclude from version control if desired
 - ✅ Preserves planning history for archeological research
 - ✅ Reduces noise when browsing the project
-
-### CLI Help
-
-Run `bd <command> --help` to see all available flags for any command.
-For example: `bd create --help` shows `--parent`, `--deps`, `--assignee`, etc.
 
 ### Important Rules
 
@@ -185,4 +145,4 @@ Usage notes:
 
 ## Memory
 
-- Read the file @web/AGENTS.md for more information on the "Clarigen Tools" project.
+- Read the file @tools/AGENTS.md for more information on the "Clarigen Tools" project.

@@ -20,13 +20,13 @@ Examples:
 
 ## Existing Infrastructure
 
-### Stacks API (`web/src/lib/stacks-api.ts`)
+### Stacks API (`tools/src/lib/stacks-api.ts`)
 
 - `getStacksApi(network)` - creates client for mainnet/testnet
 - `getContractInfo(network, contractId)` - fetches contract metadata
 - `getContractAbi(network, contractId)` - fetches and parses ABI
 
-### Network Type (`web/src/lib/constants.ts`)
+### Network Type (`tools/src/lib/constants.ts`)
 
 ```ts
 type NETWORK = 'devnet' | 'testnet' | 'mainnet';
@@ -58,7 +58,7 @@ For this feature, only 'mainnet' and 'testnet' are relevant.
 - `parseToCV(input, type)` - converts JS value to ClarityValue
 - `getTypeString(val)` - converts ABI type to human-readable string
 
-### Form Infrastructure (`web/src/`)
+### Form Infrastructure (`tools/src/`)
 
 **Form Hook (`hooks/form.ts`)**:
 
@@ -125,7 +125,7 @@ Persist form values in URL query params for shareability:
 ## File Structure
 
 ```
-web/src/
+tools/src/
 ├── routes/
 │   └── tx/
 │       └── $network.$contractAddress.$functionName.tsx

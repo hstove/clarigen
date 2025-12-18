@@ -1,4 +1,4 @@
-# Clarigen Web
+# Clarigen Web Tools
 
 This is a web application for general helper functions and utilities for the Stacks blockchain.
 
