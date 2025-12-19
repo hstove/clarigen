@@ -364,7 +364,7 @@ clarinet = "clarinet/Clarinet.toml"
 
 ## `types`
 
-The "types" output is for environments that utilize NPM (or yarn, pnpm, etc) packages. This mostly refers to Node.js or web projects.
+The "types" output is for environments that utilize NPM (or yarn, pnpm, bun, etc) packages. This mostly refers to Node.js or web projects.
 
 ### `types.output`
 

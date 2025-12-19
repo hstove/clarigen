@@ -14,33 +14,26 @@ jobs:
         uses: actions/checkout@v2
       - name: Prepare repository
         run: git checkout main
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 10.5.0
-      - name: Set Node Version
-        uses: actions/setup-node@v3
-        with:
-          node-version: 24.2.0
-          cache: 'pnpm'
+      - uses: oven-sh/setup-bun@v2
       - name: Install monorepo deps
-        run: pnpm install
+        run: bun install
       - name: Build packages
-        run: pnpm build:packages
+        run: bun build:packages
       - name: Generate type stubs
-        run: pnpm turbo run type-stubs --filter=@clarigen/cli
+        run: bun turbo run type-stubs --filter=@clarigen/cli
       - name: Type checks
-        # run: pnpm typecheck
-        run: pnpm turbo run typecheck --filter="\!docs-site"
+        # run: bun typecheck
+        run: bun turbo run typecheck --filter="\!docs-site"
       - name: Tests
-        run: pnpm test
+        run: bun run test
       - name: Lint
-        run: pnpm lint
+        run: bun lint
       # - name: Stash changes
       #   run: git stash
       - name: Create Release Pull Request or Publish to npm
         uses: changesets/action@v1
         with:
-          publish: pnpm publish-changesets
+          publish: bun publish-changesets
           commitMode: github-api
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

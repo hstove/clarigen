@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { getContractAbi, getStacksApiUrl } from '@/lib/stacks-api';
-import { Network, NETWORK } from '@/lib/constants';
+import { Network, type NETWORK } from '@/lib/constants';
 import { type } from 'arktype';
 import {
   callReadOnlyFunction,
@@ -10,7 +10,9 @@ import {
   cvToHex,
 } from '@clarigen/core';
 
-export const Route = createFileRoute('/read/$network/$contractAddress/$functionName')({
+export const Route = createFileRoute(
+  '/read/$network/$contractAddress/$functionName'
+)({
   server: {
     handlers: {
       GET: async ({ params, request }) => {
@@ -24,7 +26,7 @@ export const Route = createFileRoute('/read/$network/$contractAddress/$functionN
 
         try {
           const abi = await getContractAbi(network, contractAddress);
-          const func = abi.functions.find(f => f.name === functionName);
+          const func = abi.functions.find((f) => f.name === functionName);
 
           if (!func) {
             return new Response('Function not found', { status: 404 });
@@ -53,20 +55,12 @@ export const Route = createFileRoute('/read/$network/$contractAddress/$functionN
             url: rpcUrl,
           });
 
-          return new Response(
-            JSON.stringify({
-              okay: true,
-              result: cvToHex(result),
-              value: cvToJSON(result, true),
-              clarity: cvToString(result),
-            }),
-
-            {
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            }
-          );
+          return Response.json({
+            okay: true,
+            result: cvToHex(result),
+            value: cvToJSON(result, true),
+            clarity: cvToString(result),
+          });
         } catch (error) {
           console.error('Read-only error:', error);
           return new Response(

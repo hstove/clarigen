@@ -102,20 +102,21 @@ export function ComponentExample() {
 
 function CardExample() {
   return (
-    <Example title="Card" className="items-center justify-center">
+    <Example className="items-center justify-center" title="Card">
       <Card className="relative w-full max-w-sm overflow-hidden pt-0">
-        <div className="bg-primary absolute inset-0 z-30 aspect-video opacity-50 mix-blend-color" />
+        <div className="absolute inset-0 z-30 aspect-video bg-primary opacity-50 mix-blend-color" />
         <img
-          src="https://images.unsplash.com/photo-1604076850742-4c7221f3101b?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="Photo by mymind on Unsplash"
-          title="Photo by mymind on Unsplash"
           className="relative z-20 aspect-video w-full object-cover brightness-60 grayscale"
+          src="https://images.unsplash.com/photo-1604076850742-4c7221f3101b?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          title="Photo by mymind on Unsplash"
         />
         <CardHeader>
           <CardTitle>Observability Plus is replacing Monitoring</CardTitle>
           <CardDescription>
-            Switch to the improved way to explore your data, with natural language. Monitoring will
-            no longer be available on the Pro plan in November, 2025
+            Switch to the improved way to explore your data, with natural
+            language. Monitoring will no longer be available on the Pro plan in
+            November, 2025
           </CardDescription>
         </CardHeader>
         <CardFooter>
@@ -131,7 +132,8 @@ function CardExample() {
                 </AlertDialogMedia>
                 <AlertDialogTitle>Allow accessory to connect?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  Do you want to allow the USB accessory to connect to this device?
+                  Do you want to allow the USB accessory to connect to this
+                  device?
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
@@ -140,7 +142,7 @@ function CardExample() {
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
-          <Badge variant="secondary" className="ml-auto">
+          <Badge className="ml-auto" variant="secondary">
             Warning
           </Badge>
         </CardFooter>
@@ -149,7 +151,13 @@ function CardExample() {
   );
 }
 
-const frameworks = ['Next.js', 'SvelteKit', 'Nuxt.js', 'Remix', 'Astro'] as const;
+const frameworks = [
+  'Next.js',
+  'SvelteKit',
+  'Nuxt.js',
+  'Remix',
+  'Astro',
+] as const;
 
 const roleItems = [
   { label: 'Developer', value: 'developer' },
@@ -174,7 +182,9 @@ function FormExample() {
           <CardDescription>Please fill in your details below</CardDescription>
           <CardAction>
             <DropdownMenu>
-              <DropdownMenuTrigger render={<Button variant="ghost" size="icon" />}>
+              <DropdownMenuTrigger
+                render={<Button size="icon" variant="ghost" />}
+              >
                 <MoreVerticalIcon />
                 <span className="sr-only">More options</span>
               </DropdownMenuTrigger>
@@ -254,7 +264,7 @@ function FormExample() {
                   <DropdownMenuLabel>View</DropdownMenuLabel>
                   <DropdownMenuCheckboxItem
                     checked={notifications.email}
-                    onCheckedChange={checked =>
+                    onCheckedChange={(checked) =>
                       setNotifications({
                         ...notifications,
                         email: checked === true,
@@ -266,7 +276,7 @@ function FormExample() {
                   </DropdownMenuCheckboxItem>
                   <DropdownMenuCheckboxItem
                     checked={notifications.sms}
-                    onCheckedChange={checked =>
+                    onCheckedChange={(checked) =>
                       setNotifications({
                         ...notifications,
                         sms: checked === true,
@@ -285,7 +295,10 @@ function FormExample() {
                       <DropdownMenuSubContent>
                         <DropdownMenuGroup>
                           <DropdownMenuLabel>Appearance</DropdownMenuLabel>
-                          <DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
+                          <DropdownMenuRadioGroup
+                            onValueChange={setTheme}
+                            value={theme}
+                          >
                             <DropdownMenuRadioItem value="light">
                               <SunIcon />
                               Light
@@ -341,10 +354,12 @@ function FormExample() {
                             <DropdownMenuPortal>
                               <DropdownMenuSubContent>
                                 <DropdownMenuGroup>
-                                  <DropdownMenuLabel>Notification Types</DropdownMenuLabel>
+                                  <DropdownMenuLabel>
+                                    Notification Types
+                                  </DropdownMenuLabel>
                                   <DropdownMenuCheckboxItem
                                     checked={notifications.push}
-                                    onCheckedChange={checked =>
+                                    onCheckedChange={(checked) =>
                                       setNotifications({
                                         ...notifications,
                                         push: checked === true,
@@ -356,7 +371,7 @@ function FormExample() {
                                   </DropdownMenuCheckboxItem>
                                   <DropdownMenuCheckboxItem
                                     checked={notifications.email}
-                                    onCheckedChange={checked =>
+                                    onCheckedChange={(checked) =>
                                       setNotifications({
                                         ...notifications,
                                         email: checked === true,
@@ -411,17 +426,21 @@ function FormExample() {
               <div className="grid grid-cols-2 gap-4">
                 <Field>
                   <FieldLabel htmlFor="small-form-name">Name</FieldLabel>
-                  <Input id="small-form-name" placeholder="Enter your name" required />
+                  <Input
+                    id="small-form-name"
+                    placeholder="Enter your name"
+                    required
+                  />
                 </Field>
                 <Field>
                   <FieldLabel htmlFor="small-form-role">Role</FieldLabel>
-                  <Select items={roleItems} defaultValue={null}>
+                  <Select defaultValue={null} items={roleItems}>
                     <SelectTrigger id="small-form-role">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        {roleItems.map(item => (
+                        {roleItems.map((item) => (
                           <SelectItem key={item.value} value={item.value}>
                             {item.label}
                           </SelectItem>
@@ -432,7 +451,9 @@ function FormExample() {
                 </Field>
               </div>
               <Field>
-                <FieldLabel htmlFor="small-form-framework">Framework</FieldLabel>
+                <FieldLabel htmlFor="small-form-framework">
+                  Framework
+                </FieldLabel>
                 <Combobox items={frameworks}>
                   <ComboboxInput
                     id="small-form-framework"
@@ -442,7 +463,7 @@ function FormExample() {
                   <ComboboxContent>
                     <ComboboxEmpty>No frameworks found.</ComboboxEmpty>
                     <ComboboxList>
-                      {item => (
+                      {(item) => (
                         <ComboboxItem key={item} value={item}>
                           {item}
                         </ComboboxItem>
@@ -453,11 +474,14 @@ function FormExample() {
               </Field>
               <Field>
                 <FieldLabel htmlFor="small-form-comments">Comments</FieldLabel>
-                <Textarea id="small-form-comments" placeholder="Add any additional comments" />
+                <Textarea
+                  id="small-form-comments"
+                  placeholder="Add any additional comments"
+                />
               </Field>
               <Field orientation="horizontal">
                 <Button type="submit">Submit</Button>
-                <Button variant="outline" type="button">
+                <Button type="button" variant="outline">
                   Cancel
                 </Button>
               </Field>

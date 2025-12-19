@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useEffect, useMemo, useState } from 'react';
-import { NETWORK, Network } from '@/lib/constants';
+import { type NETWORK, Network } from '@/lib/constants';
 import { type ClarityAbiType, getTypeString } from '@clarigen/core';
 import { cvToHex } from '@stacks/transactions';
 import { request } from '@stacks/connect';
@@ -12,12 +12,18 @@ import { ClarityField, NetworkMismatchBanner } from '@/components/tx-builder';
 import { getClarityValidators } from '@/lib/clarity-validators';
 import { Button } from '@/components/ui/button';
 import { FieldGroup } from '@/components/ui/field';
-import { useContractFunction, useContractFunctions } from '@/hooks/use-contract-abi';
+import {
+  useContractFunction,
+  useContractFunctions,
+} from '@/hooks/use-contract-abi';
 import { useContractDocs } from '@/hooks/use-contract-docs';
 import { useTxUrlState } from '@/hooks/use-tx-url-state';
 import { usePostConditionsUrlState } from '@/hooks/use-post-conditions-url-state';
 import { useTransaction } from '@/hooks/use-transaction';
-import { formValuesToFunctionArgs, txArgsToFormValues } from '@/lib/clarity-form-utils';
+import {
+  formValuesToFunctionArgs,
+  txArgsToFormValues,
+} from '@/lib/clarity-form-utils';
 import { buildPostConditions } from '@/lib/post-conditions';
 import { saveFormHistory } from '@/lib/value-history';
 import { addVisitedFunction } from '@/lib/visited-history';
@@ -26,6 +32,7 @@ import { PostConditionsField } from '@/components/tx-builder/post-conditions-fie
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { Link } from '@tanstack/react-router';
 import { DocText } from '@/components/tx-builder/doc-text';
+import type { AnyFieldApi } from '@tanstack/react-form';
 
 function serializeValueForHistory(value: unknown): string | null {
   if (value === null || value === undefined) return null;
@@ -52,7 +59,9 @@ function parseNetwork(network: string): NETWORK | null {
   return result;
 }
 
-export const Route = createFileRoute('/tx/$network/$contractAddress/$functionName')({
+export const Route = createFileRoute(
+  '/tx/$network/$contractAddress/$functionName'
+)({
   component: TxBuilderPage,
 });
 
@@ -86,11 +95,19 @@ function getDefaultValue(type: ClarityAbiType): unknown {
 }
 
 function TxBuilderPage() {
-  const { network: networkParam, contractAddress, functionName } = Route.useParams();
+  const {
+    network: networkParam,
+    contractAddress,
+    functionName,
+  } = Route.useParams();
   const network = parseNetwork(networkParam)!;
 
   return (
-    <TxBuilderContent network={network} contractId={contractAddress} functionName={functionName} />
+    <TxBuilderContent
+      contractId={contractAddress}
+      functionName={functionName}
+      network={network}
+    />
   );
 }
 
@@ -100,8 +117,16 @@ type TxBuilderContentProps = {
   functionName: string;
 };
 
-function TxBuilderContent({ network, contractId, functionName }: TxBuilderContentProps) {
-  const { data: func, isLoading, error } = useContractFunction(network, contractId, functionName);
+function TxBuilderContent({
+  network,
+  contractId,
+  functionName,
+}: TxBuilderContentProps) {
+  const {
+    data: func,
+    isLoading,
+    error,
+  } = useContractFunction(network, contractId, functionName);
 
   useEffect(() => {
     addVisitedFunction(contractId, functionName, network);
@@ -109,21 +134,25 @@ function TxBuilderContent({ network, contractId, functionName }: TxBuilderConten
 
   if (isLoading) {
     return (
-      <div className="container mx-auto p-6 max-w-2xl">
-        <p className="text-sm text-muted-foreground">Loading contract function…</p>
+      <div className="container mx-auto max-w-2xl p-6">
+        <p className="text-muted-foreground text-sm">
+          Loading contract function…
+        </p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="container mx-auto p-6 max-w-2xl">
+      <div className="container mx-auto max-w-2xl p-6">
         <NetworkMismatchBanner
-          network={network}
           contractId={contractId}
           functionName={functionName}
+          network={network}
         />
-        <p className="text-sm text-destructive">Failed to load contract data.</p>
+        <p className="text-destructive text-sm">
+          Failed to load contract data.
+        </p>
       </div>
     );
   }
@@ -131,8 +160,8 @@ function TxBuilderContent({ network, contractId, functionName }: TxBuilderConten
   if (!func) {
     return (
       <FunctionNotFound
-        network={network}
         contractId={contractId}
+        network={network}
         requestedFunction={functionName}
       />
     );
@@ -140,10 +169,10 @@ function TxBuilderContent({ network, contractId, functionName }: TxBuilderConten
 
   return (
     <TxBuilderForm
-      key={`${network}-${contractId}-${func.name}`}
-      network={network}
       contractId={contractId}
       func={func}
+      key={`${network}-${contractId}-${func.name}`}
+      network={network}
     />
   );
 }
@@ -157,49 +186,66 @@ function FunctionNotFound({
   contractId: string;
   requestedFunction: string;
 }) {
-  const { data: functions, isLoading } = useContractFunctions(network, contractId);
+  const { data: functions, isLoading } = useContractFunctions(
+    network,
+    contractId
+  );
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-8">
       <NetworkMismatchBanner
-        network={network}
         contractId={contractId}
         functionName={requestedFunction}
+        network={network}
       />
-      <div className="space-y-6 mb-6">
-        <Breadcrumbs network={network} contractId={contractId} functionName={requestedFunction} />
+      <div className="mb-6 space-y-6">
+        <Breadcrumbs
+          contractId={contractId}
+          functionName={requestedFunction}
+          network={network}
+        />
         <div className="space-y-2">
-          <h1 className="font-mono text-lg font-medium tracking-tight">{contractId}</h1>
-          <p className="text-sm text-destructive font-mono">
+          <h1 className="font-medium font-mono text-lg tracking-tight">
+            {contractId}
+          </h1>
+          <p className="font-mono text-destructive text-sm">
             Function "{requestedFunction}" not found.
           </p>
         </div>
       </div>
 
       <div className="border border-border bg-card">
-        <div className="border-b border-border px-4 py-3">
-          <h2 className="font-mono text-sm font-medium">Available Functions</h2>
+        <div className="border-border border-b px-4 py-3">
+          <h2 className="font-medium font-mono text-sm">Available Functions</h2>
         </div>
         <div className="p-4">
           {isLoading ? (
-            <p className="text-sm text-muted-foreground font-mono italic">Loading functions...</p>
+            <p className="font-mono text-muted-foreground text-sm italic">
+              Loading functions...
+            </p>
           ) : !functions || functions.length === 0 ? (
-            <p className="text-sm text-muted-foreground font-mono italic">No functions found.</p>
+            <p className="font-mono text-muted-foreground text-sm italic">
+              No functions found.
+            </p>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div>
-                <h3 className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider mb-2">
+                <h3 className="mb-2 font-mono text-[10px] text-muted-foreground uppercase tracking-wider">
                   Public Functions
                 </h3>
                 <ul className="space-y-1">
                   {functions
-                    .filter(f => f.access === 'public')
-                    .map(f => (
+                    .filter((f) => f.access === 'public')
+                    .map((f) => (
                       <li key={f.name}>
                         <Link
+                          className="font-mono text-primary text-sm hover:underline"
+                          params={{
+                            network,
+                            contractAddress: contractId,
+                            functionName: f.name,
+                          }}
                           to="/tx/$network/$contractAddress/$functionName"
-                          params={{ network, contractAddress: contractId, functionName: f.name }}
-                          className="text-sm font-mono text-primary hover:underline"
                         >
                           {f.name}
                         </Link>
@@ -208,18 +254,22 @@ function FunctionNotFound({
                 </ul>
               </div>
               <div>
-                <h3 className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider mb-2">
+                <h3 className="mb-2 font-mono text-[10px] text-muted-foreground uppercase tracking-wider">
                   Read-Only Functions
                 </h3>
                 <ul className="space-y-1">
                   {functions
-                    .filter(f => f.access === 'read_only')
-                    .map(f => (
+                    .filter((f) => f.access === 'read_only')
+                    .map((f) => (
                       <li key={f.name}>
                         <Link
+                          className="font-mono text-primary text-sm hover:underline"
+                          params={{
+                            network,
+                            contractAddress: contractId,
+                            functionName: f.name,
+                          }}
                           to="/tx/$network/$contractAddress/$functionName"
-                          params={{ network, contractAddress: contractId, functionName: f.name }}
-                          className="text-sm font-mono text-primary hover:underline"
                         >
                           {f.name}
                         </Link>
@@ -238,7 +288,11 @@ function FunctionNotFound({
 type TxBuilderFormProps = {
   network: NETWORK;
   contractId: string;
-  func: { name: string; access: string; args: { name: string; type: ClarityAbiType }[] };
+  func: {
+    name: string;
+    access: string;
+    args: { name: string; type: ClarityAbiType }[];
+  };
 };
 
 function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
@@ -257,11 +311,11 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
   const { data: tx, error: txError } = useTransaction(network, txid);
   const { data: contractDocs } = useContractDocs(network, contractId);
   const functionDoc = useMemo(
-    () => contractDocs?.functions.find(doc => doc.abi.name === func.name),
+    () => contractDocs?.functions.find((doc) => doc.abi.name === func.name),
     [contractDocs, func.name]
   );
   const functionDocText = functionDoc?.comments.text ?? [];
-  const hasFunctionDocs = functionDocText.some(line => line.trim() !== '');
+  const hasFunctionDocs = functionDocText.some((line) => line.trim() !== '');
 
   const txValues = useMemo(() => {
     if (tx && 'contract_call' in tx && tx.contract_call.function_args) {
@@ -276,7 +330,8 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
     const values: Record<string, unknown> = {};
     for (const arg of func.args) {
       const urlValue = urlState[arg.name];
-      values[arg.name] = urlValue !== undefined ? urlValue : getDefaultValue(arg.type);
+      values[arg.name] =
+        urlValue !== undefined ? urlValue : getDefaultValue(arg.type);
     }
     return values;
     // eslint-disable-next-line react-hooks/exhaustive-deps -- only compute on mount or when tx loaded
@@ -290,7 +345,7 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
 
       const saveHistory = () => {
         const argsToSave = func.args
-          .map(arg => {
+          .map((arg) => {
             const serialized = serializeValueForHistory(value[arg.name]);
             if (serialized === null) return null;
             return {
@@ -327,11 +382,13 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
           }
         } else {
           const clarityArgs = formValuesToFunctionArgs(value, func.args);
-          const builtPostConditions = buildPostConditions(postConditions.conditions);
+          const builtPostConditions = buildPostConditions(
+            postConditions.conditions
+          );
           const response = await request('stx_callContract', {
             contract: contractId as `${string}.${string}`,
             functionName: func.name,
-            functionArgs: clarityArgs.map(arg => cvToHex(arg)),
+            functionArgs: clarityArgs.map((arg) => cvToHex(arg)),
             postConditionMode: postConditions.mode,
             postConditions: builtPostConditions,
           });
@@ -342,7 +399,10 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
           }
         }
       } catch (error) {
-        const message = error instanceof Error ? error.message : 'Failed to submit transaction';
+        const message =
+          error instanceof Error
+            ? error.message
+            : 'Failed to submit transaction';
         setConversionError(message);
         console.error('Submission error:', error);
       }
@@ -369,69 +429,79 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
     <FocusedFieldProvider>
       <div className="mx-auto max-w-6xl px-6 py-8">
         {/* Network mismatch warning */}
-        <NetworkMismatchBanner network={network} contractId={contractId} functionName={func.name} />
+        <NetworkMismatchBanner
+          contractId={contractId}
+          functionName={func.name}
+          network={network}
+        />
 
         {/* Header */}
-        <div className="space-y-6 mb-6">
-          <Breadcrumbs network={network} contractId={contractId} functionName={func.name} />
+        <div className="mb-6 space-y-6">
+          <Breadcrumbs
+            contractId={contractId}
+            functionName={func.name}
+            network={network}
+          />
           <div className="space-y-2">
             <div className="flex items-center gap-2 font-mono text-xs">
               <span className="text-muted-foreground">{func.access}</span>
             </div>
-            <h1 className="font-mono text-lg font-medium tracking-tight">{contractId}</h1>
+            <h1 className="font-medium font-mono text-lg tracking-tight">
+              {contractId}
+            </h1>
           </div>
         </div>
 
         {/* Two-column layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_400px]">
           {/* Context Panel - shows first on mobile, second on desktop */}
-          <div className="lg:order-2 lg:sticky lg:top-6 lg:self-start">
+          <div className="lg:sticky lg:top-6 lg:order-2 lg:self-start">
             <ContextPanel
-              txid={txid}
+              contractId={contractId}
+              functionDoc={functionDoc}
+              functionName={func.name}
+              network={network}
               tx={tx}
               txError={txError}
-              network={network}
-              contractId={contractId}
-              functionName={func.name}
-              functionDoc={functionDoc}
+              txid={txid}
             />
           </div>
 
           {/* Primary: Function Form */}
           <div className="lg:order-1">
             <div className="border border-border bg-card">
-              <div className="border-b border-border px-4 py-3 flex items-center justify-between">
-                <h2 className="font-mono text-sm font-medium">{func.name}</h2>
-                <span className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">
+              <div className="flex items-center justify-between border-border border-b px-4 py-3">
+                <h2 className="font-medium font-mono text-sm">{func.name}</h2>
+                <span className="font-mono text-[10px] text-muted-foreground uppercase tracking-wider">
                   {func.args.length} {func.args.length === 1 ? 'arg' : 'args'}
                 </span>
               </div>
 
               {hasFunctionDocs && (
-                <div className="border-b border-border bg-muted/20 px-4 py-3">
-                  <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider mb-2">
+                <div className="border-border border-b bg-muted/20 px-4 py-3">
+                  <div className="mb-2 font-mono text-[10px] text-muted-foreground uppercase tracking-wider">
                     Documentation
                   </div>
                   <DocText text={functionDocText} />
                 </div>
               )}
 
-              {readResult && readResult.okay && (
-                <div className="border-b border-border bg-muted/20 p-4 space-y-3">
+              {readResult?.okay && (
+                <div className="space-y-3 border-border border-b bg-muted/20 p-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-medium text-green-600 dark:text-green-500 flex items-center gap-1.5">
+                    <span className="flex items-center gap-1.5 font-medium text-green-600 text-xs dark:text-green-500">
                       <span>●</span> Result
                     </span>
                   </div>
-                  <pre className="font-mono text-sm p-3 bg-background border border-border overflow-auto break-all whitespace-pre-wrap">
+                  <pre className="overflow-auto whitespace-pre-wrap break-all border border-border bg-background p-3 font-mono text-sm">
                     {readResult.clarity}
                   </pre>
                   {typeof readResult.value !== 'undefined' && (
                     <details className="group">
-                      <summary className="text-[10px] text-muted-foreground font-medium uppercase cursor-pointer hover:text-foreground">
+                      <summary className="cursor-pointer font-medium text-[10px] text-muted-foreground uppercase hover:text-foreground">
                         JSON Value
                       </summary>
-                      <pre className="text-xs font-mono p-3 bg-background border border-border overflow-auto max-h-60 mt-2">
+                      <pre className="mt-2 max-h-60 overflow-auto border border-border bg-background p-3 font-mono text-xs">
                         {JSON.stringify(readResult.value, null, 2)}
                       </pre>
                     </details>
@@ -440,7 +510,7 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
               )}
 
               <form
-                onSubmit={e => {
+                onSubmit={(e) => {
                   e.preventDefault();
                   form.handleSubmit();
                 }}
@@ -449,21 +519,25 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
                   <div className="p-4">
                     <FieldGroup>
                       {func.args.length === 0 ? (
-                        <p className="text-sm text-muted-foreground font-mono">( no arguments )</p>
+                        <p className="font-mono text-muted-foreground text-sm">
+                          ( no arguments )
+                        </p>
                       ) : (
-                        func.args.map(arg => (
+                        func.args.map((arg) => (
                           <form.Field
                             key={arg.name}
                             name={arg.name as never}
                             validators={getClarityValidators(arg.type)}
                           >
-                            {field => (
-                              <fieldContext.Provider value={field}>
+                            {(field) => (
+                              <fieldContext.Provider
+                                value={field as unknown as AnyFieldApi}
+                              >
                                 <ClarityField
+                                  disabled={!!txid}
+                                  label={`${arg.name}: ${getTypeString(arg.type)}`}
                                   name={arg.name}
                                   type={arg.type}
-                                  label={`${arg.name}: ${getTypeString(arg.type)}`}
-                                  disabled={!!txid}
                                 />
                               </fieldContext.Provider>
                             )}
@@ -472,7 +546,7 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
                       )}
 
                       {conversionError && (
-                        <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 font-mono">
+                        <div className="border border-destructive/20 bg-destructive/10 p-3 font-mono text-destructive text-sm">
                           {conversionError}
                         </div>
                       )}
@@ -481,51 +555,56 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
 
                   {/* Post-conditions section - only for public functions */}
                   {func.access === 'public' && (
-                    <details className="border-t border-border">
-                      <summary className="px-4 py-3 cursor-pointer hover:bg-muted/30 flex items-center justify-between">
-                        <span className="font-mono text-xs font-medium">Post-Conditions</span>
+                    <details className="border-border border-t">
+                      <summary className="flex cursor-pointer items-center justify-between px-4 py-3 hover:bg-muted/30">
+                        <span className="font-medium font-mono text-xs">
+                          Post-Conditions
+                        </span>
                         <span className="text-[10px] text-muted-foreground">
                           {postConditions.conditions.length} defined
                         </span>
                       </summary>
                       <div className="px-4 pb-4">
                         <PostConditionsField
-                          value={postConditions}
-                          onChange={setPostConditions}
                           disabled={!!txid}
+                          onChange={setPostConditions}
+                          value={postConditions}
                         />
                       </div>
                     </details>
                   )}
 
-                  <div className="border-t border-border p-4 bg-muted/20">
+                  <div className="border-border border-t bg-muted/20 p-4">
                     {txid ? (
                       <Button
-                        type="button"
-                        variant="outline"
                         className="w-full"
                         onClick={() => setUrlState({ txid: null })}
+                        type="button"
+                        variant="outline"
                       >
                         clone to new
                       </Button>
                     ) : (
                       <form.Subscribe
-                        selector={state => ({
+                        selector={(state) => ({
                           isSubmitting: state.isSubmitting,
                           canSubmit: state.canSubmit,
                         })}
                       >
-                        {(state: { isSubmitting: boolean; canSubmit: boolean }) => (
+                        {(state: {
+                          isSubmitting: boolean;
+                          canSubmit: boolean;
+                        }) => (
                           <Button
-                            type="submit"
                             className="w-full"
                             disabled={state.isSubmitting || !state.canSubmit}
+                            type="submit"
                           >
                             {state.isSubmitting
                               ? 'processing...'
                               : func.access === 'read_only'
-                              ? 'call function'
-                              : 'build transaction'}
+                                ? 'call function'
+                                : 'build transaction'}
                           </Button>
                         )}
                       </form.Subscribe>

@@ -7,7 +7,9 @@ export type NETWORK = typeof Network.infer;
  * Detect network from Stacks address prefix.
  * SP... = mainnet, ST... = testnet/devnet
  */
-export function detectNetworkFromAddress(address: string): 'mainnet' | 'testnet' | null {
+export function detectNetworkFromAddress(
+  address: string
+): 'mainnet' | 'testnet' | null {
   const prefix = address.substring(0, 2).toUpperCase();
   if (prefix === 'SP') return 'mainnet';
   if (prefix === 'ST') return 'testnet';
@@ -20,7 +22,11 @@ export function detectNetworkFromAddress(address: string): 'mainnet' | 'testnet'
 export function isNetworkMismatch(
   network: NETWORK,
   contractId: string
-): { mismatch: boolean; detectedNetwork: 'mainnet' | 'testnet' | null; expectedNetwork: NETWORK } {
+): {
+  mismatch: boolean;
+  detectedNetwork: 'mainnet' | 'testnet' | null;
+  expectedNetwork: NETWORK;
+} {
   const address = contractId.split('.')[0];
   const detectedNetwork = detectNetworkFromAddress(address);
 

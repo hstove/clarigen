@@ -11,7 +11,9 @@ test('can create a ClarigenClient', () => {
 });
 
 test('can create a ClarigenClient with headers', () => {
-  const client = new ClarigenClient(STACKS_MAINNET, 'my-api-key', { 'my-custom-header': 'hello' });
+  const client = new ClarigenClient(STACKS_MAINNET, 'my-api-key', {
+    'my-custom-header': 'hello',
+  });
   expect(client).toBeDefined();
 });
 
@@ -27,7 +29,10 @@ test('can call a read-only function', async () => {
     )
   );
 
-  const customHeaders = { 'my-custom-header': 'hello', 'another-header': 'world' };
+  const customHeaders = {
+    'my-custom-header': 'hello',
+    'another-header': 'world',
+  };
   const client = new ClarigenClient('mainnet', undefined, customHeaders);
   const balance = await client.ro(sbtc.getBalance(sbtc.identifier));
 
@@ -35,18 +40,19 @@ test('can call a read-only function', async () => {
   const fetchCalls = fetchMock.mock.calls;
   expect(fetchCalls.length).toBeGreaterThan(0);
 
-  const hasHeaders = fetchCalls.some(call => {
+  const hasHeaders = fetchCalls.some((call) => {
     const options = call[1] as RequestInit | undefined;
-    if (!options || !options.headers) return false;
+    if (!options?.headers) return false;
 
     const headers = options.headers;
 
     if (typeof headers === 'object') {
-      const keys = Object.keys(headers).map(k => k.toLowerCase());
-      return keys.includes('my-custom-header') || keys.includes('another-header');
-    } else {
-      return false;
+      const keys = Object.keys(headers).map((k) => k.toLowerCase());
+      return (
+        keys.includes('my-custom-header') || keys.includes('another-header')
+      );
     }
+    return false;
   });
 
   expect(hasHeaders).toBe(true);

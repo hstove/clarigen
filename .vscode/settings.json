@@ -5,6 +5,7 @@
     "**/*.code-search": true,
     "deprecated": true,
     "pnpm-lock.yaml": true,
+    "bun.lock": true,
     "**/dist/**/*": true,
     "**/routeTree.gen.ts": true
   },
@@ -18,24 +19,41 @@
   "tailwindCSS.experimental.configFile": "./docs-site/tailwind.config.ts",
   "biome.enabled": false,
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "[javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "workbench.editor.customLabels.patterns": {
     "**/app/**/route.ts": "${dirname}/route.ts",
     "**/app/**/route.tsx": "${dirname}/route.tsx",
     "**/app/**/page.tsx": "${dirname} - page.tsx"
-    // Add other file conventions as needed (layout.tsx, error.tsx, etc.)
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[graphql]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "emmet.showExpandedAbbreviation": "never",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.biome": "explicit",
+    "source.organizeImports.biome": "explicit"
   }
 }

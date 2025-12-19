@@ -20,35 +20,66 @@ import { ResponseField } from './fields/response-field';
 import { ListField } from './fields/list-field';
 import { TupleField } from './fields/tuple-field';
 
-export interface ClarityFieldProps {
+export type ClarityFieldProps = {
   name: string;
   type: ClarityAbiType;
   label?: string;
   disabled?: boolean;
-}
+};
 
-export function ClarityField({ name, type, label, disabled }: ClarityFieldProps) {
+export function ClarityField({
+  name,
+  type,
+  label,
+  disabled,
+}: ClarityFieldProps) {
   if (isClarityAbiPrimitive(type)) {
     switch (type) {
       case 'uint128':
         return (
-          <NumberField name={name} label={label} signed={false} disabled={disabled} type={type} />
+          <NumberField
+            disabled={disabled}
+            label={label}
+            name={name}
+            signed={false}
+            type={type}
+          />
         );
       case 'int128':
         return (
-          <NumberField name={name} label={label} signed={true} disabled={disabled} type={type} />
+          <NumberField
+            disabled={disabled}
+            label={label}
+            name={name}
+            signed={true}
+            type={type}
+          />
         );
       case 'bool':
-        return <BoolField name={name} label={label} disabled={disabled} type={type} />;
+        return (
+          <BoolField
+            disabled={disabled}
+            label={label}
+            name={name}
+            type={type}
+          />
+        );
       case 'principal':
-        return <PrincipalField name={name} label={label} disabled={disabled} type={type} />;
+        return (
+          <PrincipalField
+            disabled={disabled}
+            label={label}
+            name={name}
+            type={type}
+          />
+        );
       case 'trait_reference':
         return (
           <PrincipalField
-            name={name}
-            label={label}
-            requireContract
             disabled={disabled}
+            label={label}
+            name={name}
+            requireContract
             type={type}
           />
         );
@@ -60,10 +91,10 @@ export function ClarityField({ name, type, label, disabled }: ClarityFieldProps)
   if (isClarityAbiBuffer(type)) {
     return (
       <BufferField
-        name={name}
+        disabled={disabled}
         label={label}
         maxLength={type.buffer.length}
-        disabled={disabled}
+        name={name}
         type={type}
       />
     );
@@ -72,10 +103,10 @@ export function ClarityField({ name, type, label, disabled }: ClarityFieldProps)
   if (isClarityAbiStringAscii(type)) {
     return (
       <StringAsciiField
-        name={name}
+        disabled={disabled}
         label={label}
         maxLength={type['string-ascii'].length}
-        disabled={disabled}
+        name={name}
         type={type}
       />
     );
@@ -84,10 +115,10 @@ export function ClarityField({ name, type, label, disabled }: ClarityFieldProps)
   if (isClarityAbiStringUtf8(type)) {
     return (
       <StringUtf8Field
-        name={name}
+        disabled={disabled}
         label={label}
         maxLength={type['string-utf8'].length}
-        disabled={disabled}
+        name={name}
         type={type}
       />
     );
@@ -95,18 +126,23 @@ export function ClarityField({ name, type, label, disabled }: ClarityFieldProps)
 
   if (isClarityAbiOptional(type)) {
     return (
-      <OptionalField name={name} label={label} innerType={type.optional} disabled={disabled} />
+      <OptionalField
+        disabled={disabled}
+        innerType={type.optional}
+        label={label}
+        name={name}
+      />
     );
   }
 
   if (isClarityAbiResponse(type)) {
     return (
       <ResponseField
-        name={name}
-        label={label}
-        okType={type.response.ok}
-        errType={type.response.error}
         disabled={disabled}
+        errType={type.response.error}
+        label={label}
+        name={name}
+        okType={type.response.ok}
       />
     );
   }
@@ -114,21 +150,28 @@ export function ClarityField({ name, type, label, disabled }: ClarityFieldProps)
   if (isClarityAbiList(type)) {
     return (
       <ListField
-        name={name}
-        label={label}
-        itemType={type.list.type}
-        maxLength={type.list.length}
         disabled={disabled}
+        itemType={type.list.type}
+        label={label}
+        maxLength={type.list.length}
+        name={name}
       />
     );
   }
 
   if (isClarityAbiTuple(type)) {
-    return <TupleField name={name} label={label} members={type.tuple} disabled={disabled} />;
+    return (
+      <TupleField
+        disabled={disabled}
+        label={label}
+        members={type.tuple}
+        name={name}
+      />
+    );
   }
 
   return (
-    <div className="text-xs font-mono text-muted-foreground border border-dashed border-border p-3 bg-muted/20">
+    <div className="border border-border border-dashed bg-muted/20 p-3 font-mono text-muted-foreground text-xs">
       unsupported type: {JSON.stringify(type)}
     </div>
   );

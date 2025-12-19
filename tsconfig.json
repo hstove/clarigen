@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    // "composite": true,
     "outDir": "./dist",
     "rootDir": ".",
     "declaration": true,
@@ -9,18 +8,16 @@
     "module": "preserve",
     "target": "es2022",
     "lib": ["ESNext"],
-    // break
     "importHelpers": true,
     "jsx": "react",
     "sourceMap": true,
     "strict": true,
-    // "noUnusedLocals": true,
-    // "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
     "noEmit": true,
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    "strictNullChecks": true
   },
   "exclude": ["node_modules", "dist"]
 }

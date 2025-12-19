@@ -7,42 +7,58 @@ import {
   isClarityAbiStringAscii,
   isClarityAbiStringUtf8,
   isClarityAbiTuple,
-  ClarityAbiType,
-  ClarityAbiTypeTraitReference,
+  type ClarityAbiType,
   isClarityAbiTraitReference,
 } from '@clarigen/core';
 // import { ClarityAbiArg, ClarityAbiFunction, ClarityAbiType } from '../types.ts';
-import { toCamelCase, ClarityAbiArg, ClarityAbiFunction } from '@clarigen/core';
+import {
+  toCamelCase,
+  type ClarityAbiArg,
+  type ClarityAbiFunction,
+} from '@clarigen/core';
 
-export const jsTypeFromAbiType = (val: ClarityAbiType, isArgument = false): string => {
+export const jsTypeFromAbiType = (
+  val: ClarityAbiType,
+  isArgument = false
+): string => {
   if (isClarityAbiPrimitive(val)) {
     if (val === 'uint128') {
       if (isArgument) return 'number | bigint';
       return 'bigint';
-    } else if (val === 'int128') {
+    }
+    if (val === 'int128') {
       if (isArgument) return 'number | bigint';
       return 'bigint';
-    } else if (val === 'bool') {
-      return 'boolean';
-    } else if (val === 'principal') {
-      return 'string';
-    } else if (val === 'none') {
-      return 'null';
-    } else if (val === 'trait_reference') {
-      return 'string';
-    } else {
-      throw new Error(`Unexpected Clarity ABI type primitive: ${JSON.stringify(val)}`);
     }
-  } else if (isClarityAbiBuffer(val)) {
+    if (val === 'bool') {
+      return 'boolean';
+    }
+    if (val === 'principal') {
+      return 'string';
+    }
+    if (val === 'none') {
+      return 'null';
+    }
+    if (val === 'trait_reference') {
+      return 'string';
+    }
+    throw new Error(
+      `Unexpected Clarity ABI type primitive: ${JSON.stringify(val)}`
+    );
+  }
+  if (isClarityAbiBuffer(val)) {
     return 'Uint8Array';
-  } else if (isClarityAbiResponse(val)) {
+  }
+  if (isClarityAbiResponse(val)) {
     const ok = jsTypeFromAbiType(val.response.ok, isArgument);
     const err = jsTypeFromAbiType(val.response.error, isArgument);
     return `Response<${ok}, ${err}>`;
-  } else if (isClarityAbiOptional(val)) {
+  }
+  if (isClarityAbiOptional(val)) {
     const innerType = jsTypeFromAbiType(val.optional, isArgument);
     return `${innerType} | null`;
-  } else if (isClarityAbiTuple(val)) {
+  }
+  if (isClarityAbiTuple(val)) {
     const tupleDefs: string[] = [];
     val.tuple.forEach(({ name, type }) => {
       const camelName = toCamelCase(name);
@@ -52,18 +68,21 @@ export const jsTypeFromAbiType = (val: ClarityAbiType, isArgument = false): stri
     return `{
   ${tupleDefs.join('\n  ')}
 }`;
-  } else if (isClarityAbiList(val)) {
+  }
+  if (isClarityAbiList(val)) {
     const innerType = jsTypeFromAbiType(val.list.type, isArgument);
     return `${innerType}[]`;
-  } else if (isClarityAbiStringAscii(val)) {
-    return 'string';
-  } else if (isClarityAbiStringUtf8(val)) {
-    return 'string';
-  } else if (isClarityAbiTraitReference(val)) {
-    return 'string';
-  } else {
-    throw new Error(`Unexpected Clarity ABI type: ${JSON.stringify(val)}`);
   }
+  if (isClarityAbiStringAscii(val)) {
+    return 'string';
+  }
+  if (isClarityAbiStringUtf8(val)) {
+    return 'string';
+  }
+  if (isClarityAbiTraitReference(val)) {
+    return 'string';
+  }
+  throw new Error(`Unexpected Clarity ABI type: ${JSON.stringify(val)}`);
 };
 
 export function abiArgType(arg: ClarityAbiArg) {

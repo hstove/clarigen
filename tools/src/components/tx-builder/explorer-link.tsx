@@ -1,18 +1,18 @@
-import { NETWORK } from '@/lib/constants';
+import type { NETWORK } from '@/lib/constants';
 
-interface ExplorerLinkProps {
+type ExplorerLinkProps = {
   txid: string;
   network: NETWORK;
-}
+};
 
 export function ExplorerLink({ txid, network }: ExplorerLinkProps) {
   const normalizedTxid = txid.startsWith('0x') ? txid : `0x${txid}`;
   return (
     <a
+      className="font-mono text-primary text-xs hover:underline"
       href={`https://explorer.hiro.so/txid/${normalizedTxid}?chain=${network}`}
-      target="_blank"
       rel="noreferrer"
-      className="text-xs text-primary hover:underline font-mono"
+      target="_blank"
     >
       → explorer
     </a>

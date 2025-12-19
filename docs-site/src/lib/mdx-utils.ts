@@ -1,6 +1,8 @@
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-// @ts-ignore
-import rehypePrettyCode, { Options as PrettyCodeOptions } from 'rehype-pretty-code';
+// @ts-expect-error
+import rehypePrettyCode, {
+  type Options as PrettyCodeOptions,
+} from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import { codeImport } from 'remark-code-import';
 import remarkGfm from 'remark-gfm';
@@ -10,11 +12,7 @@ import { rehypeNpmCommand } from './rehype-npm-command';
 // import { getHighlighter, loadTheme } from '@shikijs/compat';
 // import { getHighlighter } from 'shiki';
 import rehypeExternalLinks from 'rehype-external-links';
-import path from 'path';
 import { bundleMDX } from 'mdx-bundler';
-import withToc from '@stefanprobst/rehype-extract-toc';
-import withTocExport from '@stefanprobst/rehype-extract-toc/mdx';
-import type { Toc } from '@stefanprobst/rehype-extract-toc';
 
 const rehypePrettyCodeOptions: PrettyCodeOptions = {
   theme: {
@@ -49,9 +47,9 @@ export const rehypePlugins = [
       rel: ['noopener', 'noreferrer'],
     },
   ],
-  // @ts-ignore
-  () => tree => {
-    visit(tree, node => {
+  // @ts-expect-error
+  () => (tree) => {
+    visit(tree, (node) => {
       if (node?.type === 'element' && node?.tagName === 'pre') {
         const [codeEl] = node.children;
         if (codeEl.tagName !== 'code') {
@@ -74,9 +72,9 @@ export const rehypePlugins = [
     });
   },
   [rehypePrettyCode, rehypePrettyCodeOptions],
-  // @ts-ignore
-  () => tree => {
-    visit(tree, node => {
+  // @ts-expect-error
+  () => (tree) => {
+    visit(tree, (node) => {
       if (node?.type === 'element' && node?.tagName === 'figure') {
         if (!('data-rehype-pretty-code-figure' in node.properties)) {
           return;
@@ -87,19 +85,20 @@ export const rehypePlugins = [
           return;
         }
 
-        preElement.properties['__withMeta__'] = node.children.at(0).tagName === 'div';
-        preElement.properties['__rawString__'] = node.__rawString__;
+        preElement.properties.__withMeta__ =
+          node.children.at(0).tagName === 'div';
+        preElement.properties.__rawString__ = node.__rawString__;
 
         if (node.__src__) {
-          preElement.properties['__src__'] = node.__src__;
+          preElement.properties.__src__ = node.__src__;
         }
 
         if (node.__event__) {
-          preElement.properties['__event__'] = node.__event__;
+          preElement.properties.__event__ = node.__event__;
         }
 
         if (node.__style__) {
-          preElement.properties['__style__'] = node.__style__;
+          preElement.properties.__style__ = node.__style__;
         }
       }
     });
@@ -119,11 +118,17 @@ export const rehypePlugins = [
 export async function compileMdx(markdown: string) {
   const result = await bundleMDX({
     source: markdown,
-    mdxOptions: options => {
-      // @ts-ignore
-      options.remarkPlugins = [...(options.remarkPlugins ?? []), ...remarkPlugins];
-      // @ts-ignore
-      options.rehypePlugins = [...(options.rehypePlugins ?? []), ...rehypePlugins];
+    mdxOptions: (options) => {
+      // @ts-expect-error
+      options.remarkPlugins = [
+        ...(options.remarkPlugins ?? []),
+        ...remarkPlugins,
+      ];
+      // @ts-expect-error
+      options.rehypePlugins = [
+        ...(options.rehypePlugins ?? []),
+        ...rehypePlugins,
+      ];
       return options;
     },
   });

@@ -8,22 +8,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 10.5.0
-      - name: Set Node Version
-        uses: actions/setup-node@v3
-        with:
-          node-version: 24.2.0
-          cache: 'pnpm'
+      - uses: oven-sh/setup-bun@v2
       - name: Install dependencies
-        run: pnpm install
+        run: bun install
       - name: Build packages
-        run: pnpm build:packages
+        run: bun build:packages
       - name: Lint
-        run: pnpm lint
+        run: bun lint
       - name: Type checks
-        # run: pnpm typecheck
-        run: pnpm turbo run typecheck --filter="\!docs-site"
+        # run: bun typecheck
+        run: bun turbo run typecheck --filter="\!docs-site"
       - name: Tests
-        run: pnpm test
+        run: bun run test

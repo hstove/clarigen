@@ -1,6 +1,6 @@
 import { generateAccountsCode } from '../src/files/accounts';
-import { SessionAccount } from '../src/session';
-import { describe, expect, test } from 'vitest';
+import type { SessionAccount } from '../src/session';
+import { expect, test } from 'vitest';
 
 test('accounts are sorted before serialization', async () => {
   const accounts: SessionAccount[] = [

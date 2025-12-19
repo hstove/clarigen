@@ -1,6 +1,5 @@
 import { textStyles } from '@/lib/text-variants';
-import React from 'react';
-import { Toc } from 'types/unist';
+import type { Toc } from 'types/unist';
 
 export function DocTocItem({ item }: { item: Toc[number] }) {
   const name = item.value;
@@ -10,11 +9,12 @@ export function DocTocItem({ item }: { item: Toc[number] }) {
   return (
     <div>
       <a
-        href={item.url}
         className={textStyles({
           variant: 'small',
-          className: 'text-muted-foreground underline underline-offset-4 text-xs',
+          className:
+            'text-muted-foreground text-xs underline underline-offset-4',
         })}
+        href={item.url}
         style={{
           paddingLeft: margin,
         }}
@@ -26,7 +26,7 @@ export function DocTocItem({ item }: { item: Toc[number] }) {
 }
 
 export function DocToc({ toc }: { toc: Toc }) {
-  const items = toc.map(item => <DocTocItem key={item.value} item={item} />);
+  const items = toc.map((item) => <DocTocItem item={item} key={item.value} />);
 
   return <div className="flex flex-col gap-1">{items}</div>;
 }

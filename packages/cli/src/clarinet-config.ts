@@ -1,5 +1,5 @@
 import { type } from 'arktype';
-import { readFile } from 'fs/promises';
+import { readFile } from 'node:fs/promises';
 import { parse } from '@iarna/toml';
 
 export const ClarinetConfig = type({

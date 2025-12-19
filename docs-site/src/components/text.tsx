@@ -8,9 +8,13 @@ export interface TextProps
     VariantProps<typeof textVariants> {}
 
 const Text = React.forwardRef<HTMLSpanElement, TextProps>(
-  ({ className, variant, ...props }, ref) => {
-    return <span className={cn(textVariants({ variant, className }))} ref={ref} {...props} />;
-  }
+  ({ className, variant, ...props }, ref) => (
+    <span
+      className={cn(textVariants({ variant, className }))}
+      ref={ref}
+      {...props}
+    />
+  )
 );
 Text.displayName = 'Text';
 

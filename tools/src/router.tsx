@@ -14,16 +14,17 @@ export const getRouter = () => {
     routeTree,
     context: { ...rqContext },
     defaultPreload: 'intent',
-    Wrap: (props: { children: React.ReactNode }) => {
-      return (
-        <TanstackQuery.Provider {...rqContext}>
-          <NuqsAdapter>{props.children}</NuqsAdapter>
-        </TanstackQuery.Provider>
-      );
-    },
+    Wrap: (props: { children: React.ReactNode }) => (
+      <TanstackQuery.Provider {...rqContext}>
+        <NuqsAdapter>{props.children}</NuqsAdapter>
+      </TanstackQuery.Provider>
+    ),
   });
 
-  setupRouterSsrQueryIntegration({ router, queryClient: rqContext.queryClient });
+  setupRouterSsrQueryIntegration({
+    router,
+    queryClient: rqContext.queryClient,
+  });
 
   return router;
 };

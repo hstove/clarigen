@@ -1,10 +1,10 @@
-import { ClarityAbi } from '@clarigen/core';
+import type { ClarityAbi } from '@clarigen/core';
 
-export interface SessionContract {
+export type SessionContract = {
   contract_id: string;
   contract_interface: ClarityAbi;
   source: string;
-}
+};
 export type EpochType = ClarityAbi;
 
 export type SessionAccount = {
@@ -13,11 +13,11 @@ export type SessionAccount = {
   name: string;
 };
 
-export interface Session {
+export type Session = {
   session_id: number;
   accounts: SessionAccount[];
   contracts: SessionContract[];
-}
+};
 
 export interface SessionWithVariables extends Session {
   variables: string[];

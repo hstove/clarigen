@@ -1,5 +1,4 @@
 import { DocsSidebarNav } from '@/components/sidenav';
-import { Text } from '@/components/text';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { docsSidebar } from '@/lib/sidebar';
 

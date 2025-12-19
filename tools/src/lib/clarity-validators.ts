@@ -1,5 +1,5 @@
 import {
-  ClarityAbiType,
+  type ClarityAbiType,
   isClarityAbiPrimitive,
   isClarityAbiBuffer,
   isClarityAbiStringAscii,
@@ -113,7 +113,7 @@ export function getClarityValidators(type: ClarityAbiType) {
         const error = validator(value);
         if (error) return error;
       }
-      return undefined;
+      return;
     },
   };
 }

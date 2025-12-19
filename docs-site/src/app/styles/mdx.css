@@ -1,16 +1,16 @@
-[data-theme='light'] {
+[data-theme="light"] {
   display: block;
 }
 
-[data-theme='dark'] {
+[data-theme="dark"] {
   display: none;
 }
 
-.dark [data-theme='light'] {
+.dark [data-theme="light"] {
   display: none;
 }
 
-.dark [data-theme='dark'] {
+.dark [data-theme="dark"] {
   display: block;
 }
 
@@ -105,11 +105,17 @@
   @apply px-2;
 }
 
-.dark [data-rehype-pretty-code-figure] [data-line-numbers] > [data-line]::before {
+.dark
+  [data-rehype-pretty-code-figure]
+  [data-line-numbers]
+  > [data-line]::before {
   @apply text-zinc-50/40;
 }
 
-.light [data-rehype-pretty-code-figure] [data-line-numbers] > [data-line]::before {
+.light
+  [data-rehype-pretty-code-figure]
+  [data-line-numbers]
+  > [data-line]::before {
   @apply text-zinc-600;
 }
 

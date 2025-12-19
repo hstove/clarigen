@@ -1,7 +1,12 @@
-import { ClarityValue, ReadOnlyFunctionResponse, cvToHex, hexToCV } from '@stacks/transactions';
+import {
+  type ClarityValue,
+  type ReadOnlyFunctionResponse,
+  cvToHex,
+  hexToCV,
+} from '@stacks/transactions';
 import { smartContractsApi } from './api-helpers';
 
-export interface ReadOnlyOptions {
+export type ReadOnlyOptions = {
   contractAddress: string;
   contractName: string;
   functionName: string;
@@ -14,7 +19,7 @@ export interface ReadOnlyOptions {
   tip?: string;
   apiKey?: string;
   headers?: Record<string, string>;
-}
+};
 
 /**
  * Converts the response of a read-only function call into its Clarity Value
@@ -25,9 +30,8 @@ export function parseReadOnlyResponse<T extends ClarityValue>(
 ): T {
   if (response.okay) {
     return hexToCV(response.result) as T;
-  } else {
-    throw new Error(response.cause);
   }
+  throw new Error(response.cause);
 }
 
 /**
@@ -41,7 +45,12 @@ export function parseReadOnlyResponse<T extends ClarityValue>(
 export async function callReadOnlyFunction<T extends ClarityValue>(
   options: ReadOnlyOptions
 ): Promise<T> {
-  const { contractAddress, functionArgs, senderAddress = contractAddress, url } = options;
+  const {
+    contractAddress,
+    functionArgs,
+    senderAddress = contractAddress,
+    url,
+  } = options;
 
   const apiResponse = await smartContractsApi(
     url,
@@ -51,7 +60,9 @@ export async function callReadOnlyFunction<T extends ClarityValue>(
     ...options,
     readOnlyFunctionArgs: {
       sender: senderAddress,
-      arguments: functionArgs.map(arg => (typeof arg === 'string' ? arg : cvToHex(arg))),
+      arguments: functionArgs.map((arg) =>
+        typeof arg === 'string' ? arg : cvToHex(arg)
+      ),
     },
   });
 

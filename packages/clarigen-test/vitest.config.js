@@ -1,7 +1,10 @@
 /// <reference types="vitest" />
 
-import { defineConfig } from 'vitest/config';
-import { vitestSetupFilePath, getClarinetVitestsArgv } from '@stacks/clarinet-sdk/vitest';
+import { defineConfig } from "vitest/config";
+import {
+  vitestSetupFilePath,
+  getClarinetVitestsArgv,
+} from "@stacks/clarinet-sdk/vitest";
 
 /*
   In this file, Vitest is configured so that it works seamlessly with Clarinet and the Simnet.
@@ -20,8 +23,8 @@ import { vitestSetupFilePath, getClarinetVitestsArgv } from '@stacks/clarinet-sd
 
 export default defineConfig({
   test: {
-    environment: 'clarinet', // use vitest-environment-clarinet
-    pool: 'forks',
+    environment: "clarinet", // use vitest-environment-clarinet
+    pool: "forks",
     isolate: false,
     // maxWorkers: 1,
     setupFiles: [
@@ -31,8 +34,8 @@ export default defineConfig({
     environmentOptions: {
       clarinet: {
         ...getClarinetVitestsArgv(),
-        manifestPath: '../../demo-project/Clarinet.toml',
-        manifest: '../../demo-project/Clarinet.toml',
+        manifestPath: "../../demo-project/Clarinet.toml",
+        manifest: "../../demo-project/Clarinet.toml",
         // add or override options
       },
     },

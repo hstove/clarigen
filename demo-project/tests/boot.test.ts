@@ -1,7 +1,7 @@
 import { mainnet, pox4 as mainnetPox4 } from '@clarigen/boot/mainnet';
 import { testnet } from '@clarigen/boot/testnet';
 import { mainnet as mainnetRoot, testnet as testnetRoot } from '@clarigen/boot';
-import { test, it, expect, describe } from 'vitest';
+import { it, expect, describe } from 'vitest';
 import { accounts } from '../esm';
 import { standardPrincipalCV } from '@stacks/transactions';
 import { MAINNET_BURN_ADDRESS } from '@clarigen/core';

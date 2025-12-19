@@ -3,15 +3,20 @@ import type { ClarityAbiType } from '@clarigen/core';
 import { useFieldContext } from '@/hooks/form-context';
 import { useFieldFocusHandlers } from '@/hooks/use-focused-field';
 import { Input } from '@/components/ui/input';
-import { Field, FieldLabel, FieldError, FieldDescription } from '@/components/ui/field';
+import {
+  Field,
+  FieldLabel,
+  FieldError,
+  FieldDescription,
+} from '@/components/ui/field';
 
-interface PrincipalFieldProps {
+type PrincipalFieldProps = {
   name: string;
   label?: string;
   requireContract?: boolean;
   disabled?: boolean;
   type: ClarityAbiType;
-}
+};
 
 export function PrincipalField({
   name,
@@ -21,24 +26,26 @@ export function PrincipalField({
   type,
 }: PrincipalFieldProps) {
   const field = useFieldContext<string>();
-  const errors = useStore(field.store, state => state.meta.errors);
+  const errors = useStore(field.store, (state) => state.meta.errors);
   const { onFocus } = useFieldFocusHandlers(name, type, field.handleChange);
 
   return (
     <Field>
-      <FieldLabel htmlFor={name} className="font-mono text-xs">
+      <FieldLabel className="font-mono text-xs" htmlFor={name}>
         {label ?? name}
       </FieldLabel>
       <Input
-        id={name}
-        value={field.state.value}
-        placeholder={requireContract ? 'SP123...ABC.contract-name' : 'SP123...ABC'}
         autoComplete="off"
-        onBlur={field.handleBlur}
-        onFocus={onFocus}
-        onChange={e => field.handleChange(e.target.value)}
         className="font-mono"
         disabled={disabled}
+        id={name}
+        onBlur={field.handleBlur}
+        onChange={(e) => field.handleChange(e.target.value)}
+        onFocus={onFocus}
+        placeholder={
+          requireContract ? 'SP123...ABC.contract-name' : 'SP123...ABC'
+        }
+        value={field.state.value}
       />
       <FieldDescription className="font-mono">
         {requireContract
@@ -47,7 +54,9 @@ export function PrincipalField({
       </FieldDescription>
       {field.state.meta.isTouched && errors.length > 0 && (
         <FieldError className="font-mono">
-          {errors.map(e => (typeof e === 'string' ? e : e.message)).join(', ')}
+          {errors
+            .map((e) => (typeof e === 'string' ? e : e.message))
+            .join(', ')}
         </FieldError>
       )}
     </Field>

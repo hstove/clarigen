@@ -17,14 +17,20 @@ export default async function ContractPage({ params }: ContractPageProps) {
 
   return (
     <GeneratedContractFiles
+      clarityNode={
+        <CodeBlock code={files.clarity} language="clarity" showLineNumbers />
+      }
+      docsNode={<Mdx className="p-4" code={files.mdx} />}
+      // @ts-expect-error
       files={files}
-      docsNode={<Mdx code={files.mdx} className="p-4" />}
-      // @ts-ignore
-      typesNode={<CodeBlock code={files.types} language="typescript" showLineNumbers />}
-      // @ts-ignore
-      usageNode={<CodeBlock code={files.usage} language="typescript" showLineNumbers />}
-      // @ts-ignore
-      clarityNode={<CodeBlock code={files.clarity} language="clarity" showLineNumbers />}
+      // @ts-expect-error
+      typesNode={
+        <CodeBlock code={files.types} language="typescript" showLineNumbers />
+      }
+      // @ts-expect-error
+      usageNode={
+        <CodeBlock code={files.usage} language="typescript" showLineNumbers />
+      }
       // usageNode={<Mdx code={files.us} className="p-4" />}
     />
   );

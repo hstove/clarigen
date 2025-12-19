@@ -1,5 +1,3 @@
-import { toCamelCase } from './utils';
-import { ClarityAbi } from './clarity-types';
 export type { ClarityAbi } from './clarity-types';
 export * from './transaction';
 export * from './types';

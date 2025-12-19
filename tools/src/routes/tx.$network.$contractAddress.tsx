@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router';
-import { NETWORK, Network } from '@/lib/constants';
+import { type NETWORK, Network } from '@/lib/constants';
 import { type } from 'arktype';
 
 function parseNetwork(network: string): NETWORK | null {
@@ -14,7 +14,7 @@ function parseContractAddress(
   const parts = contractAddress.split('.');
   if (parts.length !== 2) return null;
   const [address, contractName] = parts;
-  if (!address || !contractName) return null;
+  if (!(address && contractName)) return null;
   return { address, contractName };
 }
 
@@ -27,10 +27,10 @@ function ContractLayout() {
   const network = parseNetwork(networkParam);
   const contract = parseContractAddress(contractAddress);
 
-  if (!network || !contract) {
+  if (!(network && contract)) {
     return (
-      <div className="container mx-auto p-6 max-w-2xl">
-        <p className="text-sm text-destructive">Invalid contract URL.</p>
+      <div className="container mx-auto max-w-2xl p-6">
+        <p className="text-destructive text-sm">Invalid contract URL.</p>
       </div>
     );
   }

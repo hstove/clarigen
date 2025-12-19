@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useAccount } from '@/hooks/use-stacks';
 
 const truncateAddress = (address?: string) => {
-  if (!address) return undefined;
+  if (!address) return;
 
   return `${address.slice(0, 6)}…${address.slice(-4)}`;
 };
@@ -14,7 +14,7 @@ export const WalletButton = () => {
 
   if (!stacksAddress) {
     return (
-      <Button size="sm" variant="outline" onClick={connect}>
+      <Button onClick={connect} size="sm" variant="outline">
         <Wallet className="size-3.5" data-icon="inline-start" />
         connect
       </Button>
@@ -29,7 +29,7 @@ export const WalletButton = () => {
         <span className="text-green-600 dark:text-green-500">●</span>
         <span className="text-muted-foreground">{label}</span>
       </div>
-      <Button variant="ghost" size="xs" onClick={disconnect}>
+      <Button onClick={disconnect} size="xs" variant="ghost">
         disconnect
       </Button>
     </div>

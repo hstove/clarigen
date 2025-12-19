@@ -5,20 +5,20 @@ import type { VariantProps } from 'class-variance-authority';
 export const textVariants = cva('', {
   variants: {
     variant: {
-      h1: 'scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl',
-      h2: 'scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0',
-      h3: 'scroll-m-20 text-2xl font-semibold tracking-tight',
-      h4: 'scroll-m-20 text-xl font-semibold tracking-tight',
+      h1: 'scroll-m-20 font-extrabold text-4xl tracking-tight lg:text-5xl',
+      h2: 'scroll-m-20 pb-2 font-semibold text-3xl tracking-tight transition-colors first:mt-0',
+      h3: 'scroll-m-20 font-semibold text-2xl tracking-tight',
+      h4: 'scroll-m-20 font-semibold text-xl tracking-tight',
       p: 'leading-7',
       blockquote: 'mt-6 border-l-2 pl-6 italic',
       th: 'border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right',
       td: 'border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right',
-      code: 'relative rounded border px-[0.3rem] py-[0.2rem] font-mono text-sm font-normal',
-      lead: 'text-xl text-muted-foreground',
-      large: 'text-lg font-semibold',
-      medium: 'text-base font-medium',
-      small: 'text-sm font-medium leading-none',
-      muted: 'text-sm text-muted-foreground font-normal',
+      code: 'relative rounded border px-[0.3rem] py-[0.2rem] font-mono font-normal text-sm',
+      lead: 'text-muted-foreground text-xl',
+      large: 'font-semibold text-lg',
+      medium: 'font-medium text-base',
+      small: 'font-medium text-sm leading-none',
+      muted: 'font-normal text-muted-foreground text-sm',
       // Body01: "text-body01",
       // Body02: "text-body02",
       // Caption01: "text-text-subdued text-caption01",
@@ -51,10 +51,15 @@ export const textVariants = cva('', {
   },
 });
 
-export type TextVariants = VariantProps<typeof textVariants> & { className?: string };
+export type TextVariants = VariantProps<typeof textVariants> & {
+  className?: string;
+};
 
 export type TextVariantProps = VariantProps<typeof textVariants>;
 
-export function textStyles(variant: TextVariantProps['variant'], className?: string) {
+export function textStyles(
+  variant: TextVariantProps['variant'],
+  className?: string
+) {
   return cn(textVariants({ variant, className }));
 }

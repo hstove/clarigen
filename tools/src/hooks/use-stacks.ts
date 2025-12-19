@@ -1,4 +1,7 @@
-import { connect as connectStacks, disconnect as disconnectStacks } from '@stacks/connect';
+import {
+  connect as connectStacks,
+  disconnect as disconnectStacks,
+} from '@stacks/connect';
 import React from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { queries } from '@/lib/queries';
@@ -14,7 +17,7 @@ function useStacksAccount() {
 
   const stacksAddressMainnet = stacksAccount?.addresses.stx[0].address;
 
-  let stacksAddress = stacksAddressMainnet;
+  const stacksAddress = stacksAddressMainnet;
   let stacksAddressTestnet = stacksAddressMainnet;
   if (stacksAddressMainnet) {
     const address = createAddress(stacksAddressMainnet);
@@ -38,7 +41,8 @@ function useStacksAccount() {
 
 export function useAccount() {
   const queryClient = useQueryClient();
-  const { stacksAccount, stacksAddress, stacksAddressTestnet } = useStacksAccount();
+  const { stacksAccount, stacksAddress, stacksAddressTestnet } =
+    useStacksAccount();
 
   const connect = React.useCallback(async () => {
     await connectStacks();

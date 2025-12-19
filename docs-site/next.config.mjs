@@ -1,4 +1,4 @@
-import { createContentlayerPlugin, withContentlayer } from 'next-contentlayer';
+import { withContentlayer } from 'next-contentlayer';
 // const { withContentlayer } = require('next-contentlayer');
 
 /** @type {import('next').NextConfig} */

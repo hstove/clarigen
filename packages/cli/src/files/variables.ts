@@ -1,9 +1,9 @@
 import type { Simnet } from '@stacks/clarinet-sdk';
 import { logger } from '../logger';
-import { Session, SessionContract } from '../session';
+import type { Session, SessionContract } from '../session';
 import {
-  ClarityAbiTypeTuple,
-  ClarityAbiVariable,
+  type ClarityAbiTypeTuple,
+  type ClarityAbiVariable,
   cvToValue,
   getContractName,
 } from '@clarigen/core';
@@ -24,7 +24,11 @@ function clarityVersionForContract(contract: SessionContract) {
   }
 }
 
-export function getVariablesV2(contract: SessionContract, simnet: Simnet, verbose?: boolean) {
+export function getVariablesV2(
+  contract: SessionContract,
+  simnet: Simnet,
+  verbose?: boolean
+) {
   const [deployer] = contract.contract_id.split('.');
   const fakeId = `${getContractName(contract.contract_id)}-vars`;
   logger.debug(`Deploying ${contract.contract_id} for variables.`);
@@ -37,13 +41,15 @@ export function getVariablesV2(contract: SessionContract, simnet: Simnet, verbos
   }
 
   if (contract.contract_interface.variables.length === 0) {
-    logger.info(`Contract ${getContractName(contract.contract_id, false)} has no variables`);
+    logger.info(
+      `Contract ${getContractName(contract.contract_id, false)} has no variables`
+    );
     return {};
   }
 
-  let varFn = `{\n`;
+  let varFn = '{\n';
 
-  const varLines = contract.contract_interface.variables.map(variable => {
+  const varLines = contract.contract_interface.variables.map((variable) => {
     let varLine = `${variable.name}: `;
     if (variable.access === 'constant') {
       varLine += `${variable.name}`;
@@ -52,11 +58,11 @@ export function getVariablesV2(contract: SessionContract, simnet: Simnet, verbos
     }
     return varLine;
   });
-  varFn += varLines.map(l => ` ${l},`).join('\n');
+  varFn += varLines.map((l) => ` ${l},`).join('\n');
 
   varFn += '\n}';
 
-  const fullSrc = contract.source + `\n\n${varFn}`;
+  const fullSrc = `${contract.source}\n\n${varFn}`;
   try {
     const receipt = simnet.deployContract(
       fakeId,
@@ -71,7 +77,7 @@ export function getVariablesV2(contract: SessionContract, simnet: Simnet, verbos
     const varsAbi: Writeable<ClarityAbiTypeTuple> = {
       tuple: [],
     };
-    contract.contract_interface.variables.forEach(v => {
+    contract.contract_interface.variables.forEach((v) => {
       const _v = v as unknown as Writeable<ClarityAbiVariable>;
       varsAbi.tuple.push({
         type: _v.type,
@@ -103,7 +109,7 @@ export function getVariablesV2(contract: SessionContract, simnet: Simnet, verbos
 type Writeable<T> = { -readonly [P in keyof T]: Writeable<T[P]> };
 
 export function mapVariables(session: Session, simnet: Simnet) {
-  return session.contracts.map(contract => {
+  return session.contracts.map((contract) => {
     const vars = getVariablesV2(contract, simnet);
     return serialize(vars);
   });

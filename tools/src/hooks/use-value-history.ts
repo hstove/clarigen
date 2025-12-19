@@ -1,20 +1,22 @@
 import { useState, useCallback, useEffect } from 'react';
 import { getCombinedHistory, type CombinedHistory } from '@/lib/value-history';
 
-export interface UseValueHistoryOptions {
+export type UseValueHistoryOptions = {
   contractId: string;
   functionName: string;
   argName: string;
   clarityType: string;
-}
+};
 
-export interface UseValueHistoryReturn {
+export type UseValueHistoryReturn = {
   contextHistory: string[];
   typeHistory: string[];
   refresh: () => void;
-}
+};
 
-export function useValueHistory(options: UseValueHistoryOptions): UseValueHistoryReturn {
+export function useValueHistory(
+  options: UseValueHistoryOptions
+): UseValueHistoryReturn {
   const { contractId, functionName, argName, clarityType } = options;
 
   const [history, setHistory] = useState<CombinedHistory>({
@@ -24,7 +26,12 @@ export function useValueHistory(options: UseValueHistoryOptions): UseValueHistor
 
   const refresh = useCallback(() => {
     if (typeof window === 'undefined') return;
-    const combined = getCombinedHistory(contractId, functionName, argName, clarityType);
+    const combined = getCombinedHistory(
+      contractId,
+      functionName,
+      argName,
+      clarityType
+    );
     setHistory(combined);
   }, [contractId, functionName, argName, clarityType]);
 

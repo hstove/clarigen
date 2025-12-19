@@ -1,11 +1,20 @@
-process.on('warning', warning => {
+process.on('warning', (warning) => {
   console.warn(warning);
 });
 
 import { CoreNodeEventType, cvToValue, projectFactory } from '@clarigen/core';
 import { accounts, project } from '../esm/index';
-import { rov, rovOk, txOk, txErr, ro, varGet, mapGet, filterEvents, tx } from '@clarigen/test';
-import { describe, test, it, expect } from 'vitest';
+import {
+  rov,
+  txOk,
+  txErr,
+  ro,
+  varGet,
+  mapGet,
+  filterEvents,
+  tx,
+} from '@clarigen/test';
+import { describe, it, expect } from 'vitest';
 
 const contracts = projectFactory(project, 'simnet');
 const { counter } = contracts;
@@ -50,12 +59,17 @@ describe('counter contract tests', () => {
 
   it('can get events from a tx', () => {
     const receipt = txOk(counter.increment(1n), alice);
-    const printEvents = filterEvents(receipt.events, CoreNodeEventType.ContractEvent);
+    const printEvents = filterEvents(
+      receipt.events,
+      CoreNodeEventType.ContractEvent
+    );
     expect(printEvents.length).toEqual(1);
     const [print] = printEvents;
-    const printData = cvToValue<{ action: string; object: string; value: bigint }>(
-      print.data.value
-    );
+    const printData = cvToValue<{
+      action: string;
+      object: string;
+      value: bigint;
+    }>(print.data.value);
     expect(printData).toEqual({
       action: 'incremented',
       object: 'counter',

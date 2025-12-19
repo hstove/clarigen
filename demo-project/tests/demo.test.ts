@@ -1,7 +1,7 @@
 import { projectFactory, ok, err } from '@clarigen/core';
 import { project } from '../esm';
 import { describe, expect, it } from 'vitest';
-import { txErr, txOk, tx, ro, roOk, roErr, chain, rov, rovOk, rovErr } from '@clarigen/test';
+import { txErr, txOk, tx, chain, rov, rovOk, rovErr } from '@clarigen/test';
 
 const contracts = projectFactory(project, 'simnet');
 const tester = contracts.tester;

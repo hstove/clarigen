@@ -1,19 +1,14 @@
-import { createLPString, uintCV } from '@stacks/transactions';
-import {
-  FungibleConditionCode,
-  NonFungibleConditionCode,
-  PostConditionType,
-} from '@stacks/transactions';
+import { uintCV } from '@stacks/transactions';
 import { project } from './generated/clarigen-types';
 import {
-  AssetNames,
+  type AssetNames,
   createAssetInfo,
   makeFungiblePostCondition,
   makeNonFungiblePostCondition,
-  NftAssetType,
+  type NftAssetType,
   projectFactory,
 } from '../src';
-import { expect, test, describe } from 'vitest';
+import { expect, test } from 'vitest';
 const devnet = projectFactory(project, 'devnet');
 
 const contract = devnet.tester;
@@ -21,16 +16,16 @@ const contract = devnet.tester;
 type Assets = AssetNames<typeof contract>;
 
 // @ts-expect-error Type error for asset name
-let assetName: Assets = 'incorrect-name';
+let _assetName: Assets = 'incorrect-name';
 
-assetName = 'ft';
-assetName = 'nft';
-assetName = 'tuple-nft';
+_assetName = 'ft';
+_assetName = 'nft';
+_assetName = 'tuple-nft';
 
 // @ts-expect-error Invalid asset name
-assetName = 'not-asset';
+_assetName = 'not-asset';
 
-const [deployer, contractName] = contract.identifier.split('.');
+const [deployer, _contractName] = contract.identifier.split('.');
 
 test('throw if invalid asset name', () => {
   expect(() => {

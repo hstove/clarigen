@@ -58,10 +58,10 @@ function NumberHelper({ field }: { field: FocusedField }) {
   const isSigned = field.type === 'int128';
   return (
     <div className="space-y-3">
-      <p className="text-xs text-muted-foreground">
+      <p className="text-muted-foreground text-xs">
         {isSigned ? 'Signed' : 'Unsigned'} 128-bit integer
       </p>
-      <div className="text-xs text-muted-foreground space-y-1">
+      <div className="space-y-1 text-muted-foreground text-xs">
         <p>• Enter a whole number</p>
         {!isSigned && <p>• Must be non-negative</p>}
         <p>• For token amounts, remember decimals (e.g., 1 STX = 1000000)</p>
@@ -83,10 +83,10 @@ function PrincipalHelper({
   if (field.setValue) {
     return (
       <PrincipalHelperComponent
-        field={field}
-        onApply={field.setValue}
-        network={network}
         contractId={contractId}
+        field={field}
+        network={network}
+        onApply={field.setValue}
       />
     );
   }
@@ -95,10 +95,10 @@ function PrincipalHelper({
   const isContract = field.type === 'trait_reference';
   return (
     <div className="space-y-3">
-      <p className="text-xs text-muted-foreground">
+      <p className="text-muted-foreground text-xs">
         {isContract ? 'Contract principal' : 'Stacks address'}
       </p>
-      <div className="text-xs text-muted-foreground space-y-1">
+      <div className="space-y-1 text-muted-foreground text-xs">
         <p>• Mainnet: starts with SP...</p>
         <p>• Testnet: starts with ST...</p>
         {isContract && <p>• Format: address.contract-name</p>}
@@ -111,8 +111,10 @@ function BufferHelper({ field }: { field: FocusedField }) {
   const maxLen = isClarityAbiBuffer(field.type) ? field.type.buffer.length : 0;
   return (
     <div className="space-y-3">
-      <p className="text-xs text-muted-foreground">Buffer (max {maxLen} bytes)</p>
-      <div className="text-xs text-muted-foreground space-y-1">
+      <p className="text-muted-foreground text-xs">
+        Buffer (max {maxLen} bytes)
+      </p>
+      <div className="space-y-1 text-muted-foreground text-xs">
         <p>• Enter hex-encoded bytes</p>
         <p>• With or without 0x prefix</p>
         <p>• Example: 0x48454c4c4f</p>
@@ -124,16 +126,23 @@ function BufferHelper({ field }: { field: FocusedField }) {
 function StringHelper({ field }: { field: FocusedField }) {
   const isAscii = isClarityAbiStringAscii(field.type);
   const maxLen = isAscii
-    ? (field.type as { 'string-ascii': { length: number } })['string-ascii'].length
-    : (field.type as { 'string-utf8': { length: number } })['string-utf8'].length;
+    ? (field.type as { 'string-ascii': { length: number } })['string-ascii']
+        .length
+    : (field.type as { 'string-utf8': { length: number } })['string-utf8']
+        .length;
 
   return (
     <div className="space-y-3">
-      <p className="text-xs text-muted-foreground">
-        {isAscii ? 'ASCII string' : 'UTF-8 string'} (max {maxLen} {isAscii ? 'chars' : 'bytes'})
+      <p className="text-muted-foreground text-xs">
+        {isAscii ? 'ASCII string' : 'UTF-8 string'} (max {maxLen}{' '}
+        {isAscii ? 'chars' : 'bytes'})
       </p>
-      <div className="text-xs text-muted-foreground space-y-1">
-        {isAscii ? <p>• ASCII characters only (codes 0-127)</p> : <p>• Any valid UTF-8 text</p>}
+      <div className="space-y-1 text-muted-foreground text-xs">
+        {isAscii ? (
+          <p>• ASCII characters only (codes 0-127)</p>
+        ) : (
+          <p>• Any valid UTF-8 text</p>
+        )}
       </div>
     </div>
   );
@@ -142,8 +151,8 @@ function StringHelper({ field }: { field: FocusedField }) {
 function BoolHelper() {
   return (
     <div className="space-y-3">
-      <p className="text-xs text-muted-foreground">Boolean value</p>
-      <div className="text-xs text-muted-foreground space-y-1">
+      <p className="text-muted-foreground text-xs">Boolean value</p>
+      <div className="space-y-1 text-muted-foreground text-xs">
         <p>• Toggle on for true</p>
         <p>• Toggle off for false</p>
       </div>
@@ -155,9 +164,14 @@ function DefaultHelper({ field }: { field: FocusedField }) {
   const category = getFieldTypeCategory(field);
   return (
     <div className="space-y-3">
-      <p className="text-xs text-muted-foreground capitalize">{category} field</p>
-      <p className="text-xs text-muted-foreground">
-        Type: <code className="bg-muted px-1 rounded">{getTypeString(field.type)}</code>
+      <p className="text-muted-foreground text-xs capitalize">
+        {category} field
+      </p>
+      <p className="text-muted-foreground text-xs">
+        Type:{' '}
+        <code className="rounded bg-muted px-1">
+          {getTypeString(field.type)}
+        </code>
       </p>
     </div>
   );
@@ -179,7 +193,13 @@ function FieldHelperContent({
       return <NumberHelper field={field} />;
     case 'principal':
     case 'trait':
-      return <PrincipalHelper field={field} network={network} contractId={contractId} />;
+      return (
+        <PrincipalHelper
+          contractId={contractId}
+          field={field}
+          network={network}
+        />
+      );
     case 'buffer':
       return <BufferHelper field={field} />;
     case 'string-ascii':
@@ -193,7 +213,11 @@ function FieldHelperContent({
 }
 
 function NoFieldFocused() {
-  return <p className="text-xs text-muted-foreground">Focus a field to see contextual help.</p>;
+  return (
+    <p className="text-muted-foreground text-xs">
+      Focus a field to see contextual help.
+    </p>
+  );
 }
 
 type TabId = 'tools' | 'recent';
@@ -211,45 +235,52 @@ function TabButton({
 }) {
   return (
     <button
-      type="button"
       className={cn(
         'px-3 py-1.5 font-mono text-xs transition-colors',
         active
-          ? 'border-b-2 border-primary text-foreground'
+          ? 'border-primary border-b-2 text-foreground'
           : 'text-muted-foreground hover:text-foreground'
       )}
       onClick={() => onClick(id)}
+      type="button"
     >
       {label}
     </button>
   );
 }
 
-interface FieldHelperProps {
+type FieldHelperProps = {
   network: NETWORK;
   contractId: string;
   functionName: string;
   functionDoc?: ClaridocFunction;
-}
+};
 
-export function FieldHelper({ network, contractId, functionName, functionDoc }: FieldHelperProps) {
+export function FieldHelper({
+  network,
+  contractId,
+  functionName,
+  functionDoc,
+}: FieldHelperProps) {
   const { focusedField, setFocusedField } = useFocusedField();
   const [activeTab, setActiveTab] = useState<TabId>('tools');
   const paramDocs = focusedField
-    ? functionDoc?.comments.params[focusedField.name]?.comments ?? []
+    ? (functionDoc?.comments.params[focusedField.name]?.comments ?? [])
     : [];
-  const hasParamDocs = paramDocs.some(line => line.trim() !== '');
+  const hasParamDocs = paramDocs.some((line) => line.trim() !== '');
 
   return (
-    <div className="border border-border bg-card h-full">
-      <div className="border-b border-border px-4 py-3 bg-muted/30 flex items-center justify-between">
-        <h3 className="font-mono text-sm font-medium text-muted-foreground">field helper</h3>
+    <div className="h-full border border-border bg-card">
+      <div className="flex items-center justify-between border-border border-b bg-muted/30 px-4 py-3">
+        <h3 className="font-medium font-mono text-muted-foreground text-sm">
+          field helper
+        </h3>
         {focusedField && (
           <button
-            type="button"
-            onClick={() => setFocusedField(null)}
-            className="text-muted-foreground hover:text-foreground transition-colors p-1 -m-1"
             aria-label="Clear field helper"
+            className="-m-1 p-1 text-muted-foreground transition-colors hover:text-foreground"
+            onClick={() => setFocusedField(null)}
+            type="button"
           >
             <X className="h-4 w-4" />
           </button>
@@ -257,17 +288,17 @@ export function FieldHelper({ network, contractId, functionName, functionDoc }: 
       </div>
 
       {focusedField && (
-        <div className="flex border-b border-border">
+        <div className="flex border-border border-b">
           <TabButton
+            active={activeTab === 'tools'}
             id="tools"
             label="tools"
-            active={activeTab === 'tools'}
             onClick={setActiveTab}
           />
           <TabButton
+            active={activeTab === 'recent'}
             id="recent"
             label="recent"
-            active={activeTab === 'recent'}
             onClick={setActiveTab}
           />
         </div>
@@ -276,19 +307,25 @@ export function FieldHelper({ network, contractId, functionName, functionDoc }: 
       <div className="p-4">
         {focusedField ? (
           <div className="space-y-4">
-            <div className="font-mono text-sm font-medium">{focusedField.name}</div>
+            <div className="font-medium font-mono text-sm">
+              {focusedField.name}
+            </div>
             {hasParamDocs && (
               <div className="border border-border/60 bg-muted/30 p-3">
                 <DocText text={paramDocs} />
               </div>
             )}
             {activeTab === 'tools' ? (
-              <FieldHelperContent field={focusedField} network={network} contractId={contractId} />
+              <FieldHelperContent
+                contractId={contractId}
+                field={focusedField}
+                network={network}
+              />
             ) : (
               <HistoryHelper
                 contractId={contractId}
-                functionName={functionName}
                 field={focusedField}
+                functionName={functionName}
               />
             )}
           </div>

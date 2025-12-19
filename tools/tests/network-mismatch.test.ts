@@ -1,20 +1,35 @@
 import { describe, expect, it } from 'vitest';
-import { detectNetworkFromAddress, isNetworkMismatch } from '../src/lib/constants';
+import {
+  detectNetworkFromAddress,
+  isNetworkMismatch,
+} from '../src/lib/constants';
 
 describe('detectNetworkFromAddress', () => {
   it('detects mainnet addresses (SP prefix)', () => {
-    expect(detectNetworkFromAddress('SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9')).toBe('mainnet');
-    expect(detectNetworkFromAddress('SP120SBRBQJ00MCWS7TM5R8WJNTTKD5K0HFRC2CNE')).toBe('mainnet');
+    expect(
+      detectNetworkFromAddress('SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9')
+    ).toBe('mainnet');
+    expect(
+      detectNetworkFromAddress('SP120SBRBQJ00MCWS7TM5R8WJNTTKD5K0HFRC2CNE')
+    ).toBe('mainnet');
   });
 
   it('detects testnet/devnet addresses (ST prefix)', () => {
-    expect(detectNetworkFromAddress('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM')).toBe('testnet');
-    expect(detectNetworkFromAddress('ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG')).toBe('testnet');
+    expect(
+      detectNetworkFromAddress('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM')
+    ).toBe('testnet');
+    expect(
+      detectNetworkFromAddress('ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG')
+    ).toBe('testnet');
   });
 
   it('handles lowercase prefixes', () => {
-    expect(detectNetworkFromAddress('sp3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9')).toBe('mainnet');
-    expect(detectNetworkFromAddress('st1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM')).toBe('testnet');
+    expect(
+      detectNetworkFromAddress('sp3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9')
+    ).toBe('mainnet');
+    expect(
+      detectNetworkFromAddress('st1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM')
+    ).toBe('testnet');
   });
 
   it('returns null for invalid prefixes', () => {
@@ -26,7 +41,10 @@ describe('detectNetworkFromAddress', () => {
 
 describe('isNetworkMismatch', () => {
   it('detects mainnet address on testnet route', () => {
-    const result = isNetworkMismatch('testnet', 'SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9.token');
+    const result = isNetworkMismatch(
+      'testnet',
+      'SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9.token'
+    );
     expect(result.mismatch).toBe(true);
     expect(result.detectedNetwork).toBe('mainnet');
     expect(result.expectedNetwork).toBe('testnet');
@@ -65,7 +83,10 @@ describe('isNetworkMismatch', () => {
   });
 
   it('detects mainnet address on devnet route', () => {
-    const result = isNetworkMismatch('devnet', 'SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9.token');
+    const result = isNetworkMismatch(
+      'devnet',
+      'SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9.token'
+    );
     expect(result.mismatch).toBe(true);
     expect(result.detectedNetwork).toBe('mainnet');
   });

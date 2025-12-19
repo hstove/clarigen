@@ -1,6 +1,6 @@
-import { Config } from '../config';
+import type { Config } from '../config';
 import { logger } from '../logger';
-import { spawn } from 'child_process';
+import { spawn } from 'node:child_process';
 
 export async function afterDocs(config: Config): Promise<void> {
   const command = config.docs?.after;
@@ -14,7 +14,7 @@ export async function afterDocs(config: Config): Promise<void> {
       stdio: 'inherit',
     });
     child.on('error', reject);
-    child.on('exit', code => {
+    child.on('exit', (code) => {
       if (code === 0) {
         resolve();
       } else {

@@ -1,7 +1,7 @@
 import { mainnet, pox4 as mainnetPox4 } from '../src/mainnet';
 import { testnet } from '../src/testnet';
 import { mainnet as mainnetRoot, testnet as testnetRoot } from '../src';
-import { test, it, expect, describe } from 'vitest';
+import { it, expect, describe } from 'vitest';
 import { accounts } from '../src/clarigen-types';
 import { MAINNET_BURN_ADDRESS } from '@clarigen/core';
 

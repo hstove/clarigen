@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useMemo } from 'react';
-import { NETWORK, Network } from '@/lib/constants';
+import { type NETWORK, Network } from '@/lib/constants';
 import { type } from 'arktype';
 import { useContractFunctions } from '@/hooks/use-contract-abi';
 import { useContractDocs } from '@/hooks/use-contract-docs';
@@ -21,7 +21,9 @@ function ContractOverviewPage() {
   const { network: networkParam, contractAddress } = Route.useParams();
   const network = parseNetwork(networkParam)!;
 
-  return <ContractOverviewContent network={network} contractId={contractAddress} />;
+  return (
+    <ContractOverviewContent contractId={contractAddress} network={network} />
+  );
 }
 
 type ContractOverviewContentProps = {
@@ -29,14 +31,24 @@ type ContractOverviewContentProps = {
   contractId: string;
 };
 
-function ContractOverviewContent({ network, contractId }: ContractOverviewContentProps) {
-  const { data: functions, isLoading, error } = useContractFunctions(network, contractId);
+function ContractOverviewContent({
+  network,
+  contractId,
+}: ContractOverviewContentProps) {
+  const {
+    data: functions,
+    isLoading,
+    error,
+  } = useContractFunctions(network, contractId);
   const { data: contractDocs } = useContractDocs(network, contractId);
   const functionDescriptions = useMemo(() => {
     if (!contractDocs) return new Map<string, string>();
     return new Map(
-      contractDocs.functions.map(fn => {
-        const description = fn.comments.text.map(line => line.trim()).filter(Boolean).join(' ');
+      contractDocs.functions.map((fn) => {
+        const description = fn.comments.text
+          .map((line) => line.trim())
+          .filter(Boolean)
+          .join(' ');
         return [fn.abi.name, description];
       })
     );
@@ -48,77 +60,85 @@ function ContractOverviewContent({ network, contractId }: ContractOverviewConten
 
   if (isLoading) {
     return (
-      <div className="container mx-auto p-6 max-w-2xl">
-        <p className="text-sm text-muted-foreground">Loading contract functions…</p>
+      <div className="container mx-auto max-w-2xl p-6">
+        <p className="text-muted-foreground text-sm">
+          Loading contract functions…
+        </p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="container mx-auto p-6 max-w-2xl">
-        <p className="text-sm text-destructive">Failed to load contract data.</p>
+      <div className="container mx-auto max-w-2xl p-6">
+        <p className="text-destructive text-sm">
+          Failed to load contract data.
+        </p>
       </div>
     );
   }
 
   if (!functions) {
     return (
-      <div className="container mx-auto p-6 max-w-2xl">
-        <p className="text-sm text-destructive">
+      <div className="container mx-auto max-w-2xl p-6">
+        <p className="text-destructive text-sm">
           Contract not found or not accessible on this network.
         </p>
       </div>
     );
   }
 
-  const publicFunctions = functions.filter(f => f.access === 'public');
-  const readOnlyFunctions = functions.filter(f => f.access === 'read_only');
+  const publicFunctions = functions.filter((f) => f.access === 'public');
+  const readOnlyFunctions = functions.filter((f) => f.access === 'read_only');
 
   return (
-    <div className="mx-auto max-w-2xl px-6 py-8 space-y-8">
+    <div className="mx-auto max-w-2xl space-y-8 px-6 py-8">
       {/* Breadcrumbs */}
-      <Breadcrumbs network={network} contractId={contractId} />
+      <Breadcrumbs contractId={contractId} network={network} />
 
       {/* Contract Header */}
       <div className="space-y-2">
-        <h1 className="font-mono text-lg font-medium tracking-tight break-all">{contractId}</h1>
+        <h1 className="break-all font-medium font-mono text-lg tracking-tight">
+          {contractId}
+        </h1>
       </div>
 
       {/* Public Functions */}
       <div className="space-y-4">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+        <h2 className="font-semibold text-muted-foreground text-sm uppercase tracking-wider">
           Public Functions
         </h2>
         <div className="grid gap-2">
           {publicFunctions.length === 0 ? (
-            <p className="text-sm text-muted-foreground italic">No public functions found.</p>
+            <p className="text-muted-foreground text-sm italic">
+              No public functions found.
+            </p>
           ) : (
-            publicFunctions.map(func => (
+            publicFunctions.map((func) => (
               <Link
+                className="group flex items-center justify-between border border-border bg-card p-4 transition-colors hover:border-primary/50"
                 key={func.name}
-                to="/tx/$network/$contractAddress/$functionName"
                 params={{
                   network,
                   contractAddress: contractId,
                   functionName: func.name,
                 }}
-                className="group flex items-center justify-between border border-border bg-card p-4 hover:border-primary/50 transition-colors"
+                to="/tx/$network/$contractAddress/$functionName"
               >
                 <div className="space-y-1">
-                  <div className="font-mono text-sm font-medium group-hover:text-primary transition-colors">
+                  <div className="font-medium font-mono text-sm transition-colors group-hover:text-primary">
                     {func.name}
                   </div>
-                  <div className="text-[10px] text-muted-foreground font-mono">
+                  <div className="font-mono text-[10px] text-muted-foreground">
                     {func.args.length} {func.args.length === 1 ? 'arg' : 'args'}
                   </div>
                   {functionDescriptions.get(func.name) ? (
-                    <div className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
+                    <div className="line-clamp-2 text-muted-foreground text-xs leading-relaxed">
                       {functionDescriptions.get(func.name)}
                     </div>
                   ) : null}
                 </div>
-                <div className="text-muted-foreground group-hover:text-primary transition-colors">
+                <div className="text-muted-foreground transition-colors group-hover:text-primary">
                   →
                 </div>
               </Link>
@@ -129,38 +149,40 @@ function ContractOverviewContent({ network, contractId }: ContractOverviewConten
 
       {/* Read-Only Functions */}
       <div className="space-y-4">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+        <h2 className="font-semibold text-muted-foreground text-sm uppercase tracking-wider">
           Read-Only Functions
         </h2>
         <div className="grid gap-2">
           {readOnlyFunctions.length === 0 ? (
-            <p className="text-sm text-muted-foreground italic">No read-only functions found.</p>
+            <p className="text-muted-foreground text-sm italic">
+              No read-only functions found.
+            </p>
           ) : (
-            readOnlyFunctions.map(func => (
+            readOnlyFunctions.map((func) => (
               <Link
+                className="group flex items-center justify-between border border-border bg-card p-4 transition-colors hover:border-primary/50"
                 key={func.name}
-                to="/tx/$network/$contractAddress/$functionName"
                 params={{
                   network,
                   contractAddress: contractId,
                   functionName: func.name,
                 }}
-                className="group flex items-center justify-between border border-border bg-card p-4 hover:border-primary/50 transition-colors"
+                to="/tx/$network/$contractAddress/$functionName"
               >
                 <div className="space-y-1">
-                  <div className="font-mono text-sm font-medium group-hover:text-primary transition-colors">
+                  <div className="font-medium font-mono text-sm transition-colors group-hover:text-primary">
                     {func.name}
                   </div>
-                  <div className="text-[10px] text-muted-foreground font-mono">
+                  <div className="font-mono text-[10px] text-muted-foreground">
                     {func.args.length} {func.args.length === 1 ? 'arg' : 'args'}
                   </div>
                   {functionDescriptions.get(func.name) ? (
-                    <div className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
+                    <div className="line-clamp-2 text-muted-foreground text-xs leading-relaxed">
                       {functionDescriptions.get(func.name)}
                     </div>
                   ) : null}
                 </div>
-                <div className="text-muted-foreground group-hover:text-primary transition-colors">
+                <div className="text-muted-foreground transition-colors group-hover:text-primary">
                   →
                 </div>
               </Link>

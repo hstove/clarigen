@@ -1,10 +1,10 @@
 import { type } from 'arktype';
 import { log, logger } from './logger';
 import { fileExists, writeFile } from './utils';
-import { ClarinetConfig, getClarinetConfig } from './clarinet-config';
-import { dirname, join, relative, resolve } from 'path';
+import { type ClarinetConfig, getClarinetConfig } from './clarinet-config';
+import { dirname, join, relative, resolve } from 'node:path';
 import { stringify, parse } from '@iarna/toml';
-import { readFile } from 'fs/promises';
+import { readFile } from 'node:fs/promises';
 
 export const CONFIG_FILE = 'Clarigen.toml' as const;
 
@@ -17,9 +17,15 @@ export enum OutputType {
 const typesSchema = type({
   'output?': type('string').describe('Path to the output file'),
   'outputs?': type('string[]').describe('Paths to the output files'),
-  'include_accounts?': type('boolean').describe('Include accounts in the output'),
-  'after?': type('string').describe('Script to run after the output is generated'),
-  'include_boot_contracts?': type('boolean').describe('Include boot contracts in the output'),
+  'include_accounts?': type('boolean').describe(
+    'Include accounts in the output'
+  ),
+  'after?': type('string').describe(
+    'Script to run after the output is generated'
+  ),
+  'include_boot_contracts?': type('boolean').describe(
+    'Include boot contracts in the output'
+  ),
   'watch_folders?': type('string[]').describe('Folders to watch for changes'),
 }).optional();
 
@@ -28,9 +34,13 @@ export const ConfigFile = type({
   [OutputType.ESM]: typesSchema,
   [OutputType.ESM_OLD]: typesSchema,
   [OutputType.Docs]: type({
-    'output?': type('string').describe('Path to docs output folder. Defaults to ./docs'),
+    'output?': type('string').describe(
+      'Path to docs output folder. Defaults to ./docs'
+    ),
     'outputs?': type('string[]').describe('Paths to docs output folders'),
-    'exclude?': type('string[]').describe('Contracts to exclude from docs generation'),
+    'exclude?': type('string[]').describe(
+      'Contracts to exclude from docs generation'
+    ),
     'after?': type('string').describe('Script to run after docs are generated'),
   }).optional(),
 });
@@ -58,8 +68,10 @@ export class Config {
       config[OutputType.ESM] = config[OutputType.ESM_OLD];
       delete config[OutputType.ESM_OLD];
     }
-    const clarinet = await getClarinetConfig(resolve(cwd ?? '', config.clarinet));
-    return new this(config, clarinet, cwd);
+    const clarinet = await getClarinetConfig(
+      resolve(cwd ?? '', config.clarinet)
+    );
+    return new Config(config, clarinet, cwd);
   }
 
   getOutputs(type: OutputType): string[] {
@@ -72,16 +84,14 @@ export class Config {
   outputResolve(type: OutputType, filePath?: string): string[] | null {
     const outputs = this.getOutputs(type);
     if (!this.supports(type)) return null;
-    return outputs.map(path => {
-      return resolve(this.cwd, path, filePath || '');
-    });
+    return outputs.map((path) => resolve(this.cwd, path, filePath || ''));
   }
 
   async writeOutput(type: OutputType, contents: string, filePath?: string) {
     const paths = this.outputResolve(type, filePath);
     if (paths === null) return null;
     await Promise.all(
-      paths.map(async path => {
+      paths.map(async (path) => {
         await writeFile(path, contents);
         log.debug(`Generated ${type} file at ${relative(this.cwd, path)}`);
       })

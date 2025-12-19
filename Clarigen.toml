@@ -12,7 +12,7 @@ clarinet = "./demo-project/Clarinet.toml"
 [esm]
 # `output` can be a directory or a folder.
 output = "demo-project/esm/index.ts"
-after = "pnpm eslint --fix demo-project/esm/index.ts"
+after = "bunx eslint --fix demo-project/esm/index.ts"
 include_accounts = true
 
 # `esm.after` - script to run after ESM types are generated.

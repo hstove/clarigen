@@ -3,17 +3,17 @@ import { Mdx } from '@/components/mdx-components';
 import { Text } from '@/components/text';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { allDocs } from 'contentlayer/generated';
-import { Toc } from 'types/unist';
+import type { Toc } from 'types/unist';
 
-interface DocPageProps {
+type DocPageProps = {
   params: {
     slug: string[];
   };
-}
+};
 
 function getDocFromParams({ params }: DocPageProps) {
   const slug = params.slug?.join('/') || '';
-  const doc = allDocs.find(doc => {
+  const doc = allDocs.find((doc) => {
     // console.log('Doc listing', doc.slugAsParams, slug);
     return doc.slugAsParams === slug;
   });
@@ -27,7 +27,7 @@ function getDocFromParams({ params }: DocPageProps) {
 }
 
 export const generateStaticParams = async () =>
-  allDocs.map(post => ({ slug: post.slugAsParams.split('/') }));
+  allDocs.map((post) => ({ slug: post.slugAsParams.split('/') }));
 
 export const generateMetadata = ({ params }: DocPageProps) => {
   const post = getDocFromParams({ params });

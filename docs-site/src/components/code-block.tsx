@@ -1,10 +1,13 @@
 import { getHighlighter, bundledLanguages } from 'shiki';
-import darkTheme from '@/lib/themes/dark.json';
-import lightTheme from '@/lib/themes/light.json';
-import { cn } from '@/lib/utils';
 import { MarkdownWrapper } from './markdown-wrapper';
 
-export const codeToHtml = async ({ code, language }: { code: string; language: string }) => {
+export const codeToHtml = async ({
+  code,
+  language,
+}: {
+  code: string;
+  language: string;
+}) => {
   const highlighter = await getHighlighter({
     themes: ['github-light', 'github-dark'],
     langs: Object.keys(bundledLanguages),
@@ -50,6 +53,8 @@ export async function CodeBlock({
   //     />
   //   </code>
   // );
-  // @ts-ignore
-  return <MarkdownWrapper markdown={markdown} className={className} {...props} />;
+  // @ts-expect-error
+  return (
+    <MarkdownWrapper className={className} markdown={markdown} {...props} />
+  );
 }

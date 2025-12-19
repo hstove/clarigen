@@ -1,10 +1,8 @@
 'use client';
 import React from 'react';
-import { Text } from '@/components/text';
 import Link from 'next/link';
 import { buttonVariants } from './ui/button';
 import { cn } from '@/lib/utils';
-import { GithubIcon } from 'lucide-react';
 import { Icons } from './icons';
 import { ModeToggle } from './mode-toggle';
 import { useTheme } from 'next-themes';
@@ -17,36 +15,40 @@ export const Header: React.FC<{ children?: React.ReactNode }> = () => {
   React.useEffect(() => setMounted(true), []);
   const pathname = usePathname();
   const logo = React.useMemo(() => {
-    if (!mounted) return <div className="size-6"></div>;
+    if (!mounted) return <div className="size-6" />;
     if (resolvedTheme === 'dark') {
       return <Icons.logoDark className="size-6" />;
     }
     return <Icons.logoLight className="size-6" />;
   }, [resolvedTheme, mounted]);
   return (
-    <header className="border-border/40 bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur">
+    <header className="sticky top-0 z-50 w-full border-border/40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 max-w-screen-2xl items-center">
         <div className="mr-4 hidden md:flex">
-          <Link href="/" className="mr-6 flex items-center space-x-2">
+          <Link className="mr-6 flex items-center space-x-2" href="/">
             {logo}
             <span className="hidden font-bold sm:inline-block">Clarigen</span>
           </Link>
           <nav className="flex items-center gap-4 text-sm lg:gap-6">
             <Link
-              href="/docs/intro"
               className={cn(
-                'hover:text-foreground/80 transition-colors',
-                pathname.startsWith('/docs') ? 'text-foreground' : 'text-foreground/60'
+                'transition-colors hover:text-foreground/80',
+                pathname.startsWith('/docs')
+                  ? 'text-foreground'
+                  : 'text-foreground/60'
               )}
+              href="/docs/intro"
             >
               Docs
             </Link>
             <Link
-              href="/contracts"
               className={cn(
-                'hover:text-foreground/80 transition-colors',
-                pathname.startsWith('/contracts') ? 'text-foreground' : 'text-foreground/60'
+                'transition-colors hover:text-foreground/80',
+                pathname.startsWith('/contracts')
+                  ? 'text-foreground'
+                  : 'text-foreground/60'
               )}
+              href="/contracts"
             >
               Generator
             </Link>
@@ -58,7 +60,11 @@ export const Header: React.FC<{ children?: React.ReactNode }> = () => {
           </div>
 
           <div className="flex items-center">
-            <Link href="https://github.com/hstove/clarigen" target="_blank" rel="noreferrer">
+            <Link
+              href="https://github.com/hstove/clarigen"
+              rel="noreferrer"
+              target="_blank"
+            >
               <div
                 className={cn(
                   buttonVariants({

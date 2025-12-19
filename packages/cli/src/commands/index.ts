@@ -1,6 +1,3 @@
-// import { termost, helpers } from 'termost';
-import { logger } from '../logger';
-import { Config } from '../config';
 // import { C } from 'clipanion';
 
 // export type CliGlobalFlags = {

@@ -21,10 +21,10 @@ const PRESET_DECIMALS = [
   { label: 'Custom', value: -1 },
 ] as const;
 
-interface UintHelperProps {
+type UintHelperProps = {
   field: FocusedField;
   onApply: (value: string) => void;
-}
+};
 
 export function UintHelper({ field, onApply }: UintHelperProps) {
   const [humanAmount, setHumanAmount] = useState('');
@@ -35,8 +35,8 @@ export function UintHelper({ field, onApply }: UintHelperProps) {
 
   const isCustom = selectedDecimals === '-1';
   const decimalsToUse = isCustom
-    ? parseInt(customDecimals, 10) || 0
-    : parseInt(selectedDecimals, 10);
+    ? Number.parseInt(customDecimals, 10) || 0
+    : Number.parseInt(selectedDecimals, 10);
 
   const handleConvert = () => {
     setError('');
@@ -80,40 +80,40 @@ export function UintHelper({ field, onApply }: UintHelperProps) {
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <p className="text-xs text-muted-foreground">
+        <p className="text-muted-foreground text-xs">
           Convert human-readable amounts to {isSigned ? 'int' : 'uint'} values
         </p>
       </div>
 
       <div className="space-y-3">
         <div className="space-y-2">
-          <Label htmlFor="human-amount" className="text-xs">
+          <Label className="text-xs" htmlFor="human-amount">
             Amount
           </Label>
           <Input
-            id="human-amount"
-            type="text"
-            placeholder="10.5"
-            value={humanAmount}
-            onChange={e => setHumanAmount(e.target.value)}
             className="font-mono text-sm"
+            id="human-amount"
             inputMode="decimal"
+            onChange={(e) => setHumanAmount(e.target.value)}
+            placeholder="10.5"
+            type="text"
+            value={humanAmount}
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="decimals-preset" className="text-xs">
+          <Label className="text-xs" htmlFor="decimals-preset">
             Decimals
           </Label>
           <Select
+            onValueChange={(value) => setSelectedDecimals(value || '6')}
             value={selectedDecimals}
-            onValueChange={value => setSelectedDecimals(value || '6')}
           >
-            <SelectTrigger id="decimals-preset" className="text-sm">
+            <SelectTrigger className="text-sm" id="decimals-preset">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {PRESET_DECIMALS.map(preset => (
+              {PRESET_DECIMALS.map((preset) => (
                 <SelectItem key={preset.value} value={preset.value.toString()}>
                   {preset.label}
                 </SelectItem>
@@ -124,45 +124,55 @@ export function UintHelper({ field, onApply }: UintHelperProps) {
 
         {isCustom && (
           <div className="space-y-2">
-            <Label htmlFor="custom-decimals" className="text-xs">
+            <Label className="text-xs" htmlFor="custom-decimals">
               Custom Decimals
             </Label>
             <Input
-              id="custom-decimals"
-              type="number"
-              min="0"
-              max="38"
-              placeholder="6"
-              value={customDecimals}
-              onChange={e => setCustomDecimals(e.target.value)}
               className="font-mono text-sm"
+              id="custom-decimals"
+              max="38"
+              min="0"
+              onChange={(e) => setCustomDecimals(e.target.value)}
+              placeholder="6"
+              type="number"
+              value={customDecimals}
             />
           </div>
         )}
 
-        <Button onClick={handleConvert} variant="secondary" size="sm" className="w-full">
+        <Button
+          className="w-full"
+          onClick={handleConvert}
+          size="sm"
+          variant="secondary"
+        >
           Convert
         </Button>
 
         {convertedValue && (
-          <div className="space-y-2 p-3 bg-muted/50 border border-border rounded-md">
-            <p className="text-xs text-muted-foreground">Converted Value:</p>
-            <p className="font-mono text-sm break-all">{convertedValue}</p>
+          <div className="space-y-2 rounded-md border border-border bg-muted/50 p-3">
+            <p className="text-muted-foreground text-xs">Converted Value:</p>
+            <p className="break-all font-mono text-sm">{convertedValue}</p>
           </div>
         )}
 
         {error && (
-          <div className="text-xs text-destructive p-2 bg-destructive/10 border border-destructive/20 rounded">
+          <div className="rounded border border-destructive/20 bg-destructive/10 p-2 text-destructive text-xs">
             {error}
           </div>
         )}
 
-        <Button onClick={handleApply} disabled={!convertedValue} size="sm" className="w-full">
+        <Button
+          className="w-full"
+          disabled={!convertedValue}
+          onClick={handleApply}
+          size="sm"
+        >
           Apply to Field
         </Button>
       </div>
 
-      <div className="text-xs text-muted-foreground space-y-1 pt-2 border-t border-border">
+      <div className="space-y-1 border-border border-t pt-2 text-muted-foreground text-xs">
         <p className="font-medium">Examples:</p>
         <p>• 1 STX (6 decimals) = 1000000</p>
         <p>• 10.5 USDC (6 decimals) = 10500000</p>

@@ -8,7 +8,7 @@ import { InitConfigCommand } from './commands/init-config-command';
 import { logger } from './logger';
 import { version } from './generated/version';
 
-const [node, script, ...args] = process.argv;
+const [_node, _script, ...args] = process.argv;
 
 const cli = new Cli({
   binaryLabel: 'Clarigen',

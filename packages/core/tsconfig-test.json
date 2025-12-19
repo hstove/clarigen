@@ -4,7 +4,8 @@
     "rootDir": "../../",
     "paths": {
       "@clarigen/core": ["./src/index.ts"]
-    }
+    },
+    "strictNullChecks": true
   },
   "include": ["./test/**/*", "./src/**/*"]
 }

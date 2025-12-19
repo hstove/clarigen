@@ -10,11 +10,11 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "skipLibCheck": true,
-    "types": ["node"]
+    "types": ["node"],
+    "strictNullChecks": true
   },
   "include": [
     "@stacks/clarinet-sdk/vitest-helpers/src/global",
-    // "@clarigen/test",
     "./tests/**/*.ts"
   ]
 }

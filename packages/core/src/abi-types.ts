@@ -53,57 +53,60 @@ export type ClarityAbiType =
   | ClarityAbiTypeStringUtf8
   | ClarityAbiTypeTraitReference;
 
-export interface ClarityAbiArg {
+export type ClarityAbiArg = {
   name: string;
   type: ClarityAbiType;
-}
+};
 
-export interface ClarityAbiFunction {
+export type ClarityAbiFunction = {
   name: string;
   access: 'private' | 'public' | 'read_only';
   args: ClarityAbiArg[];
   outputs: {
     type: ClarityAbiType;
   };
-}
+};
 
 export type TypedAbiArg<T, N extends string> = { _t?: T; name: N };
 
-export type TypedAbiFunction<T extends TypedAbiArg<unknown, string>[], R> = ClarityAbiFunction & {
+export type TypedAbiFunction<
+  T extends TypedAbiArg<unknown, string>[],
+  R,
+> = ClarityAbiFunction & {
   _t?: T;
   _r?: R;
 };
 
-export interface ClarityAbiVariable {
+export type ClarityAbiVariable = {
   name: string;
   access: 'variable' | 'constant';
   type: ClarityAbiType;
-}
+};
 
-export type TypedAbiVariable<T> = ClarityAbiVariable & {
+export type TypedAbiVariable<_T> = ClarityAbiVariable & {
   // defaultValue: T;
 };
 
-export interface ClarityAbiMap {
+export type ClarityAbiMap = {
   name: string;
   key: ClarityAbiType;
   value: ClarityAbiType;
-}
+};
 
 export type TypedAbiMap<K, V> = ClarityAbiMap & {
   _k?: K;
   _v?: V;
 };
 
-export interface ClarityAbiTypeFungibleToken {
+export type ClarityAbiTypeFungibleToken = {
   name: string;
-}
+};
 
-export interface ClarityAbiTypeNonFungibleToken<T = unknown> {
+export type ClarityAbiTypeNonFungibleToken<T = unknown> = {
   name: string;
   type: ClarityAbiType;
   _t?: T;
-}
+};
 
 export type StacksEpochId =
   | 'Epoch10'
@@ -120,7 +123,7 @@ export type StacksEpochId =
   | 'Epoch33';
 export type ClarityVersion = 'Clarity1' | 'Clarity2' | 'Clarity3' | 'Clarity4';
 
-export interface ClarityAbi {
+export type ClarityAbi = {
   functions: ClarityAbiFunction[];
   variables: ClarityAbiVariable[];
   maps: ClarityAbiMap[];
@@ -128,7 +131,7 @@ export interface ClarityAbi {
   non_fungible_tokens: readonly ClarityAbiTypeNonFungibleToken<unknown>[];
   epoch: StacksEpochId;
   clarity_version: ClarityVersion;
-}
+};
 
 export type TypedAbi = Readonly<{
   functions: {
@@ -149,17 +152,17 @@ export type TypedAbi = Readonly<{
   contractFile?: string;
 }>;
 
-export interface ResponseOk<T, E> {
+export type ResponseOk<T, E> = {
   value: T;
   isOk: true;
   _e?: E;
-}
+};
 
-export interface ResponseErr<T, E> {
+export type ResponseErr<T, E> = {
   value: E;
   isOk: false;
   _o?: T;
-}
+};
 
 export type Response<Ok, Err> = ResponseOk<Ok, Err> | ResponseErr<Ok, Err>;
 

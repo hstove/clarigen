@@ -1,18 +1,17 @@
-import { projectFactory, ok, err, Response } from '@clarigen/core';
+import { projectFactory, ok, err, type Response } from '@clarigen/core';
 import { project } from './generated/clarigen-types';
 import { describe, expect, it } from 'vitest';
 import {
   txErr,
   txOk,
   tx,
-  ro,
   roOk,
   roErr,
   chain,
   rov,
   rovOk,
   rovErr,
-  TransactionResult,
+  type TransactionResult,
 } from '../src';
 
 const contracts = projectFactory(project, 'simnet');
@@ -21,7 +20,7 @@ const [deployer] = tester.identifier.split('.');
 
 describe('using clarigen/test', () => {
   it('can get deployment info', () => {
-    const data = simnet.getContractsInterfaces();
+    const _data = simnet.getContractsInterfaces();
     // console.log(data);
   });
   it('can call public functions', () => {
@@ -29,7 +28,7 @@ describe('using clarigen/test', () => {
     const receipt = txOk(tester.printPub(), deployer);
     expect(receipt.value).toEqual(true);
     expect(receipt.events.length).toEqual(3);
-    delete process.env.LOG_TX_CALLS;
+    process.env.LOG_TX_CALLS = undefined;
   });
 
   it('throws with err for txOk', () => {
@@ -66,7 +65,9 @@ describe('using clarigen/test', () => {
     rovOk(tester.roResp(false), deployer) as string;
     rovErr(tester.roResp(true), deployer) as bigint;
     rov(tester.roResp(true), deployer) as Response<string, bigint>;
-    tx(tester.printPub(), deployer) as TransactionResult<Response<boolean, bigint>>;
+    tx(tester.printPub(), deployer) as TransactionResult<
+      Response<boolean, bigint>
+    >;
   });
 
   it('throws for ok with txErr', () => {

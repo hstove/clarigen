@@ -17,7 +17,10 @@
                 "name": "pox-addr",
                 "type": {
                   "tuple": [
-                    { "name": "hashbytes", "type": { "buffer": { "length": 32 } } },
+                    {
+                      "name": "hashbytes",
+                      "type": { "buffer": { "length": 32 } }
+                    },
                     { "name": "version", "type": { "buffer": { "length": 1 } } }
                   ]
                 }
@@ -43,7 +46,10 @@
               "name": "pox-addr",
               "type": {
                 "tuple": [
-                  { "name": "hashbytes", "type": { "buffer": { "length": 32 } } },
+                  {
+                    "name": "hashbytes",
+                    "type": { "buffer": { "length": 32 } }
+                  },
                   { "name": "version", "type": { "buffer": { "length": 1 } } }
                 ]
               }
@@ -79,7 +85,10 @@
       ],
       "outputs": {
         "type": {
-          "response": { "ok": { "list": { "type": "uint128", "length": 12 } }, "error": "int128" }
+          "response": {
+            "ok": { "list": { "type": "uint128", "length": 12 } },
+            "error": "int128"
+          }
         }
       }
     },
@@ -117,7 +126,10 @@
                 "name": "pox-addr",
                 "type": {
                   "tuple": [
-                    { "name": "hashbytes", "type": { "buffer": { "length": 32 } } },
+                    {
+                      "name": "hashbytes",
+                      "type": { "buffer": { "length": 32 } }
+                    },
                     { "name": "version", "type": { "buffer": { "length": 1 } } }
                   ]
                 }
@@ -136,7 +148,10 @@
               "name": "pox-addr",
               "type": {
                 "tuple": [
-                  { "name": "hashbytes", "type": { "buffer": { "length": 32 } } },
+                  {
+                    "name": "hashbytes",
+                    "type": { "buffer": { "length": 32 } }
+                  },
                   { "name": "version", "type": { "buffer": { "length": 1 } } }
                 ]
               }
@@ -182,7 +197,10 @@
         { "name": "reward-cycle", "type": "uint128" },
         { "name": "topic", "type": { "string-ascii": { "length": 14 } } },
         { "name": "period", "type": "uint128" },
-        { "name": "signer-sig-opt", "type": { "optional": { "buffer": { "length": 65 } } } },
+        {
+          "name": "signer-sig-opt",
+          "type": { "optional": { "buffer": { "length": 65 } } }
+        },
         { "name": "signer-key", "type": { "buffer": { "length": 33 } } },
         { "name": "amount", "type": "uint128" },
         { "name": "max-amount", "type": "uint128" },
@@ -203,7 +221,10 @@
                 { "name": "add-amount", "type": "uint128" },
                 { "name": "first-cycle", "type": "uint128" },
                 { "name": "reward-cycle", "type": "uint128" },
-                { "name": "signer-key", "type": { "buffer": { "length": 33 } } },
+                {
+                  "name": "signer-key",
+                  "type": { "buffer": { "length": 33 } }
+                },
                 { "name": "stacker", "type": "principal" }
               ]
             }
@@ -238,12 +259,17 @@
           }
         },
         { "name": "reward-cycle", "type": "uint128" },
-        { "name": "signer-sig", "type": { "optional": { "buffer": { "length": 65 } } } },
+        {
+          "name": "signer-sig",
+          "type": { "optional": { "buffer": { "length": 65 } } }
+        },
         { "name": "signer-key", "type": { "buffer": { "length": 33 } } },
         { "name": "max-amount", "type": "uint128" },
         { "name": "auth-id", "type": "uint128" }
       ],
-      "outputs": { "type": { "response": { "ok": "uint128", "error": "int128" } } }
+      "outputs": {
+        "type": { "response": { "ok": "uint128", "error": "int128" } }
+      }
     },
     {
       "name": "allow-contract-caller",
@@ -391,8 +417,14 @@
                     "type": {
                       "optional": {
                         "tuple": [
-                          { "name": "hashbytes", "type": { "buffer": { "length": 32 } } },
-                          { "name": "version", "type": { "buffer": { "length": 1 } } }
+                          {
+                            "name": "hashbytes",
+                            "type": { "buffer": { "length": 32 } }
+                          },
+                          {
+                            "name": "version",
+                            "type": { "buffer": { "length": 1 } }
+                          }
                         ]
                       }
                     }
@@ -454,7 +486,10 @@
           }
         },
         { "name": "reward-cycle", "type": "uint128" },
-        { "name": "signer-sig", "type": { "optional": { "buffer": { "length": 65 } } } },
+        {
+          "name": "signer-sig",
+          "type": { "optional": { "buffer": { "length": 65 } } }
+        },
         { "name": "signer-key", "type": { "buffer": { "length": 33 } } },
         { "name": "max-amount", "type": "uint128" },
         { "name": "auth-id", "type": "uint128" }
@@ -475,12 +510,17 @@
           }
         },
         { "name": "reward-cycle", "type": "uint128" },
-        { "name": "signer-sig", "type": { "optional": { "buffer": { "length": 65 } } } },
+        {
+          "name": "signer-sig",
+          "type": { "optional": { "buffer": { "length": 65 } } }
+        },
         { "name": "signer-key", "type": { "buffer": { "length": 33 } } },
         { "name": "max-amount", "type": "uint128" },
         { "name": "auth-id", "type": "uint128" }
       ],
-      "outputs": { "type": { "response": { "ok": "uint128", "error": "int128" } } }
+      "outputs": {
+        "type": { "response": { "ok": "uint128", "error": "int128" } }
+      }
     },
     {
       "name": "stack-aggregation-increase",
@@ -497,7 +537,10 @@
         },
         { "name": "reward-cycle", "type": "uint128" },
         { "name": "reward-cycle-index", "type": "uint128" },
-        { "name": "signer-sig", "type": { "optional": { "buffer": { "length": 65 } } } },
+        {
+          "name": "signer-sig",
+          "type": { "optional": { "buffer": { "length": 65 } } }
+        },
         { "name": "signer-key", "type": { "buffer": { "length": 33 } } },
         { "name": "max-amount", "type": "uint128" },
         { "name": "auth-id", "type": "uint128" }
@@ -518,7 +561,10 @@
             ]
           }
         },
-        { "name": "signer-sig", "type": { "optional": { "buffer": { "length": 65 } } } },
+        {
+          "name": "signer-sig",
+          "type": { "optional": { "buffer": { "length": 65 } } }
+        },
         { "name": "signer-key", "type": { "buffer": { "length": 33 } } },
         { "name": "max-amount", "type": "uint128" },
         { "name": "auth-id", "type": "uint128" }
@@ -542,7 +588,10 @@
       "access": "public",
       "args": [
         { "name": "increase-by", "type": "uint128" },
-        { "name": "signer-sig", "type": { "optional": { "buffer": { "length": 65 } } } },
+        {
+          "name": "signer-sig",
+          "type": { "optional": { "buffer": { "length": 65 } } }
+        },
         { "name": "signer-key", "type": { "buffer": { "length": 33 } } },
         { "name": "max-amount", "type": "uint128" },
         { "name": "auth-id", "type": "uint128" }
@@ -577,7 +626,10 @@
         },
         { "name": "start-burn-ht", "type": "uint128" },
         { "name": "lock-period", "type": "uint128" },
-        { "name": "signer-sig", "type": { "optional": { "buffer": { "length": 65 } } } },
+        {
+          "name": "signer-sig",
+          "type": { "optional": { "buffer": { "length": 65 } } }
+        },
         { "name": "signer-key", "type": { "buffer": { "length": 33 } } },
         { "name": "max-amount", "type": "uint128" },
         { "name": "auth-id", "type": "uint128" }
@@ -588,7 +640,10 @@
             "ok": {
               "tuple": [
                 { "name": "lock-amount", "type": "uint128" },
-                { "name": "signer-key", "type": { "buffer": { "length": 33 } } },
+                {
+                  "name": "signer-key",
+                  "type": { "buffer": { "length": 33 } }
+                },
                 { "name": "stacker", "type": "principal" },
                 { "name": "unlock-burn-height", "type": "uint128" }
               ]
@@ -665,7 +720,11 @@
       ],
       "outputs": {
         "type": {
-          "optional": { "tuple": [{ "name": "until-burn-ht", "type": { "optional": "uint128" } }] }
+          "optional": {
+            "tuple": [
+              { "name": "until-burn-ht", "type": { "optional": "uint128" } }
+            ]
+          }
         }
       }
     },
@@ -684,8 +743,14 @@
                 "type": {
                   "optional": {
                     "tuple": [
-                      { "name": "hashbytes", "type": { "buffer": { "length": 32 } } },
-                      { "name": "version", "type": { "buffer": { "length": 1 } } }
+                      {
+                        "name": "hashbytes",
+                        "type": { "buffer": { "length": 32 } }
+                      },
+                      {
+                        "name": "version",
+                        "type": { "buffer": { "length": 1 } }
+                      }
                     ]
                   }
                 }
@@ -711,8 +776,14 @@
                 "type": {
                   "optional": {
                     "tuple": [
-                      { "name": "hashbytes", "type": { "buffer": { "length": 32 } } },
-                      { "name": "version", "type": { "buffer": { "length": 1 } } }
+                      {
+                        "name": "hashbytes",
+                        "type": { "buffer": { "length": 32 } }
+                      },
+                      {
+                        "name": "version",
+                        "type": { "buffer": { "length": 1 } }
+                      }
                     ]
                   }
                 }
@@ -746,7 +817,11 @@
         { "name": "sender", "type": "principal" }
       ],
       "outputs": {
-        "type": { "optional": { "tuple": [{ "name": "stacked-amount", "type": "uint128" }] } }
+        "type": {
+          "optional": {
+            "tuple": [{ "name": "stacked-amount", "type": "uint128" }]
+          }
+        }
       }
     },
     {
@@ -786,7 +861,10 @@
                 "name": "pox-addr",
                 "type": {
                   "tuple": [
-                    { "name": "hashbytes", "type": { "buffer": { "length": 32 } } },
+                    {
+                      "name": "hashbytes",
+                      "type": { "buffer": { "length": 32 } }
+                    },
                     { "name": "version", "type": { "buffer": { "length": 1 } } }
                   ]
                 }
@@ -841,7 +919,10 @@
                 "name": "pox-addr",
                 "type": {
                   "tuple": [
-                    { "name": "hashbytes", "type": { "buffer": { "length": 32 } } },
+                    {
+                      "name": "hashbytes",
+                      "type": { "buffer": { "length": 32 } }
+                    },
                     { "name": "version", "type": { "buffer": { "length": 1 } } }
                   ]
                 }
@@ -908,7 +989,10 @@
         { "name": "reward-cycle", "type": "uint128" },
         { "name": "topic", "type": { "string-ascii": { "length": 14 } } },
         { "name": "period", "type": "uint128" },
-        { "name": "signer-sig-opt", "type": { "optional": { "buffer": { "length": 65 } } } },
+        {
+          "name": "signer-sig-opt",
+          "type": { "optional": { "buffer": { "length": 65 } } }
+        },
         { "name": "signer-key", "type": { "buffer": { "length": 33 } } },
         { "name": "amount", "type": "uint128" },
         { "name": "max-amount", "type": "uint128" },
@@ -938,7 +1022,11 @@
       "type": { "buffer": { "length": 1 } },
       "access": "constant"
     },
-    { "name": "ADDRESS_VERSION_P2SH", "type": { "buffer": { "length": 1 } }, "access": "constant" },
+    {
+      "name": "ADDRESS_VERSION_P2SH",
+      "type": { "buffer": { "length": 1 } },
+      "access": "constant"
+    },
     {
       "name": "ADDRESS_VERSION_P2WPKH",
       "type": { "buffer": { "length": 1 } },
@@ -949,50 +1037,194 @@
       "type": { "buffer": { "length": 1 } },
       "access": "constant"
     },
-    { "name": "ERR_DELEGATION_ALREADY_REVOKED", "type": "int128", "access": "constant" },
-    { "name": "ERR_DELEGATION_EXPIRES_DURING_LOCK", "type": "int128", "access": "constant" },
-    { "name": "ERR_DELEGATION_NO_REWARD_SLOT", "type": "int128", "access": "constant" },
-    { "name": "ERR_DELEGATION_POX_ADDR_REQUIRED", "type": "int128", "access": "constant" },
-    { "name": "ERR_DELEGATION_TOO_MUCH_LOCKED", "type": "int128", "access": "constant" },
-    { "name": "ERR_DELEGATION_WRONG_REWARD_SLOT", "type": "int128", "access": "constant" },
+    {
+      "name": "ERR_DELEGATION_ALREADY_REVOKED",
+      "type": "int128",
+      "access": "constant"
+    },
+    {
+      "name": "ERR_DELEGATION_EXPIRES_DURING_LOCK",
+      "type": "int128",
+      "access": "constant"
+    },
+    {
+      "name": "ERR_DELEGATION_NO_REWARD_SLOT",
+      "type": "int128",
+      "access": "constant"
+    },
+    {
+      "name": "ERR_DELEGATION_POX_ADDR_REQUIRED",
+      "type": "int128",
+      "access": "constant"
+    },
+    {
+      "name": "ERR_DELEGATION_TOO_MUCH_LOCKED",
+      "type": "int128",
+      "access": "constant"
+    },
+    {
+      "name": "ERR_DELEGATION_WRONG_REWARD_SLOT",
+      "type": "int128",
+      "access": "constant"
+    },
     { "name": "ERR_INVALID_INCREASE", "type": "int128", "access": "constant" },
-    { "name": "ERR_INVALID_REWARD_CYCLE", "type": "int128", "access": "constant" },
-    { "name": "ERR_INVALID_SIGNATURE_PUBKEY", "type": "int128", "access": "constant" },
-    { "name": "ERR_INVALID_SIGNATURE_RECOVER", "type": "int128", "access": "constant" },
-    { "name": "ERR_INVALID_SIGNER_KEY", "type": "int128", "access": "constant" },
-    { "name": "ERR_INVALID_START_BURN_HEIGHT", "type": "int128", "access": "constant" },
+    {
+      "name": "ERR_INVALID_REWARD_CYCLE",
+      "type": "int128",
+      "access": "constant"
+    },
+    {
+      "name": "ERR_INVALID_SIGNATURE_PUBKEY",
+      "type": "int128",
+      "access": "constant"
+    },
+    {
+      "name": "ERR_INVALID_SIGNATURE_RECOVER",
+      "type": "int128",
+      "access": "constant"
+    },
+    {
+      "name": "ERR_INVALID_SIGNER_KEY",
+      "type": "int128",
+      "access": "constant"
+    },
+    {
+      "name": "ERR_INVALID_START_BURN_HEIGHT",
+      "type": "int128",
+      "access": "constant"
+    },
     { "name": "ERR_NOT_ALLOWED", "type": "int128", "access": "constant" },
-    { "name": "ERR_NOT_CURRENT_STACKER", "type": "int128", "access": "constant" },
+    {
+      "name": "ERR_NOT_CURRENT_STACKER",
+      "type": "int128",
+      "access": "constant"
+    },
     { "name": "ERR_REUSED_SIGNER_KEY", "type": "int128", "access": "constant" },
-    { "name": "ERR_SIGNER_AUTH_AMOUNT_TOO_HIGH", "type": "int128", "access": "constant" },
+    {
+      "name": "ERR_SIGNER_AUTH_AMOUNT_TOO_HIGH",
+      "type": "int128",
+      "access": "constant"
+    },
     { "name": "ERR_SIGNER_AUTH_USED", "type": "int128", "access": "constant" },
-    { "name": "ERR_STACKING_ALREADY_DELEGATED", "type": "int128", "access": "constant" },
-    { "name": "ERR_STACKING_ALREADY_STACKED", "type": "int128", "access": "constant" },
-    { "name": "ERR_STACKING_CORRUPTED_STATE", "type": "int128", "access": "constant" },
+    {
+      "name": "ERR_STACKING_ALREADY_DELEGATED",
+      "type": "int128",
+      "access": "constant"
+    },
+    {
+      "name": "ERR_STACKING_ALREADY_STACKED",
+      "type": "int128",
+      "access": "constant"
+    },
+    {
+      "name": "ERR_STACKING_CORRUPTED_STATE",
+      "type": "int128",
+      "access": "constant"
+    },
     { "name": "ERR_STACKING_EXPIRED", "type": "int128", "access": "constant" },
-    { "name": "ERR_STACKING_INSUFFICIENT_FUNDS", "type": "int128", "access": "constant" },
-    { "name": "ERR_STACKING_INVALID_AMOUNT", "type": "int128", "access": "constant" },
-    { "name": "ERR_STACKING_INVALID_LOCK_PERIOD", "type": "int128", "access": "constant" },
-    { "name": "ERR_STACKING_INVALID_POX_ADDRESS", "type": "int128", "access": "constant" },
-    { "name": "ERR_STACKING_IS_DELEGATED", "type": "int128", "access": "constant" },
-    { "name": "ERR_STACKING_NOT_DELEGATED", "type": "int128", "access": "constant" },
-    { "name": "ERR_STACKING_NO_SUCH_PRINCIPAL", "type": "int128", "access": "constant" },
-    { "name": "ERR_STACKING_PERMISSION_DENIED", "type": "int128", "access": "constant" },
-    { "name": "ERR_STACKING_POX_ADDRESS_IN_USE", "type": "int128", "access": "constant" },
-    { "name": "ERR_STACKING_STX_LOCKED", "type": "int128", "access": "constant" },
-    { "name": "ERR_STACKING_THRESHOLD_NOT_MET", "type": "int128", "access": "constant" },
-    { "name": "ERR_STACKING_UNREACHABLE", "type": "int128", "access": "constant" },
-    { "name": "ERR_STACK_EXTEND_NOT_LOCKED", "type": "int128", "access": "constant" },
-    { "name": "ERR_STACK_INCREASE_NOT_LOCKED", "type": "int128", "access": "constant" },
+    {
+      "name": "ERR_STACKING_INSUFFICIENT_FUNDS",
+      "type": "int128",
+      "access": "constant"
+    },
+    {
+      "name": "ERR_STACKING_INVALID_AMOUNT",
+      "type": "int128",
+      "access": "constant"
+    },
+    {
+      "name": "ERR_STACKING_INVALID_LOCK_PERIOD",
+      "type": "int128",
+      "access": "constant"
+    },
+    {
+      "name": "ERR_STACKING_INVALID_POX_ADDRESS",
+      "type": "int128",
+      "access": "constant"
+    },
+    {
+      "name": "ERR_STACKING_IS_DELEGATED",
+      "type": "int128",
+      "access": "constant"
+    },
+    {
+      "name": "ERR_STACKING_NOT_DELEGATED",
+      "type": "int128",
+      "access": "constant"
+    },
+    {
+      "name": "ERR_STACKING_NO_SUCH_PRINCIPAL",
+      "type": "int128",
+      "access": "constant"
+    },
+    {
+      "name": "ERR_STACKING_PERMISSION_DENIED",
+      "type": "int128",
+      "access": "constant"
+    },
+    {
+      "name": "ERR_STACKING_POX_ADDRESS_IN_USE",
+      "type": "int128",
+      "access": "constant"
+    },
+    {
+      "name": "ERR_STACKING_STX_LOCKED",
+      "type": "int128",
+      "access": "constant"
+    },
+    {
+      "name": "ERR_STACKING_THRESHOLD_NOT_MET",
+      "type": "int128",
+      "access": "constant"
+    },
+    {
+      "name": "ERR_STACKING_UNREACHABLE",
+      "type": "int128",
+      "access": "constant"
+    },
+    {
+      "name": "ERR_STACK_EXTEND_NOT_LOCKED",
+      "type": "int128",
+      "access": "constant"
+    },
+    {
+      "name": "ERR_STACK_INCREASE_NOT_LOCKED",
+      "type": "int128",
+      "access": "constant"
+    },
     { "name": "MAX_ADDRESS_VERSION", "type": "uint128", "access": "constant" },
-    { "name": "MAX_ADDRESS_VERSION_BUFF_20", "type": "uint128", "access": "constant" },
-    { "name": "MAX_ADDRESS_VERSION_BUFF_32", "type": "uint128", "access": "constant" },
-    { "name": "MAX_POX_REWARD_CYCLES", "type": "uint128", "access": "constant" },
-    { "name": "MIN_POX_REWARD_CYCLES", "type": "uint128", "access": "constant" },
+    {
+      "name": "MAX_ADDRESS_VERSION_BUFF_20",
+      "type": "uint128",
+      "access": "constant"
+    },
+    {
+      "name": "MAX_ADDRESS_VERSION_BUFF_32",
+      "type": "uint128",
+      "access": "constant"
+    },
+    {
+      "name": "MAX_POX_REWARD_CYCLES",
+      "type": "uint128",
+      "access": "constant"
+    },
+    {
+      "name": "MIN_POX_REWARD_CYCLES",
+      "type": "uint128",
+      "access": "constant"
+    },
     { "name": "PREPARE_CYCLE_LENGTH", "type": "uint128", "access": "constant" },
     { "name": "REWARD_CYCLE_LENGTH", "type": "uint128", "access": "constant" },
-    { "name": "SIP018_MSG_PREFIX", "type": { "buffer": { "length": 6 } }, "access": "constant" },
-    { "name": "STACKING_THRESHOLD_25", "type": "uint128", "access": "constant" },
+    {
+      "name": "SIP018_MSG_PREFIX",
+      "type": { "buffer": { "length": 6 } },
+      "access": "constant"
+    },
+    {
+      "name": "STACKING_THRESHOLD_25",
+      "type": "uint128",
+      "access": "constant"
+    },
     {
       "name": "STACKS_ADDR_VERSION_MAINNET",
       "type": { "buffer": { "length": 1 } },
@@ -1004,10 +1236,26 @@
       "access": "constant"
     },
     { "name": "configured", "type": "bool", "access": "variable" },
-    { "name": "first-burnchain-block-height", "type": "uint128", "access": "variable" },
-    { "name": "first-pox-4-reward-cycle", "type": "uint128", "access": "variable" },
-    { "name": "pox-prepare-cycle-length", "type": "uint128", "access": "variable" },
-    { "name": "pox-reward-cycle-length", "type": "uint128", "access": "variable" }
+    {
+      "name": "first-burnchain-block-height",
+      "type": "uint128",
+      "access": "variable"
+    },
+    {
+      "name": "first-pox-4-reward-cycle",
+      "type": "uint128",
+      "access": "variable"
+    },
+    {
+      "name": "pox-prepare-cycle-length",
+      "type": "uint128",
+      "access": "variable"
+    },
+    {
+      "name": "pox-reward-cycle-length",
+      "type": "uint128",
+      "access": "variable"
+    }
   ],
   "maps": [
     {
@@ -1018,7 +1266,11 @@
           { "name": "sender", "type": "principal" }
         ]
       },
-      "value": { "tuple": [{ "name": "until-burn-ht", "type": { "optional": "uint128" } }] }
+      "value": {
+        "tuple": [
+          { "name": "until-burn-ht", "type": { "optional": "uint128" } }
+        ]
+      }
     },
     {
       "name": "delegation-state",
@@ -1032,7 +1284,10 @@
             "type": {
               "optional": {
                 "tuple": [
-                  { "name": "hashbytes", "type": { "buffer": { "length": 32 } } },
+                  {
+                    "name": "hashbytes",
+                    "type": { "buffer": { "length": 32 } }
+                  },
                   { "name": "version", "type": { "buffer": { "length": 1 } } }
                 ]
               }
@@ -1155,7 +1410,10 @@
               ]
             }
           },
-          { "name": "reward-set-indexes", "type": { "list": { "type": "uint128", "length": 12 } } }
+          {
+            "name": "reward-set-indexes",
+            "type": { "list": { "type": "uint128", "length": 12 } }
+          }
         ]
       }
     },

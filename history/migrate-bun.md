@@ -33,3 +33,5 @@ Migrate the Clarigen project from PNPM to Bun, and switch from ESLint/Prettier t
 5. Install and configure Ultracite/Biome.
 6. Remove ESLint and Prettier configurations and dependencies.
 7. Run linting/formatting and ensure unused code warnings are silenced in config.
+8. Update CI tasks to use `bun`
+9. Basically ensure any invocate of `pnpm` is replaced with `bun`.

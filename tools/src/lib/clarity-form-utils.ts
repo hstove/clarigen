@@ -1,5 +1,10 @@
-import { ClarityValue, hexToCV, ClarityType } from '@stacks/transactions';
-import { ClarityAbiArg, formValueToCV, principalToString, ClarityAbiType } from '@clarigen/core';
+import { type ClarityValue, hexToCV, ClarityType } from '@stacks/transactions';
+import {
+  type ClarityAbiArg,
+  formValueToCV,
+  principalToString,
+  type ClarityAbiType,
+} from '@clarigen/core';
 
 /**
  * Converts a single form value to a ClarityValue using the ABI type.
@@ -50,7 +55,7 @@ export function formValuesToFunctionArgs(
   formValues: Record<string, unknown>,
   args: ClarityAbiArg[]
 ): ClarityValue[] {
-  return args.map(arg => {
+  return args.map((arg) => {
     const value = formValues[arg.name];
     return formValueToCV(value, arg.type);
   });
@@ -82,14 +87,15 @@ export function cvToFormValue(val: ClarityValue): unknown {
     case ClarityType.PrincipalContract:
       return principalToString(val);
     case ClarityType.List:
-      return val.value.map(v => cvToFormValue(v));
+      return val.value.map((v) => cvToFormValue(v));
     case ClarityType.Tuple:
-      return Object.entries(val.value).reduce((acc, [key, v]) => {
-        return {
+      return Object.entries(val.value).reduce(
+        (acc, [key, v]) => ({
           ...acc,
           [key]: cvToFormValue(v),
-        };
-      }, {});
+        }),
+        {}
+      );
     case ClarityType.StringASCII:
     case ClarityType.StringUTF8:
       return val.value;
@@ -101,7 +107,9 @@ export function cvToFormValue(val: ClarityValue): unknown {
 /**
  * Converts transaction arguments from the Stacks API (hex encoded) back to form values.
  */
-export function txArgsToFormValues(args: { name: string; hex: string }[]): Record<string, unknown> {
+export function txArgsToFormValues(
+  args: { name: string; hex: string }[]
+): Record<string, unknown> {
   const values: Record<string, unknown> = {};
   for (const arg of args) {
     const cv = hexToCV(arg.hex);

@@ -3,17 +3,10 @@
   "mode": "file-router",
   "typescript": true,
   "tailwind": true,
-  "packageManager": "pnpm",
+  "packageManager": "bun",
   "addOnOptions": {},
   "git": true,
   "version": 1,
   "framework": "react-cra",
-  "chosenAddOns": [
-    "nitro",
-    "start",
-    "shadcn",
-    "oRPC",
-    "form",
-    "tanstack-query"
-  ]
+  "chosenAddOns": ["nitro", "start", "shadcn", "oRPC", "form", "tanstack-query"]
 }

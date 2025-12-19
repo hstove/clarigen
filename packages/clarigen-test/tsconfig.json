@@ -8,7 +8,14 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "skipLibCheck": true,
-    "types": ["node", "./node_modules/@stacks/clarinet-sdk/vitest-helpers/src/global"]
+    "types": [
+      "node",
+      "./node_modules/@stacks/clarinet-sdk/vitest-helpers/src/global"
+    ],
+    "strictNullChecks": true
   },
-  "include": ["./src/**/*", "./node_modules/@stacks/clarinet-sdk/vitest-helpers/src/global.d.ts",]
+  "include": [
+    "./src/**/*",
+    "./node_modules/@stacks/clarinet-sdk/vitest-helpers/src/global.d.ts"
+  ]
 }

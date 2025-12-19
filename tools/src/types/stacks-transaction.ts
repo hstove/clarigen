@@ -23,7 +23,8 @@ const PrincipalContract = type({
   contract_name: 'string',
 });
 
-const PostConditionPrincipal = PrincipalOrigin.or(PrincipalStandard).or(PrincipalContract);
+const PostConditionPrincipal =
+  PrincipalOrigin.or(PrincipalStandard).or(PrincipalContract);
 
 // Post conditions
 const StxConditionCode = type(
@@ -59,7 +60,9 @@ const NonFungiblePostCondition = type({
   asset: AssetInfo,
 });
 
-const PostCondition = StxPostCondition.or(FungiblePostCondition).or(NonFungiblePostCondition);
+const PostCondition = StxPostCondition.or(FungiblePostCondition).or(
+  NonFungiblePostCondition
+);
 
 // Events
 const SmartContractLogEvent = type({
@@ -255,12 +258,19 @@ const TenureChangePayload = type({
 
 // === Confirmed Transactions ===
 
-const ConfirmedTokenTransfer = BaseTxFields.and(ConfirmedTxFields).and(TokenTransferPayload);
-const ConfirmedSmartContract = BaseTxFields.and(ConfirmedTxFields).and(SmartContractPayload);
-const ConfirmedContractCall = BaseTxFields.and(ConfirmedTxFields).and(ContractCallPayload);
-const ConfirmedPoisonMicroblock = BaseTxFields.and(ConfirmedTxFields).and(PoisonMicroblockPayload);
-const ConfirmedCoinbase = BaseTxFields.and(ConfirmedTxFields).and(CoinbasePayload);
-const ConfirmedTenureChange = BaseTxFields.and(ConfirmedTxFields).and(TenureChangePayload);
+const ConfirmedTokenTransfer =
+  BaseTxFields.and(ConfirmedTxFields).and(TokenTransferPayload);
+const ConfirmedSmartContract =
+  BaseTxFields.and(ConfirmedTxFields).and(SmartContractPayload);
+const ConfirmedContractCall =
+  BaseTxFields.and(ConfirmedTxFields).and(ContractCallPayload);
+const ConfirmedPoisonMicroblock = BaseTxFields.and(ConfirmedTxFields).and(
+  PoisonMicroblockPayload
+);
+const ConfirmedCoinbase =
+  BaseTxFields.and(ConfirmedTxFields).and(CoinbasePayload);
+const ConfirmedTenureChange =
+  BaseTxFields.and(ConfirmedTxFields).and(TenureChangePayload);
 
 const ConfirmedTransaction = ConfirmedTokenTransfer.or(ConfirmedSmartContract)
   .or(ConfirmedContractCall)
@@ -270,12 +280,18 @@ const ConfirmedTransaction = ConfirmedTokenTransfer.or(ConfirmedSmartContract)
 
 // === Pending Transactions ===
 
-const PendingTokenTransfer = BaseTxFields.and(PendingTxFields).and(TokenTransferPayload);
-const PendingSmartContract = BaseTxFields.and(PendingTxFields).and(SmartContractPayload);
-const PendingContractCall = BaseTxFields.and(PendingTxFields).and(ContractCallPayload);
-const PendingPoisonMicroblock = BaseTxFields.and(PendingTxFields).and(PoisonMicroblockPayload);
+const PendingTokenTransfer =
+  BaseTxFields.and(PendingTxFields).and(TokenTransferPayload);
+const PendingSmartContract =
+  BaseTxFields.and(PendingTxFields).and(SmartContractPayload);
+const PendingContractCall =
+  BaseTxFields.and(PendingTxFields).and(ContractCallPayload);
+const PendingPoisonMicroblock = BaseTxFields.and(PendingTxFields).and(
+  PoisonMicroblockPayload
+);
 const PendingCoinbase = BaseTxFields.and(PendingTxFields).and(CoinbasePayload);
-const PendingTenureChange = BaseTxFields.and(PendingTxFields).and(TenureChangePayload);
+const PendingTenureChange =
+  BaseTxFields.and(PendingTxFields).and(TenureChangePayload);
 
 const PendingTransaction = PendingTokenTransfer.or(PendingSmartContract)
   .or(PendingContractCall)

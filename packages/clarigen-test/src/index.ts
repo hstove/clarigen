@@ -1,22 +1,21 @@
 import {
-  ContractCallTyped,
-  ErrType,
-  OkType,
-  TypedAbiMap,
-  TypedAbiVariable,
-  UnknownArgs,
+  type ContractCallTyped,
+  type ErrType,
+  type OkType,
+  type TypedAbiMap,
+  type TypedAbiVariable,
+  type UnknownArgs,
   cvToValue,
   mapFactory,
-  rawClarityToValue,
-  Response,
+  type Response,
   cvToString,
 } from '@clarigen/core';
 import type { ContractCallTransaction } from '@clarigen/core/deployment';
-import { Simnet, ParsedTransactionResult } from '@stacks/clarinet-sdk';
+import type { ParsedTransactionResult } from '@stacks/clarinet-sdk';
 import { cvConvertHiro, cvConvertMS, validateResponse } from './utils';
-import { CoreNodeEvent } from './events';
+import type { CoreNodeEvent } from './events';
 import { stringify } from 'yaml';
-import { ClarityValue } from '@stacks/transactions';
+import type { ClarityValue } from '@stacks/transactions';
 export * from './events';
 export * from './utils';
 
@@ -43,7 +42,7 @@ function logTxCall({
       'contract-call': {
         'contract-id': contractId,
         'expected-sender': sender,
-        parameters: args.map(arg => cvToString(arg, 'hex')),
+        parameters: args.map((arg) => cvToString(arg, 'hex')),
         method: functionName,
         cost: '10000000',
       },
@@ -60,7 +59,12 @@ export function txOk<A extends UnknownArgs, R extends AnyResponse>(
 ): TransactionResult<OkType<R>> {
   const args = tx.functionArgs.map(cvConvertMS);
   const contractId = `${tx.contractAddress}.${tx.contractName}`;
-  const receipt = simnet.callPublicFn(contractId, tx.function.name, args, sender);
+  const receipt = simnet.callPublicFn(
+    contractId,
+    tx.function.name,
+    args,
+    sender
+  );
   const value = validateResponse<OkType<R>>(receipt.result, true);
   logTxCall({ contractId, sender, args, functionName: tx.function.name });
 
@@ -77,7 +81,12 @@ export function txErr<A extends UnknownArgs, R extends AnyResponse>(
 ): TransactionResult<ErrType<R>> {
   const args = tx.functionArgs.map(cvConvertMS);
   const contractId = `${tx.contractAddress}.${tx.contractName}`;
-  const receipt = simnet.callPublicFn(contractId, tx.function.name, args, sender);
+  const receipt = simnet.callPublicFn(
+    contractId,
+    tx.function.name,
+    args,
+    sender
+  );
   const value = validateResponse<ErrType<R>>(receipt.result, false);
   logTxCall({ contractId, sender, args, functionName: tx.function.name });
 
@@ -94,7 +103,12 @@ export function tx<A extends UnknownArgs, R extends AnyResponse>(
 ): TransactionResult<R> {
   const args = tx.functionArgs.map(cvConvertMS);
   const contractId = `${tx.contractAddress}.${tx.contractName}`;
-  const receipt = simnet.callPublicFn(contractId, tx.function.name, args, sender);
+  const receipt = simnet.callPublicFn(
+    contractId,
+    tx.function.name,
+    args,
+    sender
+  );
   const value = validateResponse<R>(receipt.result);
   logTxCall({ contractId, sender, args, functionName: tx.function.name });
 
@@ -127,7 +141,10 @@ export function ro<A extends UnknownArgs, R>(
   // return value;
 }
 
-export function rov<A extends UnknownArgs, R>(tx: ContractCallTyped<A, R>, sender?: string): R {
+export function rov<A extends UnknownArgs, R>(
+  tx: ContractCallTyped<A, R>,
+  sender?: string
+): R {
   return ro(tx, sender).value;
 }
 
@@ -190,9 +207,17 @@ export function rovErr<A extends UnknownArgs, R extends AnyResponse>(
   return roErr(tx, sender).value;
 }
 
-export function mapGet<Key, Val>(contractId: string, map: TypedAbiMap<Key, Val>, key: Key) {
+export function mapGet<Key, Val>(
+  contractId: string,
+  map: TypedAbiMap<Key, Val>,
+  key: Key
+) {
   const payload = mapFactory(map, key);
-  const result = simnet.getMapEntry(contractId, payload.map.name, cvConvertMS(payload.keyCV));
+  const result = simnet.getMapEntry(
+    contractId,
+    payload.map.name,
+    cvConvertMS(payload.keyCV)
+  );
   return cvToValue<Val | null>(cvConvertHiro(result));
 }
 
@@ -215,5 +240,8 @@ export const chain = {
 };
 
 export async function makeNewSession(cwd?: string, manifestPath?: string) {
-  await simnet.initSession(cwd ?? process.cwd(), manifestPath ?? './Clarinet.toml');
+  await simnet.initSession(
+    cwd ?? process.cwd(),
+    manifestPath ?? './Clarinet.toml'
+  );
 }

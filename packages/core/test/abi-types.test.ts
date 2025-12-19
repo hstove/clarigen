@@ -1,10 +1,4 @@
 import type {
-  TypedAbiArg,
-  TypedAbiFunction,
-  TypedAbiMap,
-  TypedAbiVariable,
-  Response,
-  ClarityAbiTypeNonFungibleToken,
   // ClarityAbiType,
   ClarityAbiTypeUInt128,
   ClarityAbiTypeBool,
@@ -12,7 +6,10 @@ import type {
 import { contractsFactory } from '../src';
 import { test, expect } from 'vitest';
 
-export type ClarityAbiType = ClarityAbiTypeTuple | ClarityAbiTypeUInt128 | ClarityAbiTypeBool;
+export type ClarityAbiType =
+  | ClarityAbiTypeTuple
+  | ClarityAbiTypeUInt128
+  | ClarityAbiTypeBool;
 
 // export type ClarityAbiTypeTuple = {
 //   tuple: { name: string; type: ClarityAbiType }[];
@@ -34,9 +31,9 @@ const tupleType = {
   ],
 } as const;
 
-const b: ClarityAbiType = tupleType;
+const _b: ClarityAbiType = tupleType;
 
-const nfts = [
+const _nfts = [
   { name: 'nft', type: 'uint128' },
   {
     name: 'tuple-nft',
@@ -76,8 +73,13 @@ const testContracts = {
   },
 } as const;
 
-const { tester } = contractsFactory(testContracts, 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM');
+const { tester } = contractsFactory(
+  testContracts,
+  'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM'
+);
 
 test('factory typings', () => {
-  expect(tester.identifier).toEqual('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.tester');
+  expect(tester.identifier).toEqual(
+    'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.tester'
+  );
 });

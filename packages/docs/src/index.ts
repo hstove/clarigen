@@ -1,4 +1,4 @@
-import {
+import type {
   ClarityAbi,
   ClarityAbiArg,
   ClarityAbiFunction,
@@ -23,30 +23,30 @@ export type ClaridocFunction = ClaridocItemType<ClarityAbiFunction>;
 export type ClaridocMap = ClaridocItemType<ClarityAbiMap>;
 export type ClaridocVariable = ClaridocItemType<ClarityAbiVariable>;
 
-export interface ClaridocItem {
+export type ClaridocItem = {
   abi: ClarityAbiItem;
   comments: Comments;
   startLine: number;
   source: string[];
-}
+};
 // export type ClaridocItem = ClaridocFunction | ClaridocMap | ClaridocVariable;
 
-export interface Comments {
+export type Comments = {
   params: Record<string, ClaridocParam>;
   text: string[];
-}
+};
 
-export interface ClaridocContract {
+export type ClaridocContract = {
   functions: ClaridocFunction[];
   maps: ClaridocMap[];
   variables: ClaridocVariable[];
   comments: string[];
-}
+};
 
-export interface ClaridocParam {
+export type ClaridocParam = {
   abi: ClarityAbiArg;
   comments: string[];
-}
+};
 
 export function createContractDocInfo({
   contractSrc,
@@ -105,7 +105,9 @@ export function createContractDocInfo({
       // })
       const abiFn = findAbiItemByName(abi, name);
       if (!abiFn) {
-        console.debug(`[claridoc]: Unable to find ABI for function \`${name}\`. Probably a bug.`);
+        console.debug(
+          `[claridoc]: Unable to find ABI for function \`${name}\`. Probably a bug.`
+        );
         return;
       }
       parensCount = traceParens(line, 0);
@@ -139,19 +141,19 @@ function pushItem(contract: ClaridocContract, item: ClaridocItem) {
 }
 
 function clarityNameMatcher(line: string) {
-  return /[\w|\-|\?|\!]+/.exec(line);
+  return /[\w|\-|?|!]+/.exec(line);
 }
 
 function findItemNameFromLine(line: string): string | undefined {
-  const fnType = FN_TYPES.find(type => {
-    return line.startsWith(`(define-${type}`);
-  });
+  const fnType = FN_TYPES.find((type) => line.startsWith(`(define-${type}`));
   if (fnType) {
     const prefix = `(define-${fnType} (`;
     const startString = line.slice(prefix.length);
     const match = clarityNameMatcher(startString);
     if (!match) {
-      console.debug(`[claridocs]: Unable to determine function name from line:\n  \`${line}\``);
+      console.debug(
+        `[claridocs]: Unable to determine function name from line:\n  \`${line}\``
+      );
       return;
     }
     return match[0];
@@ -163,22 +165,25 @@ function findItemNameFromLine(line: string): string | undefined {
     const startString = line.slice(prefix.length);
     const match = clarityNameMatcher(startString);
     if (!match) {
-      console.debug(`[claridocs]: Unable to determine ${type} name from line:\n  \`${line}\``);
+      console.debug(
+        `[claridocs]: Unable to determine ${type} name from line:\n  \`${line}\``
+      );
       return;
     }
     return match[0];
   }
-  return undefined;
+  return;
 }
 
-function findAbiItemByName(abi: ClarityAbi, name: string): ClarityAbiItem | undefined {
-  const fn = abi.functions.find(fn => {
-    return fn.name === name;
-  });
+function findAbiItemByName(
+  abi: ClarityAbi,
+  name: string
+): ClarityAbiItem | undefined {
+  const fn = abi.functions.find((fn) => fn.name === name);
   if (fn) return fn;
-  const map = abi.maps.find(m => m.name === name);
+  const map = abi.maps.find((m) => m.name === name);
   if (map) return map;
-  const v = abi.variables.find(v => v.name === name);
+  const v = abi.variables.find((v) => v.name === name);
   return v;
 }
 
@@ -187,15 +192,15 @@ export function isComment(line: string) {
 }
 
 export function getFnName(line: string) {
-  const fnType = FN_TYPES.find(type => {
-    return line.startsWith(`(define-${type}`);
-  });
+  const fnType = FN_TYPES.find((type) => line.startsWith(`(define-${type}`));
   if (typeof fnType === 'undefined') return;
   const prefix = `(define-${fnType} (`;
   const startString = line.slice(prefix.length);
   const match = clarityNameMatcher(startString);
   if (!match) {
-    console.debug(`[claridocs]: Unable to determine function name from line:\n  \`${line}\``);
+    console.debug(
+      `[claridocs]: Unable to determine function name from line:\n  \`${line}\``
+    );
     return;
   }
   return match[0];
@@ -203,14 +208,17 @@ export function getFnName(line: string) {
 
 export function traceParens(line: string, count: number) {
   let newCount = count;
-  line.split('').forEach(char => {
+  line.split('').forEach((char) => {
     if (char === '(') newCount++;
     if (char === ')') newCount--;
   });
   return newCount;
 }
 
-export function parseComments(comments: string[], abi: ClarityAbiItem): Comments {
+export function parseComments(
+  comments: string[],
+  abi: ClarityAbiItem
+): Comments {
   // const params: Record<string, ClaridocParam> = {};
   let curParam: string | undefined;
   // const newComments: string[] = [];
@@ -218,8 +226,8 @@ export function parseComments(comments: string[], abi: ClarityAbiItem): Comments
     text: [],
     params: {},
   };
-  comments.forEach(line => {
-    const paramMatches = /\s*@param\s([\w|\-]+)([;|-|\s]*)(.*)/.exec(line);
+  comments.forEach((line) => {
+    const paramMatches = /\s*@param\s([\w|-]+)([;|-|\s]*)(.*)/.exec(line);
 
     if (paramMatches === null) {
       if (!curParam || line.trim() === '') {
@@ -233,7 +241,7 @@ export function parseComments(comments: string[], abi: ClarityAbiItem): Comments
 
     if (!('args' in abi)) return;
     const [_full, name, _separator, rest] = paramMatches;
-    const arg = abi.args.find(arg => arg.name === name);
+    const arg = abi.args.find((arg) => arg.name === name);
     if (!arg) {
       console.debug(`[claridocs]: Unable to find ABI for @param ${name}`);
       return;
@@ -246,7 +254,7 @@ export function parseComments(comments: string[], abi: ClarityAbiItem): Comments
   });
 
   if ('args' in abi) {
-    abi.args.forEach(arg => {
+    abi.args.forEach((arg) => {
       if (!parsed.params[arg.name]) {
         parsed.params[arg.name] = {
           abi: arg,

@@ -1,6 +1,6 @@
 import { generateLlmTxt } from '@/lib/llm-txt';
 
-export async function GET(request: Request) {
+export async function GET(_request: Request) {
   const slugs = [
     'getting-started',
     'intro',

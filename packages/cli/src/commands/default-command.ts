@@ -21,14 +21,16 @@ export async function generate(config: Config) {
     await afterESM(config);
   }
   if (!config.supports(OutputType.ESM)) {
-    logger.warn('no config for ESM outputs. Not outputting any generated types.');
+    logger.warn(
+      'no config for ESM outputs. Not outputting any generated types.'
+    );
   }
   logger.info('Types generated!');
 }
 
 export async function watch(config: Config, cwd?: string) {
   // const ora = await import('ora');
-  return new Promise(async (resolve, reject) => {
+  return new Promise(async (_resolve, _reject) => {
     // First, generate the types
     try {
       await generate(config);
@@ -42,17 +44,20 @@ export async function watch(config: Config, cwd?: string) {
     const watchFolders = config.esm?.watch_folders ?? [];
     watchFolders.push(relativeFolder);
     logger.info(`Watching for changes in ${watchFolders}`);
-    const watcher = chokidar.watch(watchFolders, { persistent: true, cwd: clarinetFolder });
+    const watcher = chokidar.watch(watchFolders, {
+      persistent: true,
+      cwd: clarinetFolder,
+    });
     let running = false;
     let start = 0;
-    const isVerbose = logger.level !== 'info';
-    watcher.on('change', path => {
+    const _isVerbose = logger.level !== 'info';
+    watcher.on('change', (path) => {
       if (!running) {
         start = Date.now();
         logger.info(`File ${path} has been changed. Generating types.`);
         running = true;
         void generate(config)
-          .catch(e => {
+          .catch((e) => {
             logger.error({ error: e }, 'Error generating types');
           })
           .then(() => {
@@ -84,7 +89,10 @@ export class DefaultCommand extends BaseCommand {
     description: 'Generate types for your Clarity contracts',
     examples: [
       ['Basic usage:', 'clarigen'],
-      ['When your `Clarigen.toml` is in a different directory:', 'clarigen /path/to/your/project'],
+      [
+        'When your `Clarigen.toml` is in a different directory:',
+        'clarigen /path/to/your/project',
+      ],
       ['Watch for changes and regenerate types:', 'clarigen --watch'],
     ],
   });

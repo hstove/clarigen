@@ -1,7 +1,7 @@
 import { pino } from 'pino';
 import pinoPretty from 'pino-pretty';
 
-export const colorizedClarigen = `\x1b[33m[Clarigen]\x1b[0m`;
+export const colorizedClarigen = '\x1b[33m[Clarigen]\x1b[0m';
 
 export const logger = pino(
   pinoPretty({

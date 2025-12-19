@@ -1,4 +1,8 @@
-import { filterEvents, SmartContractEvent, CoreNodeEventType } from '../src/events';
+import {
+  filterEvents,
+  type SmartContractEvent,
+  CoreNodeEventType,
+} from '../src/events';
 import { test, expect } from 'vitest';
 
 test('can filter events by type', () => {
@@ -18,5 +22,7 @@ test('can filter events by type', () => {
   const events = [event];
 
   expect(filterEvents(events, CoreNodeEventType.FtBurnEvent).length).toEqual(0);
-  expect(filterEvents(events, CoreNodeEventType.ContractEvent).length).toEqual(1);
+  expect(filterEvents(events, CoreNodeEventType.ContractEvent).length).toEqual(
+    1
+  );
 });

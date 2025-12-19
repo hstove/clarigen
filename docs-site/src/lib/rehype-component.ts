@@ -1,7 +1,6 @@
-import fs from 'fs';
-import path from 'path';
-import { UnistNode, UnistTree } from 'types/unist';
-import { u } from 'unist-builder';
+import fs from 'node:fs';
+import path from 'node:path';
+import type { UnistNode, UnistTree } from 'types/unist';
 import { visit } from 'unist-util-visit';
 
 // import { Index } from '../__registry__';
@@ -261,10 +260,10 @@ export function rehypeComponent() {
 }
 
 function getNodeAttributeByName(node: UnistNode, name: string) {
-  return node.attributes?.find(attribute => attribute.name === name);
+  return node.attributes?.find((attribute) => attribute.name === name);
 }
 
-function getComponentSourceFileContent(node: UnistNode) {
+function _getComponentSourceFileContent(node: UnistNode) {
   const src = getNodeAttributeByName(node, 'src')?.value as string;
 
   if (!src) {

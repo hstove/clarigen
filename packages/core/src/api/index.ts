@@ -1,26 +1,39 @@
 import { cvToHex, hexToCV } from '@stacks/transactions';
 export { cvToHex, hexToCV };
-import { StacksTransactionWire, broadcastTransaction } from '@stacks/transactions';
-import { cvToJSON, cvToValue, expectErr, expectOk, Jsonize } from '../clarity-types';
-import { Response, TypedAbiMap } from '../abi-types';
-import { ContractCall } from '../factory-types';
+import {
+  type StacksTransactionWire,
+  broadcastTransaction,
+} from '@stacks/transactions';
+import {
+  cvToJSON,
+  cvToValue,
+  expectErr,
+  expectOk,
+  type Jsonize,
+} from '../clarity-types';
+import type { Response, TypedAbiMap } from '../abi-types';
+import type { ContractCall } from '../factory-types';
 import { mapFactory } from '../factory';
 export * from './call-read-only';
 import { callReadOnlyFunction } from './call-read-only';
 import { generateUrl, getHeaders, v2Endpoint } from './api-helpers';
-import { StacksNetwork, StacksNetworkName, networkFrom } from '@stacks/network';
+import {
+  type StacksNetwork,
+  type StacksNetworkName,
+  networkFrom,
+} from '@stacks/network';
 
-export interface ApiOptionsUrl {
+export type ApiOptionsUrl = {
   url: string;
   network?: undefined;
-}
+};
 
 export type Network = StacksNetwork | StacksNetworkName;
 
-export interface ApiOptionsNetwork {
+export type ApiOptionsNetwork = {
   network: StacksNetworkName | StacksNetwork;
   url?: undefined;
-}
+};
 
 export type ApiOptionsBase = {
   network: StacksNetwork | StacksNetworkName;
@@ -42,12 +55,14 @@ export type ApiOptions = ApiOptionsBase & {
   json?: boolean;
 };
 
-export type JsonIfOption<O extends ApiOptions, R> = O extends ApiOptionsJsonize ? Jsonize<R> : R;
+export type JsonIfOption<O extends ApiOptions, R> = O extends ApiOptionsJsonize
+  ? Jsonize<R>
+  : R;
 
 // export type ApiOptions = ApiOptionsJsonize | ApiOptionsNoJson;
 
 function getTip(options: ApiOptions): string | undefined {
-  if (options.latest === false) return undefined;
+  if (options.latest === false) return;
   if (options.latest) return 'latest';
   if (typeof options.tip === 'undefined') return 'latest';
   return options.tip;
@@ -126,7 +141,10 @@ export async function fetchMapGet<Key, Val>(
   return cvToValue<Val | null>(valueCV, true);
 }
 
-export async function broadcast(transaction: StacksTransactionWire, options: ApiOptions) {
+export async function broadcast(
+  transaction: StacksTransactionWire,
+  options: ApiOptions
+) {
   const network = options.network;
   const result = await broadcastTransaction({
     transaction,
@@ -138,12 +156,11 @@ export async function broadcast(transaction: StacksTransactionWire, options: Api
         'reason_data' in result ? result.reason_data : undefined
       )}`
     );
-  } else {
-    return {
-      txId: result.txid,
-      stacksTransaction: transaction,
-    };
   }
+  return {
+    txId: result.txid,
+    stacksTransaction: transaction,
+  };
 }
 
 type ClientOptions = Omit<ApiOptions, 'network'>;
@@ -170,7 +187,10 @@ export class ClarigenClient {
     };
   }
 
-  ro<T, O extends ClientOptions>(tx: ContractCall<T>, options?: O): Promise<JsonIf<O, T>> {
+  ro<T, O extends ClientOptions>(
+    tx: ContractCall<T>,
+    options?: O
+  ): Promise<JsonIf<O, T>> {
     return ro(tx, this.roOptions(options || {})) as Promise<JsonIf<O, T>>;
   }
 

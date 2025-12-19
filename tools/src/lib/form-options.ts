@@ -1,15 +1,15 @@
-import { formOptions } from "@tanstack/react-form";
-import { type } from "arktype";
+import { formOptions } from '@tanstack/react-form';
+import { type } from 'arktype';
 
 export const depositFormOptions = formOptions({
   defaultValues: {
-    amount: "",
-    stacksAddress: "",
+    amount: '',
+    stacksAddress: '',
   },
   validators: {
     onChange: type({
-      amount: "string.numeric.parse",
-      stacksAddress: "string",
+      amount: 'string.numeric.parse',
+      stacksAddress: 'string',
     }),
   },
 });

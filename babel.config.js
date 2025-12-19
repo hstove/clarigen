@@ -1,4 +1,4 @@
-module.exports = (api, targets) => {
+module.exports = (api, _targets) => {
   // https://babeljs.io/docs/en/config-files#config-function-api
   const isTestEnv = api.env('test');
 
@@ -10,7 +10,9 @@ module.exports = (api, targets) => {
         '@babel/preset-env',
         {
           modules: isTestEnv ? 'commonjs' : false,
-          targets: isTestEnv ? { node: 'current' } : ['maintained node versions', '> 2%'],
+          targets: isTestEnv
+            ? { node: 'current' }
+            : ['maintained node versions', '> 2%'],
           loose: false,
           useBuiltIns: false,
           exclude: [

@@ -23,7 +23,8 @@ export function useContractAbi(network: NETWORK, contractId: string) {
     try {
       return { abi: parseContractAbi(query.data.abi), error: undefined };
     } catch (err) {
-      const parsedError = err instanceof Error ? err : new Error('Failed to parse ABI');
+      const parsedError =
+        err instanceof Error ? err : new Error('Failed to parse ABI');
       return { abi: undefined, error: parsedError };
     }
   }, [query.data]);
@@ -35,10 +36,16 @@ export function useContractAbi(network: NETWORK, contractId: string) {
   };
 }
 
-export function useContractFunction(network: NETWORK, contractId: string, functionName: string) {
+export function useContractFunction(
+  network: NETWORK,
+  contractId: string,
+  functionName: string
+) {
   const query = useContractAbi(network, contractId);
 
-  const func = query.data?.functions.find(f => f.name === functionName && f.access !== 'private');
+  const func = query.data?.functions.find(
+    (f) => f.name === functionName && f.access !== 'private'
+  );
 
   return {
     ...query,
@@ -49,7 +56,7 @@ export function useContractFunction(network: NETWORK, contractId: string, functi
 export function useContractFunctions(network: NETWORK, contractId: string) {
   const query = useContractAbi(network, contractId);
 
-  const functions = query.data?.functions.filter(f => f.access !== 'private');
+  const functions = query.data?.functions.filter((f) => f.access !== 'private');
 
   return {
     ...query,

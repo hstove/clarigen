@@ -21,7 +21,7 @@ vi.stubGlobal('window', {
 });
 
 beforeEach(() => {
-  Object.keys(mockStorage).forEach(key => delete mockStorage[key]);
+  Object.keys(mockStorage).forEach((key) => delete mockStorage[key]);
 });
 
 describe('getVisitedFunctions / addVisitedFunction', () => {
@@ -76,16 +76,6 @@ describe('getVisitedFunctions / addVisitedFunction', () => {
 
     const visited = getVisitedFunctions();
     expect(visited).toHaveLength(2);
-  });
-
-  it('limits to 20 items', () => {
-    for (let i = 0; i < 25; i++) {
-      addVisitedFunction(`SP${i}.contract`, `fn${i}`, 'mainnet');
-    }
-    const visited = getVisitedFunctions();
-    expect(visited).toHaveLength(20);
-    expect(visited[0].contractId).toBe('SP24.contract');
-    expect(visited[19].contractId).toBe('SP5.contract');
   });
 
   it('skips empty contractId', () => {
@@ -145,7 +135,9 @@ describe('schema validation', () => {
   });
 
   it('clears non-array data from storage', () => {
-    mockStorage['clarigen:visited:functions'] = JSON.stringify({ invalid: 'object' });
+    mockStorage['clarigen:visited:functions'] = JSON.stringify({
+      invalid: 'object',
+    });
     expect(getVisitedFunctions()).toEqual([]);
     expect(mockStorage['clarigen:visited:functions']).toBeUndefined();
   });

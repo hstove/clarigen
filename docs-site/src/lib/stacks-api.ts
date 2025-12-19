@@ -1,10 +1,13 @@
 'use server';
-import { Configuration, SmartContractsApi } from '@stacks/blockchain-api-client';
-// @ts-ignore
+import {
+  Configuration,
+  SmartContractsApi,
+} from '@stacks/blockchain-api-client';
+// @ts-expect-error
 import { cache } from 'react';
 import pox4Interface from '@/fixtures/pox-4-interface.json';
 import pox4Source from '@/fixtures/pox-4-source.json';
-import { ClarityAbi } from '@clarigen/core';
+import type { ClarityAbi } from '@clarigen/core';
 
 const apiUrlEnv = process.env.NEXT_PUBLIC_STACKS_API_URL;
 
@@ -34,7 +37,7 @@ export const fetchContractSrcAbi = cache(async (contractId: string) => {
 
   return {
     source: source.source,
-    abi: abi,
+    abi,
   };
 });
 

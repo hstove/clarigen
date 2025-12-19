@@ -20,7 +20,8 @@ export function useContractDocs(network: NETWORK, contractId: string) {
       });
       return { docs, error: undefined };
     } catch (err) {
-      const parsedError = err instanceof Error ? err : new Error('Failed to parse contract docs');
+      const parsedError =
+        err instanceof Error ? err : new Error('Failed to parse contract docs');
       return { docs: undefined, error: parsedError };
     }
   }, [query.data]);

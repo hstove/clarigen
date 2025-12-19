@@ -6,11 +6,11 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "resolveJsonModule": true,
-    // "moduleResolution": "node",
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "skipLibCheck": true,
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    "strictNullChecks": true
   },
   "include": ["./src/**/*"]
 }

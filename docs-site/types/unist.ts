@@ -1,4 +1,4 @@
-import { Node } from 'unist-builder';
+import type { Node } from 'unist-builder';
 
 export interface UnistNode extends Node {
   type: string;
@@ -23,12 +23,12 @@ export interface UnistTree extends Node {
   children: UnistNode[];
 }
 
-export interface NpmCommands {
+export type NpmCommands = {
   __npmCommand__?: string;
   __yarnCommand__?: string;
   __pnpmCommand__?: string;
   __bunCommand__?: string;
-}
+};
 
 export type Toc = {
   value: string;

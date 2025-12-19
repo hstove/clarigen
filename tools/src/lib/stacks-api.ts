@@ -1,16 +1,16 @@
 import createClient from 'openapi-fetch';
 import type { paths } from '../types/stacks-blockchain-api';
 import { StacksTransaction } from '../types/stacks-transaction';
-import { NETWORK } from './constants';
-import { ClarityAbi } from '@clarigen/core';
+import type { NETWORK } from './constants';
+import type { ClarityAbi } from '@clarigen/core';
 import { format } from 'dnum';
 
 export function getStacksApiUrl(network: NETWORK) {
   return network === 'mainnet'
     ? 'https://api.hiro.so'
     : network === 'devnet'
-    ? 'http://localhost:3999'
-    : 'https://api.testnet.hiro.so';
+      ? 'http://localhost:3999'
+      : 'https://api.testnet.hiro.so';
 }
 
 export function getStacksApi(network: NETWORK) {
@@ -23,15 +23,20 @@ export function getStacksApi(network: NETWORK) {
 
 export async function getContractInfo(network: NETWORK, contractId: string) {
   const client = getStacksApi(network);
-  const { data, error, response } = await client.GET('/extended/v1/contract/{contract_id}', {
-    params: {
-      path: {
-        contract_id: contractId,
+  const { data, error, response } = await client.GET(
+    '/extended/v1/contract/{contract_id}',
+    {
+      params: {
+        path: {
+          contract_id: contractId,
+        },
       },
-    },
-  });
+    }
+  );
   if (!data) {
-    throw new Error(`Failed to get contract info. Status ${response.status}. ${error?.message}`);
+    throw new Error(
+      `Failed to get contract info. Status ${response.status}. ${error?.message}`
+    );
   }
 
   return data;
@@ -62,7 +67,9 @@ export async function getStxBalance(network: NETWORK, address: string) {
     }
   );
   if (!data) {
-    throw new Error(`Failed to get STX balance. Status ${response.status}. ${error?.message}`);
+    throw new Error(
+      `Failed to get STX balance. Status ${response.status}. ${error?.message}`
+    );
   }
   const { balance } = data;
   return {
@@ -76,15 +83,20 @@ export async function getTransaction(
   txId: string
 ): Promise<typeof StacksTransaction.infer> {
   const client = getStacksApi(network);
-  const { data, error, response } = await client.GET('/extended/v1/tx/{tx_id}', {
-    params: {
-      path: {
-        tx_id: txId,
+  const { data, error, response } = await client.GET(
+    '/extended/v1/tx/{tx_id}',
+    {
+      params: {
+        path: {
+          tx_id: txId,
+        },
       },
-    },
-  });
+    }
+  );
   if (!data) {
-    throw new Error(`Failed to get transaction. Status ${response.status}. ${error?.message}`);
+    throw new Error(
+      `Failed to get transaction. Status ${response.status}. ${error?.message}`
+    );
   }
   return StacksTransaction.assert(data);
 }

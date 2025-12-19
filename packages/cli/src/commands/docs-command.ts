@@ -9,7 +9,7 @@ import chokidar from 'chokidar';
 
 export async function watch(config: Config, cwd?: string) {
   // const ora = await import('ora');
-  return new Promise(async (resolve, reject) => {
+  return new Promise(async (_resolve, _reject) => {
     const session = await getSession(config);
     // First, generate the docs
     try {
@@ -27,11 +27,14 @@ export async function watch(config: Config, cwd?: string) {
     const watchFolders = config.esm?.watch_folders ?? [];
     watchFolders.push(relativeFolder);
     logger.info(`Watching for changes in ${watchFolders}`);
-    const watcher = chokidar.watch(watchFolders, { persistent: true, cwd: clarinetFolder });
+    const watcher = chokidar.watch(watchFolders, {
+      persistent: true,
+      cwd: clarinetFolder,
+    });
     let running = false;
     let start = 0;
-    const isVerbose = logger.level !== 'info';
-    watcher.on('change', async path => {
+    const _isVerbose = logger.level !== 'info';
+    watcher.on('change', async (path) => {
       if (!running) {
         start = Date.now();
         logger.info(`File ${path} has been changed. Generating types.`);
@@ -41,7 +44,7 @@ export async function watch(config: Config, cwd?: string) {
           session,
           config,
         })
-          .catch(e => {
+          .catch((e) => {
             logger.error({ error: e }, 'Error generating types');
           })
           .then(() => {

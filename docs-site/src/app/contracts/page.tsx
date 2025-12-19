@@ -7,7 +7,6 @@ import {
   PageHeaderHeading,
 } from '@/components/page-header';
 import { Button } from '@/components/ui/button';
-import { textVariants } from '@/lib/text-variants';
 import { Text } from '@/components/text';
 import Link from 'next/link';
 
@@ -28,18 +27,18 @@ export function ExampleCard({
   return (
     <div className="flex flex-col gap-2 rounded border px-4 py-2">
       <div>
-        <Text variant="p" className="font-mono font-semibold">
+        <Text className="font-mono font-semibold" variant="p">
           {name}
         </Text>
       </div>
       <div>
-        <Text variant="small" className="font-light">
+        <Text className="font-light" variant="small">
           {description}
         </Text>
       </div>
-      <div className="grow"></div>
+      <div className="grow" />
       <div>
-        <Button variant="secondary" className="mt-1 w-full" asChild>
+        <Button asChild className="mt-1 w-full" variant="secondary">
           <Link href={`/contracts/${contractId}`}>View</Link>
         </Button>
       </div>
@@ -53,8 +52,8 @@ export default function GeneratorPage() {
       <PageHeader>
         <PageHeaderHeading>Generate Clarigen types</PageHeaderHeading>
         <PageHeaderDescription>
-          Enter any Stacks contract ID to get automatically generated types and contract
-          documentation.
+          Enter any Stacks contract ID to get automatically generated types and
+          contract documentation.
         </PageHeaderDescription>
         <PageActions className="max-w-[600px]">
           <Input
@@ -64,24 +63,36 @@ export default function GeneratorPage() {
           <Button>Submit</Button>
         </PageActions>
         <div>
-          <Text variant="Caption02" className="text-muted-foreground">
+          <Text className="text-muted-foreground" variant="Caption02">
             Or, see some examples:
           </Text>
         </div>
         <PageActions>
-          <Button size="sm" variant="secondary" asChild>
-            <Link href={`/contracts/SP000000000000000000002Q6VF78.pox-4`}>pox-4</Link>
+          <Button asChild size="sm" variant="secondary">
+            <Link href={'/contracts/SP000000000000000000002Q6VF78.pox-4'}>
+              pox-4
+            </Link>
           </Button>
-          <Button size="sm" variant="secondary" asChild>
-            <Link href={`/contracts/SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9.amm-swap-pool-v1-1`}>
+          <Button asChild size="sm" variant="secondary">
+            <Link
+              href={
+                '/contracts/SP3K8BC0PPEVCV7NZ6QSRWPQ2JE9E5B6N3PA0KBR9.amm-swap-pool-v1-1'
+              }
+            >
               ALEX AMM
             </Link>
           </Button>
-          <Button size="sm" variant="secondary" asChild>
-            <Link href={`/contracts/SP000000000000000000002Q6VF78.bns`}>BNS</Link>
+          <Button asChild size="sm" variant="secondary">
+            <Link href={'/contracts/SP000000000000000000002Q6VF78.bns'}>
+              BNS
+            </Link>
           </Button>
-          <Button size="sm" variant="secondary" asChild>
-            <Link href={`/contracts/SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG.stacking-dao-core-v1`}>
+          <Button asChild size="sm" variant="secondary">
+            <Link
+              href={
+                '/contracts/SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG.stacking-dao-core-v1'
+              }
+            >
               StackingDAO Core
             </Link>
           </Button>

@@ -1,0 +1,79 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "ignoreUnknown": false,
+    "maxSize": 2000000
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "includes": [
+      "**",
+      "!**/node_modules/",
+      "!**/*.d.ts",
+      "!packages/cli/test/sample-project",
+      "!packages/cli/test/clarion-project",
+      "!packages/core/dist/deno",
+      "!packages/cli/tmp/tests/deno",
+      "!**/dist/",
+      "!demo-project/test-runner.ts",
+      "!packages/clarigen-test/vitest.config.js",
+      "!docs-site/contentlayer.config.js",
+      "!tools/src/types/stacks-blockchain-api.d.ts",
+      "!tools/src/routeTree.gen.ts"
+    ]
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": false,
+      "style": {
+        "useBlockStatements": "off"
+      }
+    },
+    "includes": [
+      "**",
+      "!**/node_modules/",
+      "!**/*.d.ts",
+      "!packages/cli/test/sample-project",
+      "!packages/cli/test/clarion-project",
+      "!packages/core/dist/deno",
+      "!packages/cli/tmp/tests/deno",
+      "!**/dist/",
+      "!demo-project/test-runner.ts",
+      "!packages/clarigen-test/vitest.config.js",
+      "!docs-site/contentlayer.config.js",
+      "!tools/src/types/stacks-blockchain-api.d.ts"
+    ]
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single"
+    }
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["*.ts", "*.tsx"]
+    }
+  ],
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "off"
+      }
+    }
+  },
+  "extends": ["ultracite/core", "ultracite/react"]
+}

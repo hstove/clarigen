@@ -1,6 +1,6 @@
-import { project, contracts } from './generated/clarigen-types';
-import { projectFactory, rawClarityToValue, ResponseType } from '../src';
-import { describe, test, it, expect } from 'vitest';
+import { contracts } from './generated/clarigen-types';
+import { rawClarityToValue, type ResponseType } from '../src';
+import { describe, it, expect } from 'vitest';
 
 // const contracts = projectFactory(project, 'simnet');
 

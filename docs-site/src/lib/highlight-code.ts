@@ -1,7 +1,7 @@
 'use server';
 
-import { promises as fs } from 'fs';
-import path from 'path';
+import { promises as fs } from 'node:fs';
+import path from 'node:path';
 import { getHighlighter } from 'shiki';
 
 // Highlighting is failing in server components.
@@ -14,7 +14,10 @@ export async function highlightCode(code: string) {
     return code;
   }
 
-  const editorTheme = await fs.readFile(path.join(process.cwd(), 'lib/themes/dark.json'), 'utf-8');
+  const editorTheme = await fs.readFile(
+    path.join(process.cwd(), 'lib/themes/dark.json'),
+    'utf-8'
+  );
 
   const highlighter = await getHighlighter({
     langs: ['typescript'],

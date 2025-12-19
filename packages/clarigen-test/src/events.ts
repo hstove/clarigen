@@ -1,18 +1,18 @@
 import {
   CoreNodeEventType,
-  SmartContractEvent as _SmartContractEvent,
-  StxTransferEvent as _StxTransferEvent,
-  StxBurnEvent as _StxBurnEvent,
-  StxMintEvent as _StxMintEvent,
-  StxLockEvent as _StxLockEvent,
-  FtBurnEvent as _FtBurnEvent,
-  FtMintEvent as _FtMintEvent,
-  FtTransferEvent as _FtTransferEvent,
-  NftBurnEvent as _NftBurnEvent,
-  NftMintEvent as _NftMintEvent,
-  NftTransferEvent as _NftTransferEvent,
+  type SmartContractEvent as _SmartContractEvent,
+  type StxTransferEvent as _StxTransferEvent,
+  type StxBurnEvent as _StxBurnEvent,
+  type StxMintEvent as _StxMintEvent,
+  type StxLockEvent as _StxLockEvent,
+  type FtBurnEvent as _FtBurnEvent,
+  type FtMintEvent as _FtMintEvent,
+  type FtTransferEvent as _FtTransferEvent,
+  type NftBurnEvent as _NftBurnEvent,
+  type NftMintEvent as _NftMintEvent,
+  type NftTransferEvent as _NftTransferEvent,
 } from '@clarigen/core';
-import { ClarityValue } from '@stacks/transactions';
+import type { ClarityValue } from '@stacks/transactions';
 
 export type SmartContractEvent = {
   event: _SmartContractEvent['type'];
@@ -128,7 +128,11 @@ export function filterEvents(
   events: CoreNodeEvent[],
   type: CoreNodeEventType.FtBurnEvent
 ): FtBurnEvent[];
-export function filterEvents(events: CoreNodeEvent[], type: CoreNodeEventType): CoreNodeEvent[] {
-  const typeString = type === CoreNodeEventType.ContractEvent ? 'print_event' : type;
-  return events.filter(event => event.event === typeString);
+export function filterEvents(
+  events: CoreNodeEvent[],
+  type: CoreNodeEventType
+): CoreNodeEvent[] {
+  const typeString =
+    type === CoreNodeEventType.ContractEvent ? 'print_event' : type;
+  return events.filter((event) => event.event === typeString);
 }

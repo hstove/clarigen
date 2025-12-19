@@ -1,11 +1,11 @@
-import { StacksTransaction } from '@/types/stacks-transaction';
-import { NETWORK } from '@/lib/constants';
+import type { StacksTransaction } from '@/types/stacks-transaction';
+import type { NETWORK } from '@/lib/constants';
 import { TransactionStatus } from './transaction-status';
 import { ExplorerLink } from './explorer-link';
 import { FieldHelper } from './field-helper';
 import type { ClaridocFunction } from '@clarigen/docs';
 
-interface ContextPanelProps {
+type ContextPanelProps = {
   txid: string | undefined;
   tx: typeof StacksTransaction.infer | null | undefined;
   txError: Error | null;
@@ -13,30 +13,40 @@ interface ContextPanelProps {
   contractId: string;
   functionName: string;
   functionDoc?: ClaridocFunction;
-}
+};
 
-function TxStatusLoading({ txid, network }: { txid: string; network: NETWORK }) {
+function TxStatusLoading({
+  txid,
+  network,
+}: {
+  txid: string;
+  network: NETWORK;
+}) {
   return (
-    <div className="border border-border bg-muted/30 p-4 space-y-2 animate-pulse">
-      <div className="flex items-center gap-2 text-sm font-medium">
+    <div className="animate-pulse space-y-2 border border-border bg-muted/30 p-4">
+      <div className="flex items-center gap-2 font-medium text-sm">
         <span className="text-muted-foreground">◌</span>
         <span>Loading transaction...</span>
       </div>
-      <p className="text-xs font-mono break-all text-muted-foreground">{txid}</p>
-      <ExplorerLink txid={txid} network={network} />
+      <p className="break-all font-mono text-muted-foreground text-xs">
+        {txid}
+      </p>
+      <ExplorerLink network={network} txid={txid} />
     </div>
   );
 }
 
 function TxStatusError({ txid, network }: { txid: string; network: NETWORK }) {
   return (
-    <div className="border border-destructive/30 bg-destructive/5 p-4 space-y-2">
-      <div className="flex items-center gap-2 text-sm font-medium text-destructive">
+    <div className="space-y-2 border border-destructive/30 bg-destructive/5 p-4">
+      <div className="flex items-center gap-2 font-medium text-destructive text-sm">
         <span>×</span>
         <span>Transaction Status Unavailable</span>
       </div>
-      <p className="text-xs font-mono break-all text-muted-foreground">{txid}</p>
-      <ExplorerLink txid={txid} network={network} />
+      <p className="break-all font-mono text-muted-foreground text-xs">
+        {txid}
+      </p>
+      <ExplorerLink network={network} txid={txid} />
     </div>
   );
 }
@@ -53,21 +63,21 @@ export function ContextPanel({
   // Result mode: show transaction status
   if (txid) {
     if (tx) {
-      return <TransactionStatus tx={tx} network={network} />;
+      return <TransactionStatus network={network} tx={tx} />;
     }
     if (txError) {
-      return <TxStatusError txid={txid} network={network} />;
+      return <TxStatusError network={network} txid={txid} />;
     }
-    return <TxStatusLoading txid={txid} network={network} />;
+    return <TxStatusLoading network={network} txid={txid} />;
   }
 
   // Builder mode: show field helper
   return (
     <FieldHelper
-      network={network}
       contractId={contractId}
-      functionName={functionName}
       functionDoc={functionDoc}
+      functionName={functionName}
+      network={network}
     />
   );
 }

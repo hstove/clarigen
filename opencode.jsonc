@@ -3,9 +3,7 @@
   // "model": "anthropic/claude-sonnet-4-5",
   "autoupdate": true,
   "tools": {
-    "beads_*": true,
+    "beads_*": true
   },
-  "mcp": {
-
-  }
+  "mcp": {}
 }

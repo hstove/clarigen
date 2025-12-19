@@ -1,7 +1,14 @@
-import { SmartContractsApi, Configuration, TransactionsApi } from '@stacks/blockchain-api-client';
+import {
+  SmartContractsApi,
+  Configuration,
+  TransactionsApi,
+} from '@stacks/blockchain-api-client';
 import { isNumber } from '../utils';
 
-export function getHeaders(apiKey?: string, headersOverride: Record<string, string> = {}) {
+export function getHeaders(
+  apiKey?: string,
+  headersOverride: Record<string, string> = {}
+) {
   const headers: Record<string, string> = {
     ...headersOverride,
   };
@@ -47,7 +54,10 @@ const DEFAULT_FETCH_OPTIONS: RequestInit = isClientSide
     }
   : {};
 
-export async function fetchPrivate(input: RequestInfo, init: RequestInit = {}): Promise<Response> {
+export async function fetchPrivate(
+  input: RequestInfo,
+  init: RequestInit = {}
+): Promise<Response> {
   return fetch(input, { ...DEFAULT_FETCH_OPTIONS, ...init });
 }
 
@@ -61,18 +71,20 @@ export const generateUrl = (
 ): string => {
   try {
     const url = new URL(baseUrl);
-    Object.keys(params).forEach(key => {
+    Object.keys(params).forEach((key) => {
       const value = params[key];
       if (!value) return;
       if (Array.isArray(value)) {
         if (value.length === 0) return;
-        return url.searchParams.set(`${key}[]`, generateQueryStringFromArray<string>(key, value));
+        return url.searchParams.set(
+          `${key}[]`,
+          generateQueryStringFromArray<string>(key, value)
+        );
       }
-      if (typeof value == 'boolean' || isNumber(value)) {
+      if (typeof value === 'boolean' || isNumber(value)) {
         return url.searchParams.set(key, String(value));
-      } else {
-        url.searchParams.set(key, value);
       }
+      url.searchParams.set(key, value);
     });
     return url.toString();
   } catch (e) {

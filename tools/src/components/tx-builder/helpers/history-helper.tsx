@@ -2,18 +2,24 @@ import type { FocusedField } from '@/hooks/use-focused-field';
 import { useValueHistory } from '@/hooks/use-value-history';
 import { getTypeString } from '@clarigen/core';
 
-interface HistoryHelperProps {
+type HistoryHelperProps = {
   contractId: string;
   functionName: string;
   field: FocusedField;
-}
+};
 
-function HistoryValueButton({ value, onApply }: { value: string; onApply: (v: string) => void }) {
+function HistoryValueButton({
+  value,
+  onApply,
+}: {
+  value: string;
+  onApply: (v: string) => void;
+}) {
   return (
     <button
-      type="button"
+      className="w-full truncate border border-border bg-muted/30 px-2 py-1.5 text-left font-mono text-xs transition-colors hover:bg-muted/50"
       onClick={() => onApply(value)}
-      className="w-full text-left px-2 py-1.5 font-mono text-xs bg-muted/30 hover:bg-muted/50 border border-border truncate transition-colors"
+      type="button"
     >
       {value}
     </button>
@@ -33,19 +39,27 @@ function HistorySection({
 
   return (
     <div className="space-y-2">
-      <p className="text-[10px] font-mono text-muted-foreground uppercase tracking-wider">
+      <p className="font-mono text-[10px] text-muted-foreground uppercase tracking-wider">
         {title}
       </p>
       <div className="space-y-1">
         {values.map((value, index) => (
-          <HistoryValueButton key={`${value}-${index}`} value={value} onApply={onApply} />
+          <HistoryValueButton
+            key={`${value}-${index}`}
+            onApply={onApply}
+            value={value}
+          />
         ))}
       </div>
     </div>
   );
 }
 
-export function HistoryHelper({ contractId, functionName, field }: HistoryHelperProps) {
+export function HistoryHelper({
+  contractId,
+  functionName,
+  field,
+}: HistoryHelperProps) {
   const clarityType = getTypeString(field.type);
   const { contextHistory, typeHistory } = useValueHistory({
     contractId,
@@ -60,13 +74,14 @@ export function HistoryHelper({ contractId, functionName, field }: HistoryHelper
 
   // Deduplicate type history - remove values already in context history
   const contextSet = new Set(contextHistory);
-  const filteredTypeHistory = typeHistory.filter(v => !contextSet.has(v));
+  const filteredTypeHistory = typeHistory.filter((v) => !contextSet.has(v));
 
-  const hasHistory = contextHistory.length > 0 || filteredTypeHistory.length > 0;
+  const hasHistory =
+    contextHistory.length > 0 || filteredTypeHistory.length > 0;
 
   if (!hasHistory) {
     return (
-      <p className="text-xs text-muted-foreground italic">
+      <p className="text-muted-foreground text-xs italic">
         No recent values. Values are saved when you submit the form.
       </p>
     );
@@ -74,11 +89,15 @@ export function HistoryHelper({ contractId, functionName, field }: HistoryHelper
 
   return (
     <div className="space-y-4">
-      <HistorySection title="this field" values={contextHistory} onApply={handleApply} />
       <HistorySection
+        onApply={handleApply}
+        title="this field"
+        values={contextHistory}
+      />
+      <HistorySection
+        onApply={handleApply}
         title={`other ${clarityType}`}
         values={filteredTypeHistory}
-        onApply={handleApply}
       />
     </div>
   );

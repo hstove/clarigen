@@ -1,23 +1,37 @@
 import type { ClarityAbiType } from '@clarigen/core';
-import { useStore } from '@tanstack/react-form';
-import { fieldContext, useFieldContext, useFormContext } from '@/hooks/form-context';
+import { type AnyFieldApi, useStore } from '@tanstack/react-form';
+import {
+  fieldContext,
+  useFieldContext,
+  useFormContext,
+} from '@/hooks/form-context';
 import { Button } from '@/components/ui/button';
-import { FieldGroup, FieldLabel, FieldDescription } from '@/components/ui/field';
+import {
+  FieldGroup,
+  FieldLabel,
+  FieldDescription,
+} from '@/components/ui/field';
 import { ClarityField } from '../clarity-field';
 import { getClarityValidators } from '@/lib/clarity-validators';
 
-interface ListFieldProps {
+type ListFieldProps = {
   name: string;
   label?: string;
   itemType: ClarityAbiType;
   maxLength: number;
   disabled?: boolean;
-}
+};
 
-export function ListField({ name, label, itemType, maxLength, disabled }: ListFieldProps) {
+export function ListField({
+  name,
+  label,
+  itemType,
+  maxLength,
+  disabled,
+}: ListFieldProps) {
   const form = useFormContext();
   const field = useFieldContext<unknown[]>();
-  const items = useStore(field.store, state => state.value ?? []);
+  const items = useStore(field.store, (state) => state.value ?? []);
 
   const addItem = () => {
     if (items.length < maxLength) {
@@ -30,16 +44,16 @@ export function ListField({ name, label, itemType, maxLength, disabled }: ListFi
   };
 
   return (
-    <FieldGroup className="border border-border p-4 bg-muted/10">
+    <FieldGroup className="border border-border bg-muted/10 p-4">
       <div className="flex items-center justify-between">
         <FieldLabel className="font-mono text-xs">{label ?? name}</FieldLabel>
         {!disabled && (
           <Button
+            disabled={items.length >= maxLength}
+            onClick={addItem}
+            size="xs"
             type="button"
             variant="outline"
-            size="xs"
-            onClick={addItem}
-            disabled={items.length >= maxLength}
           >
             + add
           </Button>
@@ -50,19 +64,21 @@ export function ListField({ name, label, itemType, maxLength, disabled }: ListFi
       </FieldDescription>
 
       {items.map((_, index) => (
-        <div key={index} className="flex gap-2 items-start">
+        <div className="flex items-start gap-2" key={index}>
           <div className="flex-1">
             <form.Field
               name={`${field.name}[${index}]` as never}
               validators={getClarityValidators(itemType)}
             >
-              {itemField => (
-                <fieldContext.Provider value={itemField}>
+              {(itemField) => (
+                <fieldContext.Provider
+                  value={itemField as unknown as AnyFieldApi}
+                >
                   <ClarityField
+                    disabled={disabled}
+                    label={`[${index}]`}
                     name={`${name}[${index}]`}
                     type={itemType}
-                    label={`[${index}]`}
-                    disabled={disabled}
                   />
                 </fieldContext.Provider>
               )}
@@ -70,11 +86,11 @@ export function ListField({ name, label, itemType, maxLength, disabled }: ListFi
           </div>
           {!disabled && (
             <Button
+              className="mt-6"
+              onClick={() => removeItem(index)}
+              size="xs"
               type="button"
               variant="ghost"
-              size="xs"
-              onClick={() => removeItem(index)}
-              className="mt-6"
             >
               ×
             </Button>

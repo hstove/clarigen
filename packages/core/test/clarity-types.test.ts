@@ -1,5 +1,5 @@
 import { getTypeString, cvToString } from '../src/clarity-types';
-import { ClarityAbiType } from '../src/abi-types';
+import type { ClarityAbiType } from '../src/abi-types';
 import { responseOkCV, tupleCV, uintCV, listCV } from '@stacks/transactions';
 import { expect, it, describe } from 'vitest';
 

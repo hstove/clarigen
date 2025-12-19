@@ -1,23 +1,33 @@
 import type { ClarityAbiType } from '@clarigen/core';
-import { useStore } from '@tanstack/react-form';
-import { fieldContext, useFieldContext, useFormContext } from '@/hooks/form-context';
+import { type AnyFieldApi, useStore } from '@tanstack/react-form';
+import {
+  fieldContext,
+  useFieldContext,
+  useFormContext,
+} from '@/hooks/form-context';
 import { FieldGroup, FieldLabel, Field } from '@/components/ui/field';
 import { ClarityField } from '../clarity-field';
 import { getClarityValidators } from '@/lib/clarity-validators';
 import { cn } from '@/lib/utils';
 
-interface ResponseFieldProps {
+type ResponseFieldProps = {
   name: string;
   label?: string;
   okType: ClarityAbiType;
   errType: ClarityAbiType;
   disabled?: boolean;
-}
+};
 
-export function ResponseField({ name, label, okType, errType, disabled }: ResponseFieldProps) {
+export function ResponseField({
+  name,
+  label,
+  okType,
+  errType,
+  disabled,
+}: ResponseFieldProps) {
   const form = useFormContext();
   const field = useFieldContext<{ isOk: boolean; ok: unknown; err: unknown }>();
-  const isOk = useStore(field.store, state => state.value?.isOk ?? true);
+  const isOk = useStore(field.store, (state) => state.value?.isOk ?? true);
 
   return (
     <FieldGroup>
@@ -25,38 +35,40 @@ export function ResponseField({ name, label, okType, errType, disabled }: Respon
         <FieldLabel className="font-mono text-xs">{label ?? name}</FieldLabel>
         <div className="flex border border-border font-mono text-xs">
           <button
-            type="button"
             className={cn(
               'px-2 py-0.5 transition-colors',
-              isOk ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:bg-muted/50',
-              disabled && 'opacity-50 cursor-not-allowed'
+              isOk
+                ? 'bg-primary/20 text-primary'
+                : 'text-muted-foreground hover:bg-muted/50',
+              disabled && 'cursor-not-allowed opacity-50'
             )}
+            disabled={disabled}
             onClick={() =>
               field.handleChange({
                 ...field.state.value,
                 isOk: true,
               } as any)
             }
-            disabled={disabled}
+            type="button"
           >
             ok
           </button>
           <button
-            type="button"
             className={cn(
-              'px-2 py-0.5 border-l border-border transition-colors',
-              !isOk
-                ? 'bg-destructive/20 text-destructive'
-                : 'text-muted-foreground hover:bg-muted/50',
-              disabled && 'opacity-50 cursor-not-allowed'
+              'border-border border-l px-2 py-0.5 transition-colors',
+              isOk
+                ? 'text-muted-foreground hover:bg-muted/50'
+                : 'bg-destructive/20 text-destructive',
+              disabled && 'cursor-not-allowed opacity-50'
             )}
+            disabled={disabled}
             onClick={() =>
               field.handleChange({
                 ...field.state.value,
                 isOk: false,
               } as any)
             }
-            disabled={disabled}
+            type="button"
           >
             err
           </button>
@@ -64,18 +76,32 @@ export function ResponseField({ name, label, okType, errType, disabled }: Respon
       </Field>
 
       {isOk ? (
-        <form.Field name={`${field.name}.ok` as never} validators={getClarityValidators(okType)}>
-          {okField => (
-            <fieldContext.Provider value={okField}>
-              <ClarityField name={`${name}.ok`} type={okType} disabled={disabled} />
+        <form.Field
+          name={`${field.name}.ok` as never}
+          validators={getClarityValidators(okType)}
+        >
+          {(okField) => (
+            <fieldContext.Provider value={okField as unknown as AnyFieldApi}>
+              <ClarityField
+                disabled={disabled}
+                name={`${name}.ok`}
+                type={okType}
+              />
             </fieldContext.Provider>
           )}
         </form.Field>
       ) : (
-        <form.Field name={`${field.name}.err` as never} validators={getClarityValidators(errType)}>
-          {errField => (
-            <fieldContext.Provider value={errField}>
-              <ClarityField name={`${name}.err`} type={errType} disabled={disabled} />
+        <form.Field
+          name={`${field.name}.err` as never}
+          validators={getClarityValidators(errType)}
+        >
+          {(errField) => (
+            <fieldContext.Provider value={errField as unknown as AnyFieldApi}>
+              <ClarityField
+                disabled={disabled}
+                name={`${name}.err`}
+                type={errType}
+              />
             </fieldContext.Provider>
           )}
         </form.Field>

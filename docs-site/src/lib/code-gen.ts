@@ -1,20 +1,22 @@
 'use server';
 import { fetchContractSrcAbi } from '@/lib/stacks-api';
 import {
-  SessionContract,
+  type SessionContract,
   TYPE_IMPORTS,
   generateContractMeta,
   generateMarkdown,
 } from '@clarigen/cli';
 import { createContractDocInfo } from '@clarigen/docs';
-import { ClarityAbi, toCamelCase } from '@clarigen/core';
+import { type ClarityAbi, toCamelCase } from '@clarigen/core';
 import escape from 'escape-html';
 import { compileMdx } from './mdx-utils';
 import { format } from 'prettier';
-// @ts-ignore
+// @ts-expect-error
 import { cache } from 'react';
 
-export async function fetchContractMeta(contractId: string): Promise<SessionContract> {
+export async function fetchContractMeta(
+  contractId: string
+): Promise<SessionContract> {
   const contractInfo = await fetchContractSrcAbi(contractId);
   const contract = {
     contract_id: contractId,
@@ -75,12 +77,16 @@ export async function generateTypeUsagePage(contract: SessionContract) {
   return typeUsage;
 }
 
-export type GeneratedContractFiles = Awaited<ReturnType<typeof generateContractFiles>>;
+export type GeneratedContractFiles = Awaited<
+  ReturnType<typeof generateContractFiles>
+>;
 
 // export async function generateContractFiles(contractId: string) {
 export const generateContractFiles = cache(async (contractId: string) => {
   const contract = await fetchContractMeta(contractId);
-  const markdownWithToc = await format(generateMarkdown({ contract }), { parser: 'markdown' });
+  const markdownWithToc = await format(generateMarkdown({ contract }), {
+    parser: 'markdown',
+  });
   const [docs, types, usage] = await Promise.all([
     generateContractMarkdown(contract),
     generateContractTypes(contract),

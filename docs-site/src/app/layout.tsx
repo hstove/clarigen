@@ -6,10 +6,9 @@ import { cn } from '@/lib/utils';
 import { Providers } from '@/components/providers';
 import { Header } from '@/components/header';
 import { ThemeProvider } from '@/components/theme-provider';
-import { fontMono, fontSans } from '@/lib/fonts';
-import NextTopLoader from 'nextjs-toploader';
+import { fontSans } from '@/lib/fonts';
 
-const inter = Inter({ subsets: ['latin'] });
+const _inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Clarigen Documentation',
@@ -29,14 +28,22 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       {/* <NextTopLoader /> */}
-      <body className={cn('bg-background min-h-screen font-sans antialiased', fontSans.className)}>
-        <ThemeProvider defaultTheme="dark" attribute="class" enableSystem disableTransitionOnChange>
+      <body
+        className={cn(
+          'min-h-screen bg-background font-sans antialiased',
+          fontSans.className
+        )}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          disableTransitionOnChange
+          enableSystem
+        >
           {/* <div className="container"> */}
           <div className="flex flex-col pb-10">
             <Header />
-            <Providers>
-              <>{children}</>
-            </Providers>
+            <Providers>{children}</Providers>
           </div>
           {/* </div> */}
         </ThemeProvider>

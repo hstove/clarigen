@@ -11,89 +11,95 @@ function App() {
   const hasHistory = visitedFunctions.length > 0;
 
   return (
-    <div className="mx-auto max-w-4xl px-6 py-10 space-y-8">
+    <div className="mx-auto max-w-4xl space-y-8 px-6 py-10">
       <div className="flex items-end justify-between gap-4">
         <div className="space-y-1">
-          <h1 className="font-mono text-lg font-medium tracking-tight">Recently Viewed</h1>
-          <p className="text-xs text-muted-foreground">
-            {visitedContracts.length} contracts · {visitedFunctions.length} visits
+          <h1 className="font-medium font-mono text-lg tracking-tight">
+            Recently Viewed
+          </h1>
+          <p className="text-muted-foreground text-xs">
+            {visitedContracts.length} contracts · {visitedFunctions.length}{' '}
+            visits
           </p>
         </div>
-        <Button variant="outline" size="xs" onClick={clear} disabled={!hasHistory}>
+        <Button
+          disabled={!hasHistory}
+          onClick={clear}
+          size="xs"
+          variant="outline"
+        >
           clear history
         </Button>
       </div>
 
-      {!hasHistory ? (
-        <div className="border border-border bg-card">
-          <div className="border-b border-border px-4 py-3 bg-muted/30">
-            <h2 className="font-mono text-sm font-medium">No history yet</h2>
-          </div>
-          <div className="p-4 text-sm text-muted-foreground">
-            Visit a contract or function page to build your history.
-          </div>
-        </div>
-      ) : (
+      {hasHistory ? (
         <div className="grid gap-4">
-          {groups.map(group => (
+          {groups.map((group) => (
             <div
-              key={`${group.network}:${group.contractId}`}
               className="border border-border bg-card"
+              key={`${group.network}:${group.contractId}`}
             >
-              <div className="border-b border-border px-4 py-3 bg-muted/30">
+              <div className="border-border border-b bg-muted/30 px-4 py-3">
                 <div className="flex items-center justify-between gap-4">
                   <div className="space-y-1">
                     <Link
+                      className="break-all font-medium font-mono text-primary text-sm hover:underline"
+                      params={{
+                        network: group.network,
+                        contractAddress: group.contractId,
+                      }}
                       to="/tx/$network/$contractAddress"
-                      params={{ network: group.network, contractAddress: group.contractId }}
-                      className="font-mono text-sm font-medium text-primary hover:underline break-all"
                     >
                       {group.contractId}
                     </Link>
-                    <div className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground">
+                    <div className="font-mono text-[10px] text-muted-foreground uppercase tracking-wider">
                       {group.network}
                     </div>
                   </div>
-                  <div className="text-[10px] font-mono text-muted-foreground">
-                    {group.entries.length} {group.entries.length === 1 ? 'entry' : 'entries'}
+                  <div className="font-mono text-[10px] text-muted-foreground">
+                    {group.entries.length}{' '}
+                    {group.entries.length === 1 ? 'entry' : 'entries'}
                   </div>
                 </div>
               </div>
-              <div className="p-4 space-y-2">
-                {group.entries.map(entry => (
+              <div className="space-y-2 p-4">
+                {group.entries.map((entry) => (
                   <div
+                    className="flex items-center justify-between gap-4 border border-border/60 bg-muted/10 px-3 py-2"
                     key={`${entry.contractId}:${entry.functionName ?? 'overview'}:${
                       entry.lastVisited
                     }`}
-                    className="flex items-center justify-between gap-4 border border-border/60 bg-muted/10 px-3 py-2"
                   >
                     <div className="flex items-center gap-2 text-xs">
-                      <span className="text-[10px] font-mono uppercase text-muted-foreground">
+                      <span className="font-mono text-[10px] text-muted-foreground uppercase">
                         {entry.functionName ? 'function' : 'overview'}
                       </span>
                       {entry.functionName ? (
                         <Link
-                          to="/tx/$network/$contractAddress/$functionName"
+                          className="font-mono text-primary text-sm hover:underline"
                           params={{
                             network: entry.network,
                             contractAddress: entry.contractId,
                             functionName: entry.functionName,
                           }}
-                          className="font-mono text-sm text-primary hover:underline"
+                          to="/tx/$network/$contractAddress/$functionName"
                         >
                           {entry.functionName}
                         </Link>
                       ) : (
                         <Link
+                          className="font-mono text-primary text-sm hover:underline"
+                          params={{
+                            network: entry.network,
+                            contractAddress: entry.contractId,
+                          }}
                           to="/tx/$network/$contractAddress"
-                          params={{ network: entry.network, contractAddress: entry.contractId }}
-                          className="font-mono text-sm text-primary hover:underline"
                         >
                           contract overview
                         </Link>
                       )}
                     </div>
-                    <span className="text-[10px] font-mono text-muted-foreground">
+                    <span className="font-mono text-[10px] text-muted-foreground">
                       {formatRelativeTime(entry.lastVisited)}
                     </span>
                   </div>
@@ -101,6 +107,15 @@ function App() {
               </div>
             </div>
           ))}
+        </div>
+      ) : (
+        <div className="border border-border bg-card">
+          <div className="border-border border-b bg-muted/30 px-4 py-3">
+            <h2 className="font-medium font-mono text-sm">No history yet</h2>
+          </div>
+          <div className="p-4 text-muted-foreground text-sm">
+            Visit a contract or function page to build your history.
+          </div>
         </div>
       )}
     </div>
@@ -118,7 +133,9 @@ type GroupedVisited = {
   }[];
 };
 
-function groupVisitedByContract(entries: GroupedVisited['entries']): GroupedVisited[] {
+function groupVisitedByContract(
+  entries: GroupedVisited['entries']
+): GroupedVisited[] {
   const groups: GroupedVisited[] = [];
   const map = new Map<string, GroupedVisited>();
 
@@ -126,7 +143,11 @@ function groupVisitedByContract(entries: GroupedVisited['entries']): GroupedVisi
     const key = `${entry.network}:${entry.contractId}`;
     let group = map.get(key);
     if (!group) {
-      group = { contractId: entry.contractId, network: entry.network, entries: [] };
+      group = {
+        contractId: entry.contractId,
+        network: entry.network,
+        entries: [],
+      };
       map.set(key, group);
       groups.push(group);
     }
@@ -138,7 +159,7 @@ function groupVisitedByContract(entries: GroupedVisited['entries']): GroupedVisi
 
 function formatRelativeTime(timestamp: number): string {
   const deltaMs = Date.now() - timestamp;
-  const minutes = Math.round(deltaMs / 60000);
+  const minutes = Math.round(deltaMs / 60_000);
 
   if (minutes < 1) return 'just now';
   if (minutes < 60) return `${minutes}m ago`;

@@ -1,36 +1,42 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { ClarityAbiFunction, ClarityValue } from '@stacks/transactions';
-import { ClarityAbi, parseToCV, transformArgsToCV } from '../clarity-types';
-import { Response, ClarityAbiMap } from '../abi-types';
+import type { ClarityValue } from '@stacks/transactions';
+import {
+  type ClarityAbi,
+  parseToCV,
+  transformArgsToCV,
+} from '../clarity-types';
+import type { Response, ClarityAbiMap } from '../abi-types';
 import { toCamelCase } from '../utils';
 import type { ContractCall } from '../factory-types';
 
-export interface PureContractInfo {
+export type PureContractInfo = {
   abi: ClarityAbi;
   contractAddress: string;
   contractName: string;
-}
+};
 
 export type ContractFn<T> = (args: any) => T;
 
 export type ContractReturn<
-  C extends ContractFn<ContractCalls.ReadOnly<any>>
+  C extends ContractFn<ContractCalls.ReadOnly<any>>,
   // C
 > = C extends ContractFn<ContractCalls.ReadOnly<infer T>> ? T : unknown;
 
-export type ContractReturnOk<C extends ContractFn<ContractCalls.ReadOnly<any>>> =
-  ContractReturn<C> extends Response<infer O, any> ? O : unknown;
+export type ContractReturnOk<
+  C extends ContractFn<ContractCalls.ReadOnly<any>>,
+> = ContractReturn<C> extends Response<infer O, any> ? O : unknown;
 
-export type ContractReturnErr<C extends ContractFn<ContractCalls.ReadOnly<any>>> =
-  ContractReturn<C> extends Response<any, infer E> ? E : unknown;
+export type ContractReturnErr<
+  C extends ContractFn<ContractCalls.ReadOnly<any>>,
+> = ContractReturn<C> extends Response<any, infer E> ? E : unknown;
 
-export interface MapGet<Key, Val> {
+export type MapGet<Key, _Val> = {
   map: ClarityAbiMap;
   nativeKey: Key;
   key: ClarityValue;
   contractAddress: string;
   contractName: string;
-}
+};
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace ContractCalls {
@@ -44,12 +50,14 @@ function getter<T>(
   contract: PureContractInfo,
   property: string | symbol
 ): (...args: any) => ContractCall<T> | MapGet<any, T> {
-  const foundFunction = contract.abi.functions.find(func => toCamelCase(func.name) === property);
+  const foundFunction = contract.abi.functions.find(
+    (func) => toCamelCase(func.name) === property
+  );
   if (foundFunction) {
-    return function (...args: any[]) {
+    return (...args: any[]) => {
       const functionArgs = transformArgsToCV(foundFunction, args);
       return {
-        functionArgs: functionArgs,
+        functionArgs,
         contractAddress: contract.contractAddress,
         contractName: contract.contractName,
         function: foundFunction,
@@ -58,7 +66,9 @@ function getter<T>(
       };
     };
   }
-  const foundMap = contract.abi.maps.find(map => toCamelCase(map.name) === property);
+  const foundMap = contract.abi.maps.find(
+    (map) => toCamelCase(map.name) === property
+  );
   if (foundMap) {
     return (key: any) => {
       const keyCV = parseToCV(key, foundMap.key);
@@ -73,23 +83,27 @@ function getter<T>(
     };
   }
   // TODO: variables, tokens
-  throw new Error(`Invalid function call: no function exists for ${String(property)}`);
+  throw new Error(
+    `Invalid function call: no function exists for ${String(property)}`
+  );
 }
 
 export const proxyHandler: ProxyHandler<PureContractInfo> = {
   get: getter,
 };
 
-interface ProxyConstructor {
+type ProxyConstructor = {
   revocable<T extends object, S extends PureContractInfo>(
     target: T,
     handler: ProxyHandler<S>
   ): { proxy: T; revoke: () => void };
   new <T extends object>(target: T, handler: ProxyHandler<T>): T;
-  new <T extends object, S extends PureContractInfo>(target: S, handler: ProxyHandler<S>): T;
-}
+  new <T extends object, S extends PureContractInfo>(
+    target: S,
+    handler: ProxyHandler<S>
+  ): T;
+};
 declare const Proxy: ProxyConstructor;
 
-export const pureProxy = <T extends object>(target: PureContractInfo): T => {
-  return new Proxy<T, PureContractInfo>(target, proxyHandler);
-};
+export const pureProxy = <T extends object>(target: PureContractInfo): T =>
+  new Proxy<T, PureContractInfo>(target, proxyHandler);

@@ -1,6 +1,5 @@
 {
-  "baseBranch": "origin/main",
-  "pipeline": {
+  "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", "installer/**"]
@@ -10,17 +9,13 @@
       "outputs": []
     },
     "lint": {
-      "outputs": [],
-      "parallel": true
+      "outputs": []
     },
     "dev": {
       "cache": false
     },
     "typecheck": {
       "dependsOn": ["^build"],
-      "outputs": []
-    },
-    "publish:dev": {
       "outputs": []
     },
     "type-stubs": {

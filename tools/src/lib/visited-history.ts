@@ -56,11 +56,14 @@ export function addVisitedFunction(
   functionName: string | null,
   network: string
 ): void {
-  if (!contractId || !network) return;
+  if (!(contractId && network)) return;
 
   const visited = readVisited();
   const existingIndex = visited.findIndex(
-    v => v.contractId === contractId && v.functionName === functionName && v.network === network
+    (v) =>
+      v.contractId === contractId &&
+      v.functionName === functionName &&
+      v.network === network
   );
 
   if (existingIndex !== -1) {

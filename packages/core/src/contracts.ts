@@ -1,9 +1,8 @@
-import { Contracts, ContractInstances } from './types';
-import { getContractIdentifier } from './utils';
+import type { Contracts, ContractInstances } from './types';
 
-interface MakeContractsOptions {
+type MakeContractsOptions = {
   deployerAddress?: string;
-}
+};
 
 export function makeContracts<T extends Contracts<any>>(
   contracts: T,

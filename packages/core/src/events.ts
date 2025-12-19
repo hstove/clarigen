@@ -14,12 +14,12 @@ export enum CoreNodeEventType {
 
 export type NonStandardClarityValue = unknown;
 
-export interface CoreNodeEventBase {
+export type CoreNodeEventBase = {
   /** 0x-prefix transaction hash. */
   txid: string;
   event_index: number;
   committed: boolean;
-}
+};
 
 export interface SmartContractEvent extends CoreNodeEventBase {
   type: CoreNodeEventType.ContractEvent;
@@ -197,6 +197,9 @@ export function filterEvents(
   events: CoreNodeEvent[],
   type: CoreNodeEventType.FtBurnEvent
 ): FtBurnEvent[];
-export function filterEvents(events: CoreNodeEvent[], type: CoreNodeEventType): CoreNodeEvent[] {
-  return events.filter(event => event.type === type);
+export function filterEvents(
+  events: CoreNodeEvent[],
+  type: CoreNodeEventType
+): CoreNodeEvent[] {
+  return events.filter((event) => event.type === type);
 }

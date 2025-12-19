@@ -1,10 +1,13 @@
 'use client';
 // import { ClarityAbi } from '@clarigen/core';
-import { textStyles, textVariants } from '@/lib/text-variants';
-import { cn } from '@/lib/utils';
-import { ClaridocContract, ClaridocItem } from '@clarigen/docs';
+import { textStyles } from '@/lib/text-variants';
+import type { ClaridocContract, ClaridocItem } from '@clarigen/docs';
 import { Text } from './text';
-import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible';
+import {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from '@/components/ui/collapsible';
 import React from 'react';
 import { Button } from './ui/button';
 import { CaretDownIcon, CaretUpIcon } from '@radix-ui/react-icons';
@@ -14,11 +17,12 @@ function ContractTocItem({ item }: { item: ClaridocItem }) {
   return (
     <div className="">
       <a
-        href={`#${name.toLowerCase().replaceAll('?', '')}`}
         className={textStyles({
           variant: 'small',
-          className: 'text-muted-foreground underline underline-offset-4 text-xs',
+          className:
+            'text-muted-foreground text-xs underline underline-offset-4',
         })}
+        href={`#${name.toLowerCase().replaceAll('?', '')}`}
       >
         {name}
       </a>
@@ -26,23 +30,33 @@ function ContractTocItem({ item }: { item: ClaridocItem }) {
   );
 }
 
-function ContractTocItems({ items, heading }: { items: ClaridocItem[]; heading: string }) {
+function ContractTocItems({
+  items,
+  heading,
+}: {
+  items: ClaridocItem[];
+  heading: string;
+}) {
   const [isOpen, setIsOpen] = React.useState(true);
   return (
-    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+    <Collapsible onOpenChange={setIsOpen} open={isOpen}>
       <div className="mt-2 flex items-center justify-between">
         <Text variant="h4">{heading}</Text>
         <CollapsibleTrigger asChild>
-          <Button variant="ghost" size="sm">
-            {isOpen ? <CaretDownIcon className="size-4" /> : <CaretUpIcon className="size-4" />}
+          <Button size="sm" variant="ghost">
+            {isOpen ? (
+              <CaretDownIcon className="size-4" />
+            ) : (
+              <CaretUpIcon className="size-4" />
+            )}
             <span className="sr-only">Toggle</span>
           </Button>
         </CollapsibleTrigger>
       </div>
       <CollapsibleContent>
         <div className="flex flex-col gap-1">
-          {items.map(item => (
-            <ContractTocItem key={item.abi.name} item={item} />
+          {items.map((item) => (
+            <ContractTocItem item={item} key={item.abi.name} />
           ))}
         </div>
       </CollapsibleContent>
@@ -51,12 +65,18 @@ function ContractTocItems({ items, heading }: { items: ClaridocItem[]; heading: 
 }
 
 export function ContractToc({ contract }: { contract: ClaridocContract }) {
-  const publics = contract.functions.filter(fn => fn.abi.access === 'public');
-  const readOnly = contract.functions.filter(fn => fn.abi.access === 'read_only');
-  const privates = contract.functions.filter(fn => fn.abi.access === 'private');
+  const publics = contract.functions.filter((fn) => fn.abi.access === 'public');
+  const readOnly = contract.functions.filter(
+    (fn) => fn.abi.access === 'read_only'
+  );
+  const privates = contract.functions.filter(
+    (fn) => fn.abi.access === 'private'
+  );
   const maps = contract.maps;
-  const constants = contract.variables.filter(v => v.abi.access === 'constant');
-  const vars = contract.variables.filter(v => v.abi.access === 'variable');
+  const constants = contract.variables.filter(
+    (v) => v.abi.access === 'constant'
+  );
+  const vars = contract.variables.filter((v) => v.abi.access === 'variable');
 
   return (
     <div className="flex w-full flex-col md:max-w-md">

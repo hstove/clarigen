@@ -83,10 +83,10 @@ export function addTypeHistory(clarityType: string, value: string): void {
   addToHistory(key, value, MAX_TYPE_ITEMS);
 }
 
-export interface CombinedHistory {
+export type CombinedHistory = {
   contextHistory: string[];
   typeHistory: string[];
-}
+};
 
 export function getCombinedHistory(
   contractId: string,
@@ -99,13 +99,17 @@ export function getCombinedHistory(
   return { contextHistory, typeHistory };
 }
 
-export interface ArgToSave {
+export type ArgToSave = {
   name: string;
   type: string;
   value: string;
-}
+};
 
-export function saveFormHistory(contractId: string, functionName: string, args: ArgToSave[]): void {
+export function saveFormHistory(
+  contractId: string,
+  functionName: string,
+  args: ArgToSave[]
+): void {
   for (const arg of args) {
     if (!arg.value || arg.value.trim() === '') continue;
     addContextHistory(contractId, functionName, arg.name, arg.value);

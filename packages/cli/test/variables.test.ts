@@ -1,7 +1,7 @@
-import { join } from 'path';
+import { join } from 'node:path';
 import { Config } from '../src/config';
 import { getSession } from '../src/clarinet-sdk';
-import { SessionWithVariables } from '../src/session';
+import type { SessionWithVariables } from '../src/session';
 import { test, expect, describe, beforeAll } from 'vitest';
 
 describe('variables', () => {
@@ -16,7 +16,9 @@ describe('variables', () => {
     if (process.env.CI) {
       return;
     }
-    const counterIndex = session.contracts.findIndex(c => c.contract_id.endsWith('counter'));
+    const counterIndex = session.contracts.findIndex((c) =>
+      c.contract_id.endsWith('counter')
+    );
     const vars = session.variables[counterIndex];
     expect(vars).toEqual(`{
   counter: 1n

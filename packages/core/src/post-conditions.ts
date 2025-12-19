@@ -1,15 +1,14 @@
-// import { AssetInfo } from '@stacks/transactions';
-import { IntegerType } from '@stacks/common';
-import {
-  FungibleConditionCode,
-  NonFungibleConditionCode,
-  PostCondition,
+import type {
   NonFungiblePostCondition,
-  Pc,
   FungiblePostCondition,
 } from '@stacks/transactions';
 import type { ClarityAbiType, TypedAbi } from './abi-types';
-import { AbiTypeTo, CVInput, parseToCV, ReadonlyTuple } from './clarity-types';
+import {
+  type AbiTypeTo,
+  type CVInput,
+  parseToCV,
+  type ReadonlyTuple,
+} from './clarity-types';
 import type { FullContract } from './factory-types';
 
 type AbiWithAssets = Pick<
@@ -42,13 +41,14 @@ export function createAssetInfo<T extends AbiWithAssets>(
   throw new Error(`Invalid asset: "${asset}" is not an asset in contract.`);
 }
 
-export type NftAssetType<T extends AbiWithAssets> = T['non_fungible_tokens'][0] extends {
-  type: infer Type;
-}
-  ? Type extends ClarityAbiType | ReadonlyTuple
-    ? AbiTypeTo<Type>
-    : never
-  : never;
+export type NftAssetType<T extends AbiWithAssets> =
+  T['non_fungible_tokens'][0] extends {
+    type: infer Type;
+  }
+    ? Type extends ClarityAbiType | ReadonlyTuple
+      ? AbiTypeTo<Type>
+      : never
+    : never;
 
 export function makeNonFungiblePostCondition<T extends AbiWithAssets>(
   contract: T,
@@ -75,7 +75,7 @@ export function makeFungiblePostCondition<T extends AbiWithAssets>(
   condition: 'eq' | 'gt' | 'gte' | 'lt' | 'lte',
   amount: number | bigint | string
 ): FungiblePostCondition {
-  const [addr, name] = sender.split('.');
+  const [_addr, _name] = sender.split('.');
   const [ftType] = contract.fungible_tokens;
   const asset = createAssetInfo(contract, ftType.name);
   return {

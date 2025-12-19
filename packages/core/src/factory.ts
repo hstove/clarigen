@@ -1,18 +1,16 @@
-import { ClarityAbiFunction, ClarityValue } from '@stacks/transactions';
-import { TypedAbi, TypedAbiFunction, TypedAbiMap } from '../src/abi-types';
+import type { ClarityValue } from '@stacks/transactions';
+import type { TypedAbi, TypedAbiMap } from '../src/abi-types';
 import {
-  Batch,
-  DeploymentPlan,
-  flatBatch,
+  type Batch,
+  type DeploymentPlan,
   getContractTxs,
-  getDeploymentContract,
   getDeploymentTxPath,
   getIdentifierForDeploymentTx,
-  DeploymentTransaction,
+  type DeploymentTransaction,
 } from './deployment';
-import { CVInput, parseToCV, transformArgsToCV } from './clarity-types';
+import { type CVInput, parseToCV, transformArgsToCV } from './clarity-types';
 import { toCamelCase } from './utils';
-import {
+import type {
   AllContracts,
   ContractFactory,
   ContractFunctions,
@@ -21,7 +19,12 @@ import {
   FullContract,
 } from './factory-types';
 
-export const DEPLOYMENT_NETWORKS = ['devnet', 'simnet', 'testnet', 'mainnet'] as const;
+export const DEPLOYMENT_NETWORKS = [
+  'devnet',
+  'simnet',
+  'testnet',
+  'mainnet',
+] as const;
 export type DeploymentNetwork = (typeof DEPLOYMENT_NETWORKS)[number];
 
 export type DeploymentsForContracts<C extends AllContracts> = {
@@ -32,12 +35,18 @@ export type ContractDeployments = {
   [key in DeploymentNetwork]: string | null;
 };
 
-export type Project<C extends AllContracts, D extends DeploymentsForContracts<C>> = {
+export type Project<
+  C extends AllContracts,
+  D extends DeploymentsForContracts<C>,
+> = {
   contracts: C;
   deployments: D;
 };
 
-export type FullContractWithIdentifier<C extends TypedAbi, Id extends string> = FullContract<C> & {
+export type FullContractWithIdentifier<
+  C extends TypedAbi,
+  Id extends string,
+> = FullContract<C> & {
   identifier: Id;
 };
 
@@ -47,10 +56,15 @@ type IsDeploymentNetwork<T> = T extends DeploymentNetwork
     : false
   : never;
 
-export type ProjectFactory<P extends Project<any, any>, N extends DeploymentNetwork> = {
+export type ProjectFactory<
+  P extends Project<any, any>,
+  N extends DeploymentNetwork,
+> = {
   [ContractName in keyof P['contracts']]: FullContractWithIdentifier<
     P['contracts'][ContractName],
-    IsDeploymentNetwork<N> extends true ? '' : NonNullable<P['deployments'][ContractName][N]>
+    IsDeploymentNetwork<N> extends true
+      ? ''
+      : NonNullable<P['deployments'][ContractName][N]>
   >;
   // [ContractName in keyof P['contracts']]: P['deployments'][ContractName][N] extends string
   //   ? FullContractWithIdentifier<P['contracts'][ContractName], P['deployments'][ContractName][N]>
@@ -61,7 +75,7 @@ export function projectFactory<
   P extends Project<C, D>,
   N extends DeploymentNetwork,
   C extends AllContracts,
-  D extends DeploymentsForContracts<C>
+  D extends DeploymentsForContracts<C>,
 >(project: P, network: N): ProjectFactory<P, N> {
   const e: [keyof C, FullContract<TypedAbi>][] = [];
   Object.entries(project.contracts).forEach(([contractName, contract]) => {
@@ -97,7 +111,7 @@ export function functionsFactory<T extends ContractFunctions>(
           const functionArgs = transformArgsToCV(foundFunction, args);
           const [contractAddress, contractName] = identifier.split('.');
           return {
-            functionArgs: functionArgs,
+            functionArgs,
             contractAddress,
             contractName,
             function: foundFunction,
@@ -128,7 +142,7 @@ export function contractFactory<T extends TypedAbi, Id extends string>(
   return {
     ...functionsFactory(abi.functions, identifier),
     ...full,
-    identifier: identifier,
+    identifier,
   };
 }
 
@@ -137,27 +151,31 @@ export function deploymentFactory<T extends AllContracts>(
   deployer: DeploymentPlan
 ): ContractFactory<T> {
   const result = {} as Partial<ContractFactory<T>>;
-  const txs = getContractTxs(deployer.plan.batches as Batch<DeploymentTransaction>[]);
-  txs.forEach(tx => {
+  const txs = getContractTxs(
+    deployer.plan.batches as Batch<DeploymentTransaction>[]
+  );
+  txs.forEach((tx) => {
     const id = getIdentifierForDeploymentTx(tx);
     const [contractAddress, contractFileName] = id.split('.');
     const contractName = toCamelCase(contractFileName) as keyof T;
     const def = contracts[contractName] as TypedAbi;
     const final = contracts[contractName] as FullContract<T[keyof T]>;
     if (typeof final === 'undefined') {
-      throw new Error(`Clarigen error: mismatch for contract '${contractName as string}'`);
+      throw new Error(
+        `Clarigen error: mismatch for contract '${contractName as string}'`
+      );
     }
     result[contractName] = final;
     final.contractFile = getDeploymentTxPath(tx);
     final.identifier = id;
-    Object.keys(contracts[contractName].functions).forEach(_fnName => {
+    Object.keys(contracts[contractName].functions).forEach((_fnName) => {
       const fnName: keyof (typeof def)['functions'] = _fnName;
       const fn = ((...args: any[]) => {
         const foundFunction = def.functions[fnName];
         const functionArgs = transformArgsToCV(foundFunction, args);
         return {
-          functionArgs: functionArgs,
-          contractAddress: contractAddress,
+          functionArgs,
+          contractAddress,
           contractName: final.contractName,
           function: foundFunction,
           nativeArgs: args,
