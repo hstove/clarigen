@@ -24,6 +24,22 @@ describe('cvToString', () => {
     });
     expect(cvToString(cv)).toEqual('{ a: (list u1), b: { c: u2 } }');
   });
+
+  it('pretty-indents tuples', () => {
+    const cv = tupleCV({
+      a: uintCV(1),
+      b: tupleCV({
+        c: uintCV(2),
+      }),
+    });
+    const expected = `{
+  a: u1,
+  b: {
+    c: u2
+  }
+}`;
+    expect(cvToString(cv, { indent: 2 })).toEqual(expected);
+  });
 });
 
 describe('getTypeString', () => {

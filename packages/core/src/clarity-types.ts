@@ -249,7 +249,36 @@ export function parseToCV(input: CVInput, type: ClarityAbiType): ClarityValue {
   return _parseToCV(input as string, type as MSClarityAbiType);
 }
 
-export function cvToString(val: ClarityValue, encoding: 'tryAscii' | 'hex' = 'hex'): string {
+export interface CvToStringOptions {
+  encoding?: 'tryAscii' | 'hex';
+  indent?: number;
+}
+
+export function cvToString(val: ClarityValue, encoding?: 'tryAscii' | 'hex'): string;
+export function cvToString(val: ClarityValue, options: CvToStringOptions): string;
+export function cvToString(
+  val: ClarityValue,
+  optionsOrEncoding: 'tryAscii' | 'hex' | CvToStringOptions = 'hex'
+): string {
+  return _cvToString(val, optionsOrEncoding, 0);
+}
+
+function _cvToString(
+  val: ClarityValue,
+  optionsOrEncoding: 'tryAscii' | 'hex' | CvToStringOptions,
+  depth: number
+): string {
+  let encoding: 'tryAscii' | 'hex' = 'hex';
+  let indent: number | undefined;
+  if (typeof optionsOrEncoding === 'string') {
+    encoding = optionsOrEncoding;
+  } else if (typeof optionsOrEncoding === 'object') {
+    encoding = optionsOrEncoding.encoding ?? 'hex';
+    indent = optionsOrEncoding.indent;
+  }
+
+  const nextOptions: CvToStringOptions = { encoding, indent };
+
   switch (val.type) {
     case ClarityType.BoolTrue:
       return 'true';
@@ -270,20 +299,29 @@ export function cvToString(val: ClarityValue, encoding: 'tryAscii' | 'hex' = 'he
     case ClarityType.OptionalNone:
       return 'none';
     case ClarityType.OptionalSome:
-      return `(some ${cvToString(val.value, encoding)})`;
+      return `(some ${_cvToString(val.value, nextOptions, depth)})`;
     case ClarityType.ResponseErr:
-      return `(err ${cvToString(val.value, encoding)})`;
+      return `(err ${_cvToString(val.value, nextOptions, depth)})`;
     case ClarityType.ResponseOk:
-      return `(ok ${cvToString(val.value, encoding)})`;
+      return `(ok ${_cvToString(val.value, nextOptions, depth)})`;
     case ClarityType.PrincipalStandard:
     case ClarityType.PrincipalContract:
       return `'${principalToString(val)}`;
     case ClarityType.List:
-      return `(list ${val.value.map(v => cvToString(v, encoding)).join(' ')})`;
+      return `(list ${val.value.map(v => _cvToString(v, nextOptions, depth)).join(' ')})`;
     case ClarityType.Tuple:
-      return `{ ${Object.keys(val.value)
-        .map(key => `${key}: ${cvToString(val.value[key], encoding)}`)
-        .join(', ')} }`;
+      const keys = Object.keys(val.value);
+      if (indent === undefined || keys.length === 0) {
+        return `{ ${keys
+          .map(key => `${key}: ${_cvToString(val.value[key], nextOptions, depth)}`)
+          .join(', ')} }`;
+      }
+      const padding = ' '.repeat((depth + 1) * indent);
+      const outerPadding = ' '.repeat(depth * indent);
+      const lines = keys.map(key => {
+        return `${padding}${key}: ${_cvToString(val.value[key], nextOptions, depth + 1)}`;
+      });
+      return `{\n${lines.join(',\n')}\n${outerPadding}}`;
     case ClarityType.StringASCII:
       return `"${val.value}"`;
     case ClarityType.StringUTF8:
