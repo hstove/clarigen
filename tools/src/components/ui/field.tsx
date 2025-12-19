@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { useMemo } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 
@@ -73,6 +74,7 @@ function Field({
   ...props
 }: React.ComponentProps<'div'> & VariantProps<typeof fieldVariants>) {
   return (
+    // biome-ignore lint/a11y/useSemanticElements: ignored using `--suppress`
     <div
       className={cn(fieldVariants({ orientation }), className)}
       data-orientation={orientation}
@@ -159,6 +161,7 @@ function FieldSeparator({
       {...props}
     >
       <Separator className="absolute inset-0 top-1/2" />
+      {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
       {children && (
         <span
           className="relative mx-auto block w-fit bg-background px-2 text-muted-foreground"

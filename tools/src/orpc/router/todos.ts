@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { os } from '@orpc/server';
 import * as z from 'zod';
 

@@ -52,6 +52,8 @@ export function isResponseFormValue(
  * - Optionals use { isNone, value } in forms but null for none in parseToCV
  * - Buffers are hex strings in forms but Uint8Array in parseToCV
  */
+
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: ignored using `--suppress`
 export function formValueToParseable(
   value: unknown,
   type: ClarityAbiType
@@ -120,6 +122,7 @@ export function formValueToCV(
   }
 
   const parseable = formValueToParseable(value, type);
+  // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
   return parseToCV(parseable as any, type);
 }
 
@@ -128,6 +131,8 @@ export function formValueToCV(
  * based on the Clarity ABI type. This intermediate form value can then
  * be converted to a ClarityValue using `formValueToCV`.
  */
+
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: ignored using `--suppress`
 export function parseQueryValue(
   value: string | undefined,
   type: ClarityAbiType

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { configFilePath } from '../config';
 import { logger } from '../logger';
 import { fileExists } from '../utils';
@@ -18,6 +19,7 @@ export class InitConfigCommand extends BaseCommand {
     description: 'Overwrite the configuration file if it already exists',
   });
 
+  // biome-ignore lint/suspicious/noConfusingVoidType: ignored using `--suppress`
   async execute(): Promise<number | void> {
     this.preexecute();
     const path = configFilePath(this.cwd);

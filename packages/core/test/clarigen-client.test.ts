@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { ClarigenClient, projectFactory } from '../src';
 import { test, expect, vi } from 'vitest';
 import { project } from '../../../demo-project/esm';

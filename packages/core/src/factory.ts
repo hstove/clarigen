@@ -57,6 +57,7 @@ type IsDeploymentNetwork<T> = T extends DeploymentNetwork
   : never;
 
 export type ProjectFactory<
+  // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
   P extends Project<any, any>,
   N extends DeploymentNetwork,
 > = {
@@ -78,6 +79,7 @@ export function projectFactory<
   D extends DeploymentsForContracts<C>,
 >(project: P, network: N): ProjectFactory<P, N> {
   const e: [keyof C, FullContract<TypedAbi>][] = [];
+  // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
   Object.entries(project.contracts).forEach(([contractName, contract]) => {
     const id = project.deployments[contractName][network];
     if (id) {
@@ -154,6 +156,7 @@ export function deploymentFactory<T extends AllContracts>(
   const txs = getContractTxs(
     deployer.plan.batches as Batch<DeploymentTransaction>[]
   );
+  // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
   txs.forEach((tx) => {
     const id = getIdentifierForDeploymentTx(tx);
     const [contractAddress, contractFileName] = id.split('.');
@@ -168,8 +171,10 @@ export function deploymentFactory<T extends AllContracts>(
     result[contractName] = final;
     final.contractFile = getDeploymentTxPath(tx);
     final.identifier = id;
+    // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
     Object.keys(contracts[contractName].functions).forEach((_fnName) => {
       const fnName: keyof (typeof def)['functions'] = _fnName;
+      // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
       const fn = ((...args: any[]) => {
         const foundFunction = def.functions[fnName];
         const functionArgs = transformArgsToCV(foundFunction, args);
@@ -196,6 +201,7 @@ export type MapFactory<M extends TypedAbiMap<K, V>, K, V> = {
 
 export function mapFactory<Key, Val>(map: TypedAbiMap<Key, Val>, key: Key) {
   const keyCV = parseToCV(key as CVInput, map.key);
+  // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
   const mapFactory: MapFactory<typeof map, Key, Val> = {
     key,
     keyCV,

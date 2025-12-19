@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import type {
   ClarityAbi,
   ClarityAbiArg,
@@ -66,6 +67,7 @@ export function createContractDocInfo({
     variables: [],
     maps: [],
   };
+  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: ignored using `--suppress`
   lines.forEach((line, lineNumber) => {
     // Are we processing a function?
     if (currentFn) {
@@ -141,6 +143,7 @@ function pushItem(contract: ClaridocContract, item: ClaridocItem) {
 }
 
 function clarityNameMatcher(line: string) {
+  // biome-ignore lint/performance/useTopLevelRegex: ignored using `--suppress`
   return /[\w|\-|?|!]+/.exec(line);
 }
 
@@ -179,10 +182,12 @@ function findAbiItemByName(
   abi: ClarityAbi,
   name: string
 ): ClarityAbiItem | undefined {
+  // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
   const fn = abi.functions.find((fn) => fn.name === name);
   if (fn) return fn;
   const map = abi.maps.find((m) => m.name === name);
   if (map) return map;
+  // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
   const v = abi.variables.find((v) => v.name === name);
   return v;
 }
@@ -208,8 +213,11 @@ export function getFnName(line: string) {
 
 export function traceParens(line: string, count: number) {
   let newCount = count;
+  // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
   line.split('').forEach((char) => {
+    // biome-ignore lint/nursery/noIncrementDecrement: ignored using `--suppress`
     if (char === '(') newCount++;
+    // biome-ignore lint/nursery/noIncrementDecrement: ignored using `--suppress`
     if (char === ')') newCount--;
   });
   return newCount;
@@ -226,7 +234,9 @@ export function parseComments(
     text: [],
     params: {},
   };
+  // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
   comments.forEach((line) => {
+    // biome-ignore lint/performance/useTopLevelRegex: ignored using `--suppress`
     const paramMatches = /\s*@param\s([\w|-]+)([;|-|\s]*)(.*)/.exec(line);
 
     if (paramMatches === null) {
@@ -241,6 +251,7 @@ export function parseComments(
 
     if (!('args' in abi)) return;
     const [_full, name, _separator, rest] = paramMatches;
+    // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
     const arg = abi.args.find((arg) => arg.name === name);
     if (!arg) {
       console.debug(`[claridocs]: Unable to find ABI for @param ${name}`);
@@ -254,6 +265,7 @@ export function parseComments(
   });
 
   if ('args' in abi) {
+    // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
     abi.args.forEach((arg) => {
       if (!parsed.params[arg.name]) {
         parsed.params[arg.name] = {

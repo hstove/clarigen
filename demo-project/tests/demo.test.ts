@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { projectFactory, ok, err } from '@clarigen/core';
 import { project } from '../esm';
 import { describe, expect, it } from 'vitest';

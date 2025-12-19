@@ -32,6 +32,7 @@ export function TupleField({
 
   return (
     <FieldGroup className="border border-border bg-muted/10 p-4">
+      {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
       {label && <FieldLabel className="font-mono text-xs">{label}</FieldLabel>}
       {members.map((member) => (
         <form.Field

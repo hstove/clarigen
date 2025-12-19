@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 const CONTEXT_PREFIX = 'clarigen:history:';
 const TYPE_PREFIX = 'clarigen:global:';
 

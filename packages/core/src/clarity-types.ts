@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import {
   type ClarityAbi as _ClarityAbi,
   type ClarityAbiType as MSClarityAbiType,
@@ -23,26 +24,47 @@ import type {
   Response,
   ResponseOk,
   ResponseErr,
+  // biome-ignore lint/style/noExportedImports: ignored using `--suppress`
   ClarityAbiTypeUInt128,
+  // biome-ignore lint/style/noExportedImports: ignored using `--suppress`
   ClarityAbiTypeBool,
+  // biome-ignore lint/style/noExportedImports: ignored using `--suppress`
   ClarityAbiTypeBuffer,
+  // biome-ignore lint/style/noExportedImports: ignored using `--suppress`
   ClarityAbiTypeInt128,
+  // biome-ignore lint/style/noExportedImports: ignored using `--suppress`
   ClarityAbiTypeList,
+  // biome-ignore lint/style/noExportedImports: ignored using `--suppress`
   ClarityAbiTypeNone,
+  // biome-ignore lint/style/noExportedImports: ignored using `--suppress`
   ClarityAbiTypeOptional,
+  // biome-ignore lint/style/noExportedImports: ignored using `--suppress`
   ClarityAbiTypePrimitive,
+  // biome-ignore lint/style/noExportedImports: ignored using `--suppress`
   ClarityAbiTypePrincipal,
+  // biome-ignore lint/style/noExportedImports: ignored using `--suppress`
   ClarityAbiTypeResponse,
+  // biome-ignore lint/style/noExportedImports: ignored using `--suppress`
   ClarityAbiTypeStringAscii,
+  // biome-ignore lint/style/noExportedImports: ignored using `--suppress`
   ClarityAbiTypeStringUtf8,
+  // biome-ignore lint/style/noExportedImports: ignored using `--suppress`
   ClarityAbiTypeTraitReference,
+  // biome-ignore lint/style/noExportedImports: ignored using `--suppress`
   ClarityAbiMap,
+  // biome-ignore lint/style/noExportedImports: ignored using `--suppress`
   ClarityAbiFunction,
+  // biome-ignore lint/style/noExportedImports: ignored using `--suppress`
   ClarityAbiType,
+  // biome-ignore lint/style/noExportedImports: ignored using `--suppress`
   ClarityAbiArg,
+  // biome-ignore lint/style/noExportedImports: ignored using `--suppress`
   TypedAbiFunction,
+  // biome-ignore lint/style/noExportedImports: ignored using `--suppress`
   TypedAbiArg,
+  // biome-ignore lint/style/noExportedImports: ignored using `--suppress`
   StacksEpochId,
+  // biome-ignore lint/style/noExportedImports: ignored using `--suppress`
   ClarityVersion,
 } from './abi-types';
 export type {
@@ -113,10 +135,13 @@ export function principalToString(principal: PrincipalCV): string {
  * @param returnResponse - if true, this will return a "response" object.
  * Otherwise, it returns the inner value of the response (whether ok or err)
  */
+
+// biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
 export function cvToValue<T = any>(
   val: ClarityValue,
   returnResponse = false
 ): T {
+  // biome-ignore lint/style/useDefaultSwitchClause: ignored using `--suppress`
   switch (val.type) {
     case ClarityType.BoolTrue:
       return true as unknown as T;
@@ -145,13 +170,16 @@ export function cvToValue<T = any>(
       return val.value.map((v) => cvToValue(v)) as unknown as T;
     case ClarityType.Tuple: {
       const tupleReduced = Object.entries(val.value).reduce(
+        // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
         (acc, [key, val]) => {
           const keyFixed = toCamelCase(key);
           return {
+            // biome-ignore lint/performance/noAccumulatingSpread: ignored using `--suppress`
             ...acc,
             [keyFixed]: cvToValue(val, returnResponse),
           };
         },
+        // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
         {} as Record<string, any>
       );
       return tupleReduced as unknown as T;
@@ -173,6 +201,7 @@ export function hexToCvValue<_T>(hex: string, jsonCompat = false) {
   return cvToValue(hexToCV(hex), jsonCompat);
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
 export type TupleInput = Record<string, any>;
 export type CVInput = string | boolean | TupleInput | number | bigint;
 
@@ -221,12 +250,14 @@ export const isClarityAbiTraitReference = (
   val: ClarityAbiType
 ): val is ClarityAbiTypeTraitReference => val === 'trait_reference';
 
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: ignored using `--suppress`
 export function parseToCV(input: CVInput, type: ClarityAbiType): ClarityValue {
   if (isClarityAbiTuple(type)) {
     if (typeof input !== 'object') {
       throw new Error('Invalid tuple input');
     }
     const tuple: Record<string, ClarityValue> = {};
+    // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
     type.tuple.forEach((key) => {
       const jsKey = findJsTupleKey(key.name, input);
       const val = input[jsKey];
@@ -235,7 +266,9 @@ export function parseToCV(input: CVInput, type: ClarityAbiType): ClarityValue {
     return tupleCV(tuple);
   }
   if (isClarityAbiList(type)) {
+    // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
     const inputs = input as any[];
+    // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
     const values = inputs.map((input) => parseToCV(input, type.list.type));
     return listCV(values);
   }
@@ -304,6 +337,7 @@ export function cvToString(
   const indent = options.indent;
   const depth = options.depth ?? 0;
 
+  // biome-ignore lint/style/useDefaultSwitchClause: ignored using `--suppress`
   switch (val.type) {
     case ClarityType.BoolTrue:
       return 'true';
@@ -316,6 +350,7 @@ export function cvToString(
     case ClarityType.Buffer:
       if (encoding === 'tryAscii') {
         const str = bytesToAscii(hexToBytes(val.value));
+        // biome-ignore lint/performance/useTopLevelRegex: ignored using `--suppress`
         if (/[ -~]/.test(str)) {
           return JSON.stringify(str);
         }
@@ -366,10 +401,13 @@ export function cvToString(
  *
  * @param val - ClarityValue
  */
+
+// biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
 export function cvToJSON<T = any>(
   val: ClarityValue,
   returnResponse = false
 ): T {
+  // biome-ignore lint/style/useDefaultSwitchClause: ignored using `--suppress`
   switch (val.type) {
     case ClarityType.BoolTrue:
       return true as unknown as T;
@@ -398,13 +436,16 @@ export function cvToJSON<T = any>(
       return val.value.map((v) => cvToJSON(v)) as unknown as T;
     case ClarityType.Tuple: {
       const tupleReduced = Object.entries(val.value).reduce(
+        // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
         (acc, [key, val]) => {
           const keyFixed = toCamelCase(key);
           return {
+            // biome-ignore lint/performance/noAccumulatingSpread: ignored using `--suppress`
             ...acc,
             [keyFixed]: cvToJSON(val),
           };
         },
+        // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
         {} as Record<string, any>
       );
       return tupleReduced as unknown as T;
@@ -418,6 +459,7 @@ export function cvToJSON<T = any>(
 
 export function transformObjectArgs(
   func: ClarityAbiFunction,
+  // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
   args: Record<string, any>
 ) {
   return func.args.map((abiArg) => {
@@ -427,12 +469,14 @@ export function transformObjectArgs(
   });
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
 export function transformArgsArray(func: ClarityAbiFunction, args: any[]) {
   return args.map((arg, index) => parseToCV(arg, func.args[index].type));
 }
 
 export function transformArgsToCV(
   func: ClarityAbiFunction,
+  // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
   args: any[] | [Record<string, any>]
 ) {
   if (args.length === 0) return [];
@@ -447,6 +491,7 @@ export function transformArgsToCV(
   ) {
     try {
       let hasAllArgs = true;
+      // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
       func.args.forEach((a) => {
         try {
           findJsTupleKey(a.name, firstArg);
@@ -465,6 +510,7 @@ export function transformArgsToCV(
   return transformArgsArray(func, args);
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
 export function findJsTupleKey(key: string, input: Record<string, any>) {
   const found = Object.keys(input).find((k) => {
     const camelEq = key === k;
@@ -477,6 +523,7 @@ export function findJsTupleKey(key: string, input: Record<string, any>) {
   return found;
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
 export function expectOk<Ok>(response: Response<Ok, any>): Ok {
   if (response.isOk) {
     return response.value;
@@ -484,6 +531,7 @@ export function expectOk<Ok>(response: Response<Ok, any>): Ok {
   throw new Error(`Expected OK, received error: ${String(response.value)}`);
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
 export function expectErr<Err>(response: Response<any, Err>): Err {
   if (!response.isOk) {
     return response.value;
@@ -514,6 +562,7 @@ type TupleTypeUnion<T> =
   T extends Readonly<ClarityAbiTypeTuple['tuple'][number]>
     ? { -readonly [Z in T['name']]: AbiTypeTo<T['type']> }
     : never;
+// biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
 type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
   k: infer I
 ) => void

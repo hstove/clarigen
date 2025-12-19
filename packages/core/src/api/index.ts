@@ -1,3 +1,5 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
+// biome-ignore lint/style/noExportedImports: ignored using `--suppress`
 import { cvToHex, hexToCV } from '@stacks/transactions';
 export { cvToHex, hexToCV };
 import {
@@ -14,6 +16,7 @@ import {
 import type { Response, TypedAbiMap } from '../abi-types';
 import type { ContractCall } from '../factory-types';
 import { mapFactory } from '../factory';
+// biome-ignore lint/performance/noBarrelFile: ignored using `--suppress`
 export * from './call-read-only';
 import { callReadOnlyFunction } from './call-read-only';
 import { generateUrl, getHeaders, v2Endpoint } from './api-helpers';
@@ -92,6 +95,7 @@ export async function ro<O extends ApiOptions, T>(
 }
 
 export async function roOk<O extends ApiOptions, Ok>(
+  // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
   tx: ContractCall<Response<Ok, any>>,
   options: O
 ): Promise<JsonIfOption<O, Ok>> {
@@ -100,6 +104,7 @@ export async function roOk<O extends ApiOptions, Ok>(
 }
 
 export async function roErr<O extends ApiOptions, Err>(
+  // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
   tx: ContractCall<Response<any, Err>>,
   options: O
 ): Promise<JsonIfOption<O, Err>> {
@@ -168,11 +173,16 @@ type ClientOptions = Omit<ApiOptions, 'network'>;
 type JsonIf<O extends ClientOptions, T> = JsonIfOption<O & ApiOptions, T>;
 
 export class ClarigenClient {
+  // biome-ignore lint/style/useConsistentMemberAccessibility: ignored using `--suppress`
   public network: StacksNetwork | StacksNetworkName;
 
   constructor(
     networkOrUrl: StacksNetwork | StacksNetworkName,
+    // biome-ignore lint/style/useConsistentMemberAccessibility: ignored using `--suppress`
+    // biome-ignore lint/style/noParameterProperties: ignored using `--suppress`
     public apiKey?: string,
+    // biome-ignore lint/style/useConsistentMemberAccessibility: ignored using `--suppress`
+    // biome-ignore lint/style/noParameterProperties: ignored using `--suppress`
     public headers?: Record<string, string>
   ) {
     this.network = networkOrUrl;
@@ -195,6 +205,7 @@ export class ClarigenClient {
   }
 
   roOk<T, O extends ClientOptions>(
+    // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
     tx: ContractCall<Response<T, any>>,
     options?: O
   ): Promise<JsonIf<O, T>> {
@@ -202,6 +213,7 @@ export class ClarigenClient {
   }
 
   roErr<T, O extends ClientOptions>(
+    // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
     tx: ContractCall<Response<any, T>>,
     options?: O
   ): Promise<JsonIf<O, T>> {

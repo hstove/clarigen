@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { project, contracts } from './generated/clarigen-types';
 import {
   type DeploymentNetwork,

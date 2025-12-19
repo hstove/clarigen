@@ -14,6 +14,7 @@ export function generateContractMeta(
   const functionLines: string[] = [];
   const { functions, maps, variables, non_fungible_tokens, ...rest } = abi;
 
+  // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
   functions.forEach((func) => {
     let functionLine = `${toCamelCase(func.name)}: `;
     const funcDef = JSON.stringify(func);
@@ -97,6 +98,7 @@ export function encodeVariables(variables: ClarityAbiVariable[]) {
 
 // Extend the Uint8Array prototype in TypeScript to include util.inspect.custom
 declare global {
+  // biome-ignore lint/style/useConsistentTypeDefinitions: ignored using `--suppress`
   interface Uint8Array {
     [inspect.custom](depth: number, options: InspectOptions): string;
   }
@@ -109,6 +111,7 @@ Uint8Array.prototype[inspect.custom] = function (
   return `Uint8Array.from([${this.join(',')}])`;
 };
 
+// biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
 export function serialize(obj: any) {
   return inspect(obj, {
     // showHidden: false,

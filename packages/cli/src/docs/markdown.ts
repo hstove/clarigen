@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import type { Session, SessionContract } from '../session';
 import { getContractName, getTypeString } from '@clarigen/core';
 import {
@@ -227,6 +228,7 @@ export function generateReadme(
   excluded: Record<string, boolean>
 ) {
   const contractLines: string[] = [];
+  // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
   sortContracts(session.contracts).forEach((contract) => {
     const name = getContractName(contract.contract_id, false);
     if (excluded[name]) return;

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { type } from 'arktype';
 
 const STORAGE_KEY = 'clarigen:visited:functions';

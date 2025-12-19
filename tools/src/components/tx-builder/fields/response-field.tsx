@@ -47,6 +47,7 @@ export function ResponseField({
               field.handleChange({
                 ...field.state.value,
                 isOk: true,
+                // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
               } as any)
             }
             type="button"
@@ -66,6 +67,7 @@ export function ResponseField({
               field.handleChange({
                 ...field.state.value,
                 isOk: false,
+                // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
               } as any)
             }
             type="button"

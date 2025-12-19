@@ -8,7 +8,8 @@ import { format } from 'dnum';
 export function getStacksApiUrl(network: NETWORK) {
   return network === 'mainnet'
     ? 'https://api.hiro.so'
-    : network === 'devnet'
+    : // biome-ignore lint/style/noNestedTernary: ignored using `--suppress`
+      network === 'devnet'
       ? 'http://localhost:3999'
       : 'https://api.testnet.hiro.so';
 }

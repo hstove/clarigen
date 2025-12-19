@@ -26,7 +26,9 @@
       "!packages/clarigen-test/vitest.config.js",
       "!docs-site/contentlayer.config.js",
       "!tools/src/types/stacks-blockchain-api.d.ts",
-      "!tools/src/routeTree.gen.ts"
+      "!tools/src/routeTree.gen.ts",
+      "!docs-site/**",
+      "!opencode.jsonc"
     ]
   },
   "linter": {
@@ -35,6 +37,13 @@
       "recommended": false,
       "style": {
         "useBlockStatements": "off"
+      },
+      "performance": {
+        "noNamespaceImport": "off"
+      },
+      "suspicious": {
+        "useIterableCallbackReturn": "off",
+        "noArrayIndexKey": "off"
       }
     },
     "includes": [
@@ -49,7 +58,9 @@
       "!demo-project/test-runner.ts",
       "!packages/clarigen-test/vitest.config.js",
       "!docs-site/contentlayer.config.js",
-      "!tools/src/types/stacks-blockchain-api.d.ts"
+      "!tools/src/types/stacks-blockchain-api.d.ts",
+      "!docs-site/**",
+      "!opencode.jsonc"
     ]
   },
   "javascript": {
@@ -65,6 +76,16 @@
   "overrides": [
     {
       "includes": ["*.ts", "*.tsx"]
+    },
+    {
+      "includes": ["tools/src/routes/**/*.ts", "tools/src/routes/**/*.tsx"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useFilenamingConvention": "off"
+          }
+        }
+      }
     }
   ],
   "assist": {

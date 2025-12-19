@@ -77,6 +77,7 @@ export function getVariablesV2(
     const varsAbi: Writeable<ClarityAbiTypeTuple> = {
       tuple: [],
     };
+    // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
     contract.contract_interface.variables.forEach((v) => {
       const _v = v as unknown as Writeable<ClarityAbiVariable>;
       varsAbi.tuple.push({

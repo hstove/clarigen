@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { Command, Option } from 'clipanion';
 import { Config } from '../config';
 import { logger } from '../logger';

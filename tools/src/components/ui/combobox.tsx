@@ -67,6 +67,7 @@ function ComboboxInput({
         {...props}
       />
       <InputGroupAddon align="inline-end">
+        {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
         {showTrigger && (
           <InputGroupButton
             className="group-has-data-[slot=combobox-clear]/input-group:hidden data-pressed:bg-transparent"
@@ -77,6 +78,7 @@ function ComboboxInput({
             variant="ghost"
           />
         )}
+        {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
         {showClear && <ComboboxClear disabled={disabled} />}
       </InputGroupAddon>
       {children}
@@ -250,6 +252,7 @@ function ComboboxChip({
       {...props}
     >
       {children}
+      {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
       {showRemove && (
         <ComboboxPrimitive.ChipRemove
           className="-ml-1 opacity-50 hover:opacity-100"

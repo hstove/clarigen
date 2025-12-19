@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import type { StacksTransaction } from '@/types/stacks-transaction';
 import type { NETWORK } from '@/lib/constants';
 import { format } from 'dnum';
@@ -124,6 +125,7 @@ function formatProgress(used: number, limit: number, barWidth = 14) {
   return `${formatCompact(used)} / ${formatCompact(limit)} [${bar}] ${Math.round(ratio * 100)}%`;
 }
 
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: ignored using `--suppress`
 export function TransactionStatus({ tx, network }: TransactionStatusProps) {
   const isPending = tx.tx_status === 'pending';
   const isSuccess = tx.tx_status === 'success';
@@ -143,9 +145,11 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
           <span>
             {isPending
               ? 'pending'
-              : isSuccess
+              : // biome-ignore lint/style/noNestedTernary: ignored using `--suppress`
+                isSuccess
                 ? 'confirmed'
-                : tx.tx_status === 'abort_by_post_condition'
+                : // biome-ignore lint/style/noNestedTernary: ignored using `--suppress`
+                  tx.tx_status === 'abort_by_post_condition'
                   ? 'post-condition failure'
                   : 'failed'}
           </span>
@@ -159,6 +163,7 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
       <div className="space-y-0 px-4 py-3">
         <DataRow label="txid" mono value={tx.tx_id} />
 
+        {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
         {'fee_rate' in tx && (
           <DataRow
             label="fee"
@@ -166,6 +171,7 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
           />
         )}
 
+        {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
         {'sponsored' in tx && tx.sponsored && (
           <DataRow
             label="sponsor"
@@ -174,10 +180,12 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
           />
         )}
 
+        {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
         {'replaced_by_tx_id' in tx && tx.replaced_by_tx_id && (
           <DataRow label="replaced_by" mono value={tx.replaced_by_tx_id} />
         )}
 
+        {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
         {'receipt_time_iso' in tx && (
           <DataRow
             label="received"
@@ -185,6 +193,7 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
           />
         )}
 
+        {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
         {'block_time_iso' in tx && (
           <DataRow
             label="confirmed"
@@ -192,6 +201,7 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
           />
         )}
 
+        {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
         {'block_height' in tx && (
           <DataRow
             label="block"
@@ -202,6 +212,7 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
       </div>
 
       {/* Execution cost */}
+      {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
       {hasExecutionCost && (
         <div className="space-y-0 border-border border-t px-4 py-3">
           <div className="font-medium text-[10px] text-muted-foreground uppercase tracking-wider">
@@ -251,6 +262,7 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
       )}
 
       {/* Result */}
+      {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
       {'block_height' in tx && tx.tx_result && (
         <div className="space-y-2 border-border border-t px-4 py-3">
           <div className="font-medium text-[10px] text-muted-foreground uppercase tracking-wider">
@@ -263,6 +275,7 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
       )}
 
       {/* Post-conditions */}
+      {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
       {hasPostConditions && (
         <div className="space-y-2 border-border border-t px-4 py-3">
           <div className="font-medium text-[10px] text-muted-foreground uppercase tracking-wider">
@@ -327,6 +340,7 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
       )}
 
       {/* VM Error */}
+      {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
       {'block_height' in tx && tx.vm_error && (
         <div className="border-destructive/30 border-t bg-destructive/5 px-4 py-3">
           <pre className="whitespace-pre-wrap break-all font-mono text-destructive text-sm">
@@ -396,9 +410,11 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
                       </span>
                     </div>
                     <div className="text-[10px] text-muted-foreground">
+                      {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
                       {event.asset.sender && (
                         <div>from: {event.asset.sender}</div>
                       )}
+                      {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
                       {event.asset.recipient && (
                         <div>to: {event.asset.recipient}</div>
                       )}

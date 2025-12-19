@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 process.on('warning', (warning) => {
   console.warn(warning);
 });

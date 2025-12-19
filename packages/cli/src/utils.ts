@@ -1,10 +1,12 @@
 // import { dirname, relative, resolve } from '../deps.ts';
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { getContractName, toCamelCase } from '@clarigen/core';
 // export { getContractName, toCamelCase, toKebabCase } from '@clarigen/core';
 import { stat, mkdir, writeFile as fsWriteFile } from 'node:fs/promises';
 import { dirname, relative } from 'node:path';
 
 export function encodeVariableName(name: string) {
+  // biome-ignore lint/performance/useTopLevelRegex: ignored using `--suppress`
   if (/^[A-Z\-_]*$/.test(name)) return name.replaceAll('-', '_');
   return toCamelCase(name);
 }

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { readFile, writeFile } from 'node:fs/promises';
 import { ConfigFile } from '../src/config';
 

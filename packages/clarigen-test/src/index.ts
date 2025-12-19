@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import {
   type ContractCallTyped,
   type ErrType,
@@ -16,6 +17,7 @@ import { cvConvertHiro, cvConvertMS, validateResponse } from './utils';
 import type { CoreNodeEvent } from './events';
 import { stringify } from 'yaml';
 import type { ClarityValue } from '@stacks/transactions';
+// biome-ignore lint/performance/noBarrelFile: ignored using `--suppress`
 export * from './events';
 export * from './utils';
 
@@ -54,11 +56,13 @@ function logTxCall({
 }
 
 export function txOk<A extends UnknownArgs, R extends AnyResponse>(
+  // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
   tx: ContractCallTyped<A, R>,
   sender: string
 ): TransactionResult<OkType<R>> {
   const args = tx.functionArgs.map(cvConvertMS);
   const contractId = `${tx.contractAddress}.${tx.contractName}`;
+  // biome-ignore lint/correctness/noUndeclaredVariables: ignored using `--suppress`
   const receipt = simnet.callPublicFn(
     contractId,
     tx.function.name,
@@ -76,11 +80,13 @@ export function txOk<A extends UnknownArgs, R extends AnyResponse>(
 }
 
 export function txErr<A extends UnknownArgs, R extends AnyResponse>(
+  // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
   tx: ContractCallTyped<A, R>,
   sender: string
 ): TransactionResult<ErrType<R>> {
   const args = tx.functionArgs.map(cvConvertMS);
   const contractId = `${tx.contractAddress}.${tx.contractName}`;
+  // biome-ignore lint/correctness/noUndeclaredVariables: ignored using `--suppress`
   const receipt = simnet.callPublicFn(
     contractId,
     tx.function.name,
@@ -98,11 +104,13 @@ export function txErr<A extends UnknownArgs, R extends AnyResponse>(
 }
 
 export function tx<A extends UnknownArgs, R extends AnyResponse>(
+  // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
   tx: ContractCallTyped<A, R>,
   sender: string
 ): TransactionResult<R> {
   const args = tx.functionArgs.map(cvConvertMS);
   const contractId = `${tx.contractAddress}.${tx.contractName}`;
+  // biome-ignore lint/correctness/noUndeclaredVariables: ignored using `--suppress`
   const receipt = simnet.callPublicFn(
     contractId,
     tx.function.name,
@@ -120,11 +128,13 @@ export function tx<A extends UnknownArgs, R extends AnyResponse>(
 }
 
 export function ro<A extends UnknownArgs, R>(
+  // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
   tx: ContractCallTyped<A, R>,
   sender?: string
 ): TransactionResult<R> {
   const args = tx.functionArgs.map(cvConvertMS);
   const contractId = `${tx.contractAddress}.${tx.contractName}`;
+  // biome-ignore lint/correctness/noUndeclaredVariables: ignored using `--suppress`
   const receipt = simnet.callReadOnlyFn(
     contractId,
     tx.function.name,
@@ -142,6 +152,7 @@ export function ro<A extends UnknownArgs, R>(
 }
 
 export function rov<A extends UnknownArgs, R>(
+  // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
   tx: ContractCallTyped<A, R>,
   sender?: string
 ): R {
@@ -149,11 +160,13 @@ export function rov<A extends UnknownArgs, R>(
 }
 
 export function roOk<A extends UnknownArgs, R extends AnyResponse>(
+  // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
   tx: ContractCallTyped<A, R>,
   sender?: string
 ): TransactionResult<OkType<R>> {
   const args = tx.functionArgs.map(cvConvertMS);
   const contractId = `${tx.contractAddress}.${tx.contractName}`;
+  // biome-ignore lint/correctness/noUndeclaredVariables: ignored using `--suppress`
   const receipt = simnet.callReadOnlyFn(
     contractId,
     tx.function.name,
@@ -171,6 +184,7 @@ export function roOk<A extends UnknownArgs, R extends AnyResponse>(
 }
 
 export function rovOk<A extends UnknownArgs, R extends AnyResponse>(
+  // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
   tx: ContractCallTyped<A, R>,
   sender?: string
 ): OkType<R> {
@@ -178,11 +192,13 @@ export function rovOk<A extends UnknownArgs, R extends AnyResponse>(
 }
 
 export function roErr<A extends UnknownArgs, R extends AnyResponse>(
+  // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
   tx: ContractCallTyped<A, R>,
   sender?: string
 ): TransactionResult<ErrType<R>> {
   const args = tx.functionArgs.map(cvConvertMS);
   const contractId = `${tx.contractAddress}.${tx.contractName}`;
+  // biome-ignore lint/correctness/noUndeclaredVariables: ignored using `--suppress`
   const receipt = simnet.callReadOnlyFn(
     contractId,
     tx.function.name,
@@ -201,6 +217,7 @@ export function roErr<A extends UnknownArgs, R extends AnyResponse>(
 }
 
 export function rovErr<A extends UnknownArgs, R extends AnyResponse>(
+  // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
   tx: ContractCallTyped<A, R>,
   sender?: string
 ): ErrType<R> {
@@ -213,6 +230,7 @@ export function mapGet<Key, Val>(
   key: Key
 ) {
   const payload = mapFactory(map, key);
+  // biome-ignore lint/correctness/noUndeclaredVariables: ignored using `--suppress`
   const result = simnet.getMapEntry(
     contractId,
     payload.map.name,
@@ -222,6 +240,7 @@ export function mapGet<Key, Val>(
 }
 
 export function varGet<T>(contractId: string, variable: TypedAbiVariable<T>) {
+  // biome-ignore lint/correctness/noUndeclaredVariables: ignored using `--suppress`
   const result = simnet.getDataVar(contractId, variable.name);
   return cvToValue<T>(cvConvertHiro(result));
 }
@@ -240,6 +259,7 @@ export const chain = {
 };
 
 export async function makeNewSession(cwd?: string, manifestPath?: string) {
+  // biome-ignore lint/correctness/noUndeclaredVariables: ignored using `--suppress`
   await simnet.initSession(
     cwd ?? process.cwd(),
     manifestPath ?? './Clarinet.toml'

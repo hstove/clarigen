@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { type } from 'arktype';
 import { readFile } from 'node:fs/promises';
 import { parse } from '@iarna/toml';

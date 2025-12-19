@@ -1,4 +1,5 @@
 export type { ClarityAbi } from './clarity-types';
+// biome-ignore lint/performance/noBarrelFile: ignored using `--suppress`
 export * from './transaction';
 export * from './types';
 export * from './utils';

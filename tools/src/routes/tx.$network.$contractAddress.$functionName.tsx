@@ -65,8 +65,10 @@ export const Route = createFileRoute(
   component: TxBuilderPage,
 });
 
+// biome-ignore lint/nursery/noShadow: ignored using `--suppress`
 function getDefaultValue(type: ClarityAbiType): unknown {
   if (typeof type === 'string') {
+    // biome-ignore lint/style/useDefaultSwitchClause: ignored using `--suppress`
     switch (type) {
       case 'bool':
         return false;
@@ -100,6 +102,7 @@ function TxBuilderPage() {
     contractAddress,
     functionName,
   } = Route.useParams();
+  // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
   const network = parseNetwork(networkParam)!;
 
   return (
@@ -223,6 +226,7 @@ function FunctionNotFound({
             <p className="font-mono text-muted-foreground text-sm italic">
               Loading functions...
             </p>
+            // biome-ignore lint/style/noNestedTernary: ignored using `--suppress`
           ) : !functions || functions.length === 0 ? (
             <p className="font-mono text-muted-foreground text-sm italic">
               No functions found.
@@ -302,6 +306,7 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
   const [readResult, setReadResult] = useState<{
     okay: boolean;
     result?: string;
+    // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
     value?: any;
     clarity?: string;
     error?: string;
@@ -339,6 +344,7 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
 
   const form = useAppForm({
     defaultValues: initialValues,
+    // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: ignored using `--suppress`
     onSubmit: async ({ value }) => {
       setConversionError(null);
       setReadResult(null);
@@ -477,6 +483,7 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
                 </span>
               </div>
 
+              {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
               {hasFunctionDocs && (
                 <div className="border-border border-b bg-muted/20 px-4 py-3">
                   <div className="mb-2 font-mono text-[10px] text-muted-foreground uppercase tracking-wider">
@@ -486,6 +493,7 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
                 </div>
               )}
 
+              {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
               {readResult?.okay && (
                 <div className="space-y-3 border-border border-b bg-muted/20 p-4">
                   <div className="flex items-center justify-between">
@@ -545,6 +553,7 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
                         ))
                       )}
 
+                      {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
                       {conversionError && (
                         <div className="border border-destructive/20 bg-destructive/10 p-3 font-mono text-destructive text-sm">
                           {conversionError}
@@ -602,7 +611,8 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
                           >
                             {state.isSubmitting
                               ? 'processing...'
-                              : func.access === 'read_only'
+                              : // biome-ignore lint/style/noNestedTernary: ignored using `--suppress`
+                                func.access === 'read_only'
                                 ? 'call function'
                                 : 'build transaction'}
                           </Button>

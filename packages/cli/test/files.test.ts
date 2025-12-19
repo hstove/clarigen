@@ -2,6 +2,7 @@ import { generateAccountsCode } from '../src/files/accounts';
 import type { SessionAccount } from '../src/session';
 import { expect, test } from 'vitest';
 
+// biome-ignore lint/suspicious/useAwait: ignored using `--suppress`
 test('accounts are sorted before serialization', async () => {
   const accounts: SessionAccount[] = [
     {

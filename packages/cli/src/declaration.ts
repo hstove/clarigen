@@ -20,6 +20,7 @@ import {
 export const jsTypeFromAbiType = (
   val: ClarityAbiType,
   isArgument = false
+  // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: ignored using `--suppress`
 ): string => {
   if (isClarityAbiPrimitive(val)) {
     if (val === 'uint128') {
@@ -60,6 +61,7 @@ export const jsTypeFromAbiType = (
   }
   if (isClarityAbiTuple(val)) {
     const tupleDefs: string[] = [];
+    // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
     val.tuple.forEach(({ name, type }) => {
       const camelName = toCamelCase(name);
       const innerType = jsTypeFromAbiType(type, isArgument);

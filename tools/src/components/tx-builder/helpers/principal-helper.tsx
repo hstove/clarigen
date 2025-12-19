@@ -48,6 +48,7 @@ export function PrincipalHelper({
         <div className="space-y-1 text-muted-foreground text-xs">
           <p>• Mainnet: starts with SP...</p>
           <p>• Testnet: starts with ST...</p>
+          {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
           {isContract && <p>• Format: address.contract-name</p>}
         </div>
       </div>
@@ -67,6 +68,7 @@ export function PrincipalHelper({
               <UserCircle className="h-4 w-4" />
               <span className="flex-1 text-left">Your Address</span>
             </Button>
+            {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
             {userAddress && (
               <p className="truncate px-2 font-mono text-[10px] text-muted-foreground">
                 {userAddress}
@@ -106,6 +108,7 @@ export function PrincipalHelper({
           • Your address is automatically adjusted for{' '}
           {network === 'mainnet' ? 'mainnet' : 'testnet'}
         </p>
+        {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
         {isContract && <p>• Contract address must include the contract name</p>}
       </div>
     </div>

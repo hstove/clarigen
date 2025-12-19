@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { z } from 'zod';
 
 export const TodoSchema = z.object({

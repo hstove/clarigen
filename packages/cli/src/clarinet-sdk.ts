@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { initSimnet } from '@stacks/clarinet-sdk';
 import {
   type ClarityVersion,

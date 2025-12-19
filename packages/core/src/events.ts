@@ -1,3 +1,4 @@
+// biome-ignore lint/style/noEnum: ignored using `--suppress`
 export enum CoreNodeEventType {
   ContractEvent = 'contract_event',
   StxTransferEvent = 'stx_transfer_event',

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import {
   connect as connectStacks,
   disconnect as disconnectStacks,

@@ -63,6 +63,7 @@ export function TextField({
         placeholder={placeholder}
         value={field.state.value}
       />
+      {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
       {field.state.meta.isTouched && <ErrorMessages errors={errors} />}
     </div>
   );
@@ -90,6 +91,7 @@ export function TextArea({
         rows={rows}
         value={field.state.value}
       />
+      {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
       {field.state.meta.isTouched && <ErrorMessages errors={errors} />}
     </div>
   );
@@ -127,6 +129,7 @@ export function Select({
           </ShadcnSelect.SelectGroup>
         </ShadcnSelect.SelectContent>
       </ShadcnSelect.Select>
+      {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
       {field.state.meta.isTouched && <ErrorMessages errors={errors} />}
     </div>
   );
@@ -147,6 +150,7 @@ export function Slider({ label }: { label: string }) {
         onValueChange={(value) => field.handleChange(value[0])}
         value={[field.state.value]}
       />
+      {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
       {field.state.meta.isTouched && <ErrorMessages errors={errors} />}
     </div>
   );
@@ -167,6 +171,7 @@ export function Switch({ label }: { label: string }) {
         />
         <Label htmlFor={label}>{label}</Label>
       </div>
+      {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
       {field.state.meta.isTouched && <ErrorMessages errors={errors} />}
     </div>
   );

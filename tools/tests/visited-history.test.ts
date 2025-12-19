@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   addVisitedFunction,
@@ -21,6 +22,7 @@ vi.stubGlobal('window', {
 });
 
 beforeEach(() => {
+  // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
   Object.keys(mockStorage).forEach((key) => delete mockStorage[key]);
 });
 

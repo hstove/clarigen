@@ -103,6 +103,7 @@ export function ListField({
 
 function getDefaultValue(type: ClarityAbiType): unknown {
   if (typeof type === 'string') {
+    // biome-ignore lint/style/useDefaultSwitchClause: ignored using `--suppress`
     switch (type) {
       case 'bool':
         return false;

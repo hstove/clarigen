@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { Command, Option } from 'clipanion';
 import { logger } from '../logger';
 import { Config, OutputType } from '../config';
@@ -28,8 +29,10 @@ export async function generate(config: Config) {
   logger.info('Types generated!');
 }
 
+// biome-ignore lint/suspicious/useAwait: ignored using `--suppress`
 export async function watch(config: Config, cwd?: string) {
   // const ora = await import('ora');
+  // biome-ignore lint/suspicious/noAsyncPromiseExecutor: ignored using `--suppress`
   return new Promise(async (_resolve, _reject) => {
     // First, generate the types
     try {
@@ -56,6 +59,7 @@ export async function watch(config: Config, cwd?: string) {
         start = Date.now();
         logger.info(`File ${path} has been changed. Generating types.`);
         running = true;
+        // biome-ignore lint/complexity/noVoid: ignored using `--suppress`
         void generate(config)
           .catch((e) => {
             logger.error({ error: e }, 'Error generating types');

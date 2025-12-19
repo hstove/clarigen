@@ -89,6 +89,7 @@ type ParserType =
 
 function getParserForType(type: ClarityAbiType): ParserType {
   if (isClarityAbiPrimitive(type)) {
+    // biome-ignore lint/style/useDefaultSwitchClause: ignored using `--suppress`
     switch (type) {
       case 'bool':
         return parseAsBoolean.withDefault(false);
@@ -131,6 +132,7 @@ function getParserForType(type: ClarityAbiType): ParserType {
 
 function getDefaultValueForType(type: ClarityAbiType): unknown {
   if (typeof type === 'string') {
+    // biome-ignore lint/style/useDefaultSwitchClause: ignored using `--suppress`
     switch (type) {
       case 'bool':
         return false;

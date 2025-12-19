@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { projectFactory, ok, err, type Response } from '@clarigen/core';
 import { project } from './generated/clarigen-types';
 import { describe, expect, it } from 'vitest';
@@ -20,6 +21,7 @@ const [deployer] = tester.identifier.split('.');
 
 describe('using clarigen/test', () => {
   it('can get deployment info', () => {
+    // biome-ignore lint/correctness/noUndeclaredVariables: ignored using `--suppress`
     const _data = simnet.getContractsInterfaces();
     // console.log(data);
   });
@@ -59,7 +61,9 @@ describe('using clarigen/test', () => {
   });
 
   it('types are correct', () => {
+    // biome-ignore lint/nursery/noUnusedExpressions: ignored using `--suppress`
     txOk(tester.printPub(), deployer).value as boolean;
+    // biome-ignore lint/nursery/noUnusedExpressions: ignored using `--suppress`
     txErr(tester.printErr(), deployer).value as bigint;
     rov(tester.echo('asdf'), deployer) as string;
     rovOk(tester.roResp(false), deployer) as string;

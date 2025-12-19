@@ -34,6 +34,7 @@ export function ClarityField({
   disabled,
 }: ClarityFieldProps) {
   if (isClarityAbiPrimitive(type)) {
+    // biome-ignore lint/style/useDefaultSwitchClause: ignored using `--suppress`
     switch (type) {
       case 'uint128':
         return (

@@ -6,6 +6,7 @@ import type {
 import { contractsFactory } from '../src';
 import { test, expect } from 'vitest';
 
+// biome-ignore lint/suspicious/noExportsInTest: ignored using `--suppress`
 export type ClarityAbiType =
   | ClarityAbiTypeTuple
   | ClarityAbiTypeUInt128
@@ -14,6 +15,7 @@ export type ClarityAbiType =
 // export type ClarityAbiTypeTuple = {
 //   tuple: { name: string; type: ClarityAbiType }[];
 // };
+// biome-ignore lint/suspicious/noExportsInTest: ignored using `--suppress`
 export type ClarityAbiTypeTuple = {
   tuple:
     | readonly { name: string; type: ClarityAbiType }[]

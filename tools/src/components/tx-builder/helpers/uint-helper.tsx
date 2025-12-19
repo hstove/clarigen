@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { useState } from 'react';
 import * as dn from 'dnum';
 import { Button } from '@/components/ui/button';
@@ -122,6 +123,7 @@ export function UintHelper({ field, onApply }: UintHelperProps) {
           </Select>
         </div>
 
+        {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
         {isCustom && (
           <div className="space-y-2">
             <Label className="text-xs" htmlFor="custom-decimals">
@@ -149,6 +151,7 @@ export function UintHelper({ field, onApply }: UintHelperProps) {
           Convert
         </Button>
 
+        {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
         {convertedValue && (
           <div className="space-y-2 rounded-md border border-border bg-muted/50 p-3">
             <p className="text-muted-foreground text-xs">Converted Value:</p>
@@ -156,6 +159,7 @@ export function UintHelper({ field, onApply }: UintHelperProps) {
           </div>
         )}
 
+        {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
         {error && (
           <div className="rounded border border-destructive/20 bg-destructive/10 p-2 text-destructive text-xs">
             {error}

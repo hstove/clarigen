@@ -38,6 +38,7 @@ export function PostConditionsField({
 
   const handleAddCondition = (type: PostConditionType) => {
     let newCondition: PostConditionForm;
+    // biome-ignore lint/style/useDefaultSwitchClause: ignored using `--suppress`
     switch (type) {
       case 'stx':
         newCondition = createEmptyStxCondition();
@@ -168,6 +169,7 @@ function PostConditionItem({
   const typeIcon =
     condition.type === 'stx' ? (
       <CircleDollarSign className="h-4 w-4" />
+      // biome-ignore lint/style/noNestedTernary: ignored using `--suppress`
     ) : condition.type === 'ft' ? (
       <Coins className="h-4 w-4" />
     ) : (
@@ -175,6 +177,7 @@ function PostConditionItem({
     );
 
   const typeLabel =
+    // biome-ignore lint/style/noNestedTernary: ignored using `--suppress`
     condition.type === 'stx' ? 'STX' : condition.type === 'ft' ? 'FT' : 'NFT';
 
   return (

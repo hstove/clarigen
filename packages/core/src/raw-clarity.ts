@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { hexToBytes } from './utils';
 import type {
   ClarityAbiType,
@@ -25,37 +26,47 @@ function unwrap(input: string, prefix = '') {
 
 export type RawClarityTypeTo<
   T extends ClarityAbiType,
+  // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
   A = any,
 > = T extends ClarityAbiTypePrimitive ? AbiPrimitiveTo<T> : A;
 
+// biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
 export type ResponseType<F extends TypedAbiFunction<UnknownArgs, any>> =
+  // biome-ignore lint/correctness/noUnusedVariables: ignored using `--suppress`
   F extends TypedAbiFunction<infer A, infer R> ? R : never;
 
 // export function rawClarityToValue<AbiType extends ClarityAbiType>(
 //   input: string,
 //   type: AbiType
 // ): RawClarityTypeTo<AbiType>;
+// biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
 export function rawClarityToValue<T = any>(
   input: string,
   type: ClarityAbiType
 ): T;
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: ignored using `--suppress`
+// biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
 export function rawClarityToValue<T = any>(
   input: string,
   type: ClarityAbiType
 ): T {
   if (isClarityAbiTuple(type)) {
     const decoded = expectTuple(input);
+    // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
     const tuple: Record<string, any> = {};
     const tupleReduced = Object.entries(decoded).reduce(
       (acc, [key, val]) => {
         const keyFixed = key.trim();
         return {
+          // biome-ignore lint/performance/noAccumulatingSpread: ignored using `--suppress`
           ...acc,
           [keyFixed]: val.trim(),
         };
       },
+      // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
       {} as Record<string, any>
     );
+    // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
     type.tuple.forEach(({ name, type: _type }) => {
       const camelName = toCamelCase(name);
       tuple[camelName] = rawClarityToValue(tupleReduced[name], _type);
@@ -91,15 +102,18 @@ export function rawClarityToValue<T = any>(
     return BigInt(input) as unknown as T;
   }
   if (type === 'trait_reference') {
+    // biome-ignore lint/performance/useTopLevelRegex: ignored using `--suppress`
     return input.replace(/^'/, '') as unknown as T;
   }
   if (type === 'principal') {
+    // biome-ignore lint/performance/useTopLevelRegex: ignored using `--suppress`
     return input.replace(/^'/, '') as unknown as T;
   }
   if (type === 'none') {
     return null as unknown as T;
   }
   if (isClarityAbiBuffer(type)) {
+    // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
     const buff = hexToBytes(input.slice(2));
     return buff as unknown as T;
   }
@@ -181,6 +195,7 @@ for (let n = 0; n <= 0xff; ++n) {
 }
 
 function buff(val: Uint8Array | string) {
+  // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
   const buff =
     typeof val === 'string'
       ? new TextEncoder().encode(val)
@@ -218,11 +233,13 @@ function _expectPrincipal(input: string, value: string) {
   return value;
 }
 
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: ignored using `--suppress`
 function expectList(input: string): string[] {
   if (input.charAt(0) !== '[' || input.at(-1) !== ']') {
     throw new Error(`Expected (list ..), got ${input.toString()}`);
   }
 
+  // biome-ignore lint/suspicious/noEvolvingTypes: ignored using `--suppress`
   const stack = [];
   const elements: string[] = [];
   let start = 1;
@@ -251,13 +268,16 @@ function expectList(input: string): string[] {
   return elements;
 }
 
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: ignored using `--suppress`
 function expectTuple(input: string) {
   if (input.charAt(0) !== '{' || input.at(-1) !== '}') {
     throw new Error(`Expected '(tuple ..)', got ${input.toString()}`);
   }
 
   let start = 1;
+  // biome-ignore lint/suspicious/noEvolvingTypes: ignored using `--suppress`
   const stack = [];
+  // biome-ignore lint/suspicious/noEvolvingTypes: ignored using `--suppress`
   const elements = [];
   for (let i = 0; i < input.length; i++) {
     if (input.charAt(i) === ',' && stack.length === 1) {

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { getSession } from '../src/clarinet-sdk';
 import { test, expect } from 'vitest';
 import { Config } from '../src/config';

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { Pc } from '@stacks/transactions';
 import type { PostCondition } from '@stacks/transactions';
 
@@ -80,83 +81,89 @@ export function createEmptyNftCondition(): NftPostConditionForm {
 export function buildPostConditions(
   conditions: PostConditionForm[]
 ): PostCondition[] {
-  return conditions
-    .filter((pc) => pc.address) // Skip empty conditions
-    .map((pc) => {
-      const principal = Pc.principal(pc.address);
+  return (
+    conditions
+      .filter((pc) => pc.address) // Skip empty conditions
+      // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: ignored using `--suppress`
+      .map((pc) => {
+        const principal = Pc.principal(pc.address);
 
-      if (pc.type === 'stx') {
-        if (!pc.amount) return null;
-        const amount = BigInt(pc.amount);
-        switch (pc.condition) {
-          case 'eq':
-            return principal.willSendEq(amount).ustx();
-          case 'gt':
-            return principal.willSendGt(amount).ustx();
-          case 'gte':
-            return principal.willSendGte(amount).ustx();
-          case 'lt':
-            return principal.willSendLt(amount).ustx();
-          case 'lte':
-            return principal.willSendLte(amount).ustx();
+        if (pc.type === 'stx') {
+          if (!pc.amount) return null;
+          const amount = BigInt(pc.amount);
+          // biome-ignore lint/style/useDefaultSwitchClause: ignored using `--suppress`
+          switch (pc.condition) {
+            case 'eq':
+              return principal.willSendEq(amount).ustx();
+            case 'gt':
+              return principal.willSendGt(amount).ustx();
+            case 'gte':
+              return principal.willSendGte(amount).ustx();
+            case 'lt':
+              return principal.willSendLt(amount).ustx();
+            case 'lte':
+              return principal.willSendLte(amount).ustx();
+          }
         }
-      }
 
-      if (pc.type === 'ft') {
-        if (!(pc.amount && pc.asset)) return null;
-        const amount = BigInt(pc.amount);
-        const [contractId, tokenName] = pc.asset.split('::');
-        if (!(contractId && tokenName)) return null;
+        if (pc.type === 'ft') {
+          if (!(pc.amount && pc.asset)) return null;
+          const amount = BigInt(pc.amount);
+          const [contractId, tokenName] = pc.asset.split('::');
+          if (!(contractId && tokenName)) return null;
 
-        switch (pc.condition) {
-          case 'eq':
-            return principal
-              .willSendEq(amount)
-              .ft(contractId as `${string}.${string}`, tokenName);
-          case 'gt':
-            return principal
-              .willSendGt(amount)
-              .ft(contractId as `${string}.${string}`, tokenName);
-          case 'gte':
-            return principal
-              .willSendGte(amount)
-              .ft(contractId as `${string}.${string}`, tokenName);
-          case 'lt':
-            return principal
-              .willSendLt(amount)
-              .ft(contractId as `${string}.${string}`, tokenName);
-          case 'lte':
-            return principal
-              .willSendLte(amount)
-              .ft(contractId as `${string}.${string}`, tokenName);
+          // biome-ignore lint/style/useDefaultSwitchClause: ignored using `--suppress`
+          switch (pc.condition) {
+            case 'eq':
+              return principal
+                .willSendEq(amount)
+                .ft(contractId as `${string}.${string}`, tokenName);
+            case 'gt':
+              return principal
+                .willSendGt(amount)
+                .ft(contractId as `${string}.${string}`, tokenName);
+            case 'gte':
+              return principal
+                .willSendGte(amount)
+                .ft(contractId as `${string}.${string}`, tokenName);
+            case 'lt':
+              return principal
+                .willSendLt(amount)
+                .ft(contractId as `${string}.${string}`, tokenName);
+            case 'lte':
+              return principal
+                .willSendLte(amount)
+                .ft(contractId as `${string}.${string}`, tokenName);
+          }
         }
-      }
 
-      if (pc.type === 'nft') {
-        if (!(pc.asset && pc.assetId)) return null;
-        const [contractId, nftName] = pc.asset.split('::');
-        if (!(contractId && nftName)) return null;
+        if (pc.type === 'nft') {
+          if (!(pc.asset && pc.assetId)) return null;
+          const [contractId, nftName] = pc.asset.split('::');
+          if (!(contractId && nftName)) return null;
 
-        // For NFT, assetId needs to be a ClarityValue - for now use uintCV
-        // The user should enter just the numeric ID
-        const { uintCV } = require('@stacks/transactions');
-        const assetIdCV = uintCV(BigInt(pc.assetId));
+          // For NFT, assetId needs to be a ClarityValue - for now use uintCV
+          // The user should enter just the numeric ID
+          const { uintCV } = require('@stacks/transactions');
+          const assetIdCV = uintCV(BigInt(pc.assetId));
 
-        switch (pc.condition) {
-          case 'sent':
-            return principal
-              .willSendAsset()
-              .nft(contractId as `${string}.${string}`, nftName, assetIdCV);
-          case 'not-sent':
-            return principal
-              .willNotSendAsset()
-              .nft(contractId as `${string}.${string}`, nftName, assetIdCV);
+          // biome-ignore lint/style/useDefaultSwitchClause: ignored using `--suppress`
+          switch (pc.condition) {
+            case 'sent':
+              return principal
+                .willSendAsset()
+                .nft(contractId as `${string}.${string}`, nftName, assetIdCV);
+            case 'not-sent':
+              return principal
+                .willNotSendAsset()
+                .nft(contractId as `${string}.${string}`, nftName, assetIdCV);
+          }
         }
-      }
 
-      return null;
-    })
-    .filter((pc): pc is PostCondition => pc !== null);
+        return null;
+      })
+      .filter((pc): pc is PostCondition => pc !== null)
+  );
 }
 
 export const FUNGIBLE_COMPARATORS: {

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { type } from 'arktype';
 import { log, logger } from './logger';
 import { fileExists, writeFile } from './utils';
@@ -8,6 +9,7 @@ import { readFile } from 'node:fs/promises';
 
 export const CONFIG_FILE = 'Clarigen.toml' as const;
 
+// biome-ignore lint/style/noEnum: ignored using `--suppress`
 export enum OutputType {
   ESM = 'types',
   ESM_OLD = 'esm',
@@ -52,8 +54,11 @@ export const defaultConfigFile: ConfigFile = {
 };
 
 export class Config {
+  // biome-ignore lint/style/useConsistentMemberAccessibility: ignored using `--suppress`
   public configFile: ConfigFile;
+  // biome-ignore lint/style/useConsistentMemberAccessibility: ignored using `--suppress`
   public clarinet: ClarinetConfig;
+  // biome-ignore lint/style/useConsistentMemberAccessibility: ignored using `--suppress`
   public cwd: string;
 
   constructor(config: ConfigFile, clarinet: ClarinetConfig, cwd?: string) {
@@ -62,6 +67,7 @@ export class Config {
     this.cwd = cwd ?? process.cwd();
   }
 
+  // biome-ignore lint/style/useConsistentMemberAccessibility: ignored using `--suppress`
   public static async load(cwd?: string) {
     const config = await getConfig(cwd);
     if (config[OutputType.ESM_OLD]) {
@@ -74,6 +80,7 @@ export class Config {
     return new Config(config, clarinet, cwd);
   }
 
+  // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
   getOutputs(type: OutputType): string[] {
     const singlePath = this.configFile[type]?.output;
     const multiPath = this.configFile[type]?.outputs || [];
@@ -81,12 +88,14 @@ export class Config {
     return multiPath;
   }
 
+  // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
   outputResolve(type: OutputType, filePath?: string): string[] | null {
     const outputs = this.getOutputs(type);
     if (!this.supports(type)) return null;
     return outputs.map((path) => resolve(this.cwd, path, filePath || ''));
   }
 
+  // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
   async writeOutput(type: OutputType, contents: string, filePath?: string) {
     const paths = this.outputResolve(type, filePath);
     if (paths === null) return null;
@@ -99,10 +108,12 @@ export class Config {
     return paths;
   }
 
+  // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
   supports(type: OutputType) {
     return this.getOutputs(type).length > 0;
   }
 
+  // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
   type(type: OutputType) {
     return this.configFile[type];
   }

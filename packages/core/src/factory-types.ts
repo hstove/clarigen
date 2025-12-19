@@ -8,6 +8,7 @@ import type {
 
 export type ContractCall<T> = {
   function: ClarityAbiFunction;
+  // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
   nativeArgs: any[];
   functionArgs: ClarityValue[];
   contractAddress: string;
@@ -44,13 +45,11 @@ type ArgsRecordUnion<T extends TypedAbiArg<unknown, string>> =
         [K in T as N]: A;
       }
     : never;
-type InnerUnionToIntersection<U> = (
-  U extends any
-    ? (k: U) => void
-    : never
-) extends (k: infer I) => void
-  ? I
-  : never;
+type InnerUnionToIntersection<U> =
+  // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
+  (U extends any ? (k: U) => void : never) extends (k: infer I) => void
+    ? I
+    : never;
 type Compact<T> = { [K in keyof T]: T[K] };
 
 export type UnionToIntersection<T> = Compact<InnerUnionToIntersection<T>>;

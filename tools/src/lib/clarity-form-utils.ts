@@ -1,6 +1,8 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { type ClarityValue, hexToCV, ClarityType } from '@stacks/transactions';
 import {
   type ClarityAbiArg,
+  // biome-ignore lint/style/noExportedImports: ignored using `--suppress`
   formValueToCV,
   principalToString,
   type ClarityAbiType,
@@ -14,6 +16,7 @@ export { formValueToCV };
 
 export function getDefaultValueForType(type: ClarityAbiType): unknown {
   if (typeof type === 'string') {
+    // biome-ignore lint/style/useDefaultSwitchClause: ignored using `--suppress`
     switch (type) {
       case 'bool':
         return false;
@@ -91,6 +94,7 @@ export function cvToFormValue(val: ClarityValue): unknown {
     case ClarityType.Tuple:
       return Object.entries(val.value).reduce(
         (acc, [key, v]) => ({
+          // biome-ignore lint/performance/noAccumulatingSpread: ignored using `--suppress`
           ...acc,
           [key]: cvToFormValue(v),
         }),

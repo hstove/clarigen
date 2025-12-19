@@ -12,6 +12,7 @@ export const MAX_UINT128 = 2n ** 128n - 1n;
 export const MAX_INT128 = 2n ** 127n - 1n;
 export const MIN_INT128 = -(2n ** 127n);
 
+// biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
 export type ValidatorFn = (value: any) => string | undefined;
 
 export function getClarityValidators(type: ClarityAbiType) {
@@ -19,6 +20,7 @@ export function getClarityValidators(type: ClarityAbiType) {
 
   if (isClarityAbiPrimitive(type)) {
     if (type === 'uint128') {
+      // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: ignored using `--suppress`
       validators.push((val: string) => {
         if (!val) return 'Required';
         try {
@@ -30,6 +32,7 @@ export function getClarityValidators(type: ClarityAbiType) {
         }
       });
     } else if (type === 'int128') {
+      // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: ignored using `--suppress`
       validators.push((val: string) => {
         if (!val) return 'Required';
         try {
@@ -61,6 +64,7 @@ export function getClarityValidators(type: ClarityAbiType) {
     validators.push((val: string) => {
       if (!val) return 'Required';
       const hex = val.startsWith('0x') ? val.slice(2) : val;
+      // biome-ignore lint/performance/useTopLevelRegex: ignored using `--suppress`
       if (!/^[0-9a-fA-F]*$/.test(hex)) {
         return 'Invalid hex string';
       }
@@ -81,6 +85,8 @@ export function getClarityValidators(type: ClarityAbiType) {
         return `String exceeds maximum length of ${maxLength}`;
       }
       // eslint-disable-next-line no-control-regex
+      // biome-ignore lint/performance/useTopLevelRegex: ignored using `--suppress`
+      // biome-ignore lint/suspicious/noControlCharactersInRegex: ignored using `--suppress`
       if (/[^\x00-\x7F]/.test(val)) {
         return 'Only ASCII characters allowed';
       }
@@ -99,6 +105,7 @@ export function getClarityValidators(type: ClarityAbiType) {
 
   if (isClarityAbiList(type)) {
     const maxLength = type.list.length;
+    // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
     validators.push((val: any[]) => {
       if (!Array.isArray(val)) return 'Required';
       if (val.length > maxLength) {
@@ -108,6 +115,7 @@ export function getClarityValidators(type: ClarityAbiType) {
   }
 
   return {
+    // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
     onChange: ({ value }: { value: any }) => {
       for (const validator of validators) {
         const error = validator(value);

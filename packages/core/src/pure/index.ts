@@ -15,19 +15,25 @@ export type PureContractInfo = {
   contractName: string;
 };
 
+// biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
 export type ContractFn<T> = (args: any) => T;
 
 export type ContractReturn<
+  // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
   C extends ContractFn<ContractCalls.ReadOnly<any>>,
   // C
 > = C extends ContractFn<ContractCalls.ReadOnly<infer T>> ? T : unknown;
 
 export type ContractReturnOk<
+  // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
   C extends ContractFn<ContractCalls.ReadOnly<any>>,
+  // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
 > = ContractReturn<C> extends Response<infer O, any> ? O : unknown;
 
 export type ContractReturnErr<
+  // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
   C extends ContractFn<ContractCalls.ReadOnly<any>>,
+  // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
 > = ContractReturn<C> extends Response<any, infer E> ? E : unknown;
 
 export type MapGet<Key, _Val> = {
@@ -39,6 +45,7 @@ export type MapGet<Key, _Val> = {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
+// biome-ignore lint/style/noNamespace: ignored using `--suppress`
 export namespace ContractCalls {
   export type ReadOnly<T> = ContractCall<T>;
   export type Public<Ok, Err> = ContractCall<Response<Ok, Err>>;
@@ -49,11 +56,13 @@ export namespace ContractCalls {
 function getter<T>(
   contract: PureContractInfo,
   property: string | symbol
+  // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
 ): (...args: any) => ContractCall<T> | MapGet<any, T> {
   const foundFunction = contract.abi.functions.find(
     (func) => toCamelCase(func.name) === property
   );
   if (foundFunction) {
+    // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
     return (...args: any[]) => {
       const functionArgs = transformArgsToCV(foundFunction, args);
       return {
@@ -70,8 +79,10 @@ function getter<T>(
     (map) => toCamelCase(map.name) === property
   );
   if (foundMap) {
+    // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
     return (key: any) => {
       const keyCV = parseToCV(key, foundMap.key);
+      // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
       const mapGet: MapGet<any, T> = {
         contractAddress: contract.contractAddress,
         contractName: contract.contractName,
@@ -103,6 +114,7 @@ type ProxyConstructor = {
     handler: ProxyHandler<S>
   ): T;
 };
+// biome-ignore lint/suspicious/noShadowRestrictedNames: ignored using `--suppress`
 declare const Proxy: ProxyConstructor;
 
 export const pureProxy = <T extends object>(target: PureContractInfo): T =>

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { uintCV } from '@stacks/transactions';
 import { project } from './generated/clarigen-types';
 import {

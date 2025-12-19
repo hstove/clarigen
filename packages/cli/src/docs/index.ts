@@ -2,6 +2,7 @@ import type { Config } from '../config';
 import { logger } from '../logger';
 import { spawn } from 'node:child_process';
 
+// biome-ignore lint/suspicious/useAwait: ignored using `--suppress`
 export async function afterDocs(config: Config): Promise<void> {
   const command = config.docs?.after;
   if (!command) return;

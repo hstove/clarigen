@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { cn } from '@/lib/utils';
 
 type DocTextProps = {
@@ -10,6 +11,7 @@ function toParagraphs(text: string[]) {
   const paragraphs: string[] = [];
   let current: string[] = [];
 
+  // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
   text.forEach((line) => {
     const trimmed = line.trim();
     if (trimmed === '') {

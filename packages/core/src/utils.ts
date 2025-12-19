@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import {
   contractPrincipalCV,
   type ContractPrincipalCV,
@@ -16,6 +17,7 @@ export const toCamelCase = (
 ) => {
   const inputStr = typeof input === 'string' ? input : String(input);
   // Check if the input string only contains uppercase letters and/or underscores
+  // biome-ignore lint/performance/useTopLevelRegex: ignored using `--suppress`
   const isUpperCaseAndUnderscore = /^[A-Z_]+$/.test(inputStr);
   if (isUpperCaseAndUnderscore) {
     return inputStr;
@@ -26,6 +28,7 @@ export const toCamelCase = (
     .split('-');
   const firstChar = titleCase ? first[0].toUpperCase() : first[0].toLowerCase();
   let result = `${firstChar}${first.slice(1)}`;
+  // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
   parts.forEach((part) => {
     const capitalized = part[0].toUpperCase() + part.slice(1);
     result += capitalized;
@@ -149,6 +152,7 @@ export function projectErrors<
   const { contracts } = project;
   const result: Partial<ProjectErrors<T>> = {};
 
+  // biome-ignore lint/suspicious/useGuardForIn: ignored using `--suppress`
   for (const key in contracts) {
     result[key as keyof ProjectErrors<T>] = extractErrors(contracts[key]);
   }

@@ -1,12 +1,15 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import type { OperationResponse } from '@stacks/blockchain-api-client';
 import { StacksTransaction } from '../src/types/stacks-transaction';
 import { test, expect } from 'vitest';
 import { type } from 'arktype';
 
+// biome-ignore lint/suspicious/noExportsInTest: ignored using `--suppress`
 export type StacksTranactionResponse =
   OperationResponse['get_transaction_by_id'];
 
 test('StacksTransaction type is compatible with api', () => {
+  // biome-ignore lint/suspicious/noEmptyBlockStatements: ignored using `--suppress`
   function doSomething(_tx: StacksTranactionResponse) {}
 
   const t = {} as unknown as typeof StacksTransaction.infer;

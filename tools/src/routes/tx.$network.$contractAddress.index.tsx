@@ -19,6 +19,7 @@ export const Route = createFileRoute('/tx/$network/$contractAddress/')({
 
 function ContractOverviewPage() {
   const { network: networkParam, contractAddress } = Route.useParams();
+  // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
   const network = parseNetwork(networkParam)!;
 
   return (

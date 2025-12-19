@@ -140,6 +140,7 @@ export function flatBatch<T extends DeploymentTransaction>(
 ) {
   // const start: T[][] = [];
   const txs: T[] = [];
+  // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
   batches.forEach((batch) => txs.push(...batch.transactions));
   return txs;
 }
@@ -151,6 +152,7 @@ export function getContractTxs(
   return txs.filter(isContractDeploymentTx);
 }
 
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: ignored using `--suppress`
 export function getDeploymentContract(
   contractName: string,
   deployment: DeploymentPlan

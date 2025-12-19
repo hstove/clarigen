@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import type { SessionWithVariables } from '../session';
 import { type Config, OutputType } from '../config';
 import { log } from '../logger';
@@ -29,6 +30,8 @@ export async function generateDocs({
     (docs.exclude || []).map((e) => [e, true])
   );
   log.debug(`Generating docs at path \`${docsBase}\``);
+  // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
+  // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: ignored using `--suppress`
   const docsBaseFolder = config.outputResolve(OutputType.Docs, './')?.[0]!;
   const paths = await Promise.all(
     session.contracts.map(async (contract) => {
@@ -53,6 +56,7 @@ export async function generateDocs({
 
       // log.debug(`Writing docs markdown file at ${cwdRelative(docPathFull)}`);
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
       const path = (await config.writeOutput(OutputType.Docs, md, docFile))!;
       return path[0];
     })
@@ -61,6 +65,8 @@ export async function generateDocs({
   const readme = generateReadme(session, excluded);
 
   paths.push(
+    // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: ignored using `--suppress`
+    // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
     (await config.writeOutput(OutputType.Docs, readme, 'README.md'))?.[0]!
   );
   await afterDocs(config);

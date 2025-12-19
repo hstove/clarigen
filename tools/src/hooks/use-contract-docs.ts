@@ -14,6 +14,7 @@ export function useContractDocs(network: NETWORK, contractId: string) {
       return { docs: undefined, error: new Error('Expected ABI') };
     }
     try {
+      // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
       const docs = createContractDocInfo({
         contractSrc: query.data.source_code,
         abi: parseContractAbi(query.data.abi),

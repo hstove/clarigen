@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { readFile } from 'node:fs/promises';
 import { join, dirname, relative } from 'node:path';
 import type { Config } from '../config';
@@ -44,6 +45,7 @@ export async function getDeployments(config: Config): Promise<DeploymentsMap> {
       let plan: Plan;
       try {
         plan = await parseDeployment(path);
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: ignored using `--suppress`
       } catch (_) {}
       return [network, plan] as [DeploymentNetwork, Plan];
     })
@@ -117,6 +119,7 @@ export function collectContractDeployments(
             return [network, null];
           }
           try {
+            // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
             const contractName = contract.contract_id.split('.')[1];
             const tx = getDeploymentContract(contractName, deployment);
             const id = getIdentifierForDeploymentTx(tx);
@@ -133,6 +136,7 @@ export function collectContractDeployments(
   const deployer = session.accounts.find((a) => a.name === 'deployer');
 
   // handle defaults when there is no deployment file
+  // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
   config.clarinet.project.requirements?.forEach(({ contract_id }) => {
     insertNetworkId(full, contract_id, 'mainnet');
     const contractName = contract_id.split('.')[1];
@@ -142,6 +146,7 @@ export function collectContractDeployments(
     }
   });
 
+  // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
   session.contracts.forEach((contract) => {
     insertNetworkId(full, contract.contract_id, 'devnet');
     insertNetworkId(full, contract.contract_id, 'simnet');
@@ -194,6 +199,7 @@ export const simnetDeployment = ${JSON.stringify(files)};
   // };
 }
 
+// biome-ignore lint/suspicious/useAwait: ignored using `--suppress`
 export async function afterESM(config: Config): Promise<void> {
   const command = config.esm?.after;
   if (!command) return;

@@ -1,3 +1,4 @@
+// biome-ignore lint/performance/noBarrelFile: ignored using `--suppress`
 export * from './docs/markdown';
 export * from './docs';
 export * from './session';

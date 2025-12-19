@@ -45,6 +45,7 @@ export type ContractInstance<T> = {
   contract: T;
 };
 
+// biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
 export type ContractInstances<T extends Contracts<any>> = {
   [Name in keyof T]: ContractInstance<ReturnType<T[Name]['contract']>>;
 };

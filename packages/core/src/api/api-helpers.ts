@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import {
   SmartContractsApi,
   Configuration,
@@ -54,6 +55,7 @@ const DEFAULT_FETCH_OPTIONS: RequestInit = isClientSide
     }
   : {};
 
+// biome-ignore lint/suspicious/useAwait: ignored using `--suppress`
 export async function fetchPrivate(
   input: RequestInfo,
   init: RequestInit = {}
@@ -71,6 +73,7 @@ export const generateUrl = (
 ): string => {
   try {
     const url = new URL(baseUrl);
+    // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
     Object.keys(params).forEach((key) => {
       const value = params[key];
       if (!value) return;

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { useState } from 'react';
 import { useFocusedField, type FocusedField } from '@/hooks/use-focused-field';
 import {
@@ -23,6 +24,7 @@ function getFieldTypeCategory(field: FocusedField): string {
   const { type } = field;
 
   if (isClarityAbiPrimitive(type)) {
+    // biome-ignore lint/style/useDefaultSwitchClause: ignored using `--suppress`
     switch (type) {
       case 'uint128':
       case 'int128':
@@ -101,6 +103,7 @@ function PrincipalHelper({
       <div className="space-y-1 text-muted-foreground text-xs">
         <p>• Mainnet: starts with SP...</p>
         <p>• Testnet: starts with ST...</p>
+        {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
         {isContract && <p>• Format: address.contract-name</p>}
       </div>
     </div>
@@ -275,6 +278,7 @@ export function FieldHelper({
         <h3 className="font-medium font-mono text-muted-foreground text-sm">
           field helper
         </h3>
+        {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
         {focusedField && (
           <button
             aria-label="Clear field helper"
@@ -287,6 +291,7 @@ export function FieldHelper({
         )}
       </div>
 
+      {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
       {focusedField && (
         <div className="flex border-border border-b">
           <TabButton
@@ -310,6 +315,7 @@ export function FieldHelper({
             <div className="font-medium font-mono text-sm">
               {focusedField.name}
             </div>
+            {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
             {hasParamDocs && (
               <div className="border border-border/60 bg-muted/30 p-3">
                 <DocText text={paramDocs} />

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { type } from 'arktype';
 
 export const Network = type.or("'devnet'", "'testnet'", "'mainnet'");
