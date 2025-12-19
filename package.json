@@ -14,7 +14,7 @@
     "demo-types": "bun --filter @clarigen/cli start ../../demo-project",
     "clarigen": "bun --filter @clarigen/cli start",
     "dev:web": "bun --filter clarigen-docs dev",
-    "dev:tools": "bun --filter web-tools dev:tee"
+    "dev:tools": "bun --bun turbo run dev --filter=@clarigen/web-tools --log-prefix=none"
   },
   "prettier": "@stacks/prettier-config",
   "packageManager": "bun@1.3.4",

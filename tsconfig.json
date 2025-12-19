@@ -7,7 +7,7 @@
     "strictNullChecks": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "noUncheckedIndexedAccess": false,
+    "noUncheckedIndexedAccess": false
   },
   "exclude": ["node_modules", "dist"]
 }

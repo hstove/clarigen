@@ -16,6 +16,8 @@ import {
 function useStacksAccount() {
   const { data: stacksAccount } = useQuery(queries.stacks.getAccount());
 
+  // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: ignored using `--suppress`
+  // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
   const stacksAddressMainnet = stacksAccount?.addresses.stx[0]!.address;
 
   const stacksAddress = stacksAddressMainnet;

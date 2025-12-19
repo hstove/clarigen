@@ -304,6 +304,7 @@ export function parseToCV(input: CVInput, type: ClarityAbiType): ClarityValue {
     if (typeof input !== 'string')
       throw new Error('Invalid input for trait_reference');
     const [addr, name] = input.split('.');
+    // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
     return contractPrincipalCV(addr!, name!);
   }
   if (isClarityAbiBuffer(type)) {
@@ -373,17 +374,26 @@ export function cvToString(
       const keys = Object.keys(val.value);
       if (indent === undefined || keys.length === 0) {
         return `{ ${keys
-          .map((key) => `${key}: ${cvToString(val.value[key]!, options)}`)
+          .map(
+            (key) =>
+              `${key}: ${
+                // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
+                cvToString(val.value[key]!, options)
+              }`
+          )
           .join(', ')} }`;
       }
       const padding = ' '.repeat((depth + 1) * indent);
       const outerPadding = ' '.repeat(depth * indent);
       const lines = keys.map(
         (key) =>
-          `${padding}${key}: ${cvToString(val.value[key]!, {
-            ...options,
-            depth: depth + 1,
-          })}`
+          `${padding}${key}: ${
+            // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
+            cvToString(val.value[key]!, {
+              ...options,
+              depth: depth + 1,
+            })
+          }`
       );
       return `{\n${lines.join(',\n')}\n${outerPadding}}`;
     }
@@ -471,6 +481,7 @@ export function transformObjectArgs(
 
 // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
 export function transformArgsArray(func: ClarityAbiFunction, args: any[]) {
+  // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
   return args.map((arg, index) => parseToCV(arg, func.args[index]!.type));
 }
 

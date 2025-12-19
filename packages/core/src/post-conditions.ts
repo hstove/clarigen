@@ -57,7 +57,9 @@ export function makeNonFungiblePostCondition<T extends AbiWithAssets>(
   value: NftAssetType<T>
 ): NonFungiblePostCondition {
   const [nftType] = contract.non_fungible_tokens;
+  // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
   const asset = createAssetInfo(contract, nftType!.name);
+  // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
   const abiType = nftType!.type;
   const cv = parseToCV(value as CVInput, abiType);
   return {
@@ -77,6 +79,7 @@ export function makeFungiblePostCondition<T extends AbiWithAssets>(
 ): FungiblePostCondition {
   const [_addr, _name] = sender.split('.');
   const [ftType] = contract.fungible_tokens;
+  // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
   const asset = createAssetInfo(contract, ftType!.name);
   return {
     type: 'ft-postcondition',

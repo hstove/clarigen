@@ -49,6 +49,7 @@ export async function getSession(
           ) {
             return;
           }
+          // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
           const name = getContractName(contract_id, false)!;
           const contractPathDef = config.clarinet.contracts?.[name]?.path;
           let source: string | undefined;

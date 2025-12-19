@@ -36,7 +36,8 @@
     "rules": {
       "recommended": false,
       "style": {
-        "useBlockStatements": "off"
+        "useBlockStatements": "off",
+        "useTrimStartEnd": "off"
       },
       "performance": {
         "noNamespaceImport": "off"
@@ -66,6 +67,12 @@
   "javascript": {
     "formatter": {
       "quoteStyle": "single"
+    }
+  },
+  "json": {
+    "parser": {
+      "allowComments": true,
+      "allowTrailingCommas": true
     }
   },
   "css": {

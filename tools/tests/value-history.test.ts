@@ -70,7 +70,9 @@ describe('getContextHistory / addContextHistory', () => {
     }
     const history = getContextHistory(contractId, functionName, argName);
     expect(history).toHaveLength(10);
+    // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
     expect(history[0]!).toBe('SP14');
+    // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
     expect(history[9]!).toBe('SP5');
   });
 

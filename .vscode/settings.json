@@ -15,9 +15,7 @@
   "files.readonlyInclude": {
     "**/routeTree.gen.ts": true
   },
-  "deno.enable": false,
   "tailwindCSS.experimental.configFile": "./docs-site/tailwind.config.ts",
-  "biome.enabled": false,
   "[typescript]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
@@ -38,7 +36,6 @@
     "**/app/**/route.tsx": "${dirname}/route.tsx",
     "**/app/**/page.tsx": "${dirname} - page.tsx"
   },
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[jsonc]": {
     "editor.defaultFormatter": "biomejs.biome"
   },

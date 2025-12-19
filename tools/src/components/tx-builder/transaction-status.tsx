@@ -5,7 +5,6 @@ import { format } from 'dnum';
 import { ExplorerLink } from './explorer-link';
 import { cvToString } from '@clarigen/core';
 import { deserializeCV } from '@stacks/transactions';
-import { Hex } from 'viem'
 
 type TransactionStatusProps = {
   tx: typeof StacksTransaction.infer;

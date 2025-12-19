@@ -39,6 +39,7 @@ test('throw if invalid asset name', () => {
 const _nftId: NftAssetType<typeof contract> = 'asdf';
 
 test('can create post condition', () => {
+  // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
   const pc = makeNonFungiblePostCondition(contract, deployer!, 'sent', 1n);
   if (pc.condition !== 'sent') {
     throw new Error('invalid');
@@ -50,6 +51,7 @@ test('correct type errors', () => {
   expect(() => {
     makeNonFungiblePostCondition(
       contract,
+      // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
       deployer!,
       'sent',
       // @ts-expect-error Should fail types
@@ -59,6 +61,7 @@ test('correct type errors', () => {
 });
 
 test('works for ft', () => {
+  // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
   const pc = makeFungiblePostCondition(contract, deployer!, 'eq', 100);
   if (pc.type !== 'ft-postcondition') {
     throw new Error('Invalid');

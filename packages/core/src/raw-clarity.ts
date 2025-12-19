@@ -204,6 +204,7 @@ function buff(val: Uint8Array | string) {
   const hexOctets = new Array(buff.length);
 
   for (let i = 0; i < buff.length; ++i) {
+    // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
     hexOctets[i] = byteToHexCache[buff[i]!];
   }
 

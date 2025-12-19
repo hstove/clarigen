@@ -35,10 +35,15 @@ describe('getVisitedFunctions / addVisitedFunction', () => {
     addVisitedFunction('SP123.token', 'transfer', 'mainnet');
     const visited = getVisitedFunctions();
     expect(visited).toHaveLength(1);
+    // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
     expect(visited[0]!.contractId).toBe('SP123.token');
+    // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
     expect(visited[0]!.functionName).toBe('transfer');
+    // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
     expect(visited[0]!.network).toBe('mainnet');
+    // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
     expect(visited[0]!.lastVisited).toBeTypeOf('number');
+    // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
     expect(visited[0]!.version).toBe(1);
   });
 
@@ -46,6 +51,7 @@ describe('getVisitedFunctions / addVisitedFunction', () => {
     addVisitedFunction('SP123.token', null, 'mainnet');
     const visited = getVisitedFunctions();
     expect(visited).toHaveLength(1);
+    // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
     expect(visited[0]!.functionName).toBeNull();
   });
 
@@ -56,8 +62,11 @@ describe('getVisitedFunctions / addVisitedFunction', () => {
 
     const visited = getVisitedFunctions();
     expect(visited).toHaveLength(3);
+    // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
     expect(visited[0]!.contractId).toBe('SP333.c');
+    // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
     expect(visited[1]!.contractId).toBe('SP222.b');
+    // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
     expect(visited[2]!.contractId).toBe('SP111.a');
   });
 
@@ -68,7 +77,9 @@ describe('getVisitedFunctions / addVisitedFunction', () => {
 
     const visited = getVisitedFunctions();
     expect(visited).toHaveLength(2);
+    // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
     expect(visited[0]!.contractId).toBe('SP111.a');
+    // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
     expect(visited[1]!.contractId).toBe('SP222.b');
   });
 

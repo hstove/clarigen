@@ -48,7 +48,9 @@ export const Route = createFileRoute(
           const rpcUrl = getStacksApiUrl(network);
 
           const result = await callReadOnlyFunction({
+            // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
             contractAddress: address!,
+            // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
             contractName: name!,
             functionName,
             functionArgs: args,

@@ -147,6 +147,7 @@ export function Slider({ label }: { label: string }) {
       <ShadcnSlider
         id={label}
         onBlur={field.handleBlur}
+        // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
         onValueChange={(value) => field.handleChange(value[0]!)}
         value={[field.state.value]}
       />

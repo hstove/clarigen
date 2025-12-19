@@ -12,6 +12,7 @@ export function makeContracts<T extends Contracts<any>>(
   const instances = {} as ContractInstances<T>;
   // biome-ignore lint/suspicious/useGuardForIn: ignored using `--suppress`
   for (const k in contracts) {
+    // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
     const contract = contracts[k]!;
     const address = options.deployerAddress || contract.address;
     const identifier = `${address}.${contract.name}`;
