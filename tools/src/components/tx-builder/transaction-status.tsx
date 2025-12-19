@@ -322,8 +322,10 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
                   {event.event_type.replace(/_/g, ' ')}
                 </div>
                 {event.event_type === 'smart_contract_log' && (
-                  <div className="break-all">
-                    {cvToString(deserializeCV(event.contract_log.value.hex))}
+                  <div className="break-all whitespace-pre-wrap">
+                    {cvToString(deserializeCV(event.contract_log.value.hex), {
+                      indent: 2,
+                    })}
                   </div>
                 )}
                 {event.event_type === 'stx_asset' && (
