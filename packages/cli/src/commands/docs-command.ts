@@ -70,8 +70,8 @@ export async function watch(config: Config, cwd?: string) {
 }
 
 export class DocsCommand extends BaseCommand {
-  static paths = [['docs']];
-  static usage = BaseCommand.Usage({
+  static override paths = [['docs']];
+  static override usage = BaseCommand.Usage({
     description: 'Generate markdown documentation for your Clarity contracts',
   });
 

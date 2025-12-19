@@ -57,8 +57,8 @@ export function makeNonFungiblePostCondition<T extends AbiWithAssets>(
   value: NftAssetType<T>
 ): NonFungiblePostCondition {
   const [nftType] = contract.non_fungible_tokens;
-  const asset = createAssetInfo(contract, nftType.name);
-  const abiType = nftType.type;
+  const asset = createAssetInfo(contract, nftType!.name);
+  const abiType = nftType!.type;
   const cv = parseToCV(value as CVInput, abiType);
   return {
     type: 'nft-postcondition',
@@ -77,7 +77,7 @@ export function makeFungiblePostCondition<T extends AbiWithAssets>(
 ): FungiblePostCondition {
   const [_addr, _name] = sender.split('.');
   const [ftType] = contract.fungible_tokens;
-  const asset = createAssetInfo(contract, ftType.name);
+  const asset = createAssetInfo(contract, ftType!.name);
   return {
     type: 'ft-postcondition',
     address: sender,

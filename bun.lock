@@ -12,6 +12,7 @@
         "@biomejs/biome": "2.3.10",
         "@changesets/changelog-github": "0.5.0",
         "@stacks/prettier-config": "0.0.9",
+        "@total-typescript/tsconfig": "^1.0.4",
         "@types/node": "24.2.0",
         "@vitest/coverage-v8": "^1.1.0",
         "husky": "^4.2.5",
@@ -1203,6 +1204,8 @@
     "@testing-library/dom": ["@testing-library/dom@10.4.1", "", { "dependencies": { "@babel/code-frame": "7.27.1", "@babel/runtime": "7.28.4", "@types/aria-query": "5.0.4", "aria-query": "5.3.0", "dom-accessibility-api": "0.5.16", "lz-string": "1.5.0", "picocolors": "1.1.1", "pretty-format": "27.5.1" } }, "sha512-o4PXJQidqJl82ckFaXUeoAW+XysPLauYI43Abki5hABd853iMhitooc6znOnczgbTYmEP6U6/y1ZyKAIsvMKGg=="],
 
     "@testing-library/react": ["@testing-library/react@16.3.1", "", { "dependencies": { "@babel/runtime": "7.28.4" }, "optionalDependencies": { "@types/react": "19.2.7", "@types/react-dom": "19.2.3" }, "peerDependencies": { "@testing-library/dom": "10.4.1", "react": "19.2.3", "react-dom": "19.2.3" } }, "sha512-gr4KtAWqIOQoucWYD/f6ki+j5chXfcPc74Col/6poTyqTmn7zRmodWahWRCp8tYd+GMqBonw6hstNzqjbs6gjw=="],
+
+    "@total-typescript/tsconfig": ["@total-typescript/tsconfig@1.0.4", "", {}, "sha512-fO4ctMPGz1kOFOQ4RCPBRBfMy3gDn+pegUfrGyUFRMv/Rd0ZM3/SHH3hFCYG4u6bPLG8OlmOGcBLDexvyr3A5w=="],
 
     "@trpc/server": ["@trpc/server@11.8.0", "", { "peerDependencies": { "typescript": ">=5.7.2" } }, "sha512-DphyQnLuyX2nwJCQGWQ9zYz4hZGvRhSBqDhQ0SH3tDhQ3PU4u68xofA0pJ741Ir4InEAFD+TtJVLAQy+wVOkiQ=="],
 

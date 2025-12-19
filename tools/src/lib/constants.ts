@@ -29,7 +29,7 @@ export function isNetworkMismatch(
   expectedNetwork: NETWORK;
 } {
   const address = contractId.split('.')[0];
-  const detectedNetwork = detectNetworkFromAddress(address);
+  const detectedNetwork = detectNetworkFromAddress(address!);
 
   if (!detectedNetwork) {
     return { mismatch: false, detectedNetwork: null, expectedNetwork: network };

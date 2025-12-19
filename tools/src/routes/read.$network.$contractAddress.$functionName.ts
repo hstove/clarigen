@@ -48,8 +48,8 @@ export const Route = createFileRoute(
           const rpcUrl = getStacksApiUrl(network);
 
           const result = await callReadOnlyFunction({
-            contractAddress: address,
-            contractName: name,
+            contractAddress: address!,
+            contractName: name!,
             functionName,
             functionArgs: args,
             url: rpcUrl,

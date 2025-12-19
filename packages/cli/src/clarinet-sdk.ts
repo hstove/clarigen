@@ -49,7 +49,7 @@ export async function getSession(
           ) {
             return;
           }
-          const name = getContractName(contract_id, false);
+          const name = getContractName(contract_id, false)!;
           const contractPathDef = config.clarinet.contracts?.[name]?.path;
           let source: string | undefined;
           if (contractPathDef) {

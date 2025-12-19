@@ -70,8 +70,8 @@ describe('getContextHistory / addContextHistory', () => {
     }
     const history = getContextHistory(contractId, functionName, argName);
     expect(history).toHaveLength(10);
-    expect(history[0]).toBe('SP14');
-    expect(history[9]).toBe('SP5');
+    expect(history[0]!).toBe('SP14');
+    expect(history[9]!).toBe('SP5');
   });
 
   it('skips empty strings', () => {

@@ -8,8 +8,8 @@ import { writeFile } from 'node:fs/promises';
 import { tomlInit } from '../generated/init-config';
 
 export class InitConfigCommand extends BaseCommand {
-  static paths = [['init-config'], ['init']];
-  static usage = {
+  static override paths = [['init-config'], ['init']];
+  static override usage = {
     description: 'Initialize a Clarigen configuration file',
   };
 

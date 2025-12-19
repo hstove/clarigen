@@ -35,18 +35,18 @@ describe('getVisitedFunctions / addVisitedFunction', () => {
     addVisitedFunction('SP123.token', 'transfer', 'mainnet');
     const visited = getVisitedFunctions();
     expect(visited).toHaveLength(1);
-    expect(visited[0].contractId).toBe('SP123.token');
-    expect(visited[0].functionName).toBe('transfer');
-    expect(visited[0].network).toBe('mainnet');
-    expect(visited[0].lastVisited).toBeTypeOf('number');
-    expect(visited[0].version).toBe(1);
+    expect(visited[0]!.contractId).toBe('SP123.token');
+    expect(visited[0]!.functionName).toBe('transfer');
+    expect(visited[0]!.network).toBe('mainnet');
+    expect(visited[0]!.lastVisited).toBeTypeOf('number');
+    expect(visited[0]!.version).toBe(1);
   });
 
   it('stores contract-only visits with null functionName', () => {
     addVisitedFunction('SP123.token', null, 'mainnet');
     const visited = getVisitedFunctions();
     expect(visited).toHaveLength(1);
-    expect(visited[0].functionName).toBeNull();
+    expect(visited[0]!.functionName).toBeNull();
   });
 
   it('stores multiple visits in most-recent-first order', () => {
@@ -56,9 +56,9 @@ describe('getVisitedFunctions / addVisitedFunction', () => {
 
     const visited = getVisitedFunctions();
     expect(visited).toHaveLength(3);
-    expect(visited[0].contractId).toBe('SP333.c');
-    expect(visited[1].contractId).toBe('SP222.b');
-    expect(visited[2].contractId).toBe('SP111.a');
+    expect(visited[0]!.contractId).toBe('SP333.c');
+    expect(visited[1]!.contractId).toBe('SP222.b');
+    expect(visited[2]!.contractId).toBe('SP111.a');
   });
 
   it('moves existing visit to front (deduplication)', () => {
@@ -68,8 +68,8 @@ describe('getVisitedFunctions / addVisitedFunction', () => {
 
     const visited = getVisitedFunctions();
     expect(visited).toHaveLength(2);
-    expect(visited[0].contractId).toBe('SP111.a');
-    expect(visited[1].contractId).toBe('SP222.b');
+    expect(visited[0]!.contractId).toBe('SP111.a');
+    expect(visited[1]!.contractId).toBe('SP222.b');
   });
 
   it('treats same contract/function on different networks as separate entries', () => {

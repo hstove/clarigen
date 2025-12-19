@@ -16,7 +16,7 @@ import {
 function useStacksAccount() {
   const { data: stacksAccount } = useQuery(queries.stacks.getAccount());
 
-  const stacksAddressMainnet = stacksAccount?.addresses.stx[0].address;
+  const stacksAddressMainnet = stacksAccount?.addresses.stx[0]!.address;
 
   const stacksAddress = stacksAddressMainnet;
   let stacksAddressTestnet = stacksAddressMainnet;

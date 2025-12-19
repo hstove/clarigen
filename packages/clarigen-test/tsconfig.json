@@ -1,10 +1,6 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "module": "preserve",
-    "lib": ["esnext"],
-    "outDir": "./dist",
-    "rootDir": "./src",
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "skipLibCheck": true,

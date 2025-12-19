@@ -1,16 +1,7 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "@total-typescript/tsconfig/bundler/no-dom/library-monorepo",
   "compilerOptions": {
-    "module": "preserve",
-    "lib": ["dom", "esnext"],
-    "outDir": "./dist",
     "rootDir": "./src",
-    "resolveJsonModule": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "skipLibCheck": true,
-    "allowImportingTsExtensions": true,
-    "strictNullChecks": true
   },
   "include": ["./src/**/*"]
 }

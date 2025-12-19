@@ -147,7 +147,7 @@ export function Slider({ label }: { label: string }) {
       <ShadcnSlider
         id={label}
         onBlur={field.handleBlur}
-        onValueChange={(value) => field.handleChange(value[0])}
+        onValueChange={(value) => field.handleChange(value[0]!)}
         value={[field.state.value]}
       />
       {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}

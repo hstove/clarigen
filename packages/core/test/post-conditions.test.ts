@@ -39,7 +39,7 @@ test('throw if invalid asset name', () => {
 const _nftId: NftAssetType<typeof contract> = 'asdf';
 
 test('can create post condition', () => {
-  const pc = makeNonFungiblePostCondition(contract, deployer, 'sent', 1n);
+  const pc = makeNonFungiblePostCondition(contract, deployer!, 'sent', 1n);
   if (pc.condition !== 'sent') {
     throw new Error('invalid');
   }
@@ -50,7 +50,7 @@ test('correct type errors', () => {
   expect(() => {
     makeNonFungiblePostCondition(
       contract,
-      deployer,
+      deployer!,
       'sent',
       // @ts-expect-error Should fail types
       'asdf'
@@ -59,7 +59,7 @@ test('correct type errors', () => {
 });
 
 test('works for ft', () => {
-  const pc = makeFungiblePostCondition(contract, deployer, 'eq', 100);
+  const pc = makeFungiblePostCondition(contract, deployer!, 'eq', 100);
   if (pc.type !== 'ft-postcondition') {
     throw new Error('Invalid');
   }

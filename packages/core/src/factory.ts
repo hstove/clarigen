@@ -81,7 +81,7 @@ export function projectFactory<
   const e: [keyof C, FullContract<TypedAbi>][] = [];
   // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
   Object.entries(project.contracts).forEach(([contractName, contract]) => {
-    const id = project.deployments[contractName][network];
+    const id = project.deployments[contractName]![network];
     if (id) {
       e.push([contractName, contractFactory(contract, id)]);
     }
@@ -113,9 +113,9 @@ export function functionsFactory<T extends ContractFunctions>(
           const functionArgs = transformArgsToCV(foundFunction, args);
           const [contractAddress, contractName] = identifier.split('.');
           return {
-            functionArgs,
-            contractAddress,
-            contractName,
+            functionArgs: functionArgs!,
+            contractAddress: contractAddress!,
+            contractName: contractName!,
             function: foundFunction,
             functionName: foundFunction.name,
             nativeArgs: args,
@@ -160,7 +160,7 @@ export function deploymentFactory<T extends AllContracts>(
   txs.forEach((tx) => {
     const id = getIdentifierForDeploymentTx(tx);
     const [contractAddress, contractFileName] = id.split('.');
-    const contractName = toCamelCase(contractFileName) as keyof T;
+    const contractName = toCamelCase(contractFileName!) as keyof T;
     const def = contracts[contractName] as TypedAbi;
     const final = contracts[contractName] as FullContract<T[keyof T]>;
     if (typeof final === 'undefined') {
@@ -172,11 +172,11 @@ export function deploymentFactory<T extends AllContracts>(
     final.contractFile = getDeploymentTxPath(tx);
     final.identifier = id;
     // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
-    Object.keys(contracts[contractName].functions).forEach((_fnName) => {
+    Object.keys(contracts[contractName]!.functions).forEach((_fnName) => {
       const fnName: keyof (typeof def)['functions'] = _fnName;
       // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
       const fn = ((...args: any[]) => {
-        const foundFunction = def.functions[fnName];
+        const foundFunction = def.functions[fnName]!;
         const functionArgs = transformArgsToCV(foundFunction, args);
         return {
           functionArgs,

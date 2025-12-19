@@ -26,11 +26,11 @@ export const toCamelCase = (
     .replace('!', '_x')
     .replace('?', '_q')
     .split('-');
-  const firstChar = titleCase ? first[0].toUpperCase() : first[0].toLowerCase();
-  let result = `${firstChar}${first.slice(1)}`;
+  const firstChar = titleCase ? first![0]!.toUpperCase() : first![0]!.toLowerCase();
+  let result = `${firstChar}${first!.slice(1)}`;
   // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
   parts.forEach((part) => {
-    const capitalized = part[0].toUpperCase() + part.slice(1);
+    const capitalized = part[0]!.toUpperCase() + part.slice(1);
     result += capitalized;
   });
   return result;
@@ -44,9 +44,9 @@ export function toKebabCase(input: string): string {
   return matches.join('-').toLowerCase();
 }
 
-export function getContractName(identifier: string, camelCase = true) {
+export function getContractName(identifier: string, camelCase = true): string {
   const name = identifier.split('.')[1];
-  return camelCase ? toCamelCase(name) : name;
+  return camelCase ? toCamelCase(name!) : name!;
 }
 
 export const getContractNameFromPath = (path: string) => {
@@ -63,7 +63,7 @@ export const getContractPrincipalCV = <T>(
   contract: Contract<T>
 ): ContractPrincipalCV => {
   const contractName = getContractNameFromPath(contract.contractFile);
-  return contractPrincipalCV(contract.address, contractName);
+  return contractPrincipalCV(contract.address, contractName!);
 };
 
 export function bootContractIdentifier(name: string, mainnet: boolean) {
@@ -154,7 +154,7 @@ export function projectErrors<
 
   // biome-ignore lint/suspicious/useGuardForIn: ignored using `--suppress`
   for (const key in contracts) {
-    result[key as keyof ProjectErrors<T>] = extractErrors(contracts[key]);
+    result[key as keyof ProjectErrors<T>] = extractErrors(contracts[key]!);
   }
 
   return result as unknown as ProjectErrors<T>;

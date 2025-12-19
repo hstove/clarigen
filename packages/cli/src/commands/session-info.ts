@@ -5,8 +5,8 @@ import { logger } from '../logger';
 import { BaseCommand } from './base-command';
 
 export class SessionInfoCommand extends BaseCommand {
-  static paths = [['session-info']];
-  static usage = Command.Usage({
+  static override paths = [['session-info']];
+  static override usage = Command.Usage({
     description: "Log info about this project's Clarinet session",
   });
 

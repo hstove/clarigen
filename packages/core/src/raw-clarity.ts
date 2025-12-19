@@ -204,7 +204,7 @@ function buff(val: Uint8Array | string) {
   const hexOctets = new Array(buff.length);
 
   for (let i = 0; i < buff.length; ++i) {
-    hexOctets[i] = byteToHexCache[buff[i]];
+    hexOctets[i] = byteToHexCache[buff[i]!];
   }
 
   return `0x${hexOctets.join('')}`;
