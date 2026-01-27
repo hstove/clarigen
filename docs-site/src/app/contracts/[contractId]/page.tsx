@@ -21,13 +21,10 @@ export default async function ContractPage({ params }: ContractPageProps) {
         <CodeBlock code={files.clarity} language="clarity" showLineNumbers />
       }
       docsNode={<Mdx className="p-4" code={files.mdx} />}
-      // @ts-expect-error
       files={files}
-      // @ts-expect-error
       typesNode={
         <CodeBlock code={files.types} language="typescript" showLineNumbers />
       }
-      // @ts-expect-error
       usageNode={
         <CodeBlock code={files.usage} language="typescript" showLineNumbers />
       }
