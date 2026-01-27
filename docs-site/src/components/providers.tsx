@@ -5,6 +5,6 @@ export const Providers: React.FC<{ children?: React.ReactNode }> = ({
   children,
 }) => (
   <>
-    <JotaiProvider><>{children}</></JotaiProvider>
+    <JotaiProvider>{children}</JotaiProvider>
   </>
 );

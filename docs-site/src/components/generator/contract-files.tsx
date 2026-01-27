@@ -101,15 +101,15 @@ export function GeneratedContractFiles({
               </div> */}
             </TabsContent>
             <TabsContent className="p-4 pt-0" value="types">
-              <>{typesNode}</>
+              {typesNode}
               {/* <CodeBlock code={files.types} language="typescript" showLineNumbers /> */}
             </TabsContent>
             <TabsContent className="p-4 pt-0" value="usage">
-              <>{usageNode}</>
+              {usageNode}
               {/* <CodeBlock code={files.usage} language="typescript" showLineNumbers /> */}
             </TabsContent>
             <TabsContent className="p-4 pt-0" value="clarity">
-              <>{clarityNode}</>
+              {clarityNode}
               {/* <CodeBlock code={files.clarity} language="clarity" showLineNumbers /> */}
             </TabsContent>
           </div>

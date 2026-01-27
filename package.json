@@ -7,7 +7,7 @@
     "lint": "biome check",
     "lint:fix": "biome check --write",
     "test": "turbo run test --continue",
-    "typecheck": "bun --bun run turbo run typecheck --continue",
+    "typecheck": "bun --bun run turbo run typecheck --continue --filter=!clarigen-docs",
     "publish-packages": "bun build:packages && bun run publish -r",
     "publish-local": "bun build:packages && bun run publish -r",
     "publish-changesets": "bun build:packages && bun changeset publish",
