@@ -11,7 +11,6 @@ import { type ClarityAbi, toCamelCase } from '@clarigen/core';
 import escape from 'escape-html';
 import { compileMdx } from './mdx-utils';
 import { format } from 'prettier';
-// @ts-expect-error
 import { cache } from 'react';
 
 export async function fetchContractMeta(

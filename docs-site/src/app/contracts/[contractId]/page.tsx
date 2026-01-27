@@ -4,14 +4,15 @@ import { generateContractFiles } from '@/lib/code-gen';
 import { GeneratedContractFiles } from '@/components/generator/contract-files';
 
 export type ContractPageProps = {
-  params: {
+  params: Promise<{
     contractId: string;
-  };
+  }>;
 };
 
 export const revalidate = 3000;
 
-export default async function ContractPage({ params }: ContractPageProps) {
+export default async function ContractPage(props: ContractPageProps) {
+  const params = await props.params;
   const { contractId } = params;
   const files = await generateContractFiles(contractId);
 

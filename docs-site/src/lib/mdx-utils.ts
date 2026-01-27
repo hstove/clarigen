@@ -1,5 +1,4 @@
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-// @ts-expect-error
 import rehypePrettyCode, {
   type Options as PrettyCodeOptions,
 } from 'rehype-pretty-code';

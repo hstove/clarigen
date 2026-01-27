@@ -53,7 +53,6 @@ export async function CodeBlock({
   //     />
   //   </code>
   // );
-  // @ts-expect-error
   return (
     <MarkdownWrapper className={className} markdown={markdown} {...props} />
   );

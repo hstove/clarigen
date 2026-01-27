@@ -29,13 +29,15 @@ function getDocFromParams({ params }: DocPageProps) {
 export const generateStaticParams = async () =>
   allDocs.map((post) => ({ slug: post.slugAsParams.split('/') }));
 
-export const generateMetadata = ({ params }: DocPageProps) => {
+export const generateMetadata = async (props: DocPageProps) => {
+  const params = props.params;
   const post = getDocFromParams({ params });
   if (!post) throw new Error(`Post not found for slug: ${params.slug}`);
   return { title: post.title };
 };
 
-export const DocsPage = ({ params }: DocPageProps) => {
+export const DocsPage = async (props: DocPageProps) => {
+  const params = props.params;
   const post = getDocFromParams({ params });
   if (!post) throw new Error(`Post not found for slug: ${params.slug}`);
   return (
