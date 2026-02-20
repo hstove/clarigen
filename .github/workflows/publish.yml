@@ -22,8 +22,7 @@ jobs:
       - name: Generate type stubs
         run: bun turbo run type-stubs --filter=@clarigen/cli
       - name: Type checks
-        # run: bun typecheck
-        run: bun typecheck"
+        run: bun typecheck
       - name: Tests
         run: bun run test
       - name: Lint
