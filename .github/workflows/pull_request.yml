@@ -16,7 +16,6 @@ jobs:
       - name: Lint
         run: bun lint
       - name: Type checks
-        # run: bun typecheck
-        run: bun turbo run typecheck --filter="\!docs-site"
+        run: bun typecheck
       - name: Tests
         run: bun run test
