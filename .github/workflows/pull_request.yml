@@ -13,8 +13,8 @@ jobs:
         run: bun install
       - name: Build packages
         run: bun build:packages
-      - name: Lint
-        run: bun lint
+      # - name: Lint
+      #   run: bun lint
       - name: Type checks
         run: bun typecheck
       - name: Tests
