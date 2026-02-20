@@ -60,17 +60,8 @@ export function txOk<A extends UnknownArgs, R extends AnyResponse>(
   tx: ContractCallTyped<A, R>,
   sender: string
 ): TransactionResult<OkType<R>> {
-  const args = tx.functionArgs.map(cvConvertMS);
-  const contractId = `${tx.contractAddress}.${tx.contractName}`;
-  // biome-ignore lint/correctness/noUndeclaredVariables: ignored using `--suppress`
-  const receipt = simnet.callPublicFn(
-    contractId,
-    tx.function.name,
-    args,
-    sender
-  );
+  const receipt = getTxReceipt(tx, sender);
   const value = validateResponse<OkType<R>>(receipt.result, true);
-  logTxCall({ contractId, sender, args, functionName: tx.function.name });
 
   return {
     ...receipt,
@@ -84,17 +75,8 @@ export function txErr<A extends UnknownArgs, R extends AnyResponse>(
   tx: ContractCallTyped<A, R>,
   sender: string
 ): TransactionResult<ErrType<R>> {
-  const args = tx.functionArgs.map(cvConvertMS);
-  const contractId = `${tx.contractAddress}.${tx.contractName}`;
-  // biome-ignore lint/correctness/noUndeclaredVariables: ignored using `--suppress`
-  const receipt = simnet.callPublicFn(
-    contractId,
-    tx.function.name,
-    args,
-    sender
-  );
+  const receipt = getTxReceipt(tx, sender);
   const value = validateResponse<ErrType<R>>(receipt.result, false);
-  logTxCall({ contractId, sender, args, functionName: tx.function.name });
 
   return {
     ...receipt,
@@ -108,23 +90,33 @@ export function tx<A extends UnknownArgs, R extends AnyResponse>(
   tx: ContractCallTyped<A, R>,
   sender: string
 ): TransactionResult<R> {
-  const args = tx.functionArgs.map(cvConvertMS);
-  const contractId = `${tx.contractAddress}.${tx.contractName}`;
-  // biome-ignore lint/correctness/noUndeclaredVariables: ignored using `--suppress`
-  const receipt = simnet.callPublicFn(
-    contractId,
-    tx.function.name,
-    args,
-    sender
-  );
+  const receipt = getTxReceipt(tx, sender);
   const value = validateResponse<R>(receipt.result);
-  logTxCall({ contractId, sender, args, functionName: tx.function.name });
 
   return {
     ...receipt,
     events: receipt.events as unknown as CoreNodeEvent[],
     value,
   };
+}
+
+function getTxReceipt<A extends UnknownArgs, R extends AnyResponse>(
+  // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
+  tx: ContractCallTyped<A, R>,
+  sender: string
+): ParsedTransactionResult {
+  const args = tx.functionArgs;
+  const contractId = `${tx.contractAddress}.${tx.contractName}`;
+  let receipt: ParsedTransactionResult;
+  if (tx.function.access === 'private') {
+    // biome-ignore lint/correctness/noUndeclaredVariables: ignored using `--suppress`
+    receipt = simnet.callPrivateFn(contractId, tx.function.name, args, sender);
+  } else {
+    // biome-ignore lint/correctness/noUndeclaredVariables: ignored using `--suppress`
+    receipt = simnet.callPublicFn(contractId, tx.function.name, args, sender);
+  }
+  logTxCall({ contractId, sender, args, functionName: tx.function.name });
+  return receipt;
 }
 
 export function ro<A extends UnknownArgs, R>(
