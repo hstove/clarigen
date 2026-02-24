@@ -1,5 +1,12 @@
 # @clarigen/test
 
+## 4.1.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @clarigen/core@4.1.3
+
 ## 4.1.2
 
 ### Patch Changes
