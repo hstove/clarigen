@@ -211,6 +211,7 @@
     },
     "tools": {
       "name": "@clarigen/web-tools",
+      "version": "0.0.1",
       "dependencies": {
         "@base-ui/react": "^1.0.0",
         "@clarigen/core": "workspace:*",
