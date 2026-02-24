@@ -102,3 +102,7 @@
   )
   (ok true)
 )
+
+(define-public (response-in-response)
+  (ok { a: (ok u1) })
+)

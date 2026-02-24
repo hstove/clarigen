@@ -155,19 +155,20 @@ export function cvToValue<T = any>(
     case ClarityType.OptionalNone:
       return null as unknown as T;
     case ClarityType.OptionalSome:
-      return cvToValue(val.value);
+      return cvToValue(val.value, true);
     case ClarityType.ResponseErr:
-      if (returnResponse) return err(cvToValue(val.value)) as unknown as T;
-      return cvToValue(val.value);
+      if (returnResponse)
+        return err(cvToValue(val.value, true)) as unknown as T;
+      return cvToValue(val.value, true);
     case ClarityType.ResponseOk:
-      if (returnResponse) return ok(cvToValue(val.value)) as unknown as T;
-      return cvToValue(val.value);
+      if (returnResponse) return ok(cvToValue(val.value, true)) as unknown as T;
+      return cvToValue(val.value, true);
     case ClarityType.PrincipalStandard:
     case ClarityType.PrincipalContract:
       return principalToString(val) as unknown as T;
     case ClarityType.List:
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return val.value.map((v) => cvToValue(v)) as unknown as T;
+      return val.value.map((v) => cvToValue(v, true)) as unknown as T;
     case ClarityType.Tuple: {
       const tupleReduced = Object.entries(val.value).reduce(
         // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
@@ -176,7 +177,7 @@ export function cvToValue<T = any>(
           return {
             // biome-ignore lint/performance/noAccumulatingSpread: ignored using `--suppress`
             ...acc,
-            [keyFixed]: cvToValue(val),
+            [keyFixed]: cvToValue(val, true),
           };
         },
         // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`

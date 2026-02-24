@@ -61,4 +61,9 @@ describe('using clarigen/test', () => {
     expect(() => chain.rovOk(tester.roResp(true), deployer)).toThrow();
     expect(chain.rovErr(tester.roResp(true), deployer)).toEqual(100n);
   });
+
+  it('returns responses in responses', () => {
+    const receipt = txOk(tester.responseInResponse(), deployer);
+    expect(receipt.value).toEqual({ a: ok(1n) });
+  });
 });
