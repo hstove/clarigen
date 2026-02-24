@@ -176,7 +176,7 @@ export function cvToValue<T = any>(
           return {
             // biome-ignore lint/performance/noAccumulatingSpread: ignored using `--suppress`
             ...acc,
-            [keyFixed]: cvToValue(val, returnResponse),
+            [keyFixed]: cvToValue(val),
           };
         },
         // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
