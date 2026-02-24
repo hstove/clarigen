@@ -9,7 +9,7 @@
     "lint:fix": "biome check --write",
     "test": "turbo run test --continue",
     "typecheck": "bun --bun run turbo run typecheck --continue --filter=!clarigen-docs",
-    "publish-packages": "bun build:packages && bun turbo run publish --continue --concurrency=1",
+    "publish-packages": "bun build:packages && bun update && bun turbo run publish --continue --concurrency=1",
     "publish-local": "bun build:packages && bun run publish -r",
     "publish-changesets": "bun build:packages && bun changeset publish",
     "demo-types": "bun --filter @clarigen/cli start ../../demo-project",
@@ -25,13 +25,13 @@
     "@stacks/prettier-config": "0.0.9",
     "@total-typescript/tsconfig": "^1.0.4",
     "@types/node": "24.2.0",
-    "@vitest/coverage-v8": "^1.1.0",
-    "husky": "^4.2.5",
+    "@vitest/coverage-v8": "^1.6.1",
+    "husky": "^4.3.8",
     "next": "14.2.2",
-    "prettier": "^2.8.4",
+    "prettier": "^2.8.8",
     "shx": "^0.3.4",
-    "tsdown": "^0.17.0",
-    "tslib": "^2.1.0",
+    "tsdown": "^0.17.4",
+    "tslib": "^2.8.1",
     "turbo": "2.6.3",
     "typedoc": "0.25.13",
     "typescript": "5.9.3",
@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@changesets/cli": "^2.29.8",
-    "jsonfile": "^6.1.0"
+    "jsonfile": "^6.2.0"
   },
   "resolutions": {
     "typescript": "5.9.3",
