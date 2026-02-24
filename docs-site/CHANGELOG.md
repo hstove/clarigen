@@ -1,5 +1,16 @@
 # clarigen-docs
 
+## 1.0.4
+
+### Patch Changes
+
+- [`8f6ac0f`](https://github.com/hstove/clarigen/commit/8f6ac0f137796eb4bcf133247dfbd9681a1b0e66) Thanks [@hstove](https://github.com/hstove)! - Fixes an issue with updating dependencies and publishing
+
+- Updated dependencies [[`8f6ac0f`](https://github.com/hstove/clarigen/commit/8f6ac0f137796eb4bcf133247dfbd9681a1b0e66)]:
+  - @clarigen/cli@4.1.2
+  - @clarigen/core@4.1.2
+  - @clarigen/docs@4.1.2
+
 ## 1.0.3
 
 ### Patch Changes
