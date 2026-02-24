@@ -9,7 +9,7 @@
     "lint:fix": "biome check --write",
     "test": "turbo run test --continue",
     "typecheck": "bun --bun run turbo run typecheck --continue --filter=!clarigen-docs",
-    "publish-packages": "bun build:packages && bun run publish -r",
+    "publish-packages": "bun build:packages && bun turbo run publish --continue --concurrency=1",
     "publish-local": "bun build:packages && bun run publish -r",
     "publish-changesets": "bun build:packages && bun changeset publish",
     "demo-types": "bun --filter @clarigen/cli start ../../demo-project",

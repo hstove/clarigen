@@ -17,7 +17,8 @@
     "build": "shx rm -rf dist && tsdown",
     "test": "vitest run",
     "lint": "eslint \"src/**/*.{ts,tsx}\" && prettier --check \"./**/*.{ts,js}\"",
-    "typecheck": "tsc --noEmit -p tsconfig-test.json"
+    "typecheck": "tsc --noEmit -p tsconfig-test.json",
+    "publish": "bun publish"
   },
   "prettier": "@stacks/prettier-config",
   "name": "@clarigen/test",

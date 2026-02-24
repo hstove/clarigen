@@ -32,7 +32,8 @@
     "lint": "eslint \"src/**/*.{ts,tsx}\" && prettier --check \"./**/*.{ts,js}\"",
     "format:fix": "prettier -w \"./**/*.{ts,js}\"",
     "typecheck": "tsc --noEmit -p tsconfig-test.json",
-    "type-stubs": "tsx scripts/generate-type-stubs.ts && prettier --loglevel error -w ./src/**/*.ts"
+    "type-stubs": "tsx scripts/generate-type-stubs.ts && prettier --loglevel error -w ./src/**/*.ts",
+    "publish": "bun publish"
   },
   "prettier": "@stacks/prettier-config",
   "name": "@clarigen/cli",

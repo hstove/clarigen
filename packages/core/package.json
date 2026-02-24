@@ -18,7 +18,8 @@
     "test": "vitest run",
     "lint": "eslint \"src/**/*.{ts,tsx}\" && prettier --check \"./**/*.{ts,js}\"",
     "typecheck": "tsc --noEmit -p tsconfig-test.json",
-    "copy-types": "node copy-types.js"
+    "copy-types": "node copy-types.js",
+    "publish": "bun publish"
   },
   "prettier": "@stacks/prettier-config",
   "name": "@clarigen/core",
