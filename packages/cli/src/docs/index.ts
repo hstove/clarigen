@@ -15,7 +15,7 @@ export async function afterDocs(config: Config): Promise<void> {
       stdio: 'inherit',
     });
     child.on('error', reject);
-    child.on('exit', (code) => {
+    child.on('exit', code => {
       if (code === 0) {
         resolve();
       } else {

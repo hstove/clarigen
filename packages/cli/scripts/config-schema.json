@@ -104,5 +104,7 @@
       }
     }
   },
-  "required": ["clarinet"]
+  "required": [
+    "clarinet"
+  ]
 }

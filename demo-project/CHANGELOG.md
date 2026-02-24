@@ -1,5 +1,15 @@
 # demo-project
 
+## 4.1.0
+
+### Patch Changes
+
+- Updated dependencies [[`f38fc64`](https://github.com/hstove/clarigen/commit/f38fc64f6aa60347d44beda6b0a445027ad2f28a), [`c436afb`](https://github.com/hstove/clarigen/commit/c436afb99b9327a933e60cee7b09933d639baf70), [`0730fac`](https://github.com/hstove/clarigen/commit/0730facf8c3c2119e1ccc046553b0a008c8d9ac8), [`962583b`](https://github.com/hstove/clarigen/commit/962583b68596da7b50d179b176da61d7c7cbcc2d), [`229ea03`](https://github.com/hstove/clarigen/commit/229ea039b9bbfd9c2ea4a035b74f19296724e5ac)]:
+  - @clarigen/test@4.1.0
+  - @clarigen/core@4.1.0
+  - @clarigen/cli@4.1.0
+  - @clarigen/boot@4.1.0
+
 ## 4.0.2-alpha.1
 
 ### Patch Changes

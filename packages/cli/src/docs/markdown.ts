@@ -28,16 +28,14 @@ export function generateMarkdown({
     abi: contract.contract_interface,
   });
 
-  const functions = doc.functions.map((fn) =>
-    markdownFunction(fn, contractFile)
-  );
-  const maps = doc.maps.map((map) => markdownMap(map, contractFile));
+  const functions = doc.functions.map(fn => markdownFunction(fn, contractFile));
+  const maps = doc.maps.map(map => markdownMap(map, contractFile));
   const vars = doc.variables
-    .filter((v) => v.abi.access === 'variable')
-    .map((v) => markdownVar(v, contractFile));
+    .filter(v => v.abi.access === 'variable')
+    .map(v => markdownVar(v, contractFile));
   const constants = doc.variables
-    .filter((v) => v.abi.access === 'constant')
-    .map((v) => markdownVar(v, contractFile));
+    .filter(v => v.abi.access === 'constant')
+    .map(v => markdownVar(v, contractFile));
   let fileLine = '';
   if (contractFile) {
     const fileName = basename(contractFile);
@@ -73,9 +71,7 @@ ${constants.join('\n\n')}
 export function markdownFunction(fn: ClaridocFunction, contractFile?: string) {
   const params = mdParams(fn);
   const returnType = getTypeString(fn.abi.outputs.type);
-  const paramSigs = fn.abi.args.map(
-    (arg) => `(${arg.name} ${getTypeString(arg.type)})`
-  );
+  const paramSigs = fn.abi.args.map(arg => `(${arg.name} ${getTypeString(arg.type)})`);
 
   const startLine = fn.startLine + 1;
 
@@ -112,12 +108,8 @@ ${params}`;
 
 function mdParams(fn: ClaridocFunction) {
   if (fn.abi.args.length === 0) return '';
-  const hasDescription = Object.values(fn.comments.params).some(
-    (p) => p.comments.length > 0
-  );
-  const params = Object.values(fn.comments.params).map((p) =>
-    markdownParam(p, hasDescription)
-  );
+  const hasDescription = Object.values(fn.comments.params).some(p => p.comments.length > 0);
+  const params = Object.values(fn.comments.params).map(p => markdownParam(p, hasDescription));
   // const hasDescription = params.some(p => p.includes('Description'));
 
   return `**Parameters:**
@@ -162,8 +154,7 @@ function markdownVar(variable: ClaridocVariable, contractFile?: string) {
     link = `[View in file](${contractFile}#L${startLine})`;
   }
 
-  const sig =
-    variable.abi.access === 'variable' ? getTypeString(variable.abi.type) : '';
+  const sig = variable.abi.access === 'variable' ? getTypeString(variable.abi.type) : '';
 
   return `### ${variable.abi.name}
 
@@ -179,18 +170,12 @@ ${link}`;
 }
 
 function markdownTOC(contract: ClaridocContract) {
-  const publics = contract.functions.filter((fn) => fn.abi.access === 'public');
-  const readOnly = contract.functions.filter(
-    (fn) => fn.abi.access === 'read_only'
-  );
-  const privates = contract.functions.filter(
-    (fn) => fn.abi.access === 'private'
-  );
+  const publics = contract.functions.filter(fn => fn.abi.access === 'public');
+  const readOnly = contract.functions.filter(fn => fn.abi.access === 'read_only');
+  const privates = contract.functions.filter(fn => fn.abi.access === 'private');
   const maps = contract.maps;
-  const constants = contract.variables.filter(
-    (v) => v.abi.access === 'constant'
-  );
-  const vars = contract.variables.filter((v) => v.abi.access === 'variable');
+  const constants = contract.variables.filter(v => v.abi.access === 'constant');
+  const vars = contract.variables.filter(v => v.abi.access === 'variable');
 
   function tocLine(fn: ClaridocItem) {
     const name = fn.abi.name;
@@ -223,13 +208,10 @@ ${constants.map(tocLine).join('\n')}
 `;
 }
 
-export function generateReadme(
-  session: Session,
-  excluded: Record<string, boolean>
-) {
+export function generateReadme(session: Session, excluded: Record<string, boolean>) {
   const contractLines: string[] = [];
   // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
-  sortContracts(session.contracts).forEach((contract) => {
+  sortContracts(session.contracts).forEach(contract => {
     const name = getContractName(contract.contract_id, false);
     if (excluded[name]) return;
     const fileName = `${name}.md`;
