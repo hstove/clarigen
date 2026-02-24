@@ -1,5 +1,16 @@
 # clarigen-docs
 
+## 1.0.3
+
+### Patch Changes
+
+- [`e004ca1`](https://github.com/hstove/clarigen/commit/e004ca1cb573a347aa14fc32cc9fd8d1327a1594) Thanks [@hstove](https://github.com/hstove)! - Fixes an issues with publishing caused by `@clarigen/docs` not being in the npm registry
+
+- Updated dependencies [[`e004ca1`](https://github.com/hstove/clarigen/commit/e004ca1cb573a347aa14fc32cc9fd8d1327a1594)]:
+  - @clarigen/core@4.1.1
+  - @clarigen/docs@4.1.1
+  - @clarigen/cli@4.1.1
+
 ## 1.0.2
 
 ### Patch Changes
