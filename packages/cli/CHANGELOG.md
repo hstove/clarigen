@@ -1,5 +1,15 @@
 # @clarigen/cli
 
+## 4.1.3
+
+### Patch Changes
+
+- [`d5b5a04`](https://github.com/hstove/clarigen/commit/d5b5a0407204135b6dd4fc28a67209308e4e94de) Thanks [@hstove](https://github.com/hstove)! - Fixes an issue with the CLI's `bin` file not being published
+
+- Updated dependencies []:
+  - @clarigen/core@4.1.3
+  - @clarigen/docs@4.1.3
+
 ## 4.1.2
 
 ### Patch Changes
