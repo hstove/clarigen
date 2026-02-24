@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "4.1.0",
+  "version": "4.1.1",
   "name": "demo-project",
   "scripts": {
     "build": "shx rm -rf ./dist && tsdown",
