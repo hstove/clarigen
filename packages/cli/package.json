@@ -22,7 +22,7 @@
     "node": ">=10"
   },
   "bin": {
-    "clarigen": "./dist/run-cli.js"
+    "clarigen": "./dist/run-cli.mjs"
   },
   "scripts": {
     "start": "tsx src/run-cli.ts",

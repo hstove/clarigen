@@ -30,7 +30,7 @@
     },
     "demo-project": {
       "name": "demo-project",
-      "version": "4.1.1",
+      "version": "4.1.2",
       "dependencies": {
         "@clarigen/boot": "workspace:*",
         "@clarigen/cli": "workspace:*",
@@ -49,7 +49,7 @@
     },
     "docs-site": {
       "name": "clarigen-docs",
-      "version": "1.0.3",
+      "version": "1.0.4",
       "dependencies": {
         "@clarigen/cli": "workspace:*",
         "@clarigen/core": "workspace:*",
@@ -123,7 +123,7 @@
     },
     "packages/boot": {
       "name": "@clarigen/boot",
-      "version": "4.1.1",
+      "version": "4.1.2",
       "bin": {
         "clarigen": "./dist/run-cli.js",
       },
@@ -137,7 +137,7 @@
     },
     "packages/clarigen-test": {
       "name": "@clarigen/test",
-      "version": "4.1.1",
+      "version": "4.1.2",
       "dependencies": {
         "@clarigen/core": "workspace:*",
         "@stacks/transactions": "7.2.0",
@@ -159,7 +159,7 @@
     },
     "packages/cli": {
       "name": "@clarigen/cli",
-      "version": "4.1.1",
+      "version": "4.1.2",
       "bin": {
         "clarigen": "./dist/run-cli.js",
       },
@@ -192,7 +192,7 @@
     },
     "packages/core": {
       "name": "@clarigen/core",
-      "version": "4.1.1",
+      "version": "4.1.2",
       "dependencies": {
         "@scure/base": "^1.1.6",
         "@stacks/blockchain-api-client": "7.10.0",
@@ -204,14 +204,14 @@
     },
     "packages/docs": {
       "name": "@clarigen/docs",
-      "version": "4.1.1",
+      "version": "4.1.2",
       "dependencies": {
         "@clarigen/core": "workspace:*",
       },
     },
     "tools": {
       "name": "@clarigen/web-tools",
-      "version": "4.1.1",
+      "version": "4.1.2",
       "dependencies": {
         "@base-ui/react": "^1.0.0",
         "@clarigen/core": "workspace:*",
