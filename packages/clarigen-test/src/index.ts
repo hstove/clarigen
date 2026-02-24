@@ -10,6 +10,9 @@ import {
   mapFactory,
   type Response,
   cvToString,
+  type ResponseOk,
+  type ResponseErr,
+  isResponse,
 } from '@clarigen/core';
 import type { ContractCallTransaction } from '@clarigen/core/deployment';
 import type { ParsedTransactionResult } from '@stacks/clarinet-sdk';
@@ -256,4 +259,28 @@ export async function makeNewSession(cwd?: string, manifestPath?: string) {
     cwd ?? process.cwd(),
     manifestPath ?? './Clarinet.toml'
   );
+}
+
+export function assertOk<T extends ResponseOk<O, E> | ResponseErr<O, E>, O, E>(
+  response: T | unknown
+): asserts response is ResponseOk<O, E> {
+  if (!isResponse(response)) {
+    throw new Error('Expected response, but got something else');
+  }
+  if (!response.isOk) {
+    throw new Error(
+      `Expected response to be OK, but got ERR ${response.value}`
+    );
+  }
+}
+
+export function assertErr<T extends ResponseOk<O, E> | ResponseErr<O, E>, O, E>(
+  response: T | unknown
+): asserts response is ResponseErr<O, E> {
+  if (!isResponse(response)) {
+    throw new Error('Expected response, but got something else');
+  }
+  if (response.isOk) {
+    throw new Error('Expected response to be ERR, but got OK');
+  }
 }
