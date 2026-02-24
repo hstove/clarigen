@@ -4,7 +4,7 @@ import { sortContracts } from '../utils';
 
 export function generateIdentifiers(session: Session) {
   const identifiers = Object.fromEntries(
-    sortContracts(session.contracts).map((c) => {
+    sortContracts(session.contracts).map(c => {
       const contractName = getContractName(c.contract_id);
       return [contractName, c.contract_id];
     })

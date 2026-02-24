@@ -1,6 +1,6 @@
 {
   "name": "@clarigen/docs",
-  "version": "4.0.2-alpha.1",
+  "version": "4.1.0",
   "public": true,
   "types": "./dist/index.d.cts",
   "main": "./dist/index.cjs",

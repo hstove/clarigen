@@ -25,9 +25,7 @@ export class InitConfigCommand extends BaseCommand {
     const path = configFilePath(this.cwd);
     const configExists = await fileExists(path);
     if (configExists && !this.overwrite) {
-      logger.warn(
-        'Configuration file already exists. Use --overwrite to overwrite it.'
-      );
+      logger.warn('Configuration file already exists. Use --overwrite to overwrite it.');
       return 1;
     }
     logger.debug(`Writing configuration file to ${path}`);

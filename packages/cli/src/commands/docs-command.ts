@@ -34,7 +34,7 @@ export async function watch(config: Config, cwd?: string) {
   let running = false;
   let start = 0;
   const _isVerbose = logger.level !== 'info';
-  watcher.on('change', async (path) => {
+  watcher.on('change', async path => {
     if (!running) {
       start = Date.now();
       logger.info(`File ${path} has been changed. Generating types.`);
@@ -46,7 +46,7 @@ export async function watch(config: Config, cwd?: string) {
         session,
         config,
       })
-        .catch((e) => {
+        .catch(e => {
           logger.error({ error: e }, 'Error generating types');
         })
         .then(() => {
