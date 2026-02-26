@@ -24,9 +24,6 @@
   "engines": {
     "node": ">=10"
   },
-  "bin": {
-    "clarigen": "./dist/run-cli.js"
-  },
   "scripts": {
     "start": "tsx src/run-cli.ts",
     "dev": "tsdown --watch",
