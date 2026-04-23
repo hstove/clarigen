@@ -20,11 +20,6 @@ const tester = contracts.tester;
 const [deployer] = tester.identifier.split('.');
 
 describe('using clarigen/test', () => {
-  it('can get deployment info', () => {
-    // biome-ignore lint/correctness/noUndeclaredVariables: ignored using `--suppress`
-    const _data = simnet.getContractsInterfaces();
-    // console.log(data);
-  });
   it('can call public functions', () => {
     process.env.LOG_TX_CALLS = 'true';
     const receipt = txOk(tester.printPub(), deployer);
@@ -113,5 +108,9 @@ describe('using clarigen/test', () => {
     expect(chain.rovOk(tester.roResp(false), deployer)).toEqual('asdf');
     expect(() => chain.rovOk(tester.roResp(true), deployer)).toThrow();
     expect(chain.rovErr(tester.roResp(true), deployer)).toEqual(100n);
+  });
+
+  it('can return keys in errors', () => {
+    expect(() => txOk(tester.throwErrorOne(), deployer)).toThrow('ERR_ONE');
   });
 });

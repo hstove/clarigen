@@ -13,7 +13,6 @@ import { toCamelCase } from './utils';
 import type {
   AllContracts,
   ContractFactory,
-  ContractFunctions,
   FunctionsToContractCalls,
   FnToContractCall,
   FullContract,
@@ -103,12 +102,12 @@ export function contractsFactory<T extends AllContracts>(
   ) as ContractFactory<T>;
 }
 
-export function functionsFactory<T extends ContractFunctions>(
-  functions: T,
+export function functionsFactory<T extends TypedAbi>(
+  abi: T,
   identifier: string
 ): FunctionsToContractCalls<T> {
   return Object.fromEntries(
-    Object.entries(functions).map(([fnName, foundFunction]) => {
+    Object.entries(abi.functions).map(([fnName, foundFunction]) => {
       const fn: FnToContractCall<typeof foundFunction> = Object.assign(
         (...args: unknown[] | [Record<string, unknown>]) => {
           const functionArgs = transformArgsToCV(foundFunction, args);
@@ -123,6 +122,7 @@ export function functionsFactory<T extends ContractFunctions>(
             function: foundFunction,
             functionName: foundFunction.name,
             nativeArgs: args,
+            contractAbi: abi,
           };
         },
         { abi: foundFunction }
@@ -146,7 +146,7 @@ export function contractFactory<T extends TypedAbi, Id extends string>(
 ): FullContractWithIdentifier<T, Id> {
   const full = { ...abi } as FullContract<T>;
   return {
-    ...functionsFactory(abi.functions, identifier),
+    ...functionsFactory(abi, identifier),
     ...full,
     identifier,
   };

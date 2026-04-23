@@ -1,28 +1,19 @@
-import { type Response, cvToValue, isResponse } from '@clarigen/core';
 import {
-  type ClarityValue as HiroClarityValue,
-  deserializeCV as deserializeCVHiro,
-  serializeCV as serializeCVHiro,
-} from '@stacks/transactions';
-import {
-  type ClarityValue as MSClarityValue,
-  serializeCV as serializeCVMS,
-  deserializeCV as deserializeCVMS,
-} from '@stacks/transactions';
+  type Response,
+  type TypedAbi,
+  cvToValue,
+  extractErrors,
+  isResponse,
+} from '@clarigen/core';
+import type { ClarityValue } from '@stacks/transactions';
 
-export function cvConvertMS(value: MSClarityValue): HiroClarityValue {
-  return deserializeCVHiro(serializeCVMS(value));
-}
-
-export function cvConvertHiro(value: HiroClarityValue): MSClarityValue {
-  return deserializeCVMS(serializeCVHiro(value));
-}
-
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: allowed
 export function validateResponse<T>(
-  result: HiroClarityValue,
-  expectOk?: boolean
+  result: ClarityValue,
+  expectOk?: boolean,
+  contractAbi?: TypedAbi
 ): T {
-  const value = cvToValue<Response<T, T> | T>(cvConvertHiro(result), true);
+  const value = cvToValue<Response<T, T> | T>(result, true);
 
   if (!isResponse(value) && typeof expectOk !== 'undefined') {
     throw new Error(
@@ -34,8 +25,18 @@ export function validateResponse<T>(
     const response = value;
     const inner = response.value;
     if (expectOk && !response.isOk) {
+      // try and find a matching error code
+      let errorCode = '';
+      if (contractAbi) {
+        const match = Object.entries(extractErrors(contractAbi)).find(
+          ([_key, code]) => code === inner
+        );
+        if (match) {
+          errorCode = ` (${match[0]})`;
+        }
+      }
       throw new Error(
-        `Tx result failed. Expected OK, received ERR ${String(inner)}.`
+        `Tx result failed. Expected OK, received ERR ${String(inner)}${errorCode}.`
       );
     }
     if (expectOk === false && response.isOk) {

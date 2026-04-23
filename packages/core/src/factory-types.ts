@@ -14,6 +14,7 @@ export type ContractCall<T> = {
   contractAddress: string;
   contractName: string;
   functionName: string;
+  contractAbi?: TypedAbi;
   _r?: T;
 };
 

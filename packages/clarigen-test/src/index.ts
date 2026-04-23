@@ -16,7 +16,7 @@ import {
 } from '@clarigen/core';
 import type { ContractCallTransaction } from '@clarigen/core/deployment';
 import type { ParsedTransactionResult } from '@stacks/clarinet-sdk';
-import { cvConvertHiro, cvConvertMS, validateResponse } from './utils';
+import { validateResponse } from './utils';
 import type { CoreNodeEvent } from './events';
 import { stringify } from 'yaml';
 import type { ClarityValue } from '@stacks/transactions';
@@ -64,7 +64,11 @@ export function txOk<A extends UnknownArgs, R extends AnyResponse>(
   sender: string
 ): TransactionResult<OkType<R>> {
   const receipt = getTxReceipt(tx, sender);
-  const value = validateResponse<OkType<R>>(receipt.result, true);
+  const value = validateResponse<OkType<R>>(
+    receipt.result,
+    true,
+    tx.contractAbi
+  );
 
   return {
     ...receipt,
@@ -79,7 +83,11 @@ export function txErr<A extends UnknownArgs, R extends AnyResponse>(
   sender: string
 ): TransactionResult<ErrType<R>> {
   const receipt = getTxReceipt(tx, sender);
-  const value = validateResponse<ErrType<R>>(receipt.result, false);
+  const value = validateResponse<ErrType<R>>(
+    receipt.result,
+    false,
+    tx.contractAbi
+  );
 
   return {
     ...receipt,
@@ -94,7 +102,7 @@ export function tx<A extends UnknownArgs, R extends AnyResponse>(
   sender: string
 ): TransactionResult<R> {
   const receipt = getTxReceipt(tx, sender);
-  const value = validateResponse<R>(receipt.result);
+  const value = validateResponse<R>(receipt.result, undefined, tx.contractAbi);
 
   return {
     ...receipt,
@@ -127,7 +135,7 @@ export function ro<A extends UnknownArgs, R>(
   tx: ContractCallTyped<A, R>,
   sender?: string
 ): TransactionResult<R> {
-  const args = tx.functionArgs.map(cvConvertMS);
+  const args = tx.functionArgs;
   const contractId = `${tx.contractAddress}.${tx.contractName}`;
   // biome-ignore lint/correctness/noUndeclaredVariables: ignored using `--suppress`
   const receipt = simnet.callReadOnlyFn(
@@ -136,7 +144,7 @@ export function ro<A extends UnknownArgs, R>(
     args,
     sender ?? tx.contractAddress
   );
-  const value = validateResponse<R>(receipt.result);
+  const value = validateResponse<R>(receipt.result, undefined, tx.contractAbi);
   return {
     ...receipt,
     events: receipt.events as unknown as CoreNodeEvent[],
@@ -159,7 +167,7 @@ export function roOk<A extends UnknownArgs, R extends AnyResponse>(
   tx: ContractCallTyped<A, R>,
   sender?: string
 ): TransactionResult<OkType<R>> {
-  const args = tx.functionArgs.map(cvConvertMS);
+  const args = tx.functionArgs;
   const contractId = `${tx.contractAddress}.${tx.contractName}`;
   // biome-ignore lint/correctness/noUndeclaredVariables: ignored using `--suppress`
   const receipt = simnet.callReadOnlyFn(
@@ -168,7 +176,11 @@ export function roOk<A extends UnknownArgs, R extends AnyResponse>(
     args,
     sender ?? tx.contractAddress
   );
-  const value = validateResponse<OkType<R>>(receipt.result, true);
+  const value = validateResponse<OkType<R>>(
+    receipt.result,
+    true,
+    tx.contractAbi
+  );
   return {
     ...receipt,
     events: receipt.events as unknown as CoreNodeEvent[],
@@ -191,7 +203,7 @@ export function roErr<A extends UnknownArgs, R extends AnyResponse>(
   tx: ContractCallTyped<A, R>,
   sender?: string
 ): TransactionResult<ErrType<R>> {
-  const args = tx.functionArgs.map(cvConvertMS);
+  const args = tx.functionArgs;
   const contractId = `${tx.contractAddress}.${tx.contractName}`;
   // biome-ignore lint/correctness/noUndeclaredVariables: ignored using `--suppress`
   const receipt = simnet.callReadOnlyFn(
@@ -200,7 +212,11 @@ export function roErr<A extends UnknownArgs, R extends AnyResponse>(
     args,
     sender ?? tx.contractAddress
   );
-  const value = validateResponse<ErrType<R>>(receipt.result, false);
+  const value = validateResponse<ErrType<R>>(
+    receipt.result,
+    false,
+    tx.contractAbi
+  );
 
   return {
     ...receipt,
@@ -229,15 +245,15 @@ export function mapGet<Key, Val>(
   const result = simnet.getMapEntry(
     contractId,
     payload.map.name,
-    cvConvertMS(payload.keyCV)
+    payload.keyCV
   );
-  return cvToValue<Val | null>(cvConvertHiro(result));
+  return cvToValue<Val | null>(result);
 }
 
 export function varGet<T>(contractId: string, variable: TypedAbiVariable<T>) {
   // biome-ignore lint/correctness/noUndeclaredVariables: ignored using `--suppress`
   const result = simnet.getDataVar(contractId, variable.name);
-  return cvToValue<T>(cvConvertHiro(result));
+  return cvToValue<T>(result);
 }
 
 // Helper export for previous Deno-based tests

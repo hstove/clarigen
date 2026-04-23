@@ -1678,6 +1678,12 @@ export const contracts = {
         args: [{ name: 'num', type: 'uint128' }],
         outputs: { type: { response: { ok: 'bool', error: 'none' } } },
       } as TypedAbiFunction<[num: TypedAbiArg<number | bigint, 'num'>], Response<boolean, null>>,
+      throwErrorOne: {
+        name: 'throw-error-one',
+        access: 'public',
+        args: [],
+        outputs: { type: { response: { ok: 'none', error: 'uint128' } } },
+      } as TypedAbiFunction<[], Response<null, bigint>>,
       clarity4Test: {
         name: 'clarity-4-test',
         access: 'read_only',

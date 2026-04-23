@@ -106,3 +106,7 @@
 (define-public (response-in-response)
   (ok { a: (ok u1) })
 )
+
+(define-public (throw-error-one)
+  ERR_ONE
+)
