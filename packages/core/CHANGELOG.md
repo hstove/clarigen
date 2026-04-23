@@ -1,5 +1,11 @@
 # @clarigen/core
 
+## 4.1.4
+
+### Patch Changes
+
+- [`b0d6d12`](https://github.com/hstove/clarigen/commit/b0d6d124ef3e5cc2175fe195bf6c3f1458af3e79) Thanks [@hstove](https://github.com/hstove)! - Removed the deprecated `pure` interface from `@clarigen/core`
+
 ## 4.1.3
 
 ## 4.1.2
