@@ -1,5 +1,11 @@
 # @clarigen/core
 
+## 4.1.5
+
+### Patch Changes
+
+- [`852a3f9`](https://github.com/hstove/clarigen/commit/852a3f9c245c532899afaea2297de5f8cb71d475) Thanks [@hstove](https://github.com/hstove)! - Fixes a bug when parsing JS-based inputs when the ABI type is a response. This would happen when calling a function where one of the arguments is a response.
+
 ## 4.1.4
 
 ### Patch Changes

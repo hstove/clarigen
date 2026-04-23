@@ -1,5 +1,12 @@
 # @clarigen/test
 
+## 4.1.5
+
+### Patch Changes
+
+- Updated dependencies [[`852a3f9`](https://github.com/hstove/clarigen/commit/852a3f9c245c532899afaea2297de5f8cb71d475)]:
+  - @clarigen/core@4.1.5
+
 ## 4.1.4
 
 ### Patch Changes
