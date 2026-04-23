@@ -18,6 +18,8 @@ import {
   hexToCV,
   bufferCV,
   parseToCV as _parseToCV,
+  responseErrorCV,
+  responseOkCV,
 } from '@stacks/transactions';
 
 import type {
@@ -288,6 +290,15 @@ export function parseToCV(input: CVInput, type: ClarityAbiType): ClarityValue {
       throw new Error('Invalid string-ascii input');
     }
     return stringUtf8CV(input);
+  }
+  if (isClarityAbiResponse(type)) {
+    if (!isResponse(input)) {
+      throw new Error('Invalid response input');
+    }
+    if (input.isOk) {
+      return responseOkCV(parseToCV(input.value, type.response.ok));
+    }
+    return responseErrorCV(parseToCV(input.value, type.response.error));
   }
   if (type === 'bool') {
     const inputString = typeof input === 'boolean' ? input.toString() : input;

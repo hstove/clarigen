@@ -3,11 +3,11 @@ import { type UserConfig, defineConfig } from 'tsdown';
 export const defaultConfig: UserConfig = {
   target: 'node16',
   entry: ['src/index.ts'],
-  minify: true,
+  minify: false,
   outDir: 'dist',
+  sourcemap: true,
   exports: true,
   dts: true,
-  // splitting: true,
   format: ['esm', 'cjs'],
 };
 
