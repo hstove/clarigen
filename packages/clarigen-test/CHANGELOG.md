@@ -1,5 +1,14 @@
 # @clarigen/test
 
+## 4.1.4
+
+### Patch Changes
+
+- [`b0d6d12`](https://github.com/hstove/clarigen/commit/b0d6d124ef3e5cc2175fe195bf6c3f1458af3e79) Thanks [@hstove](https://github.com/hstove)! - When a validated response (ie with `txOk` or `rovOk`) returns an error, the error message now attempts to find a matching error key in the exception message.
+
+- Updated dependencies [[`b0d6d12`](https://github.com/hstove/clarigen/commit/b0d6d124ef3e5cc2175fe195bf6c3f1458af3e79)]:
+  - @clarigen/core@4.1.4
+
 ## 4.1.3
 
 ### Patch Changes
