@@ -1,5 +1,16 @@
 # clarigen-docs
 
+## 1.0.8
+
+### Patch Changes
+
+- [`3ca9abc`](https://github.com/hstove/clarigen/commit/3ca9abc11f4781919ca5a87dfe3ad7c56504400e) Thanks [@hstove](https://github.com/hstove)! - Updates the Clarity version that can be deployed to get variables, so that we no longer have to update Clarigen when a new Clarity version comes out.
+
+- Updated dependencies [[`3ca9abc`](https://github.com/hstove/clarigen/commit/3ca9abc11f4781919ca5a87dfe3ad7c56504400e)]:
+  - @clarigen/cli@4.1.6
+  - @clarigen/core@4.1.6
+  - @clarigen/docs@4.1.6
+
 ## 1.0.7
 
 ### Patch Changes
