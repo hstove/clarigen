@@ -25,8 +25,8 @@
   "author": "Hank Stoever",
   "type": "module",
   "devDependencies": {
-    "@stacks/clarinet-sdk": "3.9.2",
-    "@stacks/clarinet-sdk-wasm": "3.9.2",
+    "@stacks/clarinet-sdk": "3.18.1",
+    "@stacks/clarinet-sdk-wasm": "3.18.1",
     "@types/node": "24.2.0",
     "tsx": "^4.8.1",
     "typescript": "5.9.3",

@@ -19,12 +19,24 @@ function clarityVersionForContract(contract: SessionContract) {
       return 3;
     case 'Clarity4':
       return 4;
+    case 'Clarity5':
+      return 5;
     default:
-      return 3;
+      if (contract.contract_interface.clarity_version.startsWith('Clarity')) {
+        return Number.parseInt(
+          contract.contract_interface.clarity_version.slice('Clarity'.length),
+          10
+        );
+      }
+      return 4;
   }
 }
 
-export function getVariablesV2(contract: SessionContract, simnet: Simnet, verbose?: boolean) {
+export function getVariablesV2(
+  contract: SessionContract,
+  simnet: Simnet,
+  verbose?: boolean
+) {
   const [deployer] = contract.contract_id.split('.');
   const fakeId = `${getContractName(contract.contract_id)}-vars`;
   logger.debug(`Deploying ${contract.contract_id} for variables.`);
@@ -37,13 +49,15 @@ export function getVariablesV2(contract: SessionContract, simnet: Simnet, verbos
   }
 
   if (contract.contract_interface.variables.length === 0) {
-    logger.info(`Contract ${getContractName(contract.contract_id, false)} has no variables`);
+    logger.info(
+      `Contract ${getContractName(contract.contract_id, false)} has no variables`
+    );
     return {};
   }
 
   let varFn = '{\n';
 
-  const varLines = contract.contract_interface.variables.map(variable => {
+  const varLines = contract.contract_interface.variables.map((variable) => {
     let varLine = `${variable.name}: `;
     if (variable.access === 'constant') {
       varLine += `${variable.name}`;
@@ -52,7 +66,7 @@ export function getVariablesV2(contract: SessionContract, simnet: Simnet, verbos
     }
     return varLine;
   });
-  varFn += varLines.map(l => ` ${l},`).join('\n');
+  varFn += varLines.map((l) => ` ${l},`).join('\n');
 
   varFn += '\n}';
 
@@ -62,7 +76,12 @@ export function getVariablesV2(contract: SessionContract, simnet: Simnet, verbos
       fakeId,
       fullSrc,
       {
-        clarityVersion: clarityVersionForContract(contract),
+        // hacky type to prevent having to constantly update this
+        clarityVersion: clarityVersionForContract(contract) as unknown as
+          | 1
+          | 2
+          | 3
+          | 4,
       },
       deployer
     );
@@ -71,32 +90,24 @@ export function getVariablesV2(contract: SessionContract, simnet: Simnet, verbos
     const varsAbi: Writeable<ClarityAbiTypeTuple> = {
       tuple: [],
     };
-    // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
-    contract.contract_interface.variables.forEach(v => {
+    for (const v of contract.contract_interface.variables) {
       const _v = v as unknown as Writeable<ClarityAbiVariable>;
       varsAbi.tuple.push({
         type: _v.type,
         name: _v.name,
       });
-    });
+    }
 
     if (verbose) {
-      // const cv = cvConvertHiro(result);
-      // console.log('cv', cv);
-      // console.log(esCvToValue(cvConvertHiro(result), true));
       logger.info(cvToValue(result, true));
     }
 
-    // return esCvToValue(cvConvertHiro(result), true);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return cvToValue(result, true);
   } catch (error) {
     logger.warn(
       { err: error },
       `Error getting variables for ${getContractName(contract.contract_id, false)}`
     );
-    // logger.error(`Source code: ${contract.source} with type ${String(typeof contract.source)}`);
-    // logger.error(fullSrc);
     return {};
   }
 }
@@ -104,7 +115,7 @@ export function getVariablesV2(contract: SessionContract, simnet: Simnet, verbos
 type Writeable<T> = { -readonly [P in keyof T]: Writeable<T[P]> };
 
 export function mapVariables(session: Session, simnet: Simnet) {
-  return session.contracts.map(contract => {
+  return session.contracts.map((contract) => {
     const vars = getVariablesV2(contract, simnet);
     return serialize(vars);
   });

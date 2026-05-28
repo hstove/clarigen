@@ -124,7 +124,11 @@ export function isResponse<T>(
 export interface ClarityAbi extends _ClarityAbi {
   // maps: ClarityAbiMap[];
   epoch: StacksEpochId;
-  clarity_version: ClarityVersion;
+  clarity_version:
+    | ClarityVersion
+    | 'Clarity5'
+    | 'Clarity6'
+    | `Clarity${number}`;
   // clarity_version?: string;
 }
 
