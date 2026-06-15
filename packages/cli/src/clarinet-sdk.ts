@@ -8,17 +8,79 @@ import {
   getContractName,
   hexToCvValue,
 } from '@clarigen/core';
+import {
+  type Batch,
+  type DeploymentTransaction,
+  getContractTxs,
+  getIdentifierForDeploymentTx,
+} from '@clarigen/core/deployment';
 
 import type { Config } from './config';
 import { readFile } from 'node:fs/promises';
+import { dirname, join } from 'node:path';
+import { parseDeployment } from './files/esm';
 import { mapVariables } from './files/variables';
 import type { SessionContract, SessionWithVariables } from './session';
+
+export function deduplicateContractInterfaces<T>(
+  interfaces: Iterable<[string, T]>,
+  preferredIdentifiers = new Set<string>()
+): [string, T][] {
+  const contracts = new Map<string, [string, T]>();
+  for (const [contractId, contractInterface] of interfaces) {
+    const contractName = getContractName(contractId);
+    const existing = contracts.get(contractName);
+    if (
+      !existing ||
+      (!preferredIdentifiers.has(existing[0]) &&
+        preferredIdentifiers.has(contractId))
+    ) {
+      contracts.set(contractName, [contractId, contractInterface]);
+    }
+  }
+  return [...contracts.values()];
+}
+
+async function getSimnetDeploymentIdentifiers(config: Config) {
+  const path = join(
+    dirname(config.clarinetFile()),
+    'deployments',
+    'default.simnet-plan.yaml'
+  );
+  const deployment = await parseDeployment(path);
+  if (!deployment) return new Set<string>();
+  const transactions = getContractTxs(
+    deployment.plan.batches as Batch<DeploymentTransaction>[]
+  );
+  return new Set(
+    transactions.flatMap(transaction => {
+      try {
+        return [getIdentifierForDeploymentTx(transaction)];
+      } catch {
+        const tx = transaction as unknown as {
+          'transaction-type'?: string;
+          'contract-name'?: string;
+          'emulated-sender'?: string;
+        };
+        if (
+          tx['transaction-type'] === 'emulated-contract-publish' &&
+          tx['contract-name'] &&
+          tx['emulated-sender']
+        ) {
+          return [`${tx['emulated-sender']}.${tx['contract-name']}`];
+        }
+        return [];
+      }
+    })
+  );
+}
 
 export async function getSession(
   config: Config
 ): Promise<SessionWithVariables> {
   const simnet = await initSimnet(config.clarinetFile(), true);
   const interfaces = simnet.getContractsInterfaces();
+  const deploymentIdentifiers = await getSimnetDeploymentIdentifiers(config);
   const accounts = simnet.getAccounts();
 
   const allAccounts = [...accounts.entries()].map(([name, address]) => {
@@ -40,7 +102,10 @@ export async function getSession(
 
   const contracts = (
     await Promise.all(
-      [...interfaces.entries()].map(
+      deduplicateContractInterfaces(
+        interfaces.entries(),
+        deploymentIdentifiers
+      ).map(
         async ([contract_id, contract_interface]) => {
           if (
             (contract_id.startsWith(MAINNET_BURN_ADDRESS) &&
@@ -67,7 +132,7 @@ export async function getSession(
                 contract_interface.clarity_version as ClarityVersion,
             },
             source: source ?? '',
-          };
+          } as SessionContract;
         }
       )
     )

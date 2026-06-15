@@ -1,0 +1,3 @@
+[mcp_servers.playwriter]
+command = "npx"
+args = ["playwriter@latest"]
