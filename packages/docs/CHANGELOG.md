@@ -1,5 +1,14 @@
 # @clarigen/docs
 
+## 4.1.7
+
+### Patch Changes
+
+- [`1b52ecc`](https://github.com/hstove/clarigen/commit/1b52ecc47c6066ec396d3edef7ab294ca8b199b9) Thanks [@hstove](https://github.com/hstove)! - Fixes an issue with generated Clarigen types when `override_boot_contracts_source` is present
+
+- Updated dependencies [[`1b52ecc`](https://github.com/hstove/clarigen/commit/1b52ecc47c6066ec396d3edef7ab294ca8b199b9)]:
+  - @clarigen/core@4.1.7
+
 ## 4.1.6
 
 ### Patch Changes
