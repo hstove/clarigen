@@ -13,7 +13,7 @@ type DocPageProps = {
 
 function getDocFromParams({ params }: DocPageProps) {
   const slug = params.slug?.join('/') || '';
-  const doc = allDocs.find((doc) => {
+  const doc = allDocs.find(doc => {
     // console.log('Doc listing', doc.slugAsParams, slug);
     return doc.slugAsParams === slug;
   });
@@ -27,7 +27,7 @@ function getDocFromParams({ params }: DocPageProps) {
 }
 
 export const generateStaticParams = async () =>
-  allDocs.map((post) => ({ slug: post.slugAsParams.split('/') }));
+  allDocs.map(post => ({ slug: post.slugAsParams.split('/') }));
 
 export const generateMetadata = ({ params }: DocPageProps) => {
   const post = getDocFromParams({ params });

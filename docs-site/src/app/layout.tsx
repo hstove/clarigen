@@ -28,18 +28,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       {/* <NextTopLoader /> */}
-      <body
-        className={cn(
-          'min-h-screen bg-background font-sans antialiased',
-          fontSans.className
-        )}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          disableTransitionOnChange
-          enableSystem
-        >
+      <body className={cn('min-h-screen bg-background font-sans antialiased', fontSans.className)}>
+        <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange enableSystem>
           {/* <div className="container"> */}
           <div className="flex flex-col pb-10">
             <Header />

@@ -27,11 +27,7 @@ type PostConditionsFieldProps = {
   disabled?: boolean;
 };
 
-export function PostConditionsField({
-  value,
-  onChange,
-  disabled,
-}: PostConditionsFieldProps) {
+export function PostConditionsField({ value, onChange, disabled }: PostConditionsFieldProps) {
   const handleModeChange = (checked: boolean) => {
     onChange({ ...value, mode: checked ? 'allow' : 'deny' });
   };
@@ -101,7 +97,7 @@ export function PostConditionsField({
               condition={condition}
               disabled={disabled}
               key={index}
-              onChange={(updated) => handleUpdateCondition(index, updated)}
+              onChange={updated => handleUpdateCondition(index, updated)}
               onRemove={() => handleRemoveCondition(index)}
             />
           ))}
@@ -145,9 +141,7 @@ export function PostConditionsField({
       )}
 
       {value.conditions.length === 0 && (
-        <p className="text-muted-foreground text-xs">
-          No post-conditions defined.
-        </p>
+        <p className="text-muted-foreground text-xs">No post-conditions defined.</p>
       )}
     </div>
   );
@@ -160,17 +154,12 @@ type PostConditionItemProps = {
   disabled?: boolean;
 };
 
-function PostConditionItem({
-  condition,
-  onChange,
-  onRemove,
-  disabled,
-}: PostConditionItemProps) {
+function PostConditionItem({ condition, onChange, onRemove, disabled }: PostConditionItemProps) {
   const typeIcon =
     condition.type === 'stx' ? (
       <CircleDollarSign className="h-4 w-4" />
-      // biome-ignore lint/style/noNestedTernary: ignored using `--suppress`
-    ) : condition.type === 'ft' ? (
+    ) : // biome-ignore lint/style/noNestedTernary: ignored using `--suppress`
+    condition.type === 'ft' ? (
       <Coins className="h-4 w-4" />
     ) : (
       <Image className="h-4 w-4" />
@@ -209,7 +198,7 @@ function PostConditionItem({
           <Input
             className="font-mono"
             disabled={disabled}
-            onChange={(e) =>
+            onChange={e =>
               onChange({
                 ...condition,
                 address: e.target.value,
@@ -226,16 +215,14 @@ function PostConditionItem({
             <Label className="text-xs">Condition</Label>
             <Select
               disabled={disabled}
-              onValueChange={(val) =>
-                onChange({ ...condition, condition: val } as PostConditionForm)
-              }
+              onValueChange={val => onChange({ ...condition, condition: val } as PostConditionForm)}
               value={condition.condition}
             >
               <SelectTrigger className="w-full">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {FUNGIBLE_COMPARATORS.map((c) => (
+                {FUNGIBLE_COMPARATORS.map(c => (
                   <SelectItem key={c.value} value={c.value}>
                     {c.label}
                   </SelectItem>
@@ -248,16 +235,14 @@ function PostConditionItem({
             <Label className="text-xs">Condition</Label>
             <Select
               disabled={disabled}
-              onValueChange={(val) =>
-                onChange({ ...condition, condition: val } as PostConditionForm)
-              }
+              onValueChange={val => onChange({ ...condition, condition: val } as PostConditionForm)}
               value={condition.condition}
             >
               <SelectTrigger className="w-full">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {NFT_COMPARATORS.map((c) => (
+                {NFT_COMPARATORS.map(c => (
                   <SelectItem key={c.value} value={c.value}>
                     {c.label}
                   </SelectItem>
@@ -274,7 +259,7 @@ function PostConditionItem({
             <Input
               className="font-mono"
               disabled={disabled}
-              onChange={(e) =>
+              onChange={e =>
                 onChange({
                   ...condition,
                   asset: e.target.value,
@@ -297,7 +282,7 @@ function PostConditionItem({
               className="font-mono"
               disabled={disabled}
               inputMode="numeric"
-              onChange={(e) =>
+              onChange={e =>
                 onChange({
                   ...condition,
                   amount: e.target.value,
@@ -307,9 +292,7 @@ function PostConditionItem({
               value={condition.amount}
             />
             <p className="text-[10px] text-muted-foreground">
-              {condition.type === 'stx'
-                ? '1 STX = 1,000,000 micro-STX'
-                : 'Enter raw amount'}
+              {condition.type === 'stx' ? '1 STX = 1,000,000 micro-STX' : 'Enter raw amount'}
             </p>
           </div>
         )}
@@ -321,7 +304,7 @@ function PostConditionItem({
             <Input
               className="font-mono"
               disabled={disabled}
-              onChange={(e) =>
+              onChange={e =>
                 onChange({
                   ...condition,
                   assetId: e.target.value,
@@ -330,9 +313,7 @@ function PostConditionItem({
               placeholder="1"
               value={condition.assetId}
             />
-            <p className="text-[10px] text-muted-foreground">
-              NFT identifier (numeric)
-            </p>
+            <p className="text-[10px] text-muted-foreground">NFT identifier (numeric)</p>
           </div>
         )}
       </div>

@@ -1,10 +1,6 @@
 /** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { hexToBytes } from './utils';
-import type {
-  ClarityAbiType,
-  ClarityAbiTypePrimitive,
-  TypedAbiFunction,
-} from './abi-types';
+import type { ClarityAbiType, ClarityAbiTypePrimitive, TypedAbiFunction } from './abi-types';
 import {
   isClarityAbiOptional,
   isClarityAbiBuffer,
@@ -40,16 +36,10 @@ export type ResponseType<F extends TypedAbiFunction<UnknownArgs, any>> =
 //   type: AbiType
 // ): RawClarityTypeTo<AbiType>;
 // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
-export function rawClarityToValue<T = any>(
-  input: string,
-  type: ClarityAbiType
-): T;
+export function rawClarityToValue<T = any>(input: string, type: ClarityAbiType): T;
 // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: ignored using `--suppress`
 // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
-export function rawClarityToValue<T = any>(
-  input: string,
-  type: ClarityAbiType
-): T {
+export function rawClarityToValue<T = any>(input: string, type: ClarityAbiType): T {
   if (isClarityAbiTuple(type)) {
     const decoded = expectTuple(input);
     // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
@@ -77,9 +67,7 @@ export function rawClarityToValue<T = any>(
   if (isClarityAbiList(type)) {
     const elements: string[] = expectList(input);
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return elements.map((e) =>
-      rawClarityToValue(e, type.list.type)
-    ) as unknown as T;
+    return elements.map(e => rawClarityToValue(e, type.list.type)) as unknown as T;
     // throw new Error("Unable to parse list");
   }
   if (isClarityAbiOptional(type)) {
@@ -125,9 +113,7 @@ export function rawClarityToValue<T = any>(
     const inner = unwrap(input, 'err');
     return err(rawClarityToValue(inner, type.response.error)) as unknown as T;
   }
-  throw new Error(
-    `Unable to parse cv string to value: ${input} ${JSON.stringify(type, null, 2)}`
-  );
+  throw new Error(`Unable to parse cv string to value: ${input} ${JSON.stringify(type, null, 2)}`);
 }
 
 function consume(src: string, expectation: string, wrapped: boolean) {
@@ -196,10 +182,7 @@ for (let n = 0; n <= 0xff; ++n) {
 
 function buff(val: Uint8Array | string) {
   // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
-  const buff =
-    typeof val === 'string'
-      ? new TextEncoder().encode(val)
-      : new Uint8Array(val);
+  const buff = typeof val === 'string' ? new TextEncoder().encode(val) : new Uint8Array(val);
 
   const hexOctets = new Array(buff.length);
 

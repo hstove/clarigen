@@ -12,7 +12,7 @@ import router from '@/orpc/router';
 
 const handler = new OpenAPIHandler(router, {
   interceptors: [
-    onError((error) => {
+    onError(error => {
       console.error(error);
     }),
   ],

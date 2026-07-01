@@ -58,7 +58,7 @@ export function formValuesToFunctionArgs(
   formValues: Record<string, unknown>,
   args: ClarityAbiArg[]
 ): ClarityValue[] {
-  return args.map((arg) => {
+  return args.map(arg => {
     const value = formValues[arg.name];
     return formValueToCV(value, arg.type);
   });
@@ -90,7 +90,7 @@ export function cvToFormValue(val: ClarityValue): unknown {
     case ClarityType.PrincipalContract:
       return principalToString(val);
     case ClarityType.List:
-      return val.value.map((v) => cvToFormValue(v));
+      return val.value.map(v => cvToFormValue(v));
     case ClarityType.Tuple:
       return Object.entries(val.value).reduce(
         (acc, [key, v]) => ({
@@ -111,9 +111,7 @@ export function cvToFormValue(val: ClarityValue): unknown {
 /**
  * Converts transaction arguments from the Stacks API (hex encoded) back to form values.
  */
-export function txArgsToFormValues(
-  args: { name: string; hex: string }[]
-): Record<string, unknown> {
+export function txArgsToFormValues(args: { name: string; hex: string }[]): Record<string, unknown> {
   const values: Record<string, unknown> = {};
   for (const arg of args) {
     const cv = hexToCV(arg.hex);

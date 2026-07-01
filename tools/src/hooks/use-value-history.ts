@@ -14,9 +14,7 @@ export type UseValueHistoryReturn = {
   refresh: () => void;
 };
 
-export function useValueHistory(
-  options: UseValueHistoryOptions
-): UseValueHistoryReturn {
+export function useValueHistory(options: UseValueHistoryOptions): UseValueHistoryReturn {
   const { contractId, functionName, argName, clarityType } = options;
 
   const [history, setHistory] = useState<CombinedHistory>({
@@ -26,12 +24,7 @@ export function useValueHistory(
 
   const refresh = useCallback(() => {
     if (typeof window === 'undefined') return;
-    const combined = getCombinedHistory(
-      contractId,
-      functionName,
-      argName,
-      clarityType
-    );
+    const combined = getCombinedHistory(contractId, functionName, argName, clarityType);
     setHistory(combined);
   }, [contractId, functionName, argName, clarityType]);
 

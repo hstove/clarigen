@@ -10,10 +10,8 @@ const todos = [
 
 export const listTodos = os.input(z.object({})).handler(() => todos);
 
-export const addTodo = os
-  .input(z.object({ name: z.string() }))
-  .handler(({ input }) => {
-    const newTodo = { id: todos.length + 1, name: input.name };
-    todos.push(newTodo);
-    return newTodo;
-  });
+export const addTodo = os.input(z.object({ name: z.string() })).handler(({ input }) => {
+  const newTodo = { id: todos.length + 1, name: input.name };
+  todos.push(newTodo);
+  return newTodo;
+});

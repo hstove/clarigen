@@ -4,16 +4,11 @@ import { textVariants } from '@/lib/text-variants';
 import { cn } from '@/lib/utils';
 
 export interface TextProps
-  extends React.HTMLAttributes<HTMLSpanElement>,
-    VariantProps<typeof textVariants> {}
+  extends React.HTMLAttributes<HTMLSpanElement>, VariantProps<typeof textVariants> {}
 
 const Text = React.forwardRef<HTMLSpanElement, TextProps>(
   ({ className, variant, ...props }, ref) => (
-    <span
-      className={cn(textVariants({ variant, className }))}
-      ref={ref}
-      {...props}
-    />
+    <span className={cn(textVariants({ variant, className }))} ref={ref} {...props} />
   )
 );
 Text.displayName = 'Text';

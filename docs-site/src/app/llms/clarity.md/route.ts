@@ -4,7 +4,7 @@ export async function GET(_request: Request) {
   const slugs = ['types.md', 'functions.md', 'keywords.md'];
 
   const docs = await Promise.all(
-    slugs.map(async (slug) => {
+    slugs.map(async slug => {
       const doc = await fetch(
         `https://raw.githubusercontent.com/stacks-network/docs/refs/heads/master/docs/reference/clarity/${slug}`
       );

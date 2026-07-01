@@ -27,11 +27,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CodeBlockWrapper } from '@/components/code-block-wrapper';
 import { CopyButton, CopyNpmCommandButton } from '@/components/copy-button';
 import { Button } from '@/components/ui/button';
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Text } from '@components/text';
 import { CaretSortIcon } from '@radix-ui/react-icons';
 
@@ -45,13 +41,7 @@ const components = {
   AlertDescription,
   Button,
   h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h1
-      className={cn(
-        'mt-2 scroll-m-20 font-bold font-heading text-4xl',
-        className
-      )}
-      {...props}
-    />
+    <h1 className={cn('mt-2 scroll-m-20 font-bold font-heading text-4xl', className)} {...props} />
   ),
   h2: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2
@@ -82,33 +72,21 @@ const components = {
   ),
   h5: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h5
-      className={cn(
-        'mt-8 scroll-m-20 font-semibold text-lg tracking-tight',
-        className
-      )}
+      className={cn('mt-8 scroll-m-20 font-semibold text-lg tracking-tight', className)}
       {...props}
     />
   ),
   h6: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h6
-      className={cn(
-        'mt-8 scroll-m-20 font-semibold text-base tracking-tight',
-        className
-      )}
+      className={cn('mt-8 scroll-m-20 font-semibold text-base tracking-tight', className)}
       {...props}
     />
   ),
   a: ({ className, ...props }: React.HTMLAttributes<HTMLAnchorElement>) => (
-    <a
-      className={cn('font-medium underline underline-offset-4', className)}
-      {...props}
-    />
+    <a className={cn('font-medium underline underline-offset-4', className)} {...props} />
   ),
   p: ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
-    <p
-      className={cn('leading-7 [&:not(:first-child)]:mt-6', className)}
-      {...props}
-    />
+    <p className={cn('leading-7 [&:not(:first-child)]:mt-6', className)} {...props} />
   ),
   ul: ({ className, ...props }: React.HTMLAttributes<HTMLUListElement>) => (
     <ul className={cn('my-6 ml-6 list-disc', className)} {...props} />
@@ -120,16 +98,9 @@ const components = {
     <li className={cn('mt-2', className)} {...props} />
   ),
   blockquote: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
-    <blockquote
-      className={cn('mt-6 border-l-2 pl-6 italic', className)}
-      {...props}
-    />
+    <blockquote className={cn('mt-6 border-l-2 pl-6 italic', className)} {...props} />
   ),
-  img: ({
-    className,
-    alt,
-    ...props
-  }: React.ImgHTMLAttributes<HTMLImageElement>) => (
+  img: ({ className, alt, ...props }: React.ImgHTMLAttributes<HTMLImageElement>) => (
     // eslint-disable-next-line @next/next/no-img-element
     <img alt={alt} className={cn('rounded-md', className)} {...props} />
   ),
@@ -138,10 +109,7 @@ const components = {
   ),
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
     <div className="relative my-6 w-full overflow-auto">
-      <table
-        className={cn('w-full caption-bottom text-sm', className)}
-        {...props}
-      />
+      <table className={cn('w-full caption-bottom text-sm', className)} {...props} />
     </div>
   ),
   tr: ({ className, ...props }: React.HTMLAttributes<HTMLTableRowElement>) => (
@@ -163,10 +131,7 @@ const components = {
       {...props}
     />
   ),
-  tbody: ({
-    className,
-    ...props
-  }: React.HTMLAttributes<HTMLTableSectionElement>) => (
+  tbody: ({ className, ...props }: React.HTMLAttributes<HTMLTableSectionElement>) => (
     <tbody className={cn('[&_tr:last-child]:border-0', className)} {...props} />
   ),
   td: ({ className, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
@@ -213,20 +178,17 @@ const components = {
           value={__rawString__}
         />
       )}
-      {__npmCommand__ &&
-        __yarnCommand__ &&
-        __pnpmCommand__ &&
-        __bunCommand__ && (
-          <CopyNpmCommandButton
-            className={cn('absolute top-4 right-4', __withMeta__ && 'top-16')}
-            commands={{
-              __npmCommand__,
-              __yarnCommand__,
-              __pnpmCommand__,
-              __bunCommand__,
-            }}
-          />
-        )}
+      {__npmCommand__ && __yarnCommand__ && __pnpmCommand__ && __bunCommand__ && (
+        <CopyNpmCommandButton
+          className={cn('absolute top-4 right-4', __withMeta__ && 'top-16')}
+          commands={{
+            __npmCommand__,
+            __yarnCommand__,
+            __pnpmCommand__,
+            __bunCommand__,
+          }}
+        />
+      )}
     </>
   ),
   code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
@@ -238,10 +200,7 @@ const components = {
       {...props}
     />
   ),
-  details: ({
-    className,
-    ...props
-  }: React.HTMLAttributes<HTMLDetailsElement>) => (
+  details: ({ className, ...props }: React.HTMLAttributes<HTMLDetailsElement>) => (
     <details className={cn('mt-3', className)} {...props} />
   ),
   Image,
@@ -250,9 +209,7 @@ const components = {
   // ComponentExample,
   // ComponentSource,
   // AspectRatio,
-  CodeBlockWrapper: ({ ...props }) => (
-    <CodeBlockWrapper className="rounded-md border" {...props} />
-  ),
+  CodeBlockWrapper: ({ ...props }) => <CodeBlockWrapper className="rounded-md border" {...props} />,
   // Step: ({ className, ...props }: React.ComponentProps<'h3'>) => (
   //   <h3
   //     className={cn(
@@ -263,30 +220,18 @@ const components = {
   //   />
   // ),
   Steps: ({ ...props }) => (
-    <div
-      className="[&>h3]:step steps mb-12 ml-4 border-l pl-8 [counter-reset:step]"
-      {...props}
-    />
+    <div className="[&>h3]:step steps mb-12 ml-4 border-l pl-8 [counter-reset:step]" {...props} />
   ),
   Tabs: ({ className, ...props }: React.ComponentProps<typeof Tabs>) => (
     <Tabs className={cn('relative mt-6 w-full', className)} {...props} />
   ),
-  TabsList: ({
-    className,
-    ...props
-  }: React.ComponentProps<typeof TabsList>) => (
+  TabsList: ({ className, ...props }: React.ComponentProps<typeof TabsList>) => (
     <TabsList
-      className={cn(
-        'w-full justify-start rounded-none border-b bg-transparent p-0',
-        className
-      )}
+      className={cn('w-full justify-start rounded-none border-b bg-transparent p-0', className)}
       {...props}
     />
   ),
-  TabsTrigger: ({
-    className,
-    ...props
-  }: React.ComponentProps<typeof TabsTrigger>) => (
+  TabsTrigger: ({ className, ...props }: React.ComponentProps<typeof TabsTrigger>) => (
     <TabsTrigger
       className={cn(
         'relative h-9 rounded-none border-b-2 border-b-transparent bg-transparent px-4 pt-2 pb-3 font-semibold text-muted-foreground shadow-none transition-none data-[state=active]:border-b-primary data-[state=active]:text-foreground data-[state=active]:shadow-none',
@@ -295,10 +240,7 @@ const components = {
       {...props}
     />
   ),
-  TabsContent: ({
-    className,
-    ...props
-  }: React.ComponentProps<typeof TabsContent>) => (
+  TabsContent: ({ className, ...props }: React.ComponentProps<typeof TabsContent>) => (
     <TabsContent
       className={cn(
         'relative [&_h3.font-heading]:font-semibold [&_h3.font-heading]:text-base',
@@ -311,10 +253,7 @@ const components = {
   //   <FrameworkDocs className={cn(className)} {...props} />
   // ),
   Link: ({ className, ...props }: React.ComponentProps<typeof Link>) => (
-    <Link
-      className={cn('font-medium underline underline-offset-4', className)}
-      {...props}
-    />
+    <Link className={cn('font-medium underline underline-offset-4', className)} {...props} />
   ),
   Collapsible,
   CollapsibleContent,

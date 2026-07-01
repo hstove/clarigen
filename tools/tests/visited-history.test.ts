@@ -23,7 +23,7 @@ vi.stubGlobal('window', {
 
 beforeEach(() => {
   // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
-  Object.keys(mockStorage).forEach((key) => delete mockStorage[key]);
+  Object.keys(mockStorage).forEach(key => delete mockStorage[key]);
 });
 
 describe('getVisitedFunctions / addVisitedFunction', () => {

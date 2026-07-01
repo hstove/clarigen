@@ -45,12 +45,7 @@ export function parseReadOnlyResponse<T extends ClarityValue>(
 export async function callReadOnlyFunction<T extends ClarityValue>(
   options: ReadOnlyOptions
 ): Promise<T> {
-  const {
-    contractAddress,
-    functionArgs,
-    senderAddress = contractAddress,
-    url,
-  } = options;
+  const { contractAddress, functionArgs, senderAddress = contractAddress, url } = options;
 
   const apiResponse = await smartContractsApi(
     url,
@@ -60,9 +55,7 @@ export async function callReadOnlyFunction<T extends ClarityValue>(
     ...options,
     readOnlyFunctionArgs: {
       sender: senderAddress,
-      arguments: functionArgs.map((arg) =>
-        typeof arg === 'string' ? arg : cvToHex(arg)
-      ),
+      arguments: functionArgs.map(arg => (typeof arg === 'string' ? arg : cvToHex(arg))),
     },
   });
 

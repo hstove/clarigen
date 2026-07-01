@@ -1,16 +1,8 @@
 import type { ClarityAbiType } from '@clarigen/core';
 import { type AnyFieldApi, useStore } from '@tanstack/react-form';
-import {
-  fieldContext,
-  useFieldContext,
-  useFormContext,
-} from '@/hooks/form-context';
+import { fieldContext, useFieldContext, useFormContext } from '@/hooks/form-context';
 import { Button } from '@/components/ui/button';
-import {
-  FieldGroup,
-  FieldLabel,
-  FieldDescription,
-} from '@/components/ui/field';
+import { FieldGroup, FieldLabel, FieldDescription } from '@/components/ui/field';
 import { ClarityField } from '../clarity-field';
 import { getClarityValidators } from '@/lib/clarity-validators';
 
@@ -22,16 +14,10 @@ type ListFieldProps = {
   disabled?: boolean;
 };
 
-export function ListField({
-  name,
-  label,
-  itemType,
-  maxLength,
-  disabled,
-}: ListFieldProps) {
+export function ListField({ name, label, itemType, maxLength, disabled }: ListFieldProps) {
   const form = useFormContext();
   const field = useFieldContext<unknown[]>();
-  const items = useStore(field.store, (state) => state.value ?? []);
+  const items = useStore(field.store, state => state.value ?? []);
 
   const addItem = () => {
     if (items.length < maxLength) {
@@ -70,10 +56,8 @@ export function ListField({
               name={`${field.name}[${index}]` as never}
               validators={getClarityValidators(itemType)}
             >
-              {(itemField) => (
-                <fieldContext.Provider
-                  value={itemField as unknown as AnyFieldApi}
-                >
+              {itemField => (
+                <fieldContext.Provider value={itemField as unknown as AnyFieldApi}>
                   <ClarityField
                     disabled={disabled}
                     label={`[${index}]`}

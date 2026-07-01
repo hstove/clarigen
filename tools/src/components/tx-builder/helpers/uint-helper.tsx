@@ -95,7 +95,7 @@ export function UintHelper({ field, onApply }: UintHelperProps) {
             className="font-mono text-sm"
             id="human-amount"
             inputMode="decimal"
-            onChange={(e) => setHumanAmount(e.target.value)}
+            onChange={e => setHumanAmount(e.target.value)}
             placeholder="10.5"
             type="text"
             value={humanAmount}
@@ -107,14 +107,14 @@ export function UintHelper({ field, onApply }: UintHelperProps) {
             Decimals
           </Label>
           <Select
-            onValueChange={(value) => setSelectedDecimals(value || '6')}
+            onValueChange={value => setSelectedDecimals(value || '6')}
             value={selectedDecimals}
           >
             <SelectTrigger className="text-sm" id="decimals-preset">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {PRESET_DECIMALS.map((preset) => (
+              {PRESET_DECIMALS.map(preset => (
                 <SelectItem key={preset.value} value={preset.value.toString()}>
                   {preset.label}
                 </SelectItem>
@@ -134,7 +134,7 @@ export function UintHelper({ field, onApply }: UintHelperProps) {
               id="custom-decimals"
               max="38"
               min="0"
-              onChange={(e) => setCustomDecimals(e.target.value)}
+              onChange={e => setCustomDecimals(e.target.value)}
               placeholder="6"
               type="number"
               value={customDecimals}
@@ -142,12 +142,7 @@ export function UintHelper({ field, onApply }: UintHelperProps) {
           </div>
         )}
 
-        <Button
-          className="w-full"
-          onClick={handleConvert}
-          size="sm"
-          variant="secondary"
-        >
+        <Button className="w-full" onClick={handleConvert} size="sm" variant="secondary">
           Convert
         </Button>
 
@@ -166,12 +161,7 @@ export function UintHelper({ field, onApply }: UintHelperProps) {
           </div>
         )}
 
-        <Button
-          className="w-full"
-          disabled={!convertedValue}
-          onClick={handleApply}
-          size="sm"
-        >
+        <Button className="w-full" disabled={!convertedValue} onClick={handleApply} size="sm">
           Apply to Field
         </Button>
       </div>

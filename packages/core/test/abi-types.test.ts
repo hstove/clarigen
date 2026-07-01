@@ -7,10 +7,7 @@ import { contractsFactory } from '../src';
 import { test, expect } from 'vitest';
 
 // biome-ignore lint/suspicious/noExportsInTest: ignored using `--suppress`
-export type ClarityAbiType =
-  | ClarityAbiTypeTuple
-  | ClarityAbiTypeUInt128
-  | ClarityAbiTypeBool;
+export type ClarityAbiType = ClarityAbiTypeTuple | ClarityAbiTypeUInt128 | ClarityAbiTypeBool;
 
 // export type ClarityAbiTypeTuple = {
 //   tuple: { name: string; type: ClarityAbiType }[];
@@ -75,13 +72,8 @@ const testContracts = {
   },
 } as const;
 
-const { tester } = contractsFactory(
-  testContracts,
-  'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM'
-);
+const { tester } = contractsFactory(testContracts, 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM');
 
 test('factory typings', () => {
-  expect(tester.identifier).toEqual(
-    'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.tester'
-  );
+  expect(tester.identifier).toEqual('ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.tester');
 });

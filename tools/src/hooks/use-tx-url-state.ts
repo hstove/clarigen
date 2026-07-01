@@ -1,9 +1,4 @@
-import {
-  useQueryStates,
-  createParser,
-  parseAsString,
-  parseAsBoolean,
-} from 'nuqs';
+import { useQueryStates, createParser, parseAsString, parseAsBoolean } from 'nuqs';
 import type { ClarityAbiType } from '@clarigen/core';
 import {
   isClarityAbiPrimitive,
@@ -66,9 +61,7 @@ const parseAsTuple = createParser({
     if (!value) return {};
     try {
       const parsed = JSON.parse(value);
-      return typeof parsed === 'object' &&
-        parsed !== null &&
-        !Array.isArray(parsed)
+      return typeof parsed === 'object' && parsed !== null && !Array.isArray(parsed)
         ? (parsed as Record<string, unknown>)
         : null;
     } catch {

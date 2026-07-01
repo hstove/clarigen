@@ -47,7 +47,7 @@ function logTxCall({
       'contract-call': {
         'contract-id': contractId,
         'expected-sender': sender,
-        parameters: args.map((arg) => cvToString(arg, 'hex')),
+        parameters: args.map(arg => cvToString(arg, 'hex')),
         method: functionName,
         cost: '10000000',
       },
@@ -64,11 +64,7 @@ export function txOk<A extends UnknownArgs, R extends AnyResponse>(
   sender: string
 ): TransactionResult<OkType<R>> {
   const receipt = getTxReceipt(tx, sender);
-  const value = validateResponse<OkType<R>>(
-    receipt.result,
-    true,
-    tx.contractAbi
-  );
+  const value = validateResponse<OkType<R>>(receipt.result, true, tx.contractAbi);
 
   return {
     ...receipt,
@@ -83,11 +79,7 @@ export function txErr<A extends UnknownArgs, R extends AnyResponse>(
   sender: string
 ): TransactionResult<ErrType<R>> {
   const receipt = getTxReceipt(tx, sender);
-  const value = validateResponse<ErrType<R>>(
-    receipt.result,
-    false,
-    tx.contractAbi
-  );
+  const value = validateResponse<ErrType<R>>(receipt.result, false, tx.contractAbi);
 
   return {
     ...receipt,
@@ -176,11 +168,7 @@ export function roOk<A extends UnknownArgs, R extends AnyResponse>(
     args,
     sender ?? tx.contractAddress
   );
-  const value = validateResponse<OkType<R>>(
-    receipt.result,
-    true,
-    tx.contractAbi
-  );
+  const value = validateResponse<OkType<R>>(receipt.result, true, tx.contractAbi);
   return {
     ...receipt,
     events: receipt.events as unknown as CoreNodeEvent[],
@@ -212,11 +200,7 @@ export function roErr<A extends UnknownArgs, R extends AnyResponse>(
     args,
     sender ?? tx.contractAddress
   );
-  const value = validateResponse<ErrType<R>>(
-    receipt.result,
-    false,
-    tx.contractAbi
-  );
+  const value = validateResponse<ErrType<R>>(receipt.result, false, tx.contractAbi);
 
   return {
     ...receipt,
@@ -235,18 +219,10 @@ export function rovErr<A extends UnknownArgs, R extends AnyResponse>(
   return roErr(tx, sender).value;
 }
 
-export function mapGet<Key, Val>(
-  contractId: string,
-  map: TypedAbiMap<Key, Val>,
-  key: Key
-) {
+export function mapGet<Key, Val>(contractId: string, map: TypedAbiMap<Key, Val>, key: Key) {
   const payload = mapFactory(map, key);
   // biome-ignore lint/correctness/noUndeclaredVariables: ignored using `--suppress`
-  const result = simnet.getMapEntry(
-    contractId,
-    payload.map.name,
-    payload.keyCV
-  );
+  const result = simnet.getMapEntry(contractId, payload.map.name, payload.keyCV);
   return cvToValue<Val | null>(result);
 }
 
@@ -271,10 +247,7 @@ export const chain = {
 
 export async function makeNewSession(cwd?: string, manifestPath?: string) {
   // biome-ignore lint/correctness/noUndeclaredVariables: ignored using `--suppress`
-  await simnet.initSession(
-    cwd ?? process.cwd(),
-    manifestPath ?? './Clarinet.toml'
-  );
+  await simnet.initSession(cwd ?? process.cwd(), manifestPath ?? './Clarinet.toml');
 }
 
 export function assertOk<T extends ResponseOk<O, E> | ResponseErr<O, E>, O, E>(
@@ -284,9 +257,7 @@ export function assertOk<T extends ResponseOk<O, E> | ResponseErr<O, E>, O, E>(
     throw new Error('Expected response, but got something else');
   }
   if (!response.isOk) {
-    throw new Error(
-      `Expected response to be OK, but got ERR ${response.value}`
-    );
+    throw new Error(`Expected response to be OK, but got ERR ${response.value}`);
   }
 }
 

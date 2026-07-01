@@ -18,12 +18,7 @@ import type {
   FullContract,
 } from './factory-types';
 
-export const DEPLOYMENT_NETWORKS = [
-  'devnet',
-  'simnet',
-  'testnet',
-  'mainnet',
-] as const;
+export const DEPLOYMENT_NETWORKS = ['devnet', 'simnet', 'testnet', 'mainnet'] as const;
 export type DeploymentNetwork = (typeof DEPLOYMENT_NETWORKS)[number];
 
 export type DeploymentsForContracts<C extends AllContracts> = {
@@ -34,18 +29,12 @@ export type ContractDeployments = {
   [key in DeploymentNetwork]: string | null;
 };
 
-export type Project<
-  C extends AllContracts,
-  D extends DeploymentsForContracts<C>,
-> = {
+export type Project<C extends AllContracts, D extends DeploymentsForContracts<C>> = {
   contracts: C;
   deployments: D;
 };
 
-export type FullContractWithIdentifier<
-  C extends TypedAbi,
-  Id extends string,
-> = FullContract<C> & {
+export type FullContractWithIdentifier<C extends TypedAbi, Id extends string> = FullContract<C> & {
   identifier: Id;
 };
 
@@ -62,9 +51,7 @@ export type ProjectFactory<
 > = {
   [ContractName in keyof P['contracts']]: FullContractWithIdentifier<
     P['contracts'][ContractName],
-    IsDeploymentNetwork<N> extends true
-      ? ''
-      : NonNullable<P['deployments'][ContractName][N]>
+    IsDeploymentNetwork<N> extends true ? '' : NonNullable<P['deployments'][ContractName][N]>
   >;
   // [ContractName in keyof P['contracts']]: P['deployments'][ContractName][N] extends string
   //   ? FullContractWithIdentifier<P['contracts'][ContractName], P['deployments'][ContractName][N]>
@@ -157,11 +144,9 @@ export function deploymentFactory<T extends AllContracts>(
   deployer: DeploymentPlan
 ): ContractFactory<T> {
   const result = {} as Partial<ContractFactory<T>>;
-  const txs = getContractTxs(
-    deployer.plan.batches as Batch<DeploymentTransaction>[]
-  );
+  const txs = getContractTxs(deployer.plan.batches as Batch<DeploymentTransaction>[]);
   // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
-  txs.forEach((tx) => {
+  txs.forEach(tx => {
     const id = getIdentifierForDeploymentTx(tx);
     const [contractAddress, contractFileName] = id.split('.');
     // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
@@ -169,16 +154,14 @@ export function deploymentFactory<T extends AllContracts>(
     const def = contracts[contractName] as TypedAbi;
     const final = contracts[contractName] as FullContract<T[keyof T]>;
     if (typeof final === 'undefined') {
-      throw new Error(
-        `Clarigen error: mismatch for contract '${contractName as string}'`
-      );
+      throw new Error(`Clarigen error: mismatch for contract '${contractName as string}'`);
     }
     result[contractName] = final;
     final.contractFile = getDeploymentTxPath(tx);
     final.identifier = id;
     // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
     // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
-    Object.keys(contracts[contractName]!.functions).forEach((_fnName) => {
+    Object.keys(contracts[contractName]!.functions).forEach(_fnName => {
       const fnName: keyof (typeof def)['functions'] = _fnName;
       // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
       const fn = ((...args: any[]) => {

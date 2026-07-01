@@ -12,7 +12,7 @@ function toParagraphs(text: string[]) {
   let current: string[] = [];
 
   // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
-  text.forEach((line) => {
+  text.forEach(line => {
     const trimmed = line.trim();
     if (trimmed === '') {
       if (current.length > 0) {
@@ -39,10 +39,7 @@ export function DocText({ text, className, paragraphClassName }: DocTextProps) {
     <div className={cn('space-y-2', className)}>
       {paragraphs.map((paragraph, index) => (
         <p
-          className={cn(
-            'text-muted-foreground text-xs leading-relaxed',
-            paragraphClassName
-          )}
+          className={cn('text-muted-foreground text-xs leading-relaxed', paragraphClassName)}
           key={`${paragraph.slice(0, 12)}-${index}`}
         >
           {paragraph}

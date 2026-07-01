@@ -22,9 +22,7 @@ function ContractOverviewPage() {
   // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
   const network = parseNetwork(networkParam)!;
 
-  return (
-    <ContractOverviewContent contractId={contractAddress} network={network} />
-  );
+  return <ContractOverviewContent contractId={contractAddress} network={network} />;
 }
 
 type ContractOverviewContentProps = {
@@ -32,22 +30,15 @@ type ContractOverviewContentProps = {
   contractId: string;
 };
 
-function ContractOverviewContent({
-  network,
-  contractId,
-}: ContractOverviewContentProps) {
-  const {
-    data: functions,
-    isLoading,
-    error,
-  } = useContractFunctions(network, contractId);
+function ContractOverviewContent({ network, contractId }: ContractOverviewContentProps) {
+  const { data: functions, isLoading, error } = useContractFunctions(network, contractId);
   const { data: contractDocs } = useContractDocs(network, contractId);
   const functionDescriptions = useMemo(() => {
     if (!contractDocs) return new Map<string, string>();
     return new Map(
-      contractDocs.functions.map((fn) => {
+      contractDocs.functions.map(fn => {
         const description = fn.comments.text
-          .map((line) => line.trim())
+          .map(line => line.trim())
           .filter(Boolean)
           .join(' ');
         return [fn.abi.name, description];
@@ -62,9 +53,7 @@ function ContractOverviewContent({
   if (isLoading) {
     return (
       <div className="container mx-auto max-w-2xl p-6">
-        <p className="text-muted-foreground text-sm">
-          Loading contract functions…
-        </p>
+        <p className="text-muted-foreground text-sm">Loading contract functions…</p>
       </div>
     );
   }
@@ -72,9 +61,7 @@ function ContractOverviewContent({
   if (error) {
     return (
       <div className="container mx-auto max-w-2xl p-6">
-        <p className="text-destructive text-sm">
-          Failed to load contract data.
-        </p>
+        <p className="text-destructive text-sm">Failed to load contract data.</p>
       </div>
     );
   }
@@ -89,8 +76,8 @@ function ContractOverviewContent({
     );
   }
 
-  const publicFunctions = functions.filter((f) => f.access === 'public');
-  const readOnlyFunctions = functions.filter((f) => f.access === 'read_only');
+  const publicFunctions = functions.filter(f => f.access === 'public');
+  const readOnlyFunctions = functions.filter(f => f.access === 'read_only');
 
   return (
     <div className="mx-auto max-w-2xl space-y-8 px-6 py-8">
@@ -99,9 +86,7 @@ function ContractOverviewContent({
 
       {/* Contract Header */}
       <div className="space-y-2">
-        <h1 className="break-all font-medium font-mono text-lg tracking-tight">
-          {contractId}
-        </h1>
+        <h1 className="break-all font-medium font-mono text-lg tracking-tight">{contractId}</h1>
       </div>
 
       {/* Public Functions */}
@@ -111,11 +96,9 @@ function ContractOverviewContent({
         </h2>
         <div className="grid gap-2">
           {publicFunctions.length === 0 ? (
-            <p className="text-muted-foreground text-sm italic">
-              No public functions found.
-            </p>
+            <p className="text-muted-foreground text-sm italic">No public functions found.</p>
           ) : (
-            publicFunctions.map((func) => (
+            publicFunctions.map(func => (
               <Link
                 className="group flex items-center justify-between border border-border bg-card p-4 transition-colors hover:border-primary/50"
                 key={func.name}
@@ -155,11 +138,9 @@ function ContractOverviewContent({
         </h2>
         <div className="grid gap-2">
           {readOnlyFunctions.length === 0 ? (
-            <p className="text-muted-foreground text-sm italic">
-              No read-only functions found.
-            </p>
+            <p className="text-muted-foreground text-sm italic">No read-only functions found.</p>
           ) : (
-            readOnlyFunctions.map((func) => (
+            readOnlyFunctions.map(func => (
               <Link
                 className="group flex items-center justify-between border border-border bg-card p-4 transition-colors hover:border-primary/50"
                 key={func.name}

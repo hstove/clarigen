@@ -13,8 +13,5 @@
     "types": ["node"],
     "strictNullChecks": true
   },
-  "include": [
-    "@stacks/clarinet-sdk/vitest-helpers/src/global",
-    "./tests/**/*.ts"
-  ]
+  "include": ["@stacks/clarinet-sdk/vitest-helpers/src/global", "./tests/**/*.ts"]
 }

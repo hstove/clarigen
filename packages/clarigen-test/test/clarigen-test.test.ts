@@ -11,7 +11,7 @@ import {
 import * as Hiro from '@stacks/transactions';
 
 // biome-ignore lint/suspicious/noExportsInTest: ignored using `--suppress`
-export function cvConvert(value: MSClarityValue | HiroClarityValue) {
+export function cvConvert(value: MSClarityValue) {
   return deserializeCVHiro(serializeCVMS(value as unknown as MSClarityValue));
 }
 

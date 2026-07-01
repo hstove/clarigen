@@ -1,10 +1,5 @@
 import type { ClarityValue } from '@stacks/transactions';
-import type {
-  ClarityAbiFunction,
-  TypedAbi,
-  TypedAbiArg,
-  TypedAbiFunction,
-} from './abi-types';
+import type { ClarityAbiFunction, TypedAbi, TypedAbiArg, TypedAbiFunction } from './abi-types';
 
 export type ContractCall<T> = {
   function: ClarityAbiFunction;
@@ -18,8 +13,10 @@ export type ContractCall<T> = {
   _r?: T;
 };
 
-export interface ContractCallTyped<Args extends UnknownArgs, R>
-  extends Omit<ContractCall<R>, 'nativeArgs'> {
+export interface ContractCallTyped<Args extends UnknownArgs, R> extends Omit<
+  ContractCall<R>,
+  'nativeArgs'
+> {
   nativeArgs: ArgsType<Args>;
 }
 
@@ -48,16 +45,12 @@ type ArgsRecordUnion<T extends TypedAbiArg<unknown, string>> =
     : never;
 type InnerUnionToIntersection<U> =
   // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
-  (U extends any ? (k: U) => void : never) extends (k: infer I) => void
-    ? I
-    : never;
+  (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never;
 type Compact<T> = { [K in keyof T]: T[K] };
 
 export type UnionToIntersection<T> = Compact<InnerUnionToIntersection<T>>;
 
-export type ArgsRecord<T extends UnknownArgs> = UnionToIntersection<
-  ArgsRecordUnion<T[number]>
->;
+export type ArgsRecord<T extends UnknownArgs> = UnionToIntersection<ArgsRecordUnion<T[number]>>;
 
 export type ArgsType<T extends UnknownArgs> = [ArgsRecord<T>] | ArgsTuple<T>;
 
@@ -69,9 +62,7 @@ export type ContractCallFunction<Args extends UnknownArgs, R> = {
 };
 
 export type FnToContractCall<T> =
-  T extends TypedAbiFunction<infer Arg, infer R>
-    ? ContractCallFunction<Arg, R>
-    : never;
+  T extends TypedAbiFunction<infer Arg, infer R> ? ContractCallFunction<Arg, R> : never;
 
 // Contract factory types
 export type FunctionsToContractCalls<T> = T extends ContractFunctions
@@ -87,8 +78,7 @@ export type ContractsToContractCalls<T> = T extends AllContracts
   : never;
 
 export type FullContract<T> = T extends TypedAbi
-  ? FunctionsToContractCalls<T['functions']> &
-      T & { identifier: string } & { contractFile: string }
+  ? FunctionsToContractCalls<T['functions']> & T & { identifier: string } & { contractFile: string }
   : never;
 
 export type ContractFactory<T extends AllContracts> = {

@@ -33,10 +33,7 @@ export type NftPostConditionForm = {
   assetId: string; // Clarity value representation
 };
 
-export type PostConditionForm =
-  | StxPostConditionForm
-  | FtPostConditionForm
-  | NftPostConditionForm;
+export type PostConditionForm = StxPostConditionForm | FtPostConditionForm | NftPostConditionForm;
 
 export type PostConditionsState = {
   mode: 'allow' | 'deny';
@@ -78,14 +75,12 @@ export function createEmptyNftCondition(): NftPostConditionForm {
 }
 
 // Build actual post-conditions from form state
-export function buildPostConditions(
-  conditions: PostConditionForm[]
-): PostCondition[] {
+export function buildPostConditions(conditions: PostConditionForm[]): PostCondition[] {
   return (
     conditions
-      .filter((pc) => pc.address) // Skip empty conditions
+      .filter(pc => pc.address) // Skip empty conditions
       // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: ignored using `--suppress`
-      .map((pc) => {
+      .map(pc => {
         const principal = Pc.principal(pc.address);
 
         if (pc.type === 'stx') {

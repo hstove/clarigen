@@ -5,8 +5,7 @@ import { test, expect } from 'vitest';
 import { type } from 'arktype';
 
 // biome-ignore lint/suspicious/noExportsInTest: ignored using `--suppress`
-export type StacksTranactionResponse =
-  OperationResponse['get_transaction_by_id'];
+export type StacksTranactionResponse = OperationResponse['get_transaction_by_id'];
 
 test('StacksTransaction type is compatible with api', () => {
   // biome-ignore lint/suspicious/noEmptyBlockStatements: ignored using `--suppress`
@@ -18,8 +17,7 @@ test('StacksTransaction type is compatible with api', () => {
 });
 
 test('type validation works for a real api request', async () => {
-  const txid =
-    '0x4334efdc554bd37593ade7119608799187a3f11215585e4c3b5f68be2ce51256';
+  const txid = '0x4334efdc554bd37593ade7119608799187a3f11215585e4c3b5f68be2ce51256';
   const url = await fetch(`https://api.hiro.so/extended/v1/tx/${txid}`);
   const data = await url.json();
   const tx = StacksTransaction(data);

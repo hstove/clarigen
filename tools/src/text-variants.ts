@@ -57,9 +57,6 @@ export type TextVariants = VariantProps<typeof textVariants> & {
 
 export type TextVariantProps = VariantProps<typeof textVariants>;
 
-export function textStyles(
-  variant: TextVariantProps['variant'],
-  className?: string
-) {
+export function textStyles(variant: TextVariantProps['variant'], className?: string) {
   return cn(textVariants({ variant, className }));
 }

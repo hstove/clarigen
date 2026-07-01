@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettier:fix": "prettier --write .",
+    "prettier:fix": "vp fmt .",
     "typecheck": "tsc --noEmit"
   },
   "prettier": "@stacks/prettier-config",
@@ -46,7 +46,6 @@
     "next-contentlayer": "^0.3.4",
     "next-themes": "^0.3.0",
     "nextjs-toploader": "^1.6.12",
-    "prettier": "3.2.5",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-wrap-balancer": "^1.1.0",

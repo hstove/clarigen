@@ -1,15 +1,8 @@
 /** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
-import {
-  SmartContractsApi,
-  Configuration,
-  TransactionsApi,
-} from '@stacks/blockchain-api-client';
+import { SmartContractsApi, Configuration, TransactionsApi } from '@stacks/blockchain-api-client';
 import { isNumber } from '../utils';
 
-export function getHeaders(
-  apiKey?: string,
-  headersOverride: Record<string, string> = {}
-) {
+export function getHeaders(apiKey?: string, headersOverride: Record<string, string> = {}) {
   const headers: Record<string, string> = {
     ...headersOverride,
   };
@@ -57,15 +50,12 @@ export const generateUrl = (
   try {
     const url = new URL(baseUrl);
     // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
-    Object.keys(params).forEach((key) => {
+    Object.keys(params).forEach(key => {
       const value = params[key];
       if (!value) return;
       if (Array.isArray(value)) {
         if (value.length === 0) return;
-        return url.searchParams.set(
-          `${key}[]`,
-          generateQueryStringFromArray<string>(key, value)
-        );
+        return url.searchParams.set(`${key}[]`, generateQueryStringFromArray<string>(key, value));
       }
       if (typeof value === 'boolean' || isNumber(value)) {
         return url.searchParams.set(key, String(value));
