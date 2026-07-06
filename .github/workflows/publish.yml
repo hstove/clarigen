@@ -14,13 +14,13 @@ jobs:
         uses: actions/checkout@v6
       - name: Prepare repository
         run: git checkout main
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: pnpm
-      - name: Enable pnpm
-        run: corepack enable
       - name: Install monorepo deps
         run: pnpm install --frozen-lockfile
       - name: Build packages
