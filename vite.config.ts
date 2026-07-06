@@ -51,6 +51,7 @@ export default defineConfig({
     jsPlugins: [{ name: 'vite-plus', specifier: 'vite-plus/oxlint-plugin' }],
     rules: { 'vite-plus/prefer-vite-plus-imports': 'off' },
     options: { typeAware: false, typeCheck: false },
+    ignorePatterns: ['tools/src/routeTree.gen.ts'],
   },
   fmt: {
     printWidth: 100,
@@ -61,6 +62,6 @@ export default defineConfig({
     singleQuote: true,
     arrowParens: 'avoid',
     sortPackageJson: false,
-    ignorePatterns: [],
+    ignorePatterns: ['tools/src/routeTree.gen.ts'],
   },
 });
