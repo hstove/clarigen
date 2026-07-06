@@ -8,84 +8,82 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as ApiSplatRouteImport } from './routes/api.$'
-import { Route as TxNetworkContractAddressRouteImport } from './routes/tx.$network.$contractAddress'
-import { Route as ApiRpcSplatRouteImport } from './routes/api.rpc.$'
-import { Route as TxNetworkContractAddressIndexRouteImport } from './routes/tx.$network.$contractAddress.index'
-import { Route as TxNetworkContractAddressFunctionNameRouteImport } from './routes/tx.$network.$contractAddress.$functionName'
-import { Route as ReadNetworkContractAddressFunctionNameRouteImport } from './routes/read.$network.$contractAddress.$functionName'
+import { Route as rootRouteImport } from './routes/__root';
+import { Route as IndexRouteImport } from './routes/index';
+import { Route as ApiSplatRouteImport } from './routes/api.$';
+import { Route as TxNetworkContractAddressRouteImport } from './routes/tx.$network.$contractAddress';
+import { Route as ApiRpcSplatRouteImport } from './routes/api.rpc.$';
+import { Route as TxNetworkContractAddressIndexRouteImport } from './routes/tx.$network.$contractAddress.index';
+import { Route as TxNetworkContractAddressFunctionNameRouteImport } from './routes/tx.$network.$contractAddress.$functionName';
+import { Route as ReadNetworkContractAddressFunctionNameRouteImport } from './routes/read.$network.$contractAddress.$functionName';
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const ApiSplatRoute = ApiSplatRouteImport.update({
   id: '/api/$',
   path: '/api/$',
   getParentRoute: () => rootRouteImport,
-} as any)
-const TxNetworkContractAddressRoute =
-  TxNetworkContractAddressRouteImport.update({
-    id: '/tx/$network/$contractAddress',
-    path: '/tx/$network/$contractAddress',
-    getParentRoute: () => rootRouteImport,
-  } as any)
+} as any);
+const TxNetworkContractAddressRoute = TxNetworkContractAddressRouteImport.update({
+  id: '/tx/$network/$contractAddress',
+  path: '/tx/$network/$contractAddress',
+  getParentRoute: () => rootRouteImport,
+} as any);
 const ApiRpcSplatRoute = ApiRpcSplatRouteImport.update({
   id: '/api/rpc/$',
   path: '/api/rpc/$',
   getParentRoute: () => rootRouteImport,
-} as any)
-const TxNetworkContractAddressIndexRoute =
-  TxNetworkContractAddressIndexRouteImport.update({
-    id: '/',
-    path: '/',
-    getParentRoute: () => TxNetworkContractAddressRoute,
-  } as any)
+} as any);
+const TxNetworkContractAddressIndexRoute = TxNetworkContractAddressIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => TxNetworkContractAddressRoute,
+} as any);
 const TxNetworkContractAddressFunctionNameRoute =
   TxNetworkContractAddressFunctionNameRouteImport.update({
     id: '/$functionName',
     path: '/$functionName',
     getParentRoute: () => TxNetworkContractAddressRoute,
-  } as any)
+  } as any);
 const ReadNetworkContractAddressFunctionNameRoute =
   ReadNetworkContractAddressFunctionNameRouteImport.update({
     id: '/read/$network/$contractAddress/$functionName',
     path: '/read/$network/$contractAddress/$functionName',
     getParentRoute: () => rootRouteImport,
-  } as any)
+  } as any);
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/api/$': typeof ApiSplatRoute
-  '/api/rpc/$': typeof ApiRpcSplatRoute
-  '/tx/$network/$contractAddress': typeof TxNetworkContractAddressRouteWithChildren
-  '/read/$network/$contractAddress/$functionName': typeof ReadNetworkContractAddressFunctionNameRoute
-  '/tx/$network/$contractAddress/$functionName': typeof TxNetworkContractAddressFunctionNameRoute
-  '/tx/$network/$contractAddress/': typeof TxNetworkContractAddressIndexRoute
+  '/': typeof IndexRoute;
+  '/api/$': typeof ApiSplatRoute;
+  '/api/rpc/$': typeof ApiRpcSplatRoute;
+  '/tx/$network/$contractAddress': typeof TxNetworkContractAddressRouteWithChildren;
+  '/read/$network/$contractAddress/$functionName': typeof ReadNetworkContractAddressFunctionNameRoute;
+  '/tx/$network/$contractAddress/$functionName': typeof TxNetworkContractAddressFunctionNameRoute;
+  '/tx/$network/$contractAddress/': typeof TxNetworkContractAddressIndexRoute;
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/api/$': typeof ApiSplatRoute
-  '/api/rpc/$': typeof ApiRpcSplatRoute
-  '/read/$network/$contractAddress/$functionName': typeof ReadNetworkContractAddressFunctionNameRoute
-  '/tx/$network/$contractAddress/$functionName': typeof TxNetworkContractAddressFunctionNameRoute
-  '/tx/$network/$contractAddress': typeof TxNetworkContractAddressIndexRoute
+  '/': typeof IndexRoute;
+  '/api/$': typeof ApiSplatRoute;
+  '/api/rpc/$': typeof ApiRpcSplatRoute;
+  '/read/$network/$contractAddress/$functionName': typeof ReadNetworkContractAddressFunctionNameRoute;
+  '/tx/$network/$contractAddress/$functionName': typeof TxNetworkContractAddressFunctionNameRoute;
+  '/tx/$network/$contractAddress': typeof TxNetworkContractAddressIndexRoute;
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/api/$': typeof ApiSplatRoute
-  '/api/rpc/$': typeof ApiRpcSplatRoute
-  '/tx/$network/$contractAddress': typeof TxNetworkContractAddressRouteWithChildren
-  '/read/$network/$contractAddress/$functionName': typeof ReadNetworkContractAddressFunctionNameRoute
-  '/tx/$network/$contractAddress/$functionName': typeof TxNetworkContractAddressFunctionNameRoute
-  '/tx/$network/$contractAddress/': typeof TxNetworkContractAddressIndexRoute
+  __root__: typeof rootRouteImport;
+  '/': typeof IndexRoute;
+  '/api/$': typeof ApiSplatRoute;
+  '/api/rpc/$': typeof ApiRpcSplatRoute;
+  '/tx/$network/$contractAddress': typeof TxNetworkContractAddressRouteWithChildren;
+  '/read/$network/$contractAddress/$functionName': typeof ReadNetworkContractAddressFunctionNameRoute;
+  '/tx/$network/$contractAddress/$functionName': typeof TxNetworkContractAddressFunctionNameRoute;
+  '/tx/$network/$contractAddress/': typeof TxNetworkContractAddressIndexRoute;
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
+  fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
     | '/'
     | '/api/$'
@@ -93,15 +91,15 @@ export interface FileRouteTypes {
     | '/tx/$network/$contractAddress'
     | '/read/$network/$contractAddress/$functionName'
     | '/tx/$network/$contractAddress/$functionName'
-    | '/tx/$network/$contractAddress/'
-  fileRoutesByTo: FileRoutesByTo
+    | '/tx/$network/$contractAddress/';
+  fileRoutesByTo: FileRoutesByTo;
   to:
     | '/'
     | '/api/$'
     | '/api/rpc/$'
     | '/read/$network/$contractAddress/$functionName'
     | '/tx/$network/$contractAddress/$functionName'
-    | '/tx/$network/$contractAddress'
+    | '/tx/$network/$contractAddress';
   id:
     | '__root__'
     | '/'
@@ -110,105 +108,101 @@ export interface FileRouteTypes {
     | '/tx/$network/$contractAddress'
     | '/read/$network/$contractAddress/$functionName'
     | '/tx/$network/$contractAddress/$functionName'
-    | '/tx/$network/$contractAddress/'
-  fileRoutesById: FileRoutesById
+    | '/tx/$network/$contractAddress/';
+  fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  ApiSplatRoute: typeof ApiSplatRoute
-  ApiRpcSplatRoute: typeof ApiRpcSplatRoute
-  TxNetworkContractAddressRoute: typeof TxNetworkContractAddressRouteWithChildren
-  ReadNetworkContractAddressFunctionNameRoute: typeof ReadNetworkContractAddressFunctionNameRoute
+  IndexRoute: typeof IndexRoute;
+  ApiSplatRoute: typeof ApiSplatRoute;
+  ApiRpcSplatRoute: typeof ApiRpcSplatRoute;
+  TxNetworkContractAddressRoute: typeof TxNetworkContractAddressRouteWithChildren;
+  ReadNetworkContractAddressFunctionNameRoute: typeof ReadNetworkContractAddressFunctionNameRoute;
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/';
+      path: '/';
+      fullPath: '/';
+      preLoaderRoute: typeof IndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/api/$': {
-      id: '/api/$'
-      path: '/api/$'
-      fullPath: '/api/$'
-      preLoaderRoute: typeof ApiSplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/api/$';
+      path: '/api/$';
+      fullPath: '/api/$';
+      preLoaderRoute: typeof ApiSplatRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/tx/$network/$contractAddress': {
-      id: '/tx/$network/$contractAddress'
-      path: '/tx/$network/$contractAddress'
-      fullPath: '/tx/$network/$contractAddress'
-      preLoaderRoute: typeof TxNetworkContractAddressRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/tx/$network/$contractAddress';
+      path: '/tx/$network/$contractAddress';
+      fullPath: '/tx/$network/$contractAddress';
+      preLoaderRoute: typeof TxNetworkContractAddressRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/api/rpc/$': {
-      id: '/api/rpc/$'
-      path: '/api/rpc/$'
-      fullPath: '/api/rpc/$'
-      preLoaderRoute: typeof ApiRpcSplatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/api/rpc/$';
+      path: '/api/rpc/$';
+      fullPath: '/api/rpc/$';
+      preLoaderRoute: typeof ApiRpcSplatRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/tx/$network/$contractAddress/': {
-      id: '/tx/$network/$contractAddress/'
-      path: '/'
-      fullPath: '/tx/$network/$contractAddress/'
-      preLoaderRoute: typeof TxNetworkContractAddressIndexRouteImport
-      parentRoute: typeof TxNetworkContractAddressRoute
-    }
+      id: '/tx/$network/$contractAddress/';
+      path: '/';
+      fullPath: '/tx/$network/$contractAddress/';
+      preLoaderRoute: typeof TxNetworkContractAddressIndexRouteImport;
+      parentRoute: typeof TxNetworkContractAddressRoute;
+    };
     '/tx/$network/$contractAddress/$functionName': {
-      id: '/tx/$network/$contractAddress/$functionName'
-      path: '/$functionName'
-      fullPath: '/tx/$network/$contractAddress/$functionName'
-      preLoaderRoute: typeof TxNetworkContractAddressFunctionNameRouteImport
-      parentRoute: typeof TxNetworkContractAddressRoute
-    }
+      id: '/tx/$network/$contractAddress/$functionName';
+      path: '/$functionName';
+      fullPath: '/tx/$network/$contractAddress/$functionName';
+      preLoaderRoute: typeof TxNetworkContractAddressFunctionNameRouteImport;
+      parentRoute: typeof TxNetworkContractAddressRoute;
+    };
     '/read/$network/$contractAddress/$functionName': {
-      id: '/read/$network/$contractAddress/$functionName'
-      path: '/read/$network/$contractAddress/$functionName'
-      fullPath: '/read/$network/$contractAddress/$functionName'
-      preLoaderRoute: typeof ReadNetworkContractAddressFunctionNameRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/read/$network/$contractAddress/$functionName';
+      path: '/read/$network/$contractAddress/$functionName';
+      fullPath: '/read/$network/$contractAddress/$functionName';
+      preLoaderRoute: typeof ReadNetworkContractAddressFunctionNameRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
   }
 }
 
 interface TxNetworkContractAddressRouteChildren {
-  TxNetworkContractAddressFunctionNameRoute: typeof TxNetworkContractAddressFunctionNameRoute
-  TxNetworkContractAddressIndexRoute: typeof TxNetworkContractAddressIndexRoute
+  TxNetworkContractAddressFunctionNameRoute: typeof TxNetworkContractAddressFunctionNameRoute;
+  TxNetworkContractAddressIndexRoute: typeof TxNetworkContractAddressIndexRoute;
 }
 
-const TxNetworkContractAddressRouteChildren: TxNetworkContractAddressRouteChildren =
-  {
-    TxNetworkContractAddressFunctionNameRoute:
-      TxNetworkContractAddressFunctionNameRoute,
-    TxNetworkContractAddressIndexRoute: TxNetworkContractAddressIndexRoute,
-  }
+const TxNetworkContractAddressRouteChildren: TxNetworkContractAddressRouteChildren = {
+  TxNetworkContractAddressFunctionNameRoute: TxNetworkContractAddressFunctionNameRoute,
+  TxNetworkContractAddressIndexRoute: TxNetworkContractAddressIndexRoute,
+};
 
-const TxNetworkContractAddressRouteWithChildren =
-  TxNetworkContractAddressRoute._addFileChildren(
-    TxNetworkContractAddressRouteChildren,
-  )
+const TxNetworkContractAddressRouteWithChildren = TxNetworkContractAddressRoute._addFileChildren(
+  TxNetworkContractAddressRouteChildren
+);
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiSplatRoute: ApiSplatRoute,
   ApiRpcSplatRoute: ApiRpcSplatRoute,
   TxNetworkContractAddressRoute: TxNetworkContractAddressRouteWithChildren,
-  ReadNetworkContractAddressFunctionNameRoute:
-    ReadNetworkContractAddressFunctionNameRoute,
-}
+  ReadNetworkContractAddressFunctionNameRoute: ReadNetworkContractAddressFunctionNameRoute,
+};
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();
 
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
+import type { getRouter } from './router.tsx';
+import type { createStart } from '@tanstack/react-start';
 declare module '@tanstack/react-start' {
   interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
+    ssr: true;
+    router: Awaited<ReturnType<typeof getRouter>>;
   }
 }
