@@ -1,20 +1,11 @@
 /** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
-process.on('warning', (warning) => {
+process.on('warning', warning => {
   console.warn(warning);
 });
 
 import { CoreNodeEventType, cvToValue, projectFactory } from '@clarigen/core';
 import { accounts, project } from '../esm/index';
-import {
-  rov,
-  txOk,
-  txErr,
-  ro,
-  varGet,
-  mapGet,
-  filterEvents,
-  tx,
-} from '@clarigen/test';
+import { rov, txOk, txErr, ro, varGet, mapGet, filterEvents, tx } from '@clarigen/test';
 import { describe, it, expect } from 'vitest';
 
 const contracts = projectFactory(project, 'simnet');
@@ -60,10 +51,7 @@ describe('counter contract tests', () => {
 
   it('can get events from a tx', () => {
     const receipt = txOk(counter.increment(1n), alice);
-    const printEvents = filterEvents(
-      receipt.events,
-      CoreNodeEventType.ContractEvent
-    );
+    const printEvents = filterEvents(receipt.events, CoreNodeEventType.ContractEvent);
     expect(printEvents.length).toEqual(1);
     const [print] = printEvents;
     const printData = cvToValue<{

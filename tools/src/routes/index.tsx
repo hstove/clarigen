@@ -15,27 +15,19 @@ function App() {
     <div className="mx-auto max-w-4xl space-y-8 px-6 py-10">
       <div className="flex items-end justify-between gap-4">
         <div className="space-y-1">
-          <h1 className="font-medium font-mono text-lg tracking-tight">
-            Recently Viewed
-          </h1>
+          <h1 className="font-medium font-mono text-lg tracking-tight">Recently Viewed</h1>
           <p className="text-muted-foreground text-xs">
-            {visitedContracts.length} contracts · {visitedFunctions.length}{' '}
-            visits
+            {visitedContracts.length} contracts · {visitedFunctions.length} visits
           </p>
         </div>
-        <Button
-          disabled={!hasHistory}
-          onClick={clear}
-          size="xs"
-          variant="outline"
-        >
+        <Button disabled={!hasHistory} onClick={clear} size="xs" variant="outline">
           clear history
         </Button>
       </div>
 
       {hasHistory ? (
         <div className="grid gap-4">
-          {groups.map((group) => (
+          {groups.map(group => (
             <div
               className="border border-border bg-card"
               key={`${group.network}:${group.contractId}`}
@@ -58,13 +50,12 @@ function App() {
                     </div>
                   </div>
                   <div className="font-mono text-[10px] text-muted-foreground">
-                    {group.entries.length}{' '}
-                    {group.entries.length === 1 ? 'entry' : 'entries'}
+                    {group.entries.length} {group.entries.length === 1 ? 'entry' : 'entries'}
                   </div>
                 </div>
               </div>
               <div className="space-y-2 p-4">
-                {group.entries.map((entry) => (
+                {group.entries.map(entry => (
                   <div
                     className="flex items-center justify-between gap-4 border border-border/60 bg-muted/10 px-3 py-2"
                     key={`${entry.contractId}:${entry.functionName ?? 'overview'}:${
@@ -134,9 +125,7 @@ type GroupedVisited = {
   }[];
 };
 
-function groupVisitedByContract(
-  entries: GroupedVisited['entries']
-): GroupedVisited[] {
+function groupVisitedByContract(entries: GroupedVisited['entries']): GroupedVisited[] {
   const groups: GroupedVisited[] = [];
   const map = new Map<string, GroupedVisited>();
 

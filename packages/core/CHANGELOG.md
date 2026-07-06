@@ -319,7 +319,6 @@
 - [#28](https://github.com/mechanismHQ/clarigen/pull/28) [`2480675`](https://github.com/mechanismHQ/clarigen/commit/2480675c36da569870e36feba714cc22d849654a) Thanks [@hstove](https://github.com/hstove)! - Migrates all packages to depend on `micro-stacks`. This allows for simplicity and much reduced bundle sizes.
 
   Most APIs do not change at all, however, there are some breaking changes:
-
   - The `buff` Clarity type now uses the `Uint8Array` native JS type, instead of `Buffer`
   - Some TypeScript types that came from `@stacks/transactions` will break, like the `PostCondition` type
 
@@ -652,7 +651,6 @@
 - [#28](https://github.com/obylabs/clarigen/pull/28) [`574834a`](https://github.com/obylabs/clarigen/commit/574834a950d8b8cfcff620c66f3f22b62c191c51) Thanks [@hstove](https://github.com/hstove)! - Migrates all packages to depend on `micro-stacks`. This allows for simplicity and much reduced bundle sizes.
 
   Most APIs do not change at all, however, there are some breaking changes:
-
   - The `buff` Clarity type now uses the `Uint8Array` native JS type, instead of `Buffer`
   - Some TypeScript types that came from `@stacks/transactions` will break, like the `PostCondition` type
 
@@ -713,7 +711,6 @@
   These changes should really improve DX for project setup, as well as the ability to run Clarigen in CI.
 
   Other changes:
-
   - **Breaking change** JS types for functions that return `uint` or `int` types now use the `BigInt` native JavaScript type.
     - Although this is a breaking change, this is not a major update. Clarigen is still 0.x and is not in wide use.
   - **Breaking change**: Projects that have a `clarinet` configuration now look for the `Devnet.toml` file (instead of `Development.toml`)

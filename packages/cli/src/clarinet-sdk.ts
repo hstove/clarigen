@@ -32,8 +32,7 @@ export function deduplicateContractInterfaces<T>(
     const existing = contracts.get(contractName);
     if (
       !existing ||
-      (!preferredIdentifiers.has(existing[0]) &&
-        preferredIdentifiers.has(contractId))
+      (!preferredIdentifiers.has(existing[0]) && preferredIdentifiers.has(contractId))
     ) {
       contracts.set(contractName, [contractId, contractInterface]);
     }
@@ -42,16 +41,10 @@ export function deduplicateContractInterfaces<T>(
 }
 
 async function getSimnetDeploymentIdentifiers(config: Config) {
-  const path = join(
-    dirname(config.clarinetFile()),
-    'deployments',
-    'default.simnet-plan.yaml'
-  );
+  const path = join(dirname(config.clarinetFile()), 'deployments', 'default.simnet-plan.yaml');
   const deployment = await parseDeployment(path);
   if (!deployment) return new Set<string>();
-  const transactions = getContractTxs(
-    deployment.plan.batches as Batch<DeploymentTransaction>[]
-  );
+  const transactions = getContractTxs(deployment.plan.batches as Batch<DeploymentTransaction>[]);
   return new Set(
     transactions.flatMap(transaction => {
       try {
@@ -75,9 +68,7 @@ async function getSimnetDeploymentIdentifiers(config: Config) {
   );
 }
 
-export async function getSession(
-  config: Config
-): Promise<SessionWithVariables> {
+export async function getSession(config: Config): Promise<SessionWithVariables> {
   const simnet = await initSimnet(config.clarinetFile(), true);
   const interfaces = simnet.getContractsInterfaces();
   const deploymentIdentifiers = await getSimnetDeploymentIdentifiers(config);
@@ -87,9 +78,7 @@ export async function getSession(
     const result = simnet.runSnippet(`(stx-get-balance '${address})`) as string;
     const resultCV = hexToCvValue<bigint>(result);
     if (typeof resultCV !== 'bigint') {
-      throw new Error(
-        `Unexpected result type for \`(stx-get-balance \`, got ${resultCV}`
-      );
+      throw new Error(`Unexpected result type for \`(stx-get-balance \`, got ${resultCV}`);
     }
     return {
       name,
@@ -102,10 +91,7 @@ export async function getSession(
 
   const contracts = (
     await Promise.all(
-      deduplicateContractInterfaces(
-        interfaces.entries(),
-        deploymentIdentifiers
-      ).map(
+      deduplicateContractInterfaces(interfaces.entries(), deploymentIdentifiers).map(
         async ([contract_id, contract_interface]) => {
           if (
             (contract_id.startsWith(MAINNET_BURN_ADDRESS) &&
@@ -128,8 +114,7 @@ export async function getSession(
             contract_interface: {
               ...contract_interface,
               epoch: contract_interface.epoch as StacksEpochId,
-              clarity_version:
-                contract_interface.clarity_version as ClarityVersion,
+              clarity_version: contract_interface.clarity_version as ClarityVersion,
             },
             source: source ?? '',
           } as SessionContract;

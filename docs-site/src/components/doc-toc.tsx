@@ -11,8 +11,7 @@ export function DocTocItem({ item }: { item: Toc[number] }) {
       <a
         className={textStyles({
           variant: 'small',
-          className:
-            'text-muted-foreground text-xs underline underline-offset-4',
+          className: 'text-muted-foreground text-xs underline underline-offset-4',
         })}
         href={item.url}
         style={{
@@ -26,7 +25,7 @@ export function DocTocItem({ item }: { item: Toc[number] }) {
 }
 
 export function DocToc({ toc }: { toc: Toc }) {
-  const items = toc.map((item) => <DocTocItem item={item} key={item.value} />);
+  const items = toc.map(item => <DocTocItem item={item} key={item.value} />);
 
   return <div className="flex flex-col gap-1">{items}</div>;
 }

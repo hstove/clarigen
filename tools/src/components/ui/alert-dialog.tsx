@@ -9,21 +9,14 @@ function AlertDialog({ ...props }: AlertDialogPrimitive.Root.Props) {
 }
 
 function AlertDialogTrigger({ ...props }: AlertDialogPrimitive.Trigger.Props) {
-  return (
-    <AlertDialogPrimitive.Trigger data-slot="alert-dialog-trigger" {...props} />
-  );
+  return <AlertDialogPrimitive.Trigger data-slot="alert-dialog-trigger" {...props} />;
 }
 
 function AlertDialogPortal({ ...props }: AlertDialogPrimitive.Portal.Props) {
-  return (
-    <AlertDialogPrimitive.Portal data-slot="alert-dialog-portal" {...props} />
-  );
+  return <AlertDialogPrimitive.Portal data-slot="alert-dialog-portal" {...props} />;
 }
 
-function AlertDialogOverlay({
-  className,
-  ...props
-}: AlertDialogPrimitive.Backdrop.Props) {
+function AlertDialogOverlay({ className, ...props }: AlertDialogPrimitive.Backdrop.Props) {
   return (
     <AlertDialogPrimitive.Backdrop
       className={cn(
@@ -59,10 +52,7 @@ function AlertDialogContent({
   );
 }
 
-function AlertDialogHeader({
-  className,
-  ...props
-}: React.ComponentProps<'div'>) {
+function AlertDialogHeader({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       className={cn(
@@ -75,10 +65,7 @@ function AlertDialogHeader({
   );
 }
 
-function AlertDialogFooter({
-  className,
-  ...props
-}: React.ComponentProps<'div'>) {
+function AlertDialogFooter({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       className={cn(
@@ -91,10 +78,7 @@ function AlertDialogFooter({
   );
 }
 
-function AlertDialogMedia({
-  className,
-  ...props
-}: React.ComponentProps<'div'>) {
+function AlertDialogMedia({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       className={cn(
@@ -139,17 +123,8 @@ function AlertDialogDescription({
   );
 }
 
-function AlertDialogAction({
-  className,
-  ...props
-}: React.ComponentProps<typeof Button>) {
-  return (
-    <Button
-      className={cn(className)}
-      data-slot="alert-dialog-action"
-      {...props}
-    />
-  );
+function AlertDialogAction({ className, ...props }: React.ComponentProps<typeof Button>) {
+  return <Button className={cn(className)} data-slot="alert-dialog-action" {...props} />;
 }
 
 function AlertDialogCancel({

@@ -6,11 +6,7 @@ export type MarkdownWrapperProps = React.HTMLAttributes<HTMLElement> & {
   markdown: string;
 };
 
-export async function MarkdownWrapper({
-  markdown,
-  className,
-  ...props
-}: MarkdownWrapperProps) {
+export async function MarkdownWrapper({ markdown, className, ...props }: MarkdownWrapperProps) {
   const compiled = await compileMdx(markdown);
 
   return (

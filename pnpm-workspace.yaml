@@ -1,0 +1,11 @@
+packages:
+  - packages/*
+  - '!**/test/**'
+  - demo-project
+  - docs-site
+  - tools
+
+catalog:
+  vite: npm:@voidzero-dev/vite-plus-core@latest
+  vitest: 4.1.8
+  vite-plus: latest

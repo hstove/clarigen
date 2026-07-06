@@ -11,7 +11,7 @@ export function useTransaction(network: NETWORK, txid: string | undefined) {
       return getTransaction(network, txid);
     },
     enabled: !!txid,
-    refetchInterval: (query) => {
+    refetchInterval: query => {
       const tx = query.state.data;
       if (!tx) return 5000;
       if (tx.tx_status === 'pending') return 3000;

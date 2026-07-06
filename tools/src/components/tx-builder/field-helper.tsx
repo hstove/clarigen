@@ -114,9 +114,7 @@ function BufferHelper({ field }: { field: FocusedField }) {
   const maxLen = isClarityAbiBuffer(field.type) ? field.type.buffer.length : 0;
   return (
     <div className="space-y-3">
-      <p className="text-muted-foreground text-xs">
-        Buffer (max {maxLen} bytes)
-      </p>
+      <p className="text-muted-foreground text-xs">Buffer (max {maxLen} bytes)</p>
       <div className="space-y-1 text-muted-foreground text-xs">
         <p>• Enter hex-encoded bytes</p>
         <p>• With or without 0x prefix</p>
@@ -129,23 +127,16 @@ function BufferHelper({ field }: { field: FocusedField }) {
 function StringHelper({ field }: { field: FocusedField }) {
   const isAscii = isClarityAbiStringAscii(field.type);
   const maxLen = isAscii
-    ? (field.type as { 'string-ascii': { length: number } })['string-ascii']
-        .length
-    : (field.type as { 'string-utf8': { length: number } })['string-utf8']
-        .length;
+    ? (field.type as { 'string-ascii': { length: number } })['string-ascii'].length
+    : (field.type as { 'string-utf8': { length: number } })['string-utf8'].length;
 
   return (
     <div className="space-y-3">
       <p className="text-muted-foreground text-xs">
-        {isAscii ? 'ASCII string' : 'UTF-8 string'} (max {maxLen}{' '}
-        {isAscii ? 'chars' : 'bytes'})
+        {isAscii ? 'ASCII string' : 'UTF-8 string'} (max {maxLen} {isAscii ? 'chars' : 'bytes'})
       </p>
       <div className="space-y-1 text-muted-foreground text-xs">
-        {isAscii ? (
-          <p>• ASCII characters only (codes 0-127)</p>
-        ) : (
-          <p>• Any valid UTF-8 text</p>
-        )}
+        {isAscii ? <p>• ASCII characters only (codes 0-127)</p> : <p>• Any valid UTF-8 text</p>}
       </div>
     </div>
   );
@@ -167,14 +158,9 @@ function DefaultHelper({ field }: { field: FocusedField }) {
   const category = getFieldTypeCategory(field);
   return (
     <div className="space-y-3">
-      <p className="text-muted-foreground text-xs capitalize">
-        {category} field
-      </p>
+      <p className="text-muted-foreground text-xs capitalize">{category} field</p>
       <p className="text-muted-foreground text-xs">
-        Type:{' '}
-        <code className="rounded bg-muted px-1">
-          {getTypeString(field.type)}
-        </code>
+        Type: <code className="rounded bg-muted px-1">{getTypeString(field.type)}</code>
       </p>
     </div>
   );
@@ -196,13 +182,7 @@ function FieldHelperContent({
       return <NumberHelper field={field} />;
     case 'principal':
     case 'trait':
-      return (
-        <PrincipalHelper
-          contractId={contractId}
-          field={field}
-          network={network}
-        />
-      );
+      return <PrincipalHelper contractId={contractId} field={field} network={network} />;
     case 'buffer':
       return <BufferHelper field={field} />;
     case 'string-ascii':
@@ -216,11 +196,7 @@ function FieldHelperContent({
 }
 
 function NoFieldFocused() {
-  return (
-    <p className="text-muted-foreground text-xs">
-      Focus a field to see contextual help.
-    </p>
-  );
+  return <p className="text-muted-foreground text-xs">Focus a field to see contextual help.</p>;
 }
 
 type TabId = 'tools' | 'recent';
@@ -259,25 +235,18 @@ type FieldHelperProps = {
   functionDoc?: ClaridocFunction;
 };
 
-export function FieldHelper({
-  network,
-  contractId,
-  functionName,
-  functionDoc,
-}: FieldHelperProps) {
+export function FieldHelper({ network, contractId, functionName, functionDoc }: FieldHelperProps) {
   const { focusedField, setFocusedField } = useFocusedField();
   const [activeTab, setActiveTab] = useState<TabId>('tools');
   const paramDocs = focusedField
     ? (functionDoc?.comments.params[focusedField.name]?.comments ?? [])
     : [];
-  const hasParamDocs = paramDocs.some((line) => line.trim() !== '');
+  const hasParamDocs = paramDocs.some(line => line.trim() !== '');
 
   return (
     <div className="h-full border border-border bg-card">
       <div className="flex items-center justify-between border-border border-b bg-muted/30 px-4 py-3">
-        <h3 className="font-medium font-mono text-muted-foreground text-sm">
-          field helper
-        </h3>
+        <h3 className="font-medium font-mono text-muted-foreground text-sm">field helper</h3>
         {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
         {focusedField && (
           <button
@@ -312,9 +281,7 @@ export function FieldHelper({
       <div className="p-4">
         {focusedField ? (
           <div className="space-y-4">
-            <div className="font-medium font-mono text-sm">
-              {focusedField.name}
-            </div>
+            <div className="font-medium font-mono text-sm">{focusedField.name}</div>
             {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
             {hasParamDocs && (
               <div className="border border-border/60 bg-muted/30 p-3">
@@ -322,11 +289,7 @@ export function FieldHelper({
               </div>
             )}
             {activeTab === 'tools' ? (
-              <FieldHelperContent
-                contractId={contractId}
-                field={focusedField}
-                network={network}
-              />
+              <FieldHelperContent contractId={contractId} field={focusedField} network={network} />
             ) : (
               <HistoryHelper
                 contractId={contractId}

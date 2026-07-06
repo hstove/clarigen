@@ -1,10 +1,6 @@
 import type { ClarityAbiType } from '@clarigen/core';
 import { type AnyFieldApi, useStore } from '@tanstack/react-form';
-import {
-  fieldContext,
-  useFieldContext,
-  useFormContext,
-} from '@/hooks/form-context';
+import { fieldContext, useFieldContext, useFormContext } from '@/hooks/form-context';
 import { Switch as ShadcnSwitch } from '@/components/ui/switch';
 import { Field, FieldLabel, FieldGroup } from '@/components/ui/field';
 import { ClarityField } from '../clarity-field';
@@ -18,15 +14,10 @@ type OptionalFieldProps = {
   disabled?: boolean;
 };
 
-export function OptionalField({
-  name,
-  label,
-  innerType,
-  disabled,
-}: OptionalFieldProps) {
+export function OptionalField({ name, label, innerType, disabled }: OptionalFieldProps) {
   const form = useFormContext();
   const field = useFieldContext<{ isNone: boolean; value: unknown }>();
-  const isNone = useStore(field.store, (state) => state.value?.isNone ?? true);
+  const isNone = useStore(field.store, state => state.value?.isNone ?? true);
 
   return (
     <FieldGroup>
@@ -35,7 +26,7 @@ export function OptionalField({
           checked={!isNone}
           disabled={disabled}
           id={`${name}-toggle`}
-          onCheckedChange={(checked) => {
+          onCheckedChange={checked => {
             const currentValue = field.state.value?.value;
             const defaultValue = getDefaultValueForType(innerType);
             field.handleChange({
@@ -53,13 +44,9 @@ export function OptionalField({
           name={`${field.name}.value` as never}
           validators={getClarityValidators(innerType)}
         >
-          {(valueField) => (
+          {valueField => (
             <fieldContext.Provider value={valueField as unknown as AnyFieldApi}>
-              <ClarityField
-                disabled={disabled}
-                name={`${name}.value`}
-                type={innerType}
-              />
+              <ClarityField disabled={disabled} name={`${name}.value`} type={innerType} />
             </fieldContext.Provider>
           )}
         </form.Field>

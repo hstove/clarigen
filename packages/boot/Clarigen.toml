@@ -8,9 +8,7 @@ clarinet = "./Clarinet.toml"
 # `output` can be a directory or a folder.
 # output = "esm/index.ts"
 # output = "test/generated/clarigen-types.ts"
-outputs = [
-  "src/clarigen-types.ts",
-]
+outputs = ["src/clarigen-types.ts"]
 include_boot_contracts = true
 
 # `esm.after` - script to run after ESM types are generated.

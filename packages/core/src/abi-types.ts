@@ -69,10 +69,7 @@ export type ClarityAbiFunction = {
 
 export type TypedAbiArg<T, N extends string> = { _t?: T; name: N };
 
-export type TypedAbiFunction<
-  T extends TypedAbiArg<unknown, string>[],
-  R,
-> = ClarityAbiFunction & {
+export type TypedAbiFunction<T extends TypedAbiArg<unknown, string>[], R> = ClarityAbiFunction & {
   _t?: T;
   _r?: R;
 };

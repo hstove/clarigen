@@ -4,16 +4,16 @@
   "types": "./dist/index.d.cts",
   "exports": {
     ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
     },
     "./mainnet": {
-      "require": "./dist/mainnet.cjs",
-      "import": "./dist/mainnet.mjs"
+      "import": "./dist/mainnet.mjs",
+      "require": "./dist/mainnet.cjs"
     },
     "./testnet": {
-      "require": "./dist/testnet.cjs",
-      "import": "./dist/testnet.mjs"
+      "import": "./dist/testnet.mjs",
+      "require": "./dist/testnet.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -26,16 +26,15 @@
   },
   "scripts": {
     "start": "tsx src/run-cli.ts",
-    "dev": "tsdown --watch",
-    "build": "shx rm -rf dist && tsdown",
+    "dev": "vp pack --watch",
+    "build": "shx rm -rf dist && vp pack",
     "test": "vitest run --passWithNoTests",
-    "lint": "eslint \"src/**/*.{ts,tsx}\" && prettier --check \"./**/*.{ts,js}\"",
-    "format:fix": "prettier -w \"./**/*.{ts,js}\"",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" && vp fmt --check \"./**/*.{ts,js}\"",
+    "format:fix": "vp fmt \"./**/*.{ts,js}\"",
     "typecheck": "tsc --noEmit -p tsconfig-test.json",
     "type-stubs": "clarigen",
-    "publish": "bun publish"
+    "publish": "pnpm publish"
   },
-  "prettier": "@stacks/prettier-config",
   "name": "@clarigen/boot",
   "author": "Hank Stoever",
   "devDependencies": {

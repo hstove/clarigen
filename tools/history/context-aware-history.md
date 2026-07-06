@@ -272,28 +272,23 @@ interface FieldHelperProps {
 ## Implementation Order
 
 1. **Storage layer** (`src/lib/value-history.ts`)
-
    - Implement all storage functions
    - Add simple unit tests
 
 2. **React hook** (`src/hooks/use-value-history.ts`)
-
    - Wrap storage layer
    - Handle SSR (guard `localStorage` access)
 
 3. **History helper component** (`src/components/tx-builder/helpers/history-helper.tsx`)
-
    - Display recent values
    - Click-to-fill functionality
 
 4. **Tabbed field helper** (`src/components/tx-builder/field-helper.tsx`)
-
    - Add tab state and UI
    - Integrate history helper
    - Update props to include functionName
 
 5. **Form submission integration** (`src/routes/tx.$...tsx`)
-
    - Save values on successful submission
    - Pass functionName to ContextPanel
 

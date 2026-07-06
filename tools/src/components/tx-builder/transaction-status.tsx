@@ -41,20 +41,14 @@ function DataRow({
   return (
     <div className="flex justify-between gap-4 border-border/50 border-b py-1.5 text-xs last:border-0">
       <span className="shrink-0 text-muted-foreground">{label}</span>
-      <span
-        className={`min-w-0 max-w-[65%] break-all text-right ${mono ? 'font-mono' : ''}`}
-      >
+      <span className={`min-w-0 max-w-[65%] break-all text-right ${mono ? 'font-mono' : ''}`}>
         {value}
       </span>
     </div>
   );
 }
 
-function formatPrincipal(principal: {
-  type_id: string;
-  address?: string;
-  contract_name?: string;
-}) {
+function formatPrincipal(principal: { type_id: string; address?: string; contract_name?: string }) {
   if (principal.type_id === 'principal_origin') {
     return 'origin';
   }
@@ -130,11 +124,9 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
   const isPending = tx.tx_status === 'pending';
   const isSuccess = tx.tx_status === 'success';
   const showEventsInline = 'events' in tx && tx.events.length <= 3;
-  const hasPostConditions =
-    'post_conditions' in tx && tx.post_conditions.length > 0;
+  const hasPostConditions = 'post_conditions' in tx && tx.post_conditions.length > 0;
   const hasExecutionCost =
-    'execution_cost_read_count' in tx &&
-    typeof tx.execution_cost_read_count === 'number';
+    'execution_cost_read_count' in tx && typeof tx.execution_cost_read_count === 'number';
 
   return (
     <div className="border border-border bg-card">
@@ -165,10 +157,7 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
 
         {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
         {'fee_rate' in tx && (
-          <DataRow
-            label="fee"
-            value={`${format([BigInt(tx.fee_rate), 6])} STX`}
-          />
+          <DataRow label="fee" value={`${format([BigInt(tx.fee_rate), 6])} STX`} />
         )}
 
         {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
@@ -187,27 +176,17 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
 
         {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
         {'receipt_time_iso' in tx && (
-          <DataRow
-            label="received"
-            value={new Date(tx.receipt_time_iso).toLocaleString()}
-          />
+          <DataRow label="received" value={new Date(tx.receipt_time_iso).toLocaleString()} />
         )}
 
         {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
         {'block_time_iso' in tx && (
-          <DataRow
-            label="confirmed"
-            value={new Date(tx.block_time_iso).toLocaleString()}
-          />
+          <DataRow label="confirmed" value={new Date(tx.block_time_iso).toLocaleString()} />
         )}
 
         {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
         {'block_height' in tx && (
-          <DataRow
-            label="block"
-            mono
-            value={tx.block_height.toLocaleString()}
-          />
+          <DataRow label="block" mono value={tx.block_height.toLocaleString()} />
         )}
       </div>
 
@@ -221,10 +200,7 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
           <DataRow
             label="read count"
             mono
-            value={formatProgress(
-              tx.execution_cost_read_count,
-              BLOCK_LIMIT_MAINNET_21.read_count
-            )}
+            value={formatProgress(tx.execution_cost_read_count, BLOCK_LIMIT_MAINNET_21.read_count)}
           />
           <DataRow
             label="read length"
@@ -253,10 +229,7 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
           <DataRow
             label="runtime"
             mono
-            value={formatProgress(
-              tx.execution_cost_runtime,
-              BLOCK_LIMIT_MAINNET_21.runtime
-            )}
+            value={formatProgress(tx.execution_cost_runtime, BLOCK_LIMIT_MAINNET_21.runtime)}
           />
         </div>
       )}
@@ -289,9 +262,7 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
                     className="break-all border border-border bg-muted/30 p-3 font-mono text-xs"
                     key={`pc-${i}`}
                   >
-                    <div className="mb-2 text-[10px] text-muted-foreground uppercase">
-                      stx
-                    </div>
+                    <div className="mb-2 text-[10px] text-muted-foreground uppercase">stx</div>
                     <div className="break-all">
                       {formatPrincipal(condition.principal)}{' '}
                       {formatConditionCode(condition.condition_code)}{' '}
@@ -307,13 +278,10 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
                     className="break-all border border-border bg-muted/30 p-3 font-mono text-xs"
                     key={`pc-${i}`}
                   >
-                    <div className="mb-2 text-[10px] text-muted-foreground uppercase">
-                      fungible
-                    </div>
+                    <div className="mb-2 text-[10px] text-muted-foreground uppercase">fungible</div>
                     <div className="break-all">
                       {formatPrincipal(condition.principal)}{' '}
-                      {formatConditionCode(condition.condition_code)}{' '}
-                      {condition.amount} {assetId}
+                      {formatConditionCode(condition.condition_code)} {condition.amount} {assetId}
                     </div>
                   </div>
                 );
@@ -351,17 +319,12 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
 
       {/* Events */}
       {'block_height' in tx && tx.events && tx.events.length > 0 && (
-        <details
-          className="group border-border border-t"
-          open={showEventsInline}
-        >
+        <details className="group border-border border-t" open={showEventsInline}>
           <summary className="flex cursor-pointer items-center justify-between px-4 py-3 hover:bg-muted/30">
             <span className="font-medium text-[10px] text-muted-foreground uppercase tracking-wider">
               Events
             </span>
-            <span className="font-mono text-[10px] text-muted-foreground">
-              {tx.events.length}
-            </span>
+            <span className="font-mono text-[10px] text-muted-foreground">{tx.events.length}</span>
           </summary>
           <div className="space-y-2 px-4 pb-3">
             {tx.events.map((event, i) => (
@@ -382,8 +345,7 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
                 {event.event_type === 'stx_asset' && (
                   <div className="space-y-1">
                     <div>
-                      {event.asset.asset_event_type}{' '}
-                      {format([BigInt(event.asset.amount), 6])} STX
+                      {event.asset.asset_event_type} {format([BigInt(event.asset.amount), 6])} STX
                     </div>
                     <div className="text-[10px] text-muted-foreground">
                       <div>from: {event.asset.sender}</div>
@@ -396,14 +358,10 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
                     <div>
                       <span
                         className={`inline-block min-w-[2ch] text-center font-mono ${
-                          formatFungibleEventType(event.asset.asset_event_type)
-                            .className
+                          formatFungibleEventType(event.asset.asset_event_type).className
                         }`}
                       >
-                        {
-                          formatFungibleEventType(event.asset.asset_event_type)
-                            .symbol
-                        }
+                        {formatFungibleEventType(event.asset.asset_event_type).symbol}
                       </span>
                       <span className="ml-2">
                         {event.asset.amount} {event.asset.asset_id}
@@ -411,13 +369,9 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
                     </div>
                     <div className="text-[10px] text-muted-foreground">
                       {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
-                      {event.asset.sender && (
-                        <div>from: {event.asset.sender}</div>
-                      )}
+                      {event.asset.sender && <div>from: {event.asset.sender}</div>}
                       {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
-                      {event.asset.recipient && (
-                        <div>to: {event.asset.recipient}</div>
-                      )}
+                      {event.asset.recipient && <div>to: {event.asset.recipient}</div>}
                     </div>
                   </div>
                 )}
@@ -436,9 +390,8 @@ export function TransactionStatus({ tx, network }: TransactionStatusProps) {
                 {event.event_type === 'stx_lock' && (
                   <div className="space-y-1">
                     <div>
-                      locked{' '}
-                      {format([BigInt(event.stx_lock_event.locked_amount), 6])}{' '}
-                      STX until block {event.stx_lock_event.unlock_height}
+                      locked {format([BigInt(event.stx_lock_event.locked_amount), 6])} STX until
+                      block {event.stx_lock_event.unlock_height}
                     </div>
                     <div className="text-[10px] text-muted-foreground">
                       address: {event.stx_lock_event.locked_address}

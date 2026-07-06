@@ -1,8 +1,5 @@
 import { useQueryState, createParser } from 'nuqs';
-import {
-  type PostConditionsState,
-  DEFAULT_POST_CONDITIONS_STATE,
-} from '@/lib/post-conditions';
+import { type PostConditionsState, DEFAULT_POST_CONDITIONS_STATE } from '@/lib/post-conditions';
 
 const parseAsPostConditions = createParser({
   parse: (value: string): PostConditionsState | null => {
@@ -27,8 +24,7 @@ const parseAsPostConditions = createParser({
     }
     return JSON.stringify(value);
   },
-  eq: (a: PostConditionsState, b: PostConditionsState) =>
-    JSON.stringify(a) === JSON.stringify(b),
+  eq: (a: PostConditionsState, b: PostConditionsState) => JSON.stringify(a) === JSON.stringify(b),
 });
 
 export function usePostConditionsUrlState() {

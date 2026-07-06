@@ -27,53 +27,22 @@ export type ClarityFieldProps = {
   disabled?: boolean;
 };
 
-export function ClarityField({
-  name,
-  type,
-  label,
-  disabled,
-}: ClarityFieldProps) {
+export function ClarityField({ name, type, label, disabled }: ClarityFieldProps) {
   if (isClarityAbiPrimitive(type)) {
     // biome-ignore lint/style/useDefaultSwitchClause: ignored using `--suppress`
     switch (type) {
       case 'uint128':
         return (
-          <NumberField
-            disabled={disabled}
-            label={label}
-            name={name}
-            signed={false}
-            type={type}
-          />
+          <NumberField disabled={disabled} label={label} name={name} signed={false} type={type} />
         );
       case 'int128':
         return (
-          <NumberField
-            disabled={disabled}
-            label={label}
-            name={name}
-            signed={true}
-            type={type}
-          />
+          <NumberField disabled={disabled} label={label} name={name} signed={true} type={type} />
         );
       case 'bool':
-        return (
-          <BoolField
-            disabled={disabled}
-            label={label}
-            name={name}
-            type={type}
-          />
-        );
+        return <BoolField disabled={disabled} label={label} name={name} type={type} />;
       case 'principal':
-        return (
-          <PrincipalField
-            disabled={disabled}
-            label={label}
-            name={name}
-            type={type}
-          />
-        );
+        return <PrincipalField disabled={disabled} label={label} name={name} type={type} />;
       case 'trait_reference':
         return (
           <PrincipalField
@@ -127,12 +96,7 @@ export function ClarityField({
 
   if (isClarityAbiOptional(type)) {
     return (
-      <OptionalField
-        disabled={disabled}
-        innerType={type.optional}
-        label={label}
-        name={name}
-      />
+      <OptionalField disabled={disabled} innerType={type.optional} label={label} name={name} />
     );
   }
 
@@ -161,14 +125,7 @@ export function ClarityField({
   }
 
   if (isClarityAbiTuple(type)) {
-    return (
-      <TupleField
-        disabled={disabled}
-        label={label}
-        members={type.tuple}
-        name={name}
-      />
-    );
+    return <TupleField disabled={disabled} label={label} members={type.tuple} name={name} />;
   }
 
   return (

@@ -108,9 +108,7 @@ export function err<Ok = never, T = unknown>(value: T): ResponseErr<Ok, T> {
   };
 }
 
-export function isResponse<T>(
-  value: Response<T, T> | T
-): value is Response<T, T> {
+export function isResponse<T>(value: Response<T, T> | T): value is Response<T, T> {
   return typeof value === 'object' && value !== null && 'isOk' in value;
 }
 
@@ -124,11 +122,7 @@ export function isResponse<T>(
 export interface ClarityAbi extends _ClarityAbi {
   // maps: ClarityAbiMap[];
   epoch: StacksEpochId;
-  clarity_version:
-    | ClarityVersion
-    | 'Clarity5'
-    | 'Clarity6'
-    | `Clarity${number}`;
+  clarity_version: ClarityVersion | 'Clarity5' | 'Clarity6' | `Clarity${number}`;
   // clarity_version?: string;
 }
 
@@ -143,10 +137,7 @@ export function principalToString(principal: PrincipalCV): string {
  */
 
 // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
-export function cvToValue<T = any>(
-  val: ClarityValue,
-  returnResponse = false
-): T {
+export function cvToValue<T = any>(val: ClarityValue, returnResponse = false): T {
   // biome-ignore lint/style/useDefaultSwitchClause: ignored using `--suppress`
   switch (val.type) {
     case ClarityType.BoolTrue:
@@ -163,8 +154,7 @@ export function cvToValue<T = any>(
     case ClarityType.OptionalSome:
       return cvToValue(val.value, true);
     case ClarityType.ResponseErr:
-      if (returnResponse)
-        return err(cvToValue(val.value, true)) as unknown as T;
+      if (returnResponse) return err(cvToValue(val.value, true)) as unknown as T;
       return cvToValue(val.value, true);
     case ClarityType.ResponseOk:
       if (returnResponse) return ok(cvToValue(val.value, true)) as unknown as T;
@@ -174,7 +164,7 @@ export function cvToValue<T = any>(
       return principalToString(val) as unknown as T;
     case ClarityType.List:
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return val.value.map((v) => cvToValue(v, true)) as unknown as T;
+      return val.value.map(v => cvToValue(v, true)) as unknown as T;
     case ClarityType.Tuple: {
       const tupleReduced = Object.entries(val.value).reduce(
         // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
@@ -223,36 +213,22 @@ function inputToBigInt(input: CVInput) {
   return BigInt(input);
 }
 
-export const isClarityAbiPrimitive = (
-  val: ClarityAbiType
-): val is ClarityAbiTypePrimitive => typeof val === 'string';
-export const isClarityAbiBuffer = (
-  val: ClarityAbiType
-): val is ClarityAbiTypeBuffer =>
+export const isClarityAbiPrimitive = (val: ClarityAbiType): val is ClarityAbiTypePrimitive =>
+  typeof val === 'string';
+export const isClarityAbiBuffer = (val: ClarityAbiType): val is ClarityAbiTypeBuffer =>
   (val as ClarityAbiTypeBuffer).buffer !== undefined;
-export const isClarityAbiStringAscii = (
-  val: ClarityAbiType
-): val is ClarityAbiTypeStringAscii =>
+export const isClarityAbiStringAscii = (val: ClarityAbiType): val is ClarityAbiTypeStringAscii =>
   (val as ClarityAbiTypeStringAscii)['string-ascii'] !== undefined;
-export const isClarityAbiStringUtf8 = (
-  val: ClarityAbiType
-): val is ClarityAbiTypeStringUtf8 =>
+export const isClarityAbiStringUtf8 = (val: ClarityAbiType): val is ClarityAbiTypeStringUtf8 =>
   (val as ClarityAbiTypeStringUtf8)['string-utf8'] !== undefined;
-export const isClarityAbiResponse = (
-  val: ClarityAbiType
-): val is ClarityAbiTypeResponse =>
+export const isClarityAbiResponse = (val: ClarityAbiType): val is ClarityAbiTypeResponse =>
   (val as ClarityAbiTypeResponse).response !== undefined;
-export const isClarityAbiOptional = (
-  val: ClarityAbiType
-): val is ClarityAbiTypeOptional =>
+export const isClarityAbiOptional = (val: ClarityAbiType): val is ClarityAbiTypeOptional =>
   (val as ClarityAbiTypeOptional).optional !== undefined;
-export const isClarityAbiTuple = (
-  val: ClarityAbiType
-): val is ClarityAbiTypeTuple =>
+export const isClarityAbiTuple = (val: ClarityAbiType): val is ClarityAbiTypeTuple =>
   (val as ClarityAbiTypeTuple).tuple !== undefined;
-export const isClarityAbiList = (
-  val: ClarityAbiType
-): val is ClarityAbiTypeList => (val as ClarityAbiTypeList).list !== undefined;
+export const isClarityAbiList = (val: ClarityAbiType): val is ClarityAbiTypeList =>
+  (val as ClarityAbiTypeList).list !== undefined;
 export const isClarityAbiTraitReference = (
   val: ClarityAbiType
 ): val is ClarityAbiTypeTraitReference => val === 'trait_reference';
@@ -265,7 +241,7 @@ export function parseToCV(input: CVInput, type: ClarityAbiType): ClarityValue {
     }
     const tuple: Record<string, ClarityValue> = {};
     // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
-    type.tuple.forEach((key) => {
+    type.tuple.forEach(key => {
       const jsKey = findJsTupleKey(key.name, input);
       const val = input[jsKey];
       tuple[key.name] = parseToCV(val, key.type);
@@ -276,7 +252,7 @@ export function parseToCV(input: CVInput, type: ClarityAbiType): ClarityValue {
     // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
     const inputs = input as any[];
     // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
-    const values = inputs.map((input) => parseToCV(input, type.list.type));
+    const values = inputs.map(input => parseToCV(input, type.list.type));
     return listCV(values);
   }
   if (isClarityAbiOptional(type)) {
@@ -317,8 +293,7 @@ export function parseToCV(input: CVInput, type: ClarityAbiType): ClarityValue {
     return intCV(bigi.toString());
   }
   if (type === 'trait_reference') {
-    if (typeof input !== 'string')
-      throw new Error('Invalid input for trait_reference');
+    if (typeof input !== 'string') throw new Error('Invalid input for trait_reference');
     const [addr, name] = input.split('.');
     // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
     return contractPrincipalCV(addr!, name!);
@@ -385,13 +360,13 @@ export function cvToString(
     case ClarityType.PrincipalContract:
       return `'${principalToString(val)}`;
     case ClarityType.List:
-      return `(list ${val.value.map((v) => cvToString(v, options)).join(' ')})`;
+      return `(list ${val.value.map(v => cvToString(v, options)).join(' ')})`;
     case ClarityType.Tuple: {
       const keys = Object.keys(val.value);
       if (indent === undefined || keys.length === 0) {
         return `{ ${keys
           .map(
-            (key) =>
+            key =>
               `${key}: ${
                 // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
                 cvToString(val.value[key]!, options)
@@ -402,7 +377,7 @@ export function cvToString(
       const padding = ' '.repeat((depth + 1) * indent);
       const outerPadding = ' '.repeat(depth * indent);
       const lines = keys.map(
-        (key) =>
+        key =>
           `${padding}${key}: ${
             // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
             cvToString(val.value[key]!, {
@@ -429,10 +404,7 @@ export function cvToString(
  */
 
 // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
-export function cvToJSON<T = any>(
-  val: ClarityValue,
-  returnResponse = false
-): T {
+export function cvToJSON<T = any>(val: ClarityValue, returnResponse = false): T {
   // biome-ignore lint/style/useDefaultSwitchClause: ignored using `--suppress`
   switch (val.type) {
     case ClarityType.BoolTrue:
@@ -459,7 +431,7 @@ export function cvToJSON<T = any>(
       return principalToString(val) as unknown as T;
     case ClarityType.List:
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return val.value.map((v) => cvToJSON(v)) as unknown as T;
+      return val.value.map(v => cvToJSON(v)) as unknown as T;
     case ClarityType.Tuple: {
       const tupleReduced = Object.entries(val.value).reduce(
         // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
@@ -488,7 +460,7 @@ export function transformObjectArgs(
   // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
   args: Record<string, any>
 ) {
-  return func.args.map((abiArg) => {
+  return func.args.map(abiArg => {
     const key = findJsTupleKey(abiArg.name, args);
     const val = args[key];
     return parseToCV(val, abiArg.type);
@@ -511,15 +483,11 @@ export function transformArgsToCV(
   if (args.length === 1 && func.args.length !== 1) {
     return transformObjectArgs(func, firstArg);
   }
-  if (
-    typeof firstArg === 'object' &&
-    !Array.isArray(firstArg) &&
-    firstArg !== null
-  ) {
+  if (typeof firstArg === 'object' && !Array.isArray(firstArg) && firstArg !== null) {
     try {
       let hasAllArgs = true;
       // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
-      func.args.forEach((a) => {
+      func.args.forEach(a => {
         try {
           findJsTupleKey(a.name, firstArg);
         } catch (_error) {
@@ -539,7 +507,7 @@ export function transformArgsToCV(
 
 // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
 export function findJsTupleKey(key: string, input: Record<string, any>) {
-  const found = Object.keys(input).find((k) => {
+  const found = Object.keys(input).find(k => {
     const camelEq = key === k;
     const kebabEq = key === toKebabCase(k);
     return camelEq || kebabEq;
@@ -566,20 +534,19 @@ export function expectErr<Err>(response: Response<any, Err>): Err {
   throw new Error(`Expected Err, received ok: ${String(response.value)}`);
 }
 
-export type AbiPrimitiveTo<T extends ClarityAbiTypePrimitive> =
-  T extends ClarityAbiTypeInt128
+export type AbiPrimitiveTo<T extends ClarityAbiTypePrimitive> = T extends ClarityAbiTypeInt128
+  ? bigint
+  : T extends ClarityAbiTypeUInt128
     ? bigint
-    : T extends ClarityAbiTypeUInt128
-      ? bigint
-      : T extends ClarityAbiTypeBool
-        ? boolean
-        : T extends ClarityAbiTypePrincipal
+    : T extends ClarityAbiTypeBool
+      ? boolean
+      : T extends ClarityAbiTypePrincipal
+        ? string
+        : T extends ClarityAbiTypeTraitReference
           ? string
-          : T extends ClarityAbiTypeTraitReference
-            ? string
-            : T extends ClarityAbiTypeNone
-              ? never
-              : T;
+          : T extends ClarityAbiTypeNone
+            ? never
+            : T;
 
 export type ReadonlyTuple = {
   readonly tuple: Readonly<ClarityAbiTypeTuple['tuple']>;
@@ -590,9 +557,7 @@ type TupleTypeUnion<T> =
     ? { -readonly [Z in T['name']]: AbiTypeTo<T['type']> }
     : never;
 // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
-type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
-  k: infer I
-) => void
+type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void
   ? I
   : never;
 type Compact<T> = { [K in keyof T]: T[K] };
@@ -601,34 +566,28 @@ export type AbiTupleTo<T extends ReadonlyTuple> = Compact<
   UnionToIntersection<TupleTypeUnion<T['tuple'][number]>>
 >;
 
-export type AbiTypeTo<T extends ClarityAbiType | ReadonlyTuple> =
-  T extends ClarityAbiTypePrimitive
-    ? AbiPrimitiveTo<T>
-    : T extends ClarityAbiTypeBuffer
-      ? Uint8Array
-      : T extends ClarityAbiTypeStringAscii
+export type AbiTypeTo<T extends ClarityAbiType | ReadonlyTuple> = T extends ClarityAbiTypePrimitive
+  ? AbiPrimitiveTo<T>
+  : T extends ClarityAbiTypeBuffer
+    ? Uint8Array
+    : T extends ClarityAbiTypeStringAscii
+      ? string
+      : T extends ClarityAbiTypeStringUtf8
         ? string
-        : T extends ClarityAbiTypeStringUtf8
-          ? string
-          : T extends ClarityAbiTypeList
-            ? AbiTypeTo<T['list']['type']>[]
-            : T extends ClarityAbiTypeOptional
-              ? AbiTypeTo<T['optional']> | null
-              : T extends ClarityAbiTypeResponse
-                ? Response<
-                    AbiTypeTo<T['response']['ok']>,
-                    AbiTypeTo<T['response']['error']>
-                  >
-                : T extends ReadonlyTuple
-                  ? AbiTupleTo<T>
-                  : never;
+        : T extends ClarityAbiTypeList
+          ? AbiTypeTo<T['list']['type']>[]
+          : T extends ClarityAbiTypeOptional
+            ? AbiTypeTo<T['optional']> | null
+            : T extends ClarityAbiTypeResponse
+              ? Response<AbiTypeTo<T['response']['ok']>, AbiTypeTo<T['response']['error']>>
+              : T extends ReadonlyTuple
+                ? AbiTupleTo<T>
+                : never;
 
 // Helper type for inferring the return type of a function. Like `ReturnType`,
 // but for Clarigen types
 export type FunctionReturnType<T> =
-  T extends TypedAbiFunction<TypedAbiArg<unknown, string>[], infer R>
-    ? R
-    : never;
+  T extends TypedAbiFunction<TypedAbiArg<unknown, string>[], infer R> ? R : never;
 
 export type Jsonize<T> = T extends bigint
   ? string
@@ -668,12 +627,10 @@ export function getTypeString(val: ClarityAbiType): string {
     return `(optional ${getTypeString(val.optional)})`;
   }
   if (isClarityAbiTuple(val)) {
-    return `{ ${val.tuple.map((t) => `${t.name}: ${getTypeString(t.type)}`).join(', ')} }`;
+    return `{ ${val.tuple.map(t => `${t.name}: ${getTypeString(t.type)}`).join(', ')} }`;
   }
   if (isClarityAbiList(val)) {
     return `(list ${val.list.length} ${getTypeString(val.list.type)})`;
   }
-  throw new Error(
-    `Type string unsupported for Clarity type: ${JSON.stringify(val)}`
-  );
+  throw new Error(`Type string unsupported for Clarity type: ${JSON.stringify(val)}`);
 }

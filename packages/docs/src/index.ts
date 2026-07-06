@@ -107,9 +107,7 @@ export function createContractDocInfo({
       // })
       const abiFn = findAbiItemByName(abi, name);
       if (!abiFn) {
-        console.debug(
-          `[claridoc]: Unable to find ABI for function \`${name}\`. Probably a bug.`
-        );
+        console.debug(`[claridoc]: Unable to find ABI for function \`${name}\`. Probably a bug.`);
         return;
       }
       parensCount = traceParens(line, 0);
@@ -148,15 +146,13 @@ function clarityNameMatcher(line: string) {
 }
 
 function findItemNameFromLine(line: string): string | undefined {
-  const fnType = FN_TYPES.find((type) => line.startsWith(`(define-${type}`));
+  const fnType = FN_TYPES.find(type => line.startsWith(`(define-${type}`));
   if (fnType) {
     const prefix = `(define-${fnType} (`;
     const startString = line.slice(prefix.length);
     const match = clarityNameMatcher(startString);
     if (!match) {
-      console.debug(
-        `[claridocs]: Unable to determine function name from line:\n  \`${line}\``
-      );
+      console.debug(`[claridocs]: Unable to determine function name from line:\n  \`${line}\``);
       return;
     }
     return match[0];
@@ -168,9 +164,7 @@ function findItemNameFromLine(line: string): string | undefined {
     const startString = line.slice(prefix.length);
     const match = clarityNameMatcher(startString);
     if (!match) {
-      console.debug(
-        `[claridocs]: Unable to determine ${type} name from line:\n  \`${line}\``
-      );
+      console.debug(`[claridocs]: Unable to determine ${type} name from line:\n  \`${line}\``);
       return;
     }
     return match[0];
@@ -178,17 +172,14 @@ function findItemNameFromLine(line: string): string | undefined {
   return;
 }
 
-function findAbiItemByName(
-  abi: ClarityAbi,
-  name: string
-): ClarityAbiItem | undefined {
+function findAbiItemByName(abi: ClarityAbi, name: string): ClarityAbiItem | undefined {
   // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
-  const fn = abi.functions.find((fn) => fn.name === name);
+  const fn = abi.functions.find(fn => fn.name === name);
   if (fn) return fn;
-  const map = abi.maps.find((m) => m.name === name);
+  const map = abi.maps.find(m => m.name === name);
   if (map) return map;
   // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
-  const v = abi.variables.find((v) => v.name === name);
+  const v = abi.variables.find(v => v.name === name);
   return v;
 }
 
@@ -197,15 +188,13 @@ export function isComment(line: string) {
 }
 
 export function getFnName(line: string) {
-  const fnType = FN_TYPES.find((type) => line.startsWith(`(define-${type}`));
+  const fnType = FN_TYPES.find(type => line.startsWith(`(define-${type}`));
   if (typeof fnType === 'undefined') return;
   const prefix = `(define-${fnType} (`;
   const startString = line.slice(prefix.length);
   const match = clarityNameMatcher(startString);
   if (!match) {
-    console.debug(
-      `[claridocs]: Unable to determine function name from line:\n  \`${line}\``
-    );
+    console.debug(`[claridocs]: Unable to determine function name from line:\n  \`${line}\``);
     return;
   }
   return match[0];
@@ -214,7 +203,7 @@ export function getFnName(line: string) {
 export function traceParens(line: string, count: number) {
   let newCount = count;
   // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
-  line.split('').forEach((char) => {
+  line.split('').forEach(char => {
     // biome-ignore lint/nursery/noIncrementDecrement: ignored using `--suppress`
     if (char === '(') newCount++;
     // biome-ignore lint/nursery/noIncrementDecrement: ignored using `--suppress`
@@ -223,10 +212,7 @@ export function traceParens(line: string, count: number) {
   return newCount;
 }
 
-export function parseComments(
-  comments: string[],
-  abi: ClarityAbiItem
-): Comments {
+export function parseComments(comments: string[], abi: ClarityAbiItem): Comments {
   // const params: Record<string, ClaridocParam> = {};
   let curParam: string | undefined;
   // const newComments: string[] = [];
@@ -235,7 +221,7 @@ export function parseComments(
     params: {},
   };
   // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
-  comments.forEach((line) => {
+  comments.forEach(line => {
     // biome-ignore lint/performance/useTopLevelRegex: ignored using `--suppress`
     const paramMatches = /\s*@param\s([\w|-]+)([;|-|\s]*)(.*)/.exec(line);
 
@@ -252,7 +238,7 @@ export function parseComments(
     if (!('args' in abi)) return;
     const [_full, name, _separator, rest] = paramMatches;
     // biome-ignore lint/nursery/noShadow: ignored using `--suppress`
-    const arg = abi.args.find((arg) => arg.name === name);
+    const arg = abi.args.find(arg => arg.name === name);
     if (!arg) {
       console.debug(`[claridocs]: Unable to find ABI for @param ${name}`);
       return;
@@ -266,7 +252,7 @@ export function parseComments(
 
   if ('args' in abi) {
     // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
-    abi.args.forEach((arg) => {
+    abi.args.forEach(arg => {
       if (!parsed.params[arg.name]) {
         parsed.params[arg.name] = {
           abi: arg,

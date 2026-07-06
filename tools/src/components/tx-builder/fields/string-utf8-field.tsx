@@ -3,12 +3,7 @@ import type { ClarityAbiType } from '@clarigen/core';
 import { useFieldContext } from '@/hooks/form-context';
 import { useFieldFocusHandlers } from '@/hooks/use-focused-field';
 import { Input } from '@/components/ui/input';
-import {
-  Field,
-  FieldLabel,
-  FieldError,
-  FieldDescription,
-} from '@/components/ui/field';
+import { Field, FieldLabel, FieldError, FieldDescription } from '@/components/ui/field';
 
 type StringUtf8FieldProps = {
   name: string;
@@ -18,15 +13,9 @@ type StringUtf8FieldProps = {
   type: ClarityAbiType;
 };
 
-export function StringUtf8Field({
-  name,
-  label,
-  maxLength,
-  disabled,
-  type,
-}: StringUtf8FieldProps) {
+export function StringUtf8Field({ name, label, maxLength, disabled, type }: StringUtf8FieldProps) {
   const field = useFieldContext<string>();
-  const errors = useStore(field.store, (state) => state.meta.errors);
+  const errors = useStore(field.store, state => state.meta.errors);
   const { onFocus } = useFieldFocusHandlers(name, type);
   const currentLength = field.state.value?.length ?? 0;
 
@@ -42,7 +31,7 @@ export function StringUtf8Field({
         id={name}
         maxLength={maxLength}
         onBlur={field.handleBlur}
-        onChange={(e) => field.handleChange(e.target.value)}
+        onChange={e => field.handleChange(e.target.value)}
         onFocus={onFocus}
         placeholder="UTF-8 string"
         value={field.state.value}
@@ -52,9 +41,7 @@ export function StringUtf8Field({
       </FieldDescription>
       {field.state.meta.isTouched && errors.length > 0 && (
         <FieldError className="font-mono">
-          {errors
-            .map((e) => (typeof e === 'string' ? e : e.message))
-            .join(', ')}
+          {errors.map(e => (typeof e === 'string' ? e : e.message)).join(', ')}
         </FieldError>
       )}
     </Field>

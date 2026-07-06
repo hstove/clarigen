@@ -106,11 +106,7 @@ export type ArgToSave = {
   value: string;
 };
 
-export function saveFormHistory(
-  contractId: string,
-  functionName: string,
-  args: ArgToSave[]
-): void {
+export function saveFormHistory(contractId: string, functionName: string, args: ArgToSave[]): void {
   for (const arg of args) {
     if (!arg.value || arg.value.trim() === '') continue;
     addContextHistory(contractId, functionName, arg.name, arg.value);

@@ -721,9 +721,7 @@
       "outputs": {
         "type": {
           "optional": {
-            "tuple": [
-              { "name": "until-burn-ht", "type": { "optional": "uint128" } }
-            ]
+            "tuple": [{ "name": "until-burn-ht", "type": { "optional": "uint128" } }]
           }
         }
       }
@@ -1267,9 +1265,7 @@
         ]
       },
       "value": {
-        "tuple": [
-          { "name": "until-burn-ht", "type": { "optional": "uint128" } }
-        ]
+        "tuple": [{ "name": "until-burn-ht", "type": { "optional": "uint128" } }]
       }
     },
     {

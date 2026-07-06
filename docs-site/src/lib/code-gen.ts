@@ -13,9 +13,7 @@ import { compileMdx } from './mdx-utils';
 import { format } from 'prettier';
 import { cache } from 'react';
 
-export async function fetchContractMeta(
-  contractId: string
-): Promise<SessionContract> {
+export async function fetchContractMeta(contractId: string): Promise<SessionContract> {
   const contractInfo = await fetchContractSrcAbi(contractId);
   const contract = {
     contract_id: contractId,
@@ -76,9 +74,7 @@ export async function generateTypeUsagePage(contract: SessionContract) {
   return typeUsage;
 }
 
-export type GeneratedContractFiles = Awaited<
-  ReturnType<typeof generateContractFiles>
->;
+export type GeneratedContractFiles = Awaited<ReturnType<typeof generateContractFiles>>;
 
 // export async function generateContractFiles(contractId: string) {
 export const generateContractFiles = cache(async (contractId: string) => {

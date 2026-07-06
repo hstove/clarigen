@@ -1,10 +1,4 @@
-import {
-  type Response,
-  type TypedAbi,
-  cvToValue,
-  extractErrors,
-  isResponse,
-} from '@clarigen/core';
+import { type Response, type TypedAbi, cvToValue, extractErrors, isResponse } from '@clarigen/core';
 import type { ClarityValue } from '@stacks/transactions';
 
 // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: allowed
@@ -35,14 +29,10 @@ export function validateResponse<T>(
           errorCode = ` (${match[0]})`;
         }
       }
-      throw new Error(
-        `Tx result failed. Expected OK, received ERR ${String(inner)}${errorCode}.`
-      );
+      throw new Error(`Tx result failed. Expected OK, received ERR ${String(inner)}${errorCode}.`);
     }
     if (expectOk === false && response.isOk) {
-      throw new Error(
-        `Tx result failed. Expected ERR, received OK ${String(inner)}.`
-      );
+      throw new Error(`Tx result failed. Expected ERR, received OK ${String(inner)}.`);
     }
     return inner;
   }

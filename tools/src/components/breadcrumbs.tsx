@@ -8,11 +8,7 @@ type BreadcrumbsProps = {
   functionName?: string;
 };
 
-export function Breadcrumbs({
-  network,
-  contractId,
-  functionName,
-}: BreadcrumbsProps) {
+export function Breadcrumbs({ network, contractId, functionName }: BreadcrumbsProps) {
   return (
     <nav className="flex flex-wrap items-center gap-1.5 font-mono text-muted-foreground text-xs">
       <Link className="transition-colors hover:text-primary" to="/">
@@ -39,9 +35,7 @@ export function Breadcrumbs({
           <span className="font-medium text-foreground">{functionName}</span>
         </>
       ) : (
-        <span className="break-all font-medium text-foreground">
-          {contractId}
-        </span>
+        <span className="break-all font-medium text-foreground">{contractId}</span>
       )}
     </nav>
   );

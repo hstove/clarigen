@@ -3,7 +3,7 @@
   "version": "4.1.7",
   "name": "demo-project",
   "scripts": {
-    "build": "shx rm -rf ./dist && tsdown",
+    "build": "shx rm -rf ./dist && vp pack",
     "test": "vitest run"
   },
   "types": "./dist/index.d.cts",
@@ -23,13 +23,13 @@
   "devDependencies": {
     "@types/node": "24.2.0",
     "tsx": "^4.8.1",
-    "vitest": "3.2.4",
+    "vitest": "catalog:",
     "vitest-environment-clarinet": "3.0.2"
   },
   "exports": {
     ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"
   }

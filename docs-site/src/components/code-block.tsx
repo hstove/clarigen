@@ -1,13 +1,7 @@
 import { getHighlighter, bundledLanguages } from 'shiki';
 import { MarkdownWrapper } from './markdown-wrapper';
 
-export const codeToHtml = async ({
-  code,
-  language,
-}: {
-  code: string;
-  language: string;
-}) => {
+export const codeToHtml = async ({ code, language }: { code: string; language: string }) => {
   const highlighter = await getHighlighter({
     themes: ['github-light', 'github-dark'],
     langs: Object.keys(bundledLanguages),
@@ -53,7 +47,5 @@ export async function CodeBlock({
   //     />
   //   </code>
   // );
-  return (
-    <MarkdownWrapper className={className} markdown={markdown} {...props} />
-  );
+  return <MarkdownWrapper className={className} markdown={markdown} {...props} />;
 }
