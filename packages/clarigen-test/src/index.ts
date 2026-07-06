@@ -247,7 +247,7 @@ export const chain = {
 
 export async function makeNewSession(cwd?: string, manifestPath?: string) {
   // biome-ignore lint/correctness/noUndeclaredVariables: ignored using `--suppress`
-  await simnet.initSession(cwd ?? process.cwd(), manifestPath ?? './Clarinet.toml');
+  await simnet.initSession(cwd ?? process.cwd(), manifestPath ?? './Clarinet.toml', null);
 }
 
 export function assertOk<T extends ResponseOk<O, E> | ResponseErr<O, E>, O, E>(
