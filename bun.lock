@@ -177,8 +177,8 @@
         "yaml": "^2.4.1",
       },
       "devDependencies": {
-        "@stacks/clarinet-sdk": "3.19.0",
-        "@stacks/clarinet-sdk-wasm": "3.19.0",
+        "@stacks/clarinet-sdk": "3.23.1",
+        "@stacks/clarinet-sdk-wasm": "3.23.1",
         "tsx": "^4.7.2",
         "vitest": "3.2.4",
       },
@@ -999,9 +999,9 @@
 
     "@stacks/blockchain-api-client": ["@stacks/blockchain-api-client@7.10.0", "", { "dependencies": { "@stacks/stacks-blockchain-api-types": "7.10.0", "@types/ws": "7.4.7", "cross-fetch": "3.1.5", "eventemitter3": "4.0.7", "jsonrpc-lite": "2.2.0", "socket.io-client": "4.7.3", "ws": "8.16.0" } }, "sha512-VQbJDJuHrj2TWDmYE2Tymqa6yMCvNkc8SXPeHgX1k1BuNKFe7HUHv1r4wA24cRpoTSpM14URJOscKLBaDyklpg=="],
 
-    "@stacks/clarinet-sdk": ["@stacks/clarinet-sdk@3.19.0", "", { "dependencies": { "@stacks/clarinet-sdk-wasm": "3.19.0", "@stacks/transactions": "7.4.0", "kolorist": "1.8.0", "prompts": "2.4.2", "yargs": "18.0.0" } }, "sha512-UUWVOWoIezMadwr9kevwmmRO5eRzwbE/w7iR81dvB3geW+ctucIqWvCUXBebqAQa5+SubFfyraWj8ytZp9XIvg=="],
+    "@stacks/clarinet-sdk": ["@stacks/clarinet-sdk@3.23.1", "", { "dependencies": { "@stacks/clarinet-sdk-wasm": "3.23.1", "@stacks/transactions": "7.4.0", "kolorist": "1.8.0", "prompts": "2.4.2", "yargs": "18.0.0" } }, "sha512-OqGtIf4NSfX0eyIpY9ShxRpdD8HCrupMyRqR3iHqHmlN55d1KqA/lOLql1WGpLv0x9yEt4UP3xiM5Dd9l8HN1w=="],
 
-    "@stacks/clarinet-sdk-wasm": ["@stacks/clarinet-sdk-wasm@3.19.0", "", {}, "sha512-5Y4VrMIExO4ja3z4XU271IuQfH5METddrUv9xS1hY1KLA3VtCIXmo/Q1/tr2fnRrwpwUETjAmFfLnxnn43/RqQ=="],
+    "@stacks/clarinet-sdk-wasm": ["@stacks/clarinet-sdk-wasm@3.23.1", "", {}, "sha512-XWTKhSdMEM1QsnjQpsU3+zEiwjaGhY/rUf0hCW9cGdxBy+rImxyUacxr6Flq1XdVwZJSO0oidC5wxx4gDGjt0A=="],
 
     "@stacks/common": ["@stacks/common@7.3.1", "", {}, "sha512-29ANTFcSSlXnGQlgDVWg7OQ74lgQhu3x8JkeN19Q+UE/1lbQrzcctgPHG74XHjWNp8NPBqskUYA8/HLgIKuKNQ=="],
 
