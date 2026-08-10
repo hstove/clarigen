@@ -1,5 +1,9 @@
-import { Link } from '@tanstack/react-router';
-import { WalletButton } from './wallet-button';
+import { ClientOnly, Link } from '@tanstack/react-router';
+import { lazy, Suspense } from 'react';
+
+const WalletButton = lazy(() =>
+  import('./wallet-button').then((m) => ({ default: m.WalletButton }))
+);
 
 export function Header() {
   return (
@@ -12,7 +16,23 @@ export function Header() {
           <span className="text-muted-foreground">$</span> clarigen
         </Link>
         <div className="ml-auto">
-          <WalletButton />
+          <ClientOnly
+            fallback={
+              <span className="font-mono text-muted-foreground text-xs">
+                connect
+              </span>
+            }
+          >
+            <Suspense
+              fallback={
+                <span className="font-mono text-muted-foreground text-xs">
+                  connect
+                </span>
+              }
+            >
+              <WalletButton />
+            </Suspense>
+          </ClientOnly>
         </div>
       </div>
     </header>

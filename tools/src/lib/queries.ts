@@ -1,5 +1,4 @@
 import { createQueryKeyStore } from '@lukemorales/query-key-factory';
-import { getLocalStorage } from '@stacks/connect';
 import { getStxBalance } from './stacks-api';
 import type { NETWORK } from './constants';
 
@@ -7,7 +6,11 @@ export const queries = createQueryKeyStore({
   stacks: {
     getAccount: () => ({
       queryKey: ['getStacksAccount'],
-      queryFn: () => getLocalStorage(),
+      queryFn: async () => {
+        if (typeof window === 'undefined') return null;
+        const { getLocalStorage } = await import('@stacks/connect');
+        return getLocalStorage();
+      },
     }),
     getStxBalance: (network: NETWORK, address: string) => ({
       queryKey: [network, address],

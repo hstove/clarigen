@@ -3,7 +3,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { type NETWORK, Network } from '@/lib/constants';
 import { type ClarityAbiType, getTypeString } from '@clarigen/core';
 import { cvToHex } from '@stacks/transactions';
-import { request } from '@stacks/connect';
 import { type } from 'arktype';
 import { useAppForm } from '@/hooks/form';
 import { fieldContext } from '@/hooks/form-context';
@@ -391,6 +390,7 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
           const builtPostConditions = buildPostConditions(
             postConditions.conditions
           );
+          const { request } = await import('@stacks/connect');
           const response = await request('stx_callContract', {
             contract: contractId as `${string}.${string}`,
             functionName: func.name,

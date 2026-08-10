@@ -44,10 +44,12 @@
   },
   "resolutions": {
     "typescript": "5.9.3",
-    "whatwg-url": "^14.0.0"
+    "whatwg-url": "^14.0.0",
+    "effect": "4.0.0-beta.102"
   },
   "overrides": {
-    "whatwg-url": "^14.0.0"
+    "whatwg-url": "^14.0.0",
+    "effect": "4.0.0-beta.102"
   },
   "workspaces": [
     "packages/*",

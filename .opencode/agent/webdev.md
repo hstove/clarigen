@@ -1,7 +1,6 @@
 ---
 description: Agent for working on the web tools project inside Clarigen.
 tools:
-  beads_*: true
   playwriter_*: true
 ---
 

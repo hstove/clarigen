@@ -5,6 +5,7 @@ Web application for Stacks blockchain utilities. Part of the Clarigen monorepo.
 ## Key Features
 
 - **TX Builder** (`/tx/:network/:contract/:function`) - Dynamic form builder for contract calls. See [TX-BUILDER.md](./TX-BUILDER.md) for architecture details.
+- Homepage has an **open a contract** form — paste a contract id (and optional function) instead of hand-building the URL.
 
 ## Forms
 

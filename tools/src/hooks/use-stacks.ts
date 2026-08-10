@@ -1,8 +1,4 @@
 /** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
-import {
-  connect as connectStacks,
-  disconnect as disconnectStacks,
-} from '@stacks/connect';
 import React from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { queries } from '@/lib/queries';
@@ -48,11 +44,13 @@ export function useAccount() {
     useStacksAccount();
 
   const connect = React.useCallback(async () => {
+    const { connect: connectStacks } = await import('@stacks/connect');
     await connectStacks();
     queryClient.invalidateQueries(queries.stacks.getAccount());
   }, [queryClient]);
 
-  const disconnect = React.useCallback(() => {
+  const disconnect = React.useCallback(async () => {
+    const { disconnect: disconnectStacks } = await import('@stacks/connect');
     disconnectStacks();
     queryClient.invalidateQueries(queries.stacks.getAccount());
   }, [queryClient]);

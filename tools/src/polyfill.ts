@@ -1,22 +1,30 @@
-import { File } from 'node:buffer';
-
 /**
- * This file aims to polyfill missing APIs in Node.js 18 that oRPC depends on.
- *
- * Since Stackblitz runs on Node.js 18, these polyfills ensure oRPC works in that environment.
- * If you're running oRPC locally, please use Node.js 20 or later for full compatibility.
+ * SSR polyfills loaded from `router.tsx` before route modules.
+ * Keep this free of Node-only imports so the client Vite build can include it.
  */
 
 /**
- * Note: Stackblitz provides an emulated Node.js environment with inherent limitations.
- * If you encounter issues, please test on a local setup with Node.js 20 or later before reporting them.
+ * `@stacks/connect` (and its lit web components) extend `HTMLElement` at module
+ * init. Cloudflare Workers SSR has no DOM, so stub the minimum needed to load.
  */
-
-/**
- * The `oz.file()` schema depends on the `File` API.
- * If you're not using `oz.file()`, you can safely remove this polyfill.
- */
-if (typeof globalThis.File === 'undefined') {
+if (typeof globalThis.HTMLElement === 'undefined') {
   // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
-  globalThis.File = File as any;
+  globalThis.HTMLElement = class HTMLElement {} as any;
+}
+
+if (typeof globalThis.customElements === 'undefined') {
+  // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
+  globalThis.customElements = {
+    define() {},
+    get() {
+      return undefined;
+    },
+    whenDefined() {
+      return Promise.resolve(undefined as unknown as CustomElementConstructor);
+    },
+    upgrade() {},
+    getName() {
+      return null;
+    },
+  } as any;
 }
