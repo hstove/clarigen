@@ -3,16 +3,14 @@ import * as Cloudflare from "alchemy/Cloudflare";
 import * as Effect from "effect/Effect";
 
 export const Website = Cloudflare.Website.Vite("Website", {
+  name: "clarigen-web-tools-website-hank",
   compatibility: {
     flags: ["nodejs_compat", "global_fetch_strictly_public"],
-  },
-  assets: {
-    runWorkerFirst: true,
   },
 });
 
 export default Alchemy.Stack(
-  "clarigen-tools",
+  "clarigen-web-tools",
   {
     providers: Cloudflare.providers(),
     state: Cloudflare.state(),

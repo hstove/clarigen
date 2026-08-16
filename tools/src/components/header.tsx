@@ -4,6 +4,9 @@ import { lazy, Suspense } from 'react';
 const WalletButton = lazy(() =>
   import('./wallet-button').then((m) => ({ default: m.WalletButton }))
 );
+const HiroApiKeyButton = lazy(() =>
+  import('./hiro-api-key-button').then((m) => ({ default: m.HiroApiKeyButton }))
+);
 
 export function Header() {
   return (
@@ -15,7 +18,7 @@ export function Header() {
         >
           <span className="text-muted-foreground">$</span> clarigen
         </Link>
-        <div className="ml-auto">
+        <div className="ml-auto flex items-center gap-1">
           <ClientOnly
             fallback={
               <span className="font-mono text-muted-foreground text-xs">
@@ -30,6 +33,7 @@ export function Header() {
                 </span>
               }
             >
+              <HiroApiKeyButton />
               <WalletButton />
             </Suspense>
           </ClientOnly>

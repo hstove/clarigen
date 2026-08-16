@@ -24,6 +24,9 @@ function stacksConnectSsrStub(): Plugin {
 }
 
 const config = defineConfig({
+  resolve: {
+    dedupe: ['react', 'react-dom'],
+  },
   server: {
     port: 2527,
   },

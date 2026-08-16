@@ -4,6 +4,7 @@ import { StacksTransaction } from '../types/stacks-transaction';
 import type { NETWORK } from './constants';
 import type { ClarityAbi } from '@clarigen/core';
 import { format } from 'dnum';
+import { getHiroApiKey } from './hiro-api-key';
 
 export function getStacksApiUrl(network: NETWORK) {
   return network === 'mainnet'
@@ -14,16 +15,21 @@ export function getStacksApiUrl(network: NETWORK) {
       : 'https://api.testnet.hiro.so';
 }
 
-export function getStacksApi(network: NETWORK) {
+export function getStacksApi(network: NETWORK, apiKey = getHiroApiKey()) {
   const baseUrl = getStacksApiUrl(network);
 
   return createClient<paths>({
     baseUrl,
+    headers: apiKey ? { 'x-api-key': apiKey } : undefined,
   });
 }
 
-export async function getContractInfo(network: NETWORK, contractId: string) {
-  const client = getStacksApi(network);
+export async function getContractInfo(
+  network: NETWORK,
+  contractId: string,
+  apiKey?: string
+) {
+  const client = getStacksApi(network, apiKey);
   const { data, error, response } = await client.GET(
     '/extended/v1/contract/{contract_id}',
     {
@@ -43,8 +49,12 @@ export async function getContractInfo(network: NETWORK, contractId: string) {
   return data;
 }
 
-export async function getContractAbi(network: NETWORK, contractId: string) {
-  const contractInfo = await getContractInfo(network, contractId);
+export async function getContractAbi(
+  network: NETWORK,
+  contractId: string,
+  apiKey?: string
+) {
+  const contractInfo = await getContractInfo(network, contractId, apiKey);
   return parseContractAbi(contractInfo.abi);
 }
 

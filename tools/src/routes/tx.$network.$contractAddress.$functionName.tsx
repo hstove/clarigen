@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useEffect, useMemo, useState } from 'react';
 import { type NETWORK, Network } from '@/lib/constants';
 import { type ClarityAbiType, getTypeString } from '@clarigen/core';
-import { cvToHex } from '@stacks/transactions';
+import { cvToHex, postConditionToHex } from '@stacks/transactions';
 import { type } from 'arktype';
 import { useAppForm } from '@/hooks/form';
 import { fieldContext } from '@/hooks/form-context';
@@ -32,6 +32,7 @@ import { Breadcrumbs } from '@/components/breadcrumbs';
 import { Link } from '@tanstack/react-router';
 import { DocText } from '@/components/tx-builder/doc-text';
 import type { AnyFieldApi } from '@tanstack/react-form';
+import { getHiroApiKeyHeaders } from '@/lib/hiro-api-key';
 
 function serializeValueForHistory(value: unknown): string | null {
   if (value === null || value === undefined) return null;
@@ -376,7 +377,8 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
             }
           }
           const response = await fetch(
-            `/read/${network}/${contractId}/${func.name}?${query.toString()}`
+            `/read/${network}/${contractId}/${func.name}?${query.toString()}`,
+            { headers: getHiroApiKeyHeaders() }
           );
           const result = await response.json();
           setReadResult(result);
@@ -392,11 +394,12 @@ function TxBuilderForm({ network, contractId, func }: TxBuilderFormProps) {
           );
           const { request } = await import('@stacks/connect');
           const response = await request('stx_callContract', {
+            network,
             contract: contractId as `${string}.${string}`,
             functionName: func.name,
             functionArgs: clarityArgs.map((arg) => cvToHex(arg)),
             postConditionMode: postConditions.mode,
-            postConditions: builtPostConditions,
+            postConditions: builtPostConditions.map(postConditionToHex),
           });
 
           if (response.txid) {

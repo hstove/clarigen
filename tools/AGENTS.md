@@ -31,6 +31,9 @@ const form = useAppForm({ defaultValues, onSubmit });
 
 - Dev server: `localhost:2527`
 - Server logs: `tail -n 100 tmp/dev-server.log`
+- Production Cloudflare account: Stacks Labs (`d16d6f5618beae9f5e92cee6a50a103d`)
+- Production Alchemy profile and stage: `stackslabs` / `hank`
+- Production deploy: `bun run deploy` (targets Worker `clarigen-web-tools-website-hank`)
 - UI design: See `./UI-DESIGN.md`
 - Debugging: Use playwriter tool to interact with the running app
 - For debugging, these are some good paths to try:

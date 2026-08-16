@@ -35,62 +35,27 @@ function App() {
   const hasHistory = visitedFunctions.length > 0;
 
   return (
-    <div className="mx-auto max-w-4xl space-y-8 px-6 py-10">
-      <section className="space-y-3">
-        <h1 className="font-medium font-mono text-lg tracking-tight">
-          clarigen tools
+    <div className="mx-auto max-w-4xl space-y-10 px-6 py-12 sm:py-16">
+      <section className="space-y-4 border-primary border-l-2 pl-5">
+        <p className="font-mono text-[10px] text-primary uppercase tracking-[0.2em]">
+          Stacks contract toolbox
+        </p>
+        <h1 className="max-w-2xl font-medium font-mono text-3xl tracking-tight sm:text-4xl">
+          Build contract calls without the boilerplate.
         </h1>
-        <p className="max-w-2xl text-muted-foreground text-sm">
-          Build and submit Stacks contract calls. Paste a contract id to open
-          its functions, or jump straight to a function with the path below.
+        <p className="max-w-2xl text-muted-foreground text-sm leading-6">
+          Open any deployed contract, inspect its public functions, and build a
+          wallet-ready transaction from its ABI.
         </p>
       </section>
 
       <OpenContractForm />
 
-      <section className="border border-border bg-card">
-        <div className="border-border border-b bg-muted/30 px-4 py-3">
-          <h2 className="font-medium font-mono text-sm">url shape</h2>
-        </div>
-        <div className="space-y-3 p-4">
-          <code className="block break-all font-mono text-xs">
-            /tx/{'{network}'}/{'{contract-id}'}/{'{function-name}'}
-          </code>
-          <p className="text-muted-foreground text-xs">
-            network is{' '}
-            <span className="font-mono text-foreground">mainnet</span>,{' '}
-            <span className="font-mono text-foreground">testnet</span>, or{' '}
-            <span className="font-mono text-foreground">devnet</span>. contract
-            id looks like{' '}
-            <span className="font-mono text-foreground">
-              SP….contract-name
-            </span>
-            . Omit the function to browse all public and read-only functions.
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {EXAMPLE_CONTRACTS.map((example) => (
-              <Link
-                className="border border-border bg-muted/10 px-2 py-1 font-mono text-[10px] text-primary hover:border-primary/50 hover:underline"
-                key={example.label}
-                params={{
-                  network: example.network,
-                  contractAddress: example.contractId,
-                  functionName: example.functionName,
-                }}
-                to="/tx/$network/$contractAddress/$functionName"
-              >
-                {example.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="space-y-4">
         <div className="flex items-end justify-between gap-4">
           <div className="space-y-1">
-            <h2 className="font-medium font-mono text-lg tracking-tight">
-              Recently Viewed
+            <h2 className="font-medium font-mono text-sm tracking-tight">
+              recent activity
             </h2>
             <p className="text-muted-foreground text-xs">
               {visitedContracts.length} contracts · {visitedFunctions.length}{' '}
@@ -253,8 +218,24 @@ function OpenContractForm() {
 
   return (
     <section className="border border-border bg-card">
-      <div className="border-border border-b bg-muted/30 px-4 py-3">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-border border-b bg-muted/30 px-4 py-3">
         <h2 className="font-medium font-mono text-sm">open a contract</h2>
+        <div className="flex flex-wrap gap-2">
+          {EXAMPLE_CONTRACTS.map((example) => (
+            <Link
+              className="font-mono text-[10px] text-muted-foreground hover:text-primary hover:underline"
+              key={example.label}
+              params={{
+                network: example.network,
+                contractAddress: example.contractId,
+                functionName: example.functionName,
+              }}
+              to="/tx/$network/$contractAddress/$functionName"
+            >
+              {example.label} ↗
+            </Link>
+          ))}
+        </div>
       </div>
       <form className="space-y-4 p-4" onSubmit={handleSubmit}>
         <div className="grid gap-4 sm:grid-cols-[10rem_1fr]">
@@ -313,7 +294,7 @@ function OpenContractForm() {
         {error ? (
           <p className="font-mono text-destructive text-xs">× {error}</p>
         ) : null}
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-col items-start justify-between gap-3 border-border border-t pt-4 sm:flex-row sm:items-center">
           <p className="break-all font-mono text-[10px] text-muted-foreground">
             → /tx/{network}/{contractId.trim() || '{contract-id}'}
             {functionName.trim() ? `/${functionName.trim()}` : ''}
