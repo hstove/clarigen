@@ -22,6 +22,26 @@ import { parseDeployment } from './files/esm';
 import { mapVariables } from './files/variables';
 import type { SessionContract, SessionWithVariables } from './session';
 
+export function isBootContractId(contractId: string) {
+  return (
+    contractId.startsWith(MAINNET_BURN_ADDRESS) ||
+    contractId.startsWith(TESTNET_BURN_ADDRESS)
+  );
+}
+
+// When two contracts share a name, prefer (in order): identifiers from the
+// deployment plan (project contracts), non-boot contracts (requirements),
+// then boot contracts — mainnet over testnet, since generated identifiers
+// have historically used the mainnet burn address. Boot contracts are
+// registered at both burn addresses, so without a deterministic rank the
+// surviving variant depended on map iteration order.
+function identifierRank(contractId: string, preferredIdentifiers: Set<string>) {
+  if (preferredIdentifiers.has(contractId)) return 3;
+  if (contractId.startsWith(MAINNET_BURN_ADDRESS)) return 1;
+  if (contractId.startsWith(TESTNET_BURN_ADDRESS)) return 0;
+  return 2;
+}
+
 export function deduplicateContractInterfaces<T>(
   interfaces: Iterable<[string, T]>,
   preferredIdentifiers = new Set<string>()
@@ -32,8 +52,8 @@ export function deduplicateContractInterfaces<T>(
     const existing = contracts.get(contractName);
     if (
       !existing ||
-      (!preferredIdentifiers.has(existing[0]) &&
-        preferredIdentifiers.has(contractId))
+      identifierRank(contractId, preferredIdentifiers) >
+        identifierRank(existing[0], preferredIdentifiers)
     ) {
       contracts.set(contractName, [contractId, contractInterface]);
     }
@@ -100,43 +120,44 @@ export async function getSession(
 
   // const docsBaseFolder = (config.outputResolve(OutputType.Docs, './')!)[0];
 
-  const contracts = (
-    await Promise.all(
-      deduplicateContractInterfaces(
-        interfaces.entries(),
-        deploymentIdentifiers
-      ).map(
-        async ([contract_id, contract_interface]) => {
-          if (
-            (contract_id.startsWith(MAINNET_BURN_ADDRESS) &&
-              config.esm?.include_boot_contracts !== true) ||
-            contract_id.startsWith(TESTNET_BURN_ADDRESS)
-          ) {
-            return;
-          }
-          // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
-          const name = getContractName(contract_id, false)!;
-          const contractPathDef = config.clarinet.contracts?.[name]?.path;
-          let source: string | undefined;
-          if (contractPathDef) {
-            const contractPathFull = config.joinFromClarinet(contractPathDef);
-            source = await readFile(contractPathFull, 'utf-8');
-          }
+  // Boot contracts are excluded before deduplication so that a filtered-out
+  // variant can never shadow one that should be kept (boot contracts are
+  // registered at both burn addresses under the same name).
+  const includeBoot = config.esm?.include_boot_contracts === true;
+  const filteredInterfaces = [...interfaces.entries()].filter(
+    ([contract_id]) => includeBoot || !isBootContractId(contract_id)
+  );
 
-          return {
-            contract_id,
-            contract_interface: {
-              ...contract_interface,
-              epoch: contract_interface.epoch as StacksEpochId,
-              clarity_version:
-                contract_interface.clarity_version as ClarityVersion,
-            },
-            source: source ?? '',
-          } as SessionContract;
-        }
-      )
-    )
-  ).filter((x): x is SessionContract => x !== undefined);
+  const contracts = await Promise.all(
+    deduplicateContractInterfaces(
+      filteredInterfaces,
+      deploymentIdentifiers
+    ).map(async ([contract_id, contract_interface]) => {
+      // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
+      const name = getContractName(contract_id, false)!;
+      const contractPathDef = config.clarinet.contracts?.[name]?.path;
+      let source: string | undefined;
+      if (contractPathDef) {
+        const contractPathFull = config.joinFromClarinet(contractPathDef);
+        source = await readFile(contractPathFull, 'utf-8');
+      } else {
+        // Boot contracts and requirements have no source file in the
+        // project; the simnet can provide their source directly, which
+        // lets variable/constant extraction work for them.
+        source = simnet.getContractSource(contract_id);
+      }
+
+      return {
+        contract_id,
+        contract_interface: {
+          ...contract_interface,
+          epoch: contract_interface.epoch as StacksEpochId,
+          clarity_version: contract_interface.clarity_version as ClarityVersion,
+        },
+        source: source ?? '',
+      } as SessionContract;
+    })
+  );
 
   const session = {
     session_id: 0,
