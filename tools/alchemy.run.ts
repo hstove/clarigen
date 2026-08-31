@@ -3,7 +3,8 @@ import * as Cloudflare from "alchemy/Cloudflare";
 import * as Effect from "effect/Effect";
 
 export const Website = Cloudflare.Website.Vite("Website", {
-  name: "clarigen-web-tools-website-hank",
+  name: "clarigen-tools",
+  domain: "tools.clarigen.dev",
   compatibility: {
     flags: ["nodejs_compat", "global_fetch_strictly_public"],
   },
