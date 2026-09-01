@@ -218,6 +218,7 @@
         "@fontsource-variable/inter": "^5.2.8",
         "@fontsource/ibm-plex-mono": "^5.2.7",
         "@lukemorales/query-key-factory": "^1.3.4",
+        "@noble/hashes": "^2.4.0",
         "@orpc/client": "^1.7.5",
         "@orpc/json-schema": "^1.7.5",
         "@orpc/openapi": "^1.7.5",
@@ -229,6 +230,7 @@
         "@radix-ui/react-slider": "^1.3.6",
         "@radix-ui/react-slot": "^1.0.2",
         "@radix-ui/react-switch": "^1.2.6",
+        "@scure/base": "^1.2.6",
         "@stacks/blockchain-api-client": "8.13.5",
         "@stacks/connect": "^8.2.3",
         "@stacks/transactions": "^7.3.1",
@@ -869,7 +871,7 @@
 
     "@noble/curves": ["@noble/curves@1.9.1", "", { "dependencies": { "@noble/hashes": "1.8.0" } }, "sha512-k11yZxZg+t+gWvBbIswW0yoJlu8cHOC7dhunwOzoWH/mXGBiYyR4YY6hAEK/3EUs4UpB8la1RfdRpeGsFHkWsA=="],
 
-    "@noble/hashes": ["@noble/hashes@1.1.5", "", {}, "sha512-LTMZiiLc+V4v1Yi16TD6aX2gmtKszNye0pQgbaLqkvhIqP7nVsSaJsWloGQjJfJ8offaoP5GtX3yY5swbcJxxQ=="],
+    "@noble/hashes": ["@noble/hashes@2.4.0", "", {}, "sha512-X5XaVWZIBCT7HHZGm5I7ZQXDwLG+bGXuSrMQAW+7Zvl87h1kmc1ZB1VSRJcpUfoUrGQp4Fkoxm5kZ+Ms+aW+eA=="],
 
     "@noble/secp256k1": ["@noble/secp256k1@1.7.1", "", {}, "sha512-hOUk6AyBFmqVrv7k5WAw/LpszxVbj9gGN4JRkIX52fdFAj1UA61KXmZDvqVEm+pOyec3+fIeZB02LYa/pWOArw=="],
 
@@ -4279,9 +4281,13 @@
 
     "@stacks/profile/@stacks/transactions": ["@stacks/transactions@7.3.1", "", { "dependencies": { "@noble/hashes": "1.1.5", "@noble/secp256k1": "1.7.1", "@stacks/common": "7.3.1", "@stacks/network": "7.3.1", "c32check": "2.0.0", "lodash.clonedeep": "4.5.0" } }, "sha512-ufnC1BPrOKz5b5gxxdseP3vBrFq1+qx1L6t+J/QnjXULyWdkhtS+LBEqRw2bL5qNteMvU2GhqPgFtYQPzolGbw=="],
 
+    "@stacks/transactions/@noble/hashes": ["@noble/hashes@1.1.5", "", {}, "sha512-LTMZiiLc+V4v1Yi16TD6aX2gmtKszNye0pQgbaLqkvhIqP7nVsSaJsWloGQjJfJ8offaoP5GtX3yY5swbcJxxQ=="],
+
     "@stacks/transactions/@stacks/common": ["@stacks/common@7.0.2", "", {}, "sha512-+RSecHdkxOtswmE4tDDoZlYEuULpnTQVeDIG5eZ32opK8cFxf4EugAcK9CsIsHx/Se1yTEaQ21WGATmJGK84lQ=="],
 
     "@stacks/transactions/@stacks/network": ["@stacks/network@7.0.2", "", { "dependencies": { "@stacks/common": "7.0.2", "cross-fetch": "3.1.8" } }, "sha512-XzHnoWqku/jRrTgMXhmh3c+I0O9vDH24KlhzGDZtBu+8CGGyHNPAZzGwvoUShonMXrXjEnfO9IYQwV5aJhfv6g=="],
+
+    "@stacks/transactions-v6/@noble/hashes": ["@noble/hashes@1.1.5", "", {}, "sha512-LTMZiiLc+V4v1Yi16TD6aX2gmtKszNye0pQgbaLqkvhIqP7nVsSaJsWloGQjJfJ8offaoP5GtX3yY5swbcJxxQ=="],
 
     "@stacks/transactions-v6/@stacks/common": ["@stacks/common@6.16.0", "", { "dependencies": { "@types/bn.js": "5.1.5", "@types/node": "18.19.3" } }, "sha512-PnzvhrdGRMVZvxTulitlYafSK4l02gPCBBoI9QEoTqgSnv62oaOXhYAUUkTMFKxdHW1seVEwZsrahuXiZPIAwg=="],
 
@@ -5225,6 +5231,8 @@
 
     "@clarigen/test/@stacks/clarinet-sdk/@stacks/transactions": ["@stacks/transactions@7.4.0", "", { "dependencies": { "@noble/hashes": "1.1.5", "@noble/secp256k1": "1.7.1", "@stacks/common": "^7.3.1", "@stacks/network": "^7.3.1", "c32check": "^2.0.0", "lodash.clonedeep": "^4.5.0" } }, "sha512-scsQO3rSNNKcPHp56Wy5OeZiIpQNmmZOORz8bkQKWjzvzycAodtSWmAoHiMFAKSleR1NyeRIz642fReqlZU9tw=="],
 
+    "@clarigen/test/@stacks/transactions/@noble/hashes": ["@noble/hashes@1.1.5", "", {}, "sha512-LTMZiiLc+V4v1Yi16TD6aX2gmtKszNye0pQgbaLqkvhIqP7nVsSaJsWloGQjJfJ8offaoP5GtX3yY5swbcJxxQ=="],
+
     "@clarigen/test/@stacks/transactions/@stacks/common": ["@stacks/common@7.0.2", "", {}, "sha512-+RSecHdkxOtswmE4tDDoZlYEuULpnTQVeDIG5eZ32opK8cFxf4EugAcK9CsIsHx/Se1yTEaQ21WGATmJGK84lQ=="],
 
     "@clarigen/test/@stacks/transactions/@stacks/network": ["@stacks/network@7.2.0", "", { "dependencies": { "@stacks/common": "7.0.2", "cross-fetch": "3.1.8" } }, "sha512-AkLougCF2RLbK97TtISZxAhF3cE757XMXWOGKvEFWNauiQ5/bYyI9W5jZypG3yI/AyYIo04NKoFWWTnpJcn1iA=="],
@@ -5234,6 +5242,8 @@
     "@clarigen/web-tools/@stacks/blockchain-api-client/openapi-fetch": ["openapi-fetch@0.10.6", "", { "dependencies": { "openapi-typescript-helpers": "0.0.11" } }, "sha512-6xXfvIEL/POtLGOaFPsp3O+pDe+J3DZYxbD9BrsQHXOTeNK8z/gsWHT6adUy1KcpQOhmkerMzlQrJM6DbN55dQ=="],
 
     "@clarigen/web-tools/@stacks/blockchain-api-client/socket.io-client": ["socket.io-client@4.8.1", "", { "dependencies": { "@socket.io/component-emitter": "3.1.1", "debug": "4.3.7", "engine.io-client": "6.6.3", "socket.io-parser": "4.2.4" } }, "sha512-hJVXfu3E28NmzGk8o1sHhN3om52tRvwYeidbj7xKy2eIIse5IoKX3USlS6Tqt3BHAtflLIkCQBkzVrEEfWUyYQ=="],
+
+    "@clarigen/web-tools/@stacks/transactions/@noble/hashes": ["@noble/hashes@1.1.5", "", {}, "sha512-LTMZiiLc+V4v1Yi16TD6aX2gmtKszNye0pQgbaLqkvhIqP7nVsSaJsWloGQjJfJ8offaoP5GtX3yY5swbcJxxQ=="],
 
     "@clarigen/web-tools/@types/node/undici-types": ["undici-types@6.21.0", "", {}, "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="],
 
@@ -5499,11 +5509,17 @@
 
     "@reown/appkit-siwx/viem/ws": ["ws@8.18.2", "", {}, "sha512-DMricUmwGZUVr++AEAe2uiVM7UoO9MAVZMDu05UQOaUII0lp+zOzLLU4Xqh/JvTqklB1T4uELaaPBKyjE1r4fQ=="],
 
+    "@stacks/clarinet-sdk/@stacks/transactions/@noble/hashes": ["@noble/hashes@1.1.5", "", {}, "sha512-LTMZiiLc+V4v1Yi16TD6aX2gmtKszNye0pQgbaLqkvhIqP7nVsSaJsWloGQjJfJ8offaoP5GtX3yY5swbcJxxQ=="],
+
+    "@stacks/connect/@stacks/transactions/@noble/hashes": ["@noble/hashes@1.1.5", "", {}, "sha512-LTMZiiLc+V4v1Yi16TD6aX2gmtKszNye0pQgbaLqkvhIqP7nVsSaJsWloGQjJfJ8offaoP5GtX3yY5swbcJxxQ=="],
+
     "@stacks/network-v6/@stacks/common/@types/node": ["@types/node@18.19.3", "", { "dependencies": { "undici-types": "5.26.5" } }, "sha512-k5fggr14DwAytoA/t8rPrIz++lXK7/DqckthCmoZOKNsEbJkId4Z//BqgApXBUGrGddrigYa1oqheo/7YmW4rg=="],
 
     "@stacks/network-v6/cross-fetch/node-fetch": ["node-fetch@2.7.0", "", { "dependencies": { "whatwg-url": "14.0.0" } }, "sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A=="],
 
     "@stacks/network/cross-fetch/node-fetch": ["node-fetch@2.7.0", "", { "dependencies": { "whatwg-url": "14.0.0" } }, "sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A=="],
+
+    "@stacks/profile/@stacks/transactions/@noble/hashes": ["@noble/hashes@1.1.5", "", {}, "sha512-LTMZiiLc+V4v1Yi16TD6aX2gmtKszNye0pQgbaLqkvhIqP7nVsSaJsWloGQjJfJ8offaoP5GtX3yY5swbcJxxQ=="],
 
     "@stacks/transactions-v6/@stacks/common/@types/node": ["@types/node@18.19.3", "", { "dependencies": { "undici-types": "5.26.5" } }, "sha512-k5fggr14DwAytoA/t8rPrIz++lXK7/DqckthCmoZOKNsEbJkId4Z//BqgApXBUGrGddrigYa1oqheo/7YmW4rg=="],
 
@@ -5644,6 +5660,8 @@
     "cmdk/@radix-ui/react-primitive/@types/react-dom": ["@types/react-dom@18.2.25", "", { "dependencies": { "@types/react": "18.2.79" } }, "sha512-o/V48vf4MQh7juIKZU2QGDfli6p1+OOi5oXx36Hffpc9adsHeXjVp8rHuPkjd8VT8sOJ2Zp05HR7CdpGTIUFUA=="],
 
     "cmdk/react-dom/react": ["react@19.2.4", "", {}, "sha512-9nfp2hYpCwOjAN+8TZFGhtWEwgvWHXqESH8qT89AT/lWklpLON22Lc8pEtnpsZz7VmawabSU0gCjnj8aC0euHQ=="],
+
+    "demo-project/@stacks/transactions/@noble/hashes": ["@noble/hashes@1.1.5", "", {}, "sha512-LTMZiiLc+V4v1Yi16TD6aX2gmtKszNye0pQgbaLqkvhIqP7nVsSaJsWloGQjJfJ8offaoP5GtX3yY5swbcJxxQ=="],
 
     "enquirer/strip-ansi/ansi-regex": ["ansi-regex@5.0.1", "", {}, "sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ=="],
 
@@ -6319,6 +6337,8 @@
 
     "@changesets/git/micromatch/braces/fill-range": ["fill-range@7.1.1", "", { "dependencies": { "to-regex-range": "5.0.1" } }, "sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg=="],
 
+    "@clarigen/test/@stacks/clarinet-sdk/@stacks/transactions/@noble/hashes": ["@noble/hashes@1.1.5", "", {}, "sha512-LTMZiiLc+V4v1Yi16TD6aX2gmtKszNye0pQgbaLqkvhIqP7nVsSaJsWloGQjJfJ8offaoP5GtX3yY5swbcJxxQ=="],
+
     "@clarigen/test/@stacks/transactions/@stacks/network/cross-fetch": ["cross-fetch@3.1.8", "", { "dependencies": { "node-fetch": "2.7.0" } }, "sha512-cvA+JwZoU0Xq+h6WkMvAUqPEYy92Obet6UdKLfW60qn99ftItKjB5T+BkyWOFWe2pUyfQ+IJHmpOTznqk1M6Kg=="],
 
     "@clarigen/web-tools/@stacks/blockchain-api-client/@types/node/undici-types": ["undici-types@5.26.5", "", {}, "sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA=="],
@@ -6430,6 +6450,8 @@
     "autoprefixer/browserslist/update-browserslist-db/picocolors": ["picocolors@1.1.1", "", {}, "sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA=="],
 
     "bitcoinjs-message/bs58check/bs58/base-x": ["base-x@3.0.11", "", { "dependencies": { "safe-buffer": "5.2.1" } }, "sha512-xz7wQ8xDhdyP7tQxwdteLYeFfS68tSMNCZ/Y37WJ4bhGfKPpqEIlmIyueQHqOyoPhE6xNUqjzRr8ra0eF9VRvA=="],
+
+    "clarigen-docs/@stacks/clarinet-sdk/@stacks/transactions/@noble/hashes": ["@noble/hashes@1.1.5", "", {}, "sha512-LTMZiiLc+V4v1Yi16TD6aX2gmtKszNye0pQgbaLqkvhIqP7nVsSaJsWloGQjJfJ8offaoP5GtX3yY5swbcJxxQ=="],
 
     "clarigen-docs/@stacks/clarinet-sdk/@stacks/transactions/@stacks/common": ["@stacks/common@7.0.2", "", {}, "sha512-+RSecHdkxOtswmE4tDDoZlYEuULpnTQVeDIG5eZ32opK8cFxf4EugAcK9CsIsHx/Se1yTEaQ21WGATmJGK84lQ=="],
 
@@ -6696,6 +6718,8 @@
     "to-buffer/typed-array-buffer/is-typed-array/which-typed-array": ["which-typed-array@1.1.19", "", { "dependencies": { "available-typed-arrays": "1.0.7", "call-bind": "1.0.8", "call-bound": "1.0.4", "for-each": "0.3.5", "get-proto": "1.0.1", "gopd": "1.2.0", "has-tostringtag": "1.0.2" } }, "sha512-rEvr90Bck4WZt9HHFC4DJMsjvu7x+r6bImz0/BrbWb7A2djJ8hnZMrWnHo9F8ssv0OMErasDhftrfROTyqSDrw=="],
 
     "unrun/rolldown/@rolldown/binding-wasm32-wasi/@napi-rs/wasm-runtime": ["@napi-rs/wasm-runtime@1.1.1", "", { "dependencies": { "@emnapi/core": "^1.7.1", "@emnapi/runtime": "^1.7.1", "@tybys/wasm-util": "^0.10.1" } }, "sha512-p64ah1M1ld8xjWv3qbvFwHiFVWrq1yFvV4f7w+mzaqiR4IlSgkqhcRdHwsGgomwzBH51sRY4NEowLxnaBjcW/A=="],
+
+    "vitest-environment-clarinet/@stacks/clarinet-sdk/@stacks/transactions/@noble/hashes": ["@noble/hashes@1.1.5", "", {}, "sha512-LTMZiiLc+V4v1Yi16TD6aX2gmtKszNye0pQgbaLqkvhIqP7nVsSaJsWloGQjJfJ8offaoP5GtX3yY5swbcJxxQ=="],
 
     "vitest-environment-clarinet/@stacks/clarinet-sdk/@stacks/transactions/@stacks/common": ["@stacks/common@7.0.2", "", {}, "sha512-+RSecHdkxOtswmE4tDDoZlYEuULpnTQVeDIG5eZ32opK8cFxf4EugAcK9CsIsHx/Se1yTEaQ21WGATmJGK84lQ=="],
 

@@ -11,6 +11,8 @@ import {
   detectNetworkFromAddress,
   type NETWORK,
 } from '@/lib/constants';
+import { normalizeTxid } from '@/lib/txid';
+import { lookupContractCall } from '@/lib/tx-lookup';
 
 export const Route = createFileRoute('/')({ component: App });
 
@@ -50,6 +52,8 @@ function App() {
       </section>
 
       <OpenContractForm />
+
+      <OpenTxForm />
 
       <section className="space-y-4">
         <div className="flex items-end justify-between gap-4">
@@ -301,6 +305,134 @@ function OpenContractForm() {
           </p>
           <Button size="sm" type="submit">
             open
+          </Button>
+        </div>
+      </form>
+    </section>
+  );
+}
+
+const EXAMPLE_TXID =
+  '0xa5a59ef2961ac000efb78128e35a7a0b0ef3528ad6fd293be39cd1fcb8901682';
+
+function OpenTxForm() {
+  const navigate = useNavigate();
+  const [network, setNetwork] = useState<NETWORK>('mainnet');
+  const [txid, setTxid] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [pending, setPending] = useState(false);
+
+  let normalizedPreview: string | null = null;
+  try {
+    normalizedPreview = txid.replace(/\s+/g, '').length
+      ? normalizeTxid(txid)
+      : null;
+  } catch {
+    normalizedPreview = null;
+  }
+
+  async function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+    setError(null);
+
+    let normalized: string;
+    try {
+      normalized = normalizeTxid(txid);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'invalid txid');
+      return;
+    }
+
+    setPending(true);
+    try {
+      const result = await lookupContractCall(normalized, network);
+      await navigate({
+        to: '/tx/$network/$contractAddress/$functionName',
+        params: {
+          network: result.network,
+          contractAddress: result.contractId,
+          functionName: result.functionName,
+        },
+        search: { txid: result.txid } as never,
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'failed to look up tx');
+    } finally {
+      setPending(false);
+    }
+  }
+
+  return (
+    <section className="border border-border bg-card">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-border border-b bg-muted/30 px-4 py-3">
+        <h2 className="font-medium font-mono text-sm">open a transaction</h2>
+        <button
+          className="font-mono text-[10px] text-muted-foreground hover:text-primary hover:underline"
+          onClick={() => {
+            setTxid(EXAMPLE_TXID);
+            setNetwork('mainnet');
+            setError(null);
+          }}
+          type="button"
+        >
+          pox-5 register-for-bond ↗
+        </button>
+      </div>
+      <form className="space-y-4 p-4" onSubmit={(event) => void handleSubmit(event)}>
+        <div className="grid gap-4 sm:grid-cols-[10rem_1fr]">
+          <div className="space-y-1.5">
+            <Label className="font-mono text-xs" htmlFor="tx-network">
+              network
+            </Label>
+            <Select.Select
+              onValueChange={(value) => {
+                if (
+                  value === 'mainnet' ||
+                  value === 'testnet' ||
+                  value === 'devnet'
+                ) {
+                  setNetwork(value);
+                }
+              }}
+              value={network}
+            >
+              <Select.SelectTrigger className="w-full font-mono" id="tx-network">
+                <Select.SelectValue />
+              </Select.SelectTrigger>
+              <Select.SelectContent>
+                <Select.SelectItem value="mainnet">mainnet</Select.SelectItem>
+                <Select.SelectItem value="testnet">testnet</Select.SelectItem>
+                <Select.SelectItem value="devnet">devnet</Select.SelectItem>
+              </Select.SelectContent>
+            </Select.Select>
+          </div>
+          <div className="space-y-1.5">
+            <Label className="font-mono text-xs" htmlFor="txid">
+              txid
+            </Label>
+            <Input
+              className="font-mono"
+              id="txid"
+              onChange={(e) => {
+                setTxid(e.target.value);
+                setError(null);
+              }}
+              placeholder="0x… or 64 hex chars"
+              value={txid}
+            />
+          </div>
+        </div>
+        {error ? (
+          <p className="font-mono text-destructive text-xs">× {error}</p>
+        ) : null}
+        <div className="flex flex-col items-start justify-between gap-3 border-border border-t pt-4 sm:flex-row sm:items-center">
+          <p className="break-all font-mono text-[10px] text-muted-foreground">
+            {normalizedPreview
+              ? `→ /tx/{network}/{contract}/{fn}?txid=${normalizedPreview}`
+              : '→ looks up the contract call and opens its result page'}
+          </p>
+          <Button disabled={pending} size="sm" type="submit">
+            {pending ? 'looking up…' : 'open'}
           </Button>
         </div>
       </form>

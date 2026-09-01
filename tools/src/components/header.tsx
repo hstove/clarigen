@@ -18,6 +18,22 @@ export function Header() {
         >
           <span className="text-muted-foreground">$</span> clarigen
         </Link>
+        <nav className="ml-6 flex items-center gap-4 font-mono text-xs">
+          <Link
+            activeProps={{ className: 'text-primary' }}
+            className="text-muted-foreground transition-colors hover:text-primary"
+            to="/decoder"
+          >
+            decoder
+          </Link>
+          <Link
+            activeProps={{ className: 'text-primary' }}
+            className="text-muted-foreground transition-colors hover:text-primary"
+            to="/btc-address"
+          >
+            btc address
+          </Link>
+        </nav>
         <div className="ml-auto flex items-center gap-1">
           <ClientOnly
             fallback={

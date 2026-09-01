@@ -9,6 +9,8 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as DecoderRouteImport } from './routes/decoder'
+import { Route as BtcAddressRouteImport } from './routes/btc-address'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiSplatRouteImport } from './routes/api.$'
 import { Route as TxNetworkContractAddressRouteImport } from './routes/tx.$network.$contractAddress'
@@ -17,6 +19,16 @@ import { Route as TxNetworkContractAddressIndexRouteImport } from './routes/tx.$
 import { Route as TxNetworkContractAddressFunctionNameRouteImport } from './routes/tx.$network.$contractAddress.$functionName'
 import { Route as ReadNetworkContractAddressFunctionNameRouteImport } from './routes/read.$network.$contractAddress.$functionName'
 
+const DecoderRoute = DecoderRouteImport.update({
+  id: '/decoder',
+  path: '/decoder',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BtcAddressRoute = BtcAddressRouteImport.update({
+  id: '/btc-address',
+  path: '/btc-address',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -59,6 +71,8 @@ const ReadNetworkContractAddressFunctionNameRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/btc-address': typeof BtcAddressRoute
+  '/decoder': typeof DecoderRoute
   '/api/$': typeof ApiSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
   '/tx/$network/$contractAddress': typeof TxNetworkContractAddressRouteWithChildren
@@ -68,6 +82,8 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/btc-address': typeof BtcAddressRoute
+  '/decoder': typeof DecoderRoute
   '/api/$': typeof ApiSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
   '/read/$network/$contractAddress/$functionName': typeof ReadNetworkContractAddressFunctionNameRoute
@@ -77,6 +93,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/btc-address': typeof BtcAddressRoute
+  '/decoder': typeof DecoderRoute
   '/api/$': typeof ApiSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
   '/tx/$network/$contractAddress': typeof TxNetworkContractAddressRouteWithChildren
@@ -88,6 +106,8 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/btc-address'
+    | '/decoder'
     | '/api/$'
     | '/api/rpc/$'
     | '/tx/$network/$contractAddress'
@@ -97,6 +117,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/btc-address'
+    | '/decoder'
     | '/api/$'
     | '/api/rpc/$'
     | '/read/$network/$contractAddress/$functionName'
@@ -105,6 +127,8 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/btc-address'
+    | '/decoder'
     | '/api/$'
     | '/api/rpc/$'
     | '/tx/$network/$contractAddress'
@@ -115,6 +139,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BtcAddressRoute: typeof BtcAddressRoute
+  DecoderRoute: typeof DecoderRoute
   ApiSplatRoute: typeof ApiSplatRoute
   ApiRpcSplatRoute: typeof ApiRpcSplatRoute
   TxNetworkContractAddressRoute: typeof TxNetworkContractAddressRouteWithChildren
@@ -123,6 +149,20 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/decoder': {
+      id: '/decoder'
+      path: '/decoder'
+      fullPath: '/decoder'
+      preLoaderRoute: typeof DecoderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/btc-address': {
+      id: '/btc-address'
+      path: '/btc-address'
+      fullPath: '/btc-address'
+      preLoaderRoute: typeof BtcAddressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -194,6 +234,8 @@ const TxNetworkContractAddressRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BtcAddressRoute: BtcAddressRoute,
+  DecoderRoute: DecoderRoute,
   ApiSplatRoute: ApiSplatRoute,
   ApiRpcSplatRoute: ApiRpcSplatRoute,
   TxNetworkContractAddressRoute: TxNetworkContractAddressRouteWithChildren,
