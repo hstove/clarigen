@@ -39,8 +39,8 @@
   "name": "@clarigen/cli",
   "author": "Hank Stoever",
   "devDependencies": {
-    "@stacks/clarinet-sdk": "3.19.0",
-    "@stacks/clarinet-sdk-wasm": "3.19.0",
+    "@stacks/clarinet-sdk": "3.23.1",
+    "@stacks/clarinet-sdk-wasm": "3.23.1",
     "tsx": "^4.7.2",
     "vitest": "3.2.4"
   },

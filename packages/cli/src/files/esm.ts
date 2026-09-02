@@ -12,7 +12,8 @@ import {
   type DeploymentTransaction,
 } from '@clarigen/core/deployment';
 import type { DeploymentPlan, SimnetDeploymentPlan } from '@clarigen/core';
-import { getContractName } from '@clarigen/core';
+import { bootContractIdentifier, getContractName } from '@clarigen/core';
+import { isBootContractId } from '../clarinet-sdk';
 import { sortContracts } from '../utils';
 import type { Session } from '../session';
 import { spawn } from 'node:child_process';
@@ -135,6 +136,19 @@ export function collectContractDeployments(
       const devnetId = `${deployer.address}.${contractName}`;
       insertNetworkId(full, devnetId, 'devnet');
     }
+  });
+
+  // Boot contracts exist on every network at the burn address: the mainnet
+  // burn address on mainnet, the testnet burn address everywhere else
+  // (simnet and devnet are testnet-flavored chains).
+  // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
+  session.contracts.forEach(contract => {
+    if (!isBootContractId(contract.contract_id)) return;
+    const name = getContractName(contract.contract_id, false);
+    // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
+    DEPLOYMENT_NETWORKS.forEach(network => {
+      insertNetworkId(full, bootContractIdentifier(name, network === 'mainnet'), network);
+    });
   });
 
   // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
