@@ -15,20 +15,11 @@ cache_dir = './.cache'
 # contract_id = 'ST2T5JKWWP3FYYX4YRK8GK5BG2YCNGEAEY1JKX06E.pyth-pnau-decoder-v1'
 
 [[project.requirements]]
-contract_id = 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-deposit'
+contract_id = 'SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.send_many'
 
 [repl]
 clarity_wasm_mode = false
 show_timings = false
-
-[repl.analysis]
-# passes = ['check_checker']
-
-[repl.analysis.check_checker]
-strict = false
-trusted_sender = false
-trusted_caller = false
-callee_filter = false
 
 [project.override_boot_contracts_source]
 pox-5 = "./contracts/pox-5.clar"

@@ -58,25 +58,14 @@ genesis:
     - signers
     - signers-voting
     - costs-4
-    - costs-5
     - pox-5
 plan:
   batches:
     - id: 0
       transactions:
         - transaction-type: emulated-contract-publish
-          contract-name: sbtc-registry
-          emulated-sender: SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4
-          path: .cache/requirements/SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-registry.clar
-          clarity-version: 3
-        - transaction-type: emulated-contract-publish
-          contract-name: sbtc-token
-          emulated-sender: SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4
-          path: .cache/requirements/SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token.clar
-          clarity-version: 3
-        - transaction-type: emulated-contract-publish
-          contract-name: sbtc-deposit
-          emulated-sender: SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4
-          path: .cache/requirements/SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-deposit.clar
-          clarity-version: 3
-      epoch: '3.0'
+          contract-name: send_many
+          emulated-sender: SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE
+          path: .cache/requirements/SP3FBR2AGK5H9QBDH3EEN6DF8EK8JY7RX8QJ5SVTE.send_many.clar
+          clarity-version: 1
+      epoch: '2.0'

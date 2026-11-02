@@ -13,9 +13,6 @@ describe('variables', () => {
   });
 
   test('has variables', () => {
-    if (process.env.CI) {
-      return;
-    }
     const counterIndex = session.contracts.findIndex(c => c.contract_id.endsWith('counter'));
     const vars = session.variables[counterIndex];
     expect(vars).toEqual(`{

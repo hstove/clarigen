@@ -25,3 +25,34 @@ jobs:
         run: pnpm exec vp run typecheck
       - name: Tests
         run: pnpm exec vp run test
+
+  clarinet_sdk_compat:
+    name: Clarinet SDK ${{ matrix.clarinet-sdk }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Oldest and newest supported v3 releases. v4 is covered by `code_checks`.
+        clarinet-sdk: ['3.15.0', '3.26.0']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - name: Install dependencies with @stacks/clarinet-sdk ${{ matrix.clarinet-sdk }}
+        run: |
+          npm pkg set \
+            "pnpm.overrides.@stacks/clarinet-sdk=${{ matrix.clarinet-sdk }}" \
+            "pnpm.overrides.@stacks/clarinet-sdk-wasm=${{ matrix.clarinet-sdk }}"
+          pnpm install --no-frozen-lockfile
+      - name: Build packages
+        run: pnpm exec vp run build:packages
+      - name: Type checks
+        run: pnpm exec vp run typecheck
+      - name: Tests
+        run: pnpm exec vp run test

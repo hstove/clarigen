@@ -26,7 +26,7 @@
     "@scure/base": "^1.1.5",
     "@shikijs/compat": "^1.1.7",
     "@stacks/blockchain-api-client": "7.10.0",
-    "@stacks/clarinet-sdk": "3.9.2",
+    "@stacks/clarinet-sdk": "4.0.0",
     "@stacks/network": "^6.16.0",
     "@stacks/prettier-config": "^0.0.10",
     "@stefanprobst/rehype-extract-toc": "^2.2.0",
