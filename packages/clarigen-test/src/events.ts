@@ -128,11 +128,7 @@ export function filterEvents(
   events: CoreNodeEvent[],
   type: CoreNodeEventType.FtBurnEvent
 ): FtBurnEvent[];
-export function filterEvents(
-  events: CoreNodeEvent[],
-  type: CoreNodeEventType
-): CoreNodeEvent[] {
-  const typeString =
-    type === CoreNodeEventType.ContractEvent ? 'print_event' : type;
-  return events.filter((event) => event.event === typeString);
+export function filterEvents(events: CoreNodeEvent[], type: CoreNodeEventType): CoreNodeEvent[] {
+  const typeString = type === CoreNodeEventType.ContractEvent ? 'print_event' : type;
+  return events.filter(event => event.event === typeString);
 }

@@ -1,13 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 
-export function CopyButton({
-  text,
-  label = 'copy',
-}: {
-  text: string;
-  label?: string;
-}) {
+export function CopyButton({ text, label = 'copy' }: { text: string; label?: string }) {
   const [copied, setCopied] = useState(false);
   const buttonText = copied ? 'copied' : label;
 

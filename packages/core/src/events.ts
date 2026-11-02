@@ -198,9 +198,6 @@ export function filterEvents(
   events: CoreNodeEvent[],
   type: CoreNodeEventType.FtBurnEvent
 ): FtBurnEvent[];
-export function filterEvents(
-  events: CoreNodeEvent[],
-  type: CoreNodeEventType
-): CoreNodeEvent[] {
-  return events.filter((event) => event.type === type);
+export function filterEvents(events: CoreNodeEvent[], type: CoreNodeEventType): CoreNodeEvent[] {
+  return events.filter(event => event.type === type);
 }

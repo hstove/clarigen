@@ -2,10 +2,7 @@ import type { NETWORK } from './constants';
 import { getRawTransaction, getTransaction } from './stacks-api';
 import type { StacksTransaction } from '@/types/stacks-transaction';
 
-type ContractCallTx = Extract<
-  typeof StacksTransaction.infer,
-  { tx_type: 'contract_call' }
->;
+type ContractCallTx = Extract<typeof StacksTransaction.infer, { tx_type: 'contract_call' }>;
 
 export type ContractCallLookup = {
   network: NETWORK;

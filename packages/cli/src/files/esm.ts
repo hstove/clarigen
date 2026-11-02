@@ -24,12 +24,7 @@ export async function parseDeployment(path: string) {
   return parsed as Plan;
 }
 
-export const DEPLOYMENT_NETWORKS = [
-  'devnet',
-  'simnet',
-  'testnet',
-  'mainnet',
-] as const;
+export const DEPLOYMENT_NETWORKS = ['devnet', 'simnet', 'testnet', 'mainnet'] as const;
 export type DeploymentNetwork = (typeof DEPLOYMENT_NETWORKS)[number];
 
 type Plan = DeploymentPlan | undefined;
@@ -39,7 +34,7 @@ type DeploymentsMap = {
 
 export async function getDeployments(config: Config): Promise<DeploymentsMap> {
   const entries = await Promise.all(
-    DEPLOYMENT_NETWORKS.map(async (network) => {
+    DEPLOYMENT_NETWORKS.map(async network => {
       const file = `default.${network}-plan.yaml`;
       const path = join(dirname(config.clarinetFile()), 'deployments', file);
       let plan: Plan;
@@ -63,11 +58,7 @@ export async function generateESMFile({
   config: Config;
 }) {
   const deployments = await getDeployments(config);
-  const contractDeployments = collectContractDeployments(
-    session,
-    deployments,
-    config
-  );
+  const contractDeployments = collectContractDeployments(session, deployments, config);
 
   const simnet = generateSimnetCode(config, deployments, session);
 
@@ -110,10 +101,10 @@ export function collectContractDeployments(
   config: Config
 ): FullContractDeployments {
   const full = Object.fromEntries(
-    sortContracts(session.contracts).map((contract) => {
+    sortContracts(session.contracts).map(contract => {
       const contractName = getContractName(contract.contract_id);
       const contractDeployments = Object.fromEntries(
-        DEPLOYMENT_NETWORKS.map((network) => {
+        DEPLOYMENT_NETWORKS.map(network => {
           const deployment = deployments[network];
           if (typeof deployment === 'undefined') {
             return [network, null];
@@ -133,7 +124,7 @@ export function collectContractDeployments(
     })
   ) as FullContractDeployments;
 
-  const deployer = session.accounts.find((a) => a.name === 'deployer');
+  const deployer = session.accounts.find(a => a.name === 'deployer');
 
   // handle defaults when there is no deployment file
   // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
@@ -147,7 +138,7 @@ export function collectContractDeployments(
   });
 
   // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
-  session.contracts.forEach((contract) => {
+  session.contracts.forEach(contract => {
     insertNetworkId(full, contract.contract_id, 'devnet');
     insertNetworkId(full, contract.contract_id, 'simnet');
   });
@@ -162,10 +153,8 @@ export function collectDeploymentFiles(
 ) {
   if (!deployments.simnet) return [];
   const simnet = deployments.simnet as SimnetDeploymentPlan;
-  const txs = getContractTxs(
-    simnet.plan.batches as Batch<DeploymentTransaction>[]
-  );
-  const entries = txs.map((tx) => {
+  const txs = getContractTxs(simnet.plan.batches as Batch<DeploymentTransaction>[]);
+  const entries = txs.map(tx => {
     const id = getIdentifierForDeploymentTx(tx);
     const contractFile = getDeploymentTxPath(tx);
     return {
@@ -176,11 +165,7 @@ export function collectDeploymentFiles(
   return entries;
 }
 
-function generateSimnetCode(
-  config: Config,
-  deployments: DeploymentsMap,
-  _session: Session
-) {
+function generateSimnetCode(config: Config, deployments: DeploymentsMap, _session: Session) {
   if (!config.esm?.include_accounts) return '';
 
   const clarinetFolder = dirname(config.clarinetFile());
@@ -212,7 +197,7 @@ export async function afterESM(config: Config): Promise<void> {
       stdio: 'inherit',
     });
     child.on('error', reject);
-    child.on('exit', (code) => {
+    child.on('exit', code => {
       if (code === 0) {
         resolve();
       } else {

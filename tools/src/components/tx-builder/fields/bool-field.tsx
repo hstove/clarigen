@@ -14,7 +14,7 @@ type BoolFieldProps = {
 
 export function BoolField({ name, label, disabled, type }: BoolFieldProps) {
   const field = useFieldContext<boolean>();
-  const errors = useStore(field.store, (state) => state.meta.errors);
+  const errors = useStore(field.store, state => state.meta.errors);
   const { onFocus } = useFieldFocusHandlers(name, type);
 
   return (
@@ -24,7 +24,7 @@ export function BoolField({ name, label, disabled, type }: BoolFieldProps) {
         disabled={disabled}
         id={name}
         onBlur={field.handleBlur}
-        onCheckedChange={(checked) => field.handleChange(checked)}
+        onCheckedChange={checked => field.handleChange(checked)}
         onFocus={onFocus}
       />
       <FieldLabel className="font-mono text-xs" htmlFor={name}>
@@ -32,9 +32,7 @@ export function BoolField({ name, label, disabled, type }: BoolFieldProps) {
       </FieldLabel>
       {field.state.meta.isTouched && errors.length > 0 && (
         <FieldError className="font-mono">
-          {errors
-            .map((e) => (typeof e === 'string' ? e : e.message))
-            .join(', ')}
+          {errors.map(e => (typeof e === 'string' ? e : e.message)).join(', ')}
         </FieldError>
       )}
     </Field>

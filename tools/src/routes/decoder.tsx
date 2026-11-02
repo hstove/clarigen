@@ -57,8 +57,8 @@ function DecoderPage() {
           deserializeCV, then read it.
         </h1>
         <p className="max-w-2xl text-muted-foreground text-sm leading-6">
-          Paste any serialized Clarity value as hex. The decoder turns it into a
-          structured view and a pretty-printed Clarity literal.
+          Paste any serialized Clarity value as hex. The decoder turns it into a structured view and
+          a pretty-printed Clarity literal.
         </p>
       </section>
 
@@ -66,7 +66,7 @@ function DecoderPage() {
         <div className="flex flex-wrap items-center justify-between gap-3 border-border border-b bg-muted/30 px-4 py-3">
           <h2 className="font-medium font-mono text-sm">hex</h2>
           <div className="flex flex-wrap gap-2">
-            {DECODER_EXAMPLES.map((example) => (
+            {DECODER_EXAMPLES.map(example => (
               <button
                 className="font-mono text-[10px] text-muted-foreground hover:text-primary hover:underline"
                 key={example.label}
@@ -87,7 +87,7 @@ function DecoderPage() {
           <Textarea
             className="min-h-28 font-mono"
             id="cv-hex"
-            onChange={(event) => {
+            onChange={event => {
               setHex(event.target.value);
             }}
             placeholder="0x0c00000002…"
@@ -115,9 +115,7 @@ function DecoderPage() {
           <div className="border-border border-b bg-muted/30 px-4 py-3">
             <h3 className="font-medium font-mono text-sm">decoded</h3>
           </div>
-          <p className="p-4 font-mono text-destructive text-xs">
-            × {decoded.message}
-          </p>
+          <p className="p-4 font-mono text-destructive text-xs">× {decoded.message}</p>
         </div>
       ) : null}
 
@@ -146,9 +144,7 @@ function DecoderPage() {
           <details className="border border-border bg-card">
             <summary className="flex cursor-pointer items-center justify-between px-4 py-3 hover:bg-muted/30">
               <span className="font-medium font-mono text-sm">json</span>
-              <span className="font-mono text-[10px] text-muted-foreground">
-                cvToJSON
-              </span>
+              <span className="font-mono text-[10px] text-muted-foreground">cvToJSON</span>
             </summary>
             <div className="border-border border-t px-4 py-3">
               <div className="mb-2 flex justify-end">

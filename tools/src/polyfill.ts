@@ -8,8 +8,7 @@
  * init. Cloudflare Workers SSR has no DOM, so stub the minimum needed to load.
  */
 if (typeof globalThis.HTMLElement === 'undefined') {
-  globalThis.HTMLElement =
-    class HTMLElement {} as unknown as typeof globalThis.HTMLElement;
+  globalThis.HTMLElement = class HTMLElement {} as unknown as typeof globalThis.HTMLElement;
 }
 
 if (typeof globalThis.customElements === 'undefined') {

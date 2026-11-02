@@ -13,9 +13,7 @@ const eventSchema = z.object({
     'enable_lift_mode',
   ]),
   // declare type AllowedPropertyValues = string | number | boolean | null
-  properties: z
-    .record(z.union([z.string(), z.number(), z.boolean(), z.null()]))
-    .optional(),
+  properties: z.record(z.union([z.string(), z.number(), z.boolean(), z.null()])).optional(),
 });
 
 export type Event = z.infer<typeof eventSchema>;

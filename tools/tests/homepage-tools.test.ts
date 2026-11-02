@@ -1,17 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { normalizeHex, stripHexPrefix } from '../src/lib/hex';
 import { normalizeTxid } from '../src/lib/txid';
-import {
-  btcAddressToPoxTuple,
-  poxTupleToBtcAddress,
-} from '../src/lib/pox-address';
+import { btcAddressToPoxTuple, poxTupleToBtcAddress } from '../src/lib/pox-address';
 import { hexToCV } from '@stacks/transactions';
 import { cvToString } from '@clarigen/core';
 import { DECODER_EXAMPLES } from '../src/lib/decoder-examples';
 
 describe('normalizeTxid', () => {
-  const raw =
-    'a5a59ef2961ac000efb78128e35a7a0b0ef3528ad6fd293be39cd1fcb8901682';
+  const raw = 'a5a59ef2961ac000efb78128e35a7a0b0ef3528ad6fd293be39cd1fcb8901682';
   const prefixed = `0x${raw}`;
 
   it('adds a 0x prefix when missing', () => {
@@ -70,13 +66,8 @@ describe('pox address conversion', () => {
   });
 
   it('round-trips p2tr', () => {
-    const hash32 =
-      '0x751e76e8199196d454941c45d1b3a323f1433bd6751e76e8199196d454941c45';
-    const { address, decoded } = poxTupleToBtcAddress(
-      '0x06',
-      hash32,
-      'mainnet'
-    );
+    const hash32 = '0x751e76e8199196d454941c45d1b3a323f1433bd6751e76e8199196d454941c45';
+    const { address, decoded } = poxTupleToBtcAddress('0x06', hash32, 'mainnet');
     expect(address.startsWith('bc1p')).toBe(true);
     const back = btcAddressToPoxTuple(address);
     expect(back.version).toBe(0x06);
@@ -96,8 +87,6 @@ describe('pox address conversion', () => {
 describe('decoder examples', () => {
   it('deserialize to the expected clarity literals', () => {
     expect(cvToString(hexToCV(DECODER_EXAMPLES[0].hex))).toBe('u42');
-    expect(cvToString(hexToCV(DECODER_EXAMPLES[2].hex))).toBe(
-      '(ok (list u1 u2 u3))'
-    );
+    expect(cvToString(hexToCV(DECODER_EXAMPLES[2].hex))).toBe('(ok (list u1 u2 u3))');
   });
 });

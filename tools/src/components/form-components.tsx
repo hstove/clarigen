@@ -13,8 +13,8 @@ import { Label } from '@/components/ui/label';
 export function SubscribeButton({ label }: { label: string }) {
   const form = useFormContext();
   return (
-    <form.Subscribe selector={(state) => state.isSubmitting}>
-      {(isSubmitting) => (
+    <form.Subscribe selector={state => state.isSubmitting}>
+      {isSubmitting => (
         <Button disabled={isSubmitting} type="submit">
           {label}
         </Button>
@@ -23,14 +23,10 @@ export function SubscribeButton({ label }: { label: string }) {
   );
 }
 
-function ErrorMessages({
-  errors,
-}: {
-  errors: Array<string | { message: string }>;
-}) {
+function ErrorMessages({ errors }: { errors: Array<string | { message: string }> }) {
   return (
     <>
-      {errors.map((error) => (
+      {errors.map(error => (
         <div
           className="mt-1 font-bold text-red-500"
           key={typeof error === 'string' ? error : error.message}
@@ -42,15 +38,9 @@ function ErrorMessages({
   );
 }
 
-export function TextField({
-  label,
-  placeholder,
-}: {
-  label: string;
-  placeholder?: string;
-}) {
+export function TextField({ label, placeholder }: { label: string; placeholder?: string }) {
   const field = useFieldContext<string>();
-  const errors = useStore(field.store, (state) => state.meta.errors);
+  const errors = useStore(field.store, state => state.meta.errors);
 
   return (
     <div>
@@ -59,7 +49,7 @@ export function TextField({
       </Label>
       <Input
         onBlur={field.handleBlur}
-        onChange={(e) => field.handleChange(e.target.value)}
+        onChange={e => field.handleChange(e.target.value)}
         placeholder={placeholder}
         value={field.state.value}
       />
@@ -69,15 +59,9 @@ export function TextField({
   );
 }
 
-export function TextArea({
-  label,
-  rows = 3,
-}: {
-  label: string;
-  rows?: number;
-}) {
+export function TextArea({ label, rows = 3 }: { label: string; rows?: number }) {
   const field = useFieldContext<string>();
-  const errors = useStore(field.store, (state) => state.meta.errors);
+  const errors = useStore(field.store, state => state.meta.errors);
 
   return (
     <div>
@@ -87,7 +71,7 @@ export function TextArea({
       <ShadcnTextarea
         id={label}
         onBlur={field.handleBlur}
-        onChange={(e) => field.handleChange(e.target.value)}
+        onChange={e => field.handleChange(e.target.value)}
         rows={rows}
         value={field.state.value}
       />
@@ -106,13 +90,13 @@ export function Select({
   placeholder?: string;
 }) {
   const field = useFieldContext<string>();
-  const errors = useStore(field.store, (state) => state.meta.errors);
+  const errors = useStore(field.store, state => state.meta.errors);
 
   return (
     <div>
       <ShadcnSelect.Select
         name={field.name}
-        onValueChange={(value) => field.handleChange(value ?? '')}
+        onValueChange={value => field.handleChange(value ?? '')}
         value={field.state.value}
       >
         <ShadcnSelect.SelectTrigger className="w-full">
@@ -121,7 +105,7 @@ export function Select({
         <ShadcnSelect.SelectContent>
           <ShadcnSelect.SelectGroup>
             <ShadcnSelect.SelectLabel>{label}</ShadcnSelect.SelectLabel>
-            {values.map((value) => (
+            {values.map(value => (
               <ShadcnSelect.SelectItem key={value.value} value={value.value}>
                 {value.label}
               </ShadcnSelect.SelectItem>
@@ -137,7 +121,7 @@ export function Select({
 
 export function Slider({ label }: { label: string }) {
   const field = useFieldContext<number>();
-  const errors = useStore(field.store, (state) => state.meta.errors);
+  const errors = useStore(field.store, state => state.meta.errors);
 
   return (
     <div>
@@ -148,7 +132,7 @@ export function Slider({ label }: { label: string }) {
         id={label}
         onBlur={field.handleBlur}
         // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
-        onValueChange={(value) => field.handleChange(value[0]!)}
+        onValueChange={value => field.handleChange(value[0]!)}
         value={[field.state.value]}
       />
       {/** biome-ignore lint/nursery/noLeakedRender: ignored using `--suppress` */}
@@ -159,7 +143,7 @@ export function Slider({ label }: { label: string }) {
 
 export function Switch({ label }: { label: string }) {
   const field = useFieldContext<boolean>();
-  const errors = useStore(field.store, (state) => state.meta.errors);
+  const errors = useStore(field.store, state => state.meta.errors);
 
   return (
     <div>
@@ -168,7 +152,7 @@ export function Switch({ label }: { label: string }) {
           checked={field.state.value}
           id={label}
           onBlur={field.handleBlur}
-          onCheckedChange={(checked) => field.handleChange(checked)}
+          onCheckedChange={checked => field.handleChange(checked)}
         />
         <Label htmlFor={label}>{label}</Label>
       </div>

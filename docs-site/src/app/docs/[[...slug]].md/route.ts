@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 
 export async function GET(request: NextRequest) {
   const slug = request.nextUrl.pathname.split('/').slice(2).join('/');
-  const doc = allDocs.find((doc) => doc.slugAsParams === slug);
+  const doc = allDocs.find(doc => doc.slugAsParams === slug);
   if (!doc) {
     return new Response('Not found', { status: 404 });
   }

@@ -12,9 +12,7 @@ import Link from 'next/link';
 import { Tabs, TabsList, TabsContent, TabsTrigger } from '@/components/ui/tabs';
 
 export default async function Home() {
-  const _counterExample = allExamples.find(
-    (ex) => ex.slug === 'counter-contract'
-  );
+  const _counterExample = allExamples.find(ex => ex.slug === 'counter-contract');
   return (
     <div className="container relative">
       <PageHeader>
@@ -22,17 +20,11 @@ export default async function Home() {
         <PageHeaderHeading>Build Clarity apps with ease</PageHeaderHeading>
         <PageHeaderDescription>
           Clarigen automatically generates{' '}
-          <span className="font-bold">
-            TypeScript code for your Clarity contracts
-          </span>
-          .
+          <span className="font-bold">TypeScript code for your Clarity contracts</span>.
         </PageHeaderDescription>
         <PageHeaderDescription>
           Whether you&apos;re writing tests our building a web app,{' '}
-          <span className="font-bold text-green-600">
-            Clarigen makes development a breeze
-          </span>
-          .
+          <span className="font-bold text-green-600">Clarigen makes development a breeze</span>.
         </PageHeaderDescription>
         <PageActions>
           <Button asChild size="lg">

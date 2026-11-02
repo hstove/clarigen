@@ -22,19 +22,17 @@ export async function generateDocs({
   }
   const docsPathExt = extname(docsBase);
   if (docsPathExt) {
-    log.warn(
-      `Docs output path ('${docsBase}') looks like a file - it needs to be a directory.`
-    );
+    log.warn(`Docs output path ('${docsBase}') looks like a file - it needs to be a directory.`);
   }
   const excluded: Record<string, boolean> = Object.fromEntries(
-    (docs.exclude || []).map((e) => [e, true])
+    (docs.exclude || []).map(e => [e, true])
   );
   log.debug(`Generating docs at path \`${docsBase}\``);
   // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
   // biome-ignore lint/suspicious/noNonNullAssertedOptionalChain: ignored using `--suppress`
   const docsBaseFolder = config.outputResolve(OutputType.Docs, './')?.[0]!;
   const paths = await Promise.all(
-    session.contracts.map(async (contract) => {
+    session.contracts.map(async contract => {
       const name = getContractName(contract.contract_id, false);
       if (excluded[name]) return null;
       const docFile = `${name}.md`;
@@ -47,9 +45,7 @@ export async function generateDocs({
         contractFile = relative(docsBaseFolder, contractPathFull);
       } else {
         // TODO: probably a requirement
-        log.debug(
-          `Couldn't find contract file from Clarinet.toml for contract ${name}`
-        );
+        log.debug(`Couldn't find contract file from Clarinet.toml for contract ${name}`);
       }
 
       const md = generateMarkdown({ contract, contractFile });

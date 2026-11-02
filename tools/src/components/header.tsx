@@ -1,11 +1,9 @@
 import { ClientOnly, Link } from '@tanstack/react-router';
 import { lazy, Suspense } from 'react';
 
-const WalletButton = lazy(() =>
-  import('./wallet-button').then((m) => ({ default: m.WalletButton }))
-);
+const WalletButton = lazy(() => import('./wallet-button').then(m => ({ default: m.WalletButton })));
 const HiroApiKeyButton = lazy(() =>
-  import('./hiro-api-key-button').then((m) => ({ default: m.HiroApiKeyButton }))
+  import('./hiro-api-key-button').then(m => ({ default: m.HiroApiKeyButton }))
 );
 
 export function Header() {
@@ -43,18 +41,10 @@ export function Header() {
         </nav>
         <div className="ml-auto flex items-center gap-1">
           <ClientOnly
-            fallback={
-              <span className="font-mono text-muted-foreground text-xs">
-                connect
-              </span>
-            }
+            fallback={<span className="font-mono text-muted-foreground text-xs">connect</span>}
           >
             <Suspense
-              fallback={
-                <span className="font-mono text-muted-foreground text-xs">
-                  connect
-                </span>
-              }
+              fallback={<span className="font-mono text-muted-foreground text-xs">connect</span>}
             >
               <HiroApiKeyButton />
               <WalletButton />

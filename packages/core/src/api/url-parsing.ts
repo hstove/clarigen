@@ -1,8 +1,4 @@
-import {
-  type ClarityValue,
-  responseOkCV,
-  responseErrorCV,
-} from '@stacks/transactions';
+import { type ClarityValue, responseOkCV, responseErrorCV } from '@stacks/transactions';
 import {
   type ClarityAbiType,
   type ClarityAbiArg,
@@ -24,9 +20,7 @@ export type ResponseFormValue = {
   err?: unknown;
 };
 
-export function isOptionalFormValue(
-  value: unknown
-): value is OptionalFormValue {
+export function isOptionalFormValue(value: unknown): value is OptionalFormValue {
   return (
     typeof value === 'object' &&
     value !== null &&
@@ -35,9 +29,7 @@ export function isOptionalFormValue(
   );
 }
 
-export function isResponseFormValue(
-  value: unknown
-): value is ResponseFormValue {
+export function isResponseFormValue(value: unknown): value is ResponseFormValue {
   return (
     typeof value === 'object' &&
     value !== null &&
@@ -54,10 +46,7 @@ export function isResponseFormValue(
  */
 
 // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: ignored using `--suppress`
-export function formValueToParseable(
-  value: unknown,
-  type: ClarityAbiType
-): unknown {
+export function formValueToParseable(value: unknown, type: ClarityAbiType): unknown {
   if (isClarityAbiOptional(type)) {
     if (isOptionalFormValue(value)) {
       if (value.isNone) {
@@ -93,7 +82,7 @@ export function formValueToParseable(
     if (!Array.isArray(value)) {
       return value;
     }
-    return value.map((item) => formValueToParseable(item, type.list.type));
+    return value.map(item => formValueToParseable(item, type.list.type));
   }
 
   return value;
@@ -102,21 +91,14 @@ export function formValueToParseable(
 /**
  * Converts a single form value to a ClarityValue using the ABI type.
  */
-export function formValueToCV(
-  value: unknown,
-  type: ClarityAbiType
-): ClarityValue {
+export function formValueToCV(value: unknown, type: ClarityAbiType): ClarityValue {
   // Handle response types directly since parseToCV doesn't support them
   if (isClarityAbiResponse(type)) {
     if (!isResponseFormValue(value)) {
-      throw new Error(
-        'Response type requires { isOk: boolean, value: unknown } form value'
-      );
+      throw new Error('Response type requires { isOk: boolean, value: unknown } form value');
     }
     const innerType = value.isOk ? type.response.ok : type.response.error;
-    const innerValue = value.isOk
-      ? (value.ok ?? value.value)
-      : (value.err ?? value.value);
+    const innerValue = value.isOk ? (value.ok ?? value.value) : (value.err ?? value.value);
     const innerCV = formValueToCV(innerValue, innerType);
     return value.isOk ? responseOkCV(innerCV) : responseErrorCV(innerCV);
   }
@@ -133,10 +115,7 @@ export function formValueToCV(
  */
 
 // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: ignored using `--suppress`
-export function parseQueryValue(
-  value: string | undefined,
-  type: ClarityAbiType
-): unknown {
+export function parseQueryValue(value: string | undefined, type: ClarityAbiType): unknown {
   if (value === undefined || value === '') {
     if (isClarityAbiOptional(type)) return { isNone: true, value: null };
     if (isClarityAbiList(type)) return [];
@@ -177,7 +156,7 @@ export function queryToFunctionArgs(
   query: Record<string, string | string[] | undefined>,
   args: ClarityAbiArg[]
 ): ClarityValue[] {
-  return args.map((arg) => {
+  return args.map(arg => {
     const rawValue = query[arg.name];
     const value = Array.isArray(rawValue) ? rawValue[0] : rawValue;
     const formValue = parseQueryValue(value, arg.type);

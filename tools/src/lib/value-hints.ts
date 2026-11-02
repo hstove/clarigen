@@ -40,11 +40,7 @@ const OP_16 = 0x60;
 const BYTE = 256;
 
 /** Returns [dataStart, dataLength] for a push opcode, or null. */
-function pushData(
-  bytes: Uint8Array,
-  op: number,
-  next: number
-): [number, number] | null {
+function pushData(bytes: Uint8Array, op: number, next: number): [number, number] | null {
   if (op >= 1 && op <= OP_PUSHBYTES_MAX) return [next, op];
   if (op === OP_PUSHDATA1) return [next + 1, bytes[next] ?? Number.NaN];
   if (op === OP_PUSHDATA2) {
@@ -106,18 +102,14 @@ function nestedClarity(bytes: Uint8Array): string | null {
 export function bufferHints(bufferHex: string): BufferHint[] {
   if (bufferHex.length === 0) return [];
   const bytes = hexToBytes(bufferHex);
-  const hints: BufferHint[] = [
-    { label: 'length', value: `${bytes.length} bytes` },
-  ];
+  const hints: BufferHint[] = [{ label: 'length', value: `${bytes.length} bytes` }];
 
   const script = disassembleScript(bytes);
   if (script) hints.push({ label: 'btc script', value: script });
 
   const isPubkey =
-    bytes.length === COMPRESSED_PUBKEY_BYTES &&
-    (bytes[0] === 0x02 || bytes[0] === 0x03);
-  if (isPubkey)
-    hints.push({ label: 'looks like', value: 'compressed public key' });
+    bytes.length === COMPRESSED_PUBKEY_BYTES && (bytes[0] === 0x02 || bytes[0] === 0x03);
+  if (isPubkey) hints.push({ label: 'looks like', value: 'compressed public key' });
   if (bytes.length === HASH160_BYTES) {
     hints.push({ label: 'looks like', value: 'hash160 (20 bytes)' });
   }
@@ -147,10 +139,7 @@ export function scaleAmount(value: bigint, decimals: number): string {
   const abs = negative ? -value : value;
   const base = 10n ** BigInt(decimals);
   const whole = groupDigits(abs / base);
-  const fraction = (abs % base)
-    .toString()
-    .padStart(decimals, '0')
-    .replace(TRAILING_ZEROS, '');
+  const fraction = (abs % base).toString().padStart(decimals, '0').replace(TRAILING_ZEROS, '');
   return `${negative ? '-' : ''}${whole}${fraction ? `.${fraction}` : ''}`;
 }
 

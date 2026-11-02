@@ -34,7 +34,7 @@ const form = useAppForm({ defaultValues, onSubmit });
 - Server logs: `tail -n 100 tmp/dev-server.log`
 - Production Cloudflare account: Personal (`82d6b61d18e47412d942d6e35208c71d`)
 - Production Alchemy profile and stage: `personal` / `prod`
-- Production deploy: `bun run deploy` (targets Worker `clarigen-tools` at `tools.clarigen.dev`)
+- Production deploy: `pnpm run deploy` (targets Worker `clarigen-tools` at `tools.clarigen.dev`)
 - UI design: See `./UI-DESIGN.md`
 - Debugging: Use playwriter tool to interact with the running app
 - For debugging, these are some good paths to try:

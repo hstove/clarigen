@@ -8,9 +8,7 @@ export type NETWORK = typeof Network.infer;
  * Detect network from Stacks address prefix.
  * SP... = mainnet, ST... = testnet/devnet
  */
-export function detectNetworkFromAddress(
-  address: string
-): 'mainnet' | 'testnet' | null {
+export function detectNetworkFromAddress(address: string): 'mainnet' | 'testnet' | null {
   const prefix = address.substring(0, 2).toUpperCase();
   if (prefix === 'SP') return 'mainnet';
   if (prefix === 'ST') return 'testnet';

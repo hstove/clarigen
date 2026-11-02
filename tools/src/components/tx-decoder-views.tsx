@@ -73,12 +73,9 @@ function Warnings({ warnings }: { warnings: Warning[] }) {
   if (warnings.length === 0) return null;
   return (
     <ul className="space-y-2">
-      {warnings.map((warning) => (
+      {warnings.map(warning => (
         <li
-          className={cn(
-            'border px-3 py-2 font-mono text-xs',
-            WARNING_STYLES[warning.level]
-          )}
+          className={cn('border px-3 py-2 font-mono text-xs', WARNING_STYLES[warning.level])}
           key={warning.message}
         >
           {warning.level === 'info' ? 'i' : '!'} {warning.message}
@@ -117,11 +114,7 @@ export function describePostCondition(pc: PostCondition): string {
   return `${who} ${NFT_CONDITIONS[pc.condition]} ${pc.asset} ${cvToString(pc.assetId)}`;
 }
 
-function PostConditionList({
-  postConditions,
-}: {
-  postConditions: PostCondition[];
-}) {
+function PostConditionList({ postConditions }: { postConditions: PostCondition[] }) {
   if (postConditions.length === 0) {
     return <p className="font-mono text-muted-foreground text-xs">none</p>;
   }
@@ -168,21 +161,10 @@ function PostConditionsPanel({
   );
 }
 
-function ArgsList({
-  call,
-  network,
-}: {
-  call: ContractCallInfo;
-  network: TxNetwork | null;
-}) {
-  const abi = useContractFunction(
-    network ?? 'mainnet',
-    call.contractId,
-    call.functionName
-  );
+function ArgsList({ call, network }: { call: ContractCallInfo; network: TxNetwork | null }) {
+  const abi = useContractFunction(network ?? 'mainnet', call.contractId, call.functionName);
   const abiArgs = network ? abi.data?.args : undefined;
-  const countMismatch =
-    abiArgs !== undefined && abiArgs.length !== call.args.length;
+  const countMismatch = abiArgs !== undefined && abiArgs.length !== call.args.length;
 
   return (
     <div className="space-y-4">
@@ -238,9 +220,7 @@ function ArgRow({
           <span className="text-muted-foreground">{index}</span>
           <span className="font-medium">{name ?? `arg ${index}`}</span>
           {typeString ? (
-            <span className="text-[10px] text-muted-foreground">
-              {typeString}
-            </span>
+            <span className="text-[10px] text-muted-foreground">{typeString}</span>
           ) : null}
         </div>
         <CopyButton text={cvToString(value)} />
@@ -289,13 +269,7 @@ function ContractCallPanel({
   );
 }
 
-function PayloadPanel({
-  payload,
-  network,
-}: {
-  payload: TxPayload;
-  network: TxNetwork | null;
-}) {
+function PayloadPanel({ payload, network }: { payload: TxPayload; network: TxNetwork | null }) {
   switch (payload.kind) {
     case 'contract-call':
       return <ContractCallPanel call={payload} network={network} />;
@@ -305,10 +279,7 @@ function PayloadPanel({
           <Fields
             rows={[
               ['recipient', payload.recipient],
-              [
-                'amount',
-                `${formatStx(payload.amount)} (${groupDigits(payload.amount)} µSTX)`,
-              ],
+              ['amount', `${formatStx(payload.amount)} (${groupDigits(payload.amount)} µSTX)`],
               ['memo', payload.memo ? `"${payload.memo}"` : '—'],
             ]}
           />
@@ -316,15 +287,10 @@ function PayloadPanel({
       );
     case 'smart-contract':
       return (
-        <Panel
-          aside={<CopyButton text={payload.code} />}
-          title={`deploy ${payload.contractName}`}
-        >
+        <Panel aside={<CopyButton text={payload.code} />} title={`deploy ${payload.contractName}`}>
           <div className="space-y-3">
             {payload.clarityVersion === null ? null : (
-              <Fields
-                rows={[['clarity version', String(payload.clarityVersion)]]}
-              />
+              <Fields rows={[['clarity version', String(payload.clarityVersion)]]} />
             )}
             <pre className="max-h-96 overflow-auto bg-muted/20 p-3 font-mono text-xs leading-5">
               {payload.code}
@@ -350,10 +316,7 @@ function spenderRows(prefix: string, spender: Spender): [string, ReactNode][] {
   return [
     [`${prefix} address`, spender.address],
     [`${prefix} nonce`, spender.nonce.toString()],
-    [
-      `${prefix} fee`,
-      `${formatStx(spender.fee)} (${groupDigits(spender.fee)} µSTX)`,
-    ],
+    [`${prefix} fee`, `${formatStx(spender.fee)} (${groupDigits(spender.fee)} µSTX)`],
     [`${prefix} auth`, `${spender.hashMode} · ${signatures}`],
   ];
 }
@@ -374,18 +337,14 @@ export function TransactionView({ tx }: { tx: DecodedTransaction }) {
         <Fields rows={rows} />
       </Panel>
       <PayloadPanel network={tx.network} payload={tx.payload} />
-      <PostConditionsPanel
-        mode={tx.postConditionMode}
-        postConditions={tx.postConditions}
-      />
+      <PostConditionsPanel mode={tx.postConditionMode} postConditions={tx.postConditions} />
     </div>
   );
 }
 
 function CallRequestView({ request }: { request: CallRequest }) {
   const network =
-    request.network ??
-    detectNetworkFromAddress(request.call.contractId.split('.')[0] ?? '');
+    request.network ?? detectNetworkFromAddress(request.call.contractId.split('.')[0] ?? '');
   return (
     <div className="space-y-4">
       <Warnings warnings={callRequestWarnings(request)} />
@@ -410,18 +369,14 @@ function TxidView({ txid }: { txid: string }) {
   if (query.isPending) {
     return (
       <Panel title="txid">
-        <p className="font-mono text-muted-foreground text-xs">
-          fetching {txid}…
-        </p>
+        <p className="font-mono text-muted-foreground text-xs">fetching {txid}…</p>
       </Panel>
     );
   }
   if (query.isError) {
     return (
       <Panel title="txid">
-        <p className="font-mono text-destructive text-xs">
-          × {query.error.message}
-        </p>
+        <p className="font-mono text-destructive text-xs">× {query.error.message}</p>
       </Panel>
     );
   }
@@ -445,10 +400,7 @@ export function DecodedItemView({ item }: { item: DecodedItem }) {
       return <TxidView txid={item.txid} />;
     case 'clarity':
       return (
-        <Panel
-          aside={<CopyButton text={cvToString(item.value)} />}
-          title="clarity value"
-        >
+        <Panel aside={<CopyButton text={cvToString(item.value)} />} title="clarity value">
           <div className="space-y-3">
             <ClarityValueView value={item.value} />
             <pre className="overflow-x-auto whitespace-pre-wrap break-all border-border border-t pt-3 font-mono text-xs leading-6">
@@ -464,9 +416,7 @@ export function DecodedItemView({ item }: { item: DecodedItem }) {
         </Panel>
       );
     case 'post-conditions':
-      return (
-        <PostConditionsPanel mode={null} postConditions={item.postConditions} />
-      );
+      return <PostConditionsPanel mode={null} postConditions={item.postConditions} />;
     default:
       return null;
   }

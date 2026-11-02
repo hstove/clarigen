@@ -35,9 +35,7 @@ function Example({
       data-slot="example"
       {...props}
     >
-      <div className="px-1.5 py-2 font-medium text-muted-foreground text-xs">
-        {title}
-      </div>
+      <div className="px-1.5 py-2 font-medium text-muted-foreground text-xs">{title}</div>
       <div
         className={cn(
           "flex min-w-0 flex-1 flex-col items-start gap-6 border border-dashed bg-background p-4 text-foreground sm:p-6 *:[div:not([class*='w-'])]:w-full",

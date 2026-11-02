@@ -12,16 +12,15 @@
     "node": ">=10"
   },
   "scripts": {
-    "start": "tsdown --watch",
-    "dev": "tsdown --watch",
-    "build": "tsdown",
+    "start": "vp pack --watch",
+    "dev": "vp pack --watch",
+    "build": "vp pack",
     "test": "vitest run",
-    "lint": "eslint \"src/**/*.{ts,tsx}\" && prettier --check \"./**/*.{ts,js}\"",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" && vp fmt --check \"./**/*.{ts,js}\"",
     "typecheck": "tsc --noEmit -p tsconfig-test.json",
     "copy-types": "node copy-types.js",
-    "publish": "bun publish"
+    "publish": "pnpm publish"
   },
-  "prettier": "@stacks/prettier-config",
   "name": "@clarigen/core",
   "author": "Hank Stoever",
   "dependencies": {
@@ -38,12 +37,12 @@
   },
   "exports": {
     ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
     },
     "./deployment": {
-      "require": "./dist/deployment.cjs",
-      "import": "./dist/deployment.mjs"
+      "import": "./dist/deployment.mjs",
+      "require": "./dist/deployment.cjs"
     },
     "./package.json": "./package.json"
   }

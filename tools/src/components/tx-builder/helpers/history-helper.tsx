@@ -8,13 +8,7 @@ type HistoryHelperProps = {
   field: FocusedField;
 };
 
-function HistoryValueButton({
-  value,
-  onApply,
-}: {
-  value: string;
-  onApply: (v: string) => void;
-}) {
+function HistoryValueButton({ value, onApply }: { value: string; onApply: (v: string) => void }) {
   return (
     <button
       className="w-full truncate border border-border bg-muted/30 px-2 py-1.5 text-left font-mono text-xs transition-colors hover:bg-muted/50"
@@ -44,22 +38,14 @@ function HistorySection({
       </p>
       <div className="space-y-1">
         {values.map((value, index) => (
-          <HistoryValueButton
-            key={`${value}-${index}`}
-            onApply={onApply}
-            value={value}
-          />
+          <HistoryValueButton key={`${value}-${index}`} onApply={onApply} value={value} />
         ))}
       </div>
     </div>
   );
 }
 
-export function HistoryHelper({
-  contractId,
-  functionName,
-  field,
-}: HistoryHelperProps) {
+export function HistoryHelper({ contractId, functionName, field }: HistoryHelperProps) {
   const clarityType = getTypeString(field.type);
   const { contextHistory, typeHistory } = useValueHistory({
     contractId,
@@ -74,10 +60,9 @@ export function HistoryHelper({
 
   // Deduplicate type history - remove values already in context history
   const contextSet = new Set(contextHistory);
-  const filteredTypeHistory = typeHistory.filter((v) => !contextSet.has(v));
+  const filteredTypeHistory = typeHistory.filter(v => !contextSet.has(v));
 
-  const hasHistory =
-    contextHistory.length > 0 || filteredTypeHistory.length > 0;
+  const hasHistory = contextHistory.length > 0 || filteredTypeHistory.length > 0;
 
   if (!hasHistory) {
     return (
@@ -89,11 +74,7 @@ export function HistoryHelper({
 
   return (
     <div className="space-y-4">
-      <HistorySection
-        onApply={handleApply}
-        title="this field"
-        values={contextHistory}
-      />
+      <HistorySection onApply={handleApply} title="this field" values={contextHistory} />
       <HistorySection
         onApply={handleApply}
         title={`other ${clarityType}`}

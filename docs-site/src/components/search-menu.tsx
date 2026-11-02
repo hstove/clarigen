@@ -21,12 +21,12 @@ import {
   CommandSeparator,
 } from '@/components/ui/command';
 
-const commandItems = docsSidebar.map((group) => {
+const commandItems = docsSidebar.map(group => {
   const { items, ...rest } = group;
   return {
     items: group.items
-      .map((navItem) => {
-        const doc = allDocs.find((doc) => doc.slug === navItem.href);
+      .map(navItem => {
+        const doc = allDocs.find(doc => doc.slug === navItem.href);
         if (!doc) {
           return null;
           // throw new Error(`Could not find doc for ${navItem.href}`);
@@ -36,7 +36,7 @@ const commandItems = docsSidebar.map((group) => {
           ...navItem,
         };
       })
-      .filter((i) => i !== null),
+      .filter(i => i !== null),
     ...rest,
   };
 });
@@ -50,7 +50,7 @@ export function CommandMenu({ ...props }: DialogProps) {
     const down = (e: KeyboardEvent) => {
       if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
-        setOpen((open) => !open);
+        setOpen(open => !open);
       }
     };
 
@@ -108,10 +108,10 @@ export function CommandMenu({ ...props }: DialogProps) {
         <CommandInput placeholder="Type a command or search..." />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
-          {commandItems.map((group) => (
+          {commandItems.map(group => (
             <React.Fragment key={group.title}>
               <CommandGroup heading={group.title}>
-                {group.items.map((navItem) =>
+                {group.items.map(navItem =>
                   navItem === null ? null : (
                     <CommandItem
                       key={navItem.href}

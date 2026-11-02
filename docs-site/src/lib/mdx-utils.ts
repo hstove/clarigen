@@ -1,7 +1,5 @@
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import rehypePrettyCode, {
-  type Options as PrettyCodeOptions,
-} from 'rehype-pretty-code';
+import rehypePrettyCode, { type Options as PrettyCodeOptions } from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import { codeImport } from 'remark-code-import';
 import remarkGfm from 'remark-gfm';
@@ -47,8 +45,8 @@ export const rehypePlugins = [
     },
   ],
   // @ts-expect-error
-  () => (tree) => {
-    visit(tree, (node) => {
+  () => tree => {
+    visit(tree, node => {
       if (node?.type === 'element' && node?.tagName === 'pre') {
         const [codeEl] = node.children;
         if (codeEl.tagName !== 'code') {
@@ -72,8 +70,8 @@ export const rehypePlugins = [
   },
   [rehypePrettyCode, rehypePrettyCodeOptions],
   // @ts-expect-error
-  () => (tree) => {
-    visit(tree, (node) => {
+  () => tree => {
+    visit(tree, node => {
       if (node?.type === 'element' && node?.tagName === 'figure') {
         if (!('data-rehype-pretty-code-figure' in node.properties)) {
           return;
@@ -84,8 +82,7 @@ export const rehypePlugins = [
           return;
         }
 
-        preElement.properties.__withMeta__ =
-          node.children.at(0).tagName === 'div';
+        preElement.properties.__withMeta__ = node.children.at(0).tagName === 'div';
         preElement.properties.__rawString__ = node.__rawString__;
 
         if (node.__src__) {
@@ -117,17 +114,11 @@ export const rehypePlugins = [
 export async function compileMdx(markdown: string) {
   const result = await bundleMDX({
     source: markdown,
-    mdxOptions: (options) => {
+    mdxOptions: options => {
       // @ts-expect-error
-      options.remarkPlugins = [
-        ...(options.remarkPlugins ?? []),
-        ...remarkPlugins,
-      ];
+      options.remarkPlugins = [...(options.remarkPlugins ?? []), ...remarkPlugins];
       // @ts-expect-error
-      options.rehypePlugins = [
-        ...(options.rehypePlugins ?? []),
-        ...rehypePlugins,
-      ];
+      options.rehypePlugins = [...(options.rehypePlugins ?? []), ...rehypePlugins];
       return options;
     },
   });

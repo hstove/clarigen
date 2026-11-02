@@ -3,12 +3,7 @@ import type { ClarityAbiType } from '@clarigen/core';
 import { useFieldContext } from '@/hooks/form-context';
 import { useFieldFocusHandlers } from '@/hooks/use-focused-field';
 import { Input } from '@/components/ui/input';
-import {
-  Field,
-  FieldLabel,
-  FieldError,
-  FieldDescription,
-} from '@/components/ui/field';
+import { Field, FieldLabel, FieldError, FieldDescription } from '@/components/ui/field';
 
 type NumberFieldProps = {
   name: string;
@@ -18,18 +13,10 @@ type NumberFieldProps = {
   type: ClarityAbiType;
 };
 
-export function NumberField({
-  name,
-  label,
-  signed,
-  disabled,
-  type,
-}: NumberFieldProps) {
+export function NumberField({ name, label, signed, disabled, type }: NumberFieldProps) {
   const field = useFieldContext<string>();
-  const errors = useStore(field.store, (state) => state.meta.errors);
-  const { onFocus } = useFieldFocusHandlers(name, type, (value) =>
-    field.handleChange(value)
-  );
+  const errors = useStore(field.store, state => state.meta.errors);
+  const { onFocus } = useFieldFocusHandlers(name, type, value => field.handleChange(value));
 
   return (
     <Field>
@@ -43,7 +30,7 @@ export function NumberField({
         id={name}
         inputMode="numeric"
         onBlur={field.handleBlur}
-        onChange={(e) => field.handleChange(e.target.value)}
+        onChange={e => field.handleChange(e.target.value)}
         onFocus={onFocus}
         placeholder={signed ? 'int' : 'uint'}
         value={field.state.value}
@@ -53,9 +40,7 @@ export function NumberField({
       </FieldDescription>
       {field.state.meta.isTouched && errors.length > 0 && (
         <FieldError className="font-mono">
-          {errors
-            .map((e) => (typeof e === 'string' ? e : e.message))
-            .join(', ')}
+          {errors.map(e => (typeof e === 'string' ? e : e.message)).join(', ')}
         </FieldError>
       )}
     </Field>

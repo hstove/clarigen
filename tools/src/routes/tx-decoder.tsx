@@ -14,7 +14,7 @@ export const Route = createFileRoute('/tx-decoder')({
 });
 
 const NEWLINES = /\s*\n\s*/g;
-const MODE_VALUES = DECODE_MODES.map((mode) => mode.value);
+const MODE_VALUES = DECODE_MODES.map(mode => mode.value);
 
 const ITEM_LABELS: Record<DecodedItem['kind'], string> = {
   transaction: 'transaction',
@@ -27,10 +27,7 @@ const ITEM_LABELS: Record<DecodedItem['kind'], string> = {
 };
 
 function TxDecoderPage() {
-  const [urlInput, setUrlInput] = useQueryState(
-    'input',
-    parseAsString.withDefault('')
-  );
+  const [urlInput, setUrlInput] = useQueryState('input', parseAsString.withDefault(''));
   // The router drops newlines from the URL, so the textarea keeps its own copy
   const [input, setInputState] = useState(urlInput);
   const setInput = (value: string) => {
@@ -63,9 +60,8 @@ function TxDecoderPage() {
           Know what you're signing.
         </h1>
         <p className="max-w-2xl text-muted-foreground text-sm leading-6">
-          Paste a serialized transaction, a txid, a single Clarity arg, a
-          post-condition, or a <code>stx_callContract</code> request. Multiple
-          values can go one per line.
+          Paste a serialized transaction, a txid, a single Clarity arg, a post-condition, or a{' '}
+          <code>stx_callContract</code> request. Multiple values can go one per line.
         </p>
       </section>
 
@@ -73,7 +69,7 @@ function TxDecoderPage() {
         <div className="flex flex-wrap items-center justify-between gap-3 border-border border-b bg-muted/30 px-4 py-3">
           <h2 className="font-medium font-mono text-sm">input</h2>
           <div className="flex flex-wrap gap-3">
-            {TX_DECODER_EXAMPLES.map((example) => (
+            {TX_DECODER_EXAMPLES.map(example => (
               <button
                 className="font-mono text-[10px] text-muted-foreground hover:text-primary hover:underline"
                 key={example.label}
@@ -94,27 +90,21 @@ function TxDecoderPage() {
               hex, txid, or JSON
             </Label>
             <div className="flex items-center gap-2">
-              <Label
-                className="font-mono text-[10px] text-muted-foreground"
-                htmlFor="decode-as"
-              >
+              <Label className="font-mono text-[10px] text-muted-foreground" htmlFor="decode-as">
                 decode as
               </Label>
               <Select.Select
-                onValueChange={(value) => {
-                  const match = DECODE_MODES.find((m) => m.value === value);
+                onValueChange={value => {
+                  const match = DECODE_MODES.find(m => m.value === value);
                   if (match) setMode(match.value);
                 }}
                 value={mode}
               >
-                <Select.SelectTrigger
-                  className="h-7 w-44 font-mono text-xs"
-                  id="decode-as"
-                >
+                <Select.SelectTrigger className="h-7 w-44 font-mono text-xs" id="decode-as">
                   <Select.SelectValue />
                 </Select.SelectTrigger>
                 <Select.SelectContent>
-                  {DECODE_MODES.map((option) => (
+                  {DECODE_MODES.map(option => (
                     <Select.SelectItem key={option.value} value={option.value}>
                       {option.label}
                     </Select.SelectItem>
@@ -126,7 +116,7 @@ function TxDecoderPage() {
           <Textarea
             className="min-h-32 font-mono text-xs"
             id="tx-input"
-            onChange={(event) => {
+            onChange={event => {
               setInput(event.target.value);
             }}
             placeholder="0x00000000010400…"
@@ -150,14 +140,10 @@ function TxDecoderPage() {
             <div className="flex flex-wrap items-baseline gap-3 font-mono text-[10px] text-muted-foreground uppercase tracking-wider">
               {multiple ? <span>#{index}</span> : null}
               {entry.status === 'ok' ? (
-                <span className="text-primary">
-                  {ITEM_LABELS[entry.item.kind]}
-                </span>
+                <span className="text-primary">{ITEM_LABELS[entry.item.kind]}</span>
               ) : null}
               {multiple ? (
-                <span className="truncate normal-case tracking-normal">
-                  {entry.source}
-                </span>
+                <span className="truncate normal-case tracking-normal">{entry.source}</span>
               ) : null}
             </div>
           ) : null}

@@ -4,13 +4,7 @@ import { ClarityType, type ClarityValue } from '@stacks/transactions';
 import { cn } from '@/lib/utils';
 import { bufferHints, integerHints } from '@/lib/value-hints';
 
-function TypeBadge({
-  children,
-  className,
-}: {
-  children: string;
-  className?: string;
-}) {
+function TypeBadge({ children, className }: { children: string; className?: string }) {
   return (
     <span
       className={cn(
@@ -38,21 +32,17 @@ function Primitive({
     <div className="space-y-1">
       <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
         <TypeBadge>{type}</TypeBadge>
-        <span className={cn('break-all font-mono text-xs', valueClassName)}>
-          {value}
-        </span>
+        <span className={cn('break-all font-mono text-xs', valueClassName)}>{value}</span>
       </div>
       {hints.length > 0 ? (
         <ul className="space-y-0.5 border-border border-l pl-3">
-          {hints.map((hint) => (
+          {hints.map(hint => (
             <li
               className="break-all font-mono text-[10px] text-muted-foreground"
               key={`${hint.label}:${hint.value}`}
             >
               {hint.label ? (
-                <span className="mr-2 uppercase tracking-wider">
-                  {hint.label}
-                </span>
+                <span className="mr-2 uppercase tracking-wider">{hint.label}</span>
               ) : null}
               <span className="text-foreground/80">{hint.value}</span>
             </li>
@@ -64,7 +54,7 @@ function Primitive({
 }
 
 function numberHints(value: bigint) {
-  return integerHints(value).map((hint) => ({ value: hint }));
+  return integerHints(value).map(hint => ({ value: hint }));
 }
 
 function Nested({
@@ -83,9 +73,7 @@ function Nested({
       <div className="flex items-center gap-2 border-border border-b bg-muted/30 px-3 py-1.5">
         <TypeBadge className={typeClassName}>{type}</TypeBadge>
         {count !== undefined ? (
-          <span className="font-mono text-[10px] text-muted-foreground">
-            {count}
-          </span>
+          <span className="font-mono text-[10px] text-muted-foreground">{count}</span>
         ) : null}
       </div>
       <div className="p-3">{children}</div>
@@ -97,20 +85,10 @@ export function ClarityValueView({ value }: { value: ClarityValue }) {
   switch (value.type) {
     case ClarityType.BoolTrue:
       return (
-        <Primitive
-          type="bool"
-          value="true"
-          valueClassName="text-green-600 dark:text-green-500"
-        />
+        <Primitive type="bool" value="true" valueClassName="text-green-600 dark:text-green-500" />
       );
     case ClarityType.BoolFalse:
-      return (
-        <Primitive
-          type="bool"
-          value="false"
-          valueClassName="text-destructive"
-        />
-      );
+      return <Primitive type="bool" value="false" valueClassName="text-destructive" />;
     case ClarityType.Int:
       return (
         <Primitive
@@ -129,11 +107,7 @@ export function ClarityValueView({ value }: { value: ClarityValue }) {
       );
     case ClarityType.Buffer:
       return (
-        <Primitive
-          hints={bufferHints(value.value)}
-          type="buffer"
-          value={`0x${value.value}`}
-        />
+        <Primitive hints={bufferHints(value.value)} type="buffer" value={`0x${value.value}`} />
       );
     case ClarityType.OptionalNone:
       return <Primitive type="optional" value="none" />;
@@ -167,9 +141,7 @@ export function ClarityValueView({ value }: { value: ClarityValue }) {
             <div className="space-y-2">
               {value.value.map((item, index) => (
                 <div key={`${index}:${cvToString(item)}`}>
-                  <div className="mb-1 font-mono text-[10px] text-muted-foreground">
-                    {index}
-                  </div>
+                  <div className="mb-1 font-mono text-[10px] text-muted-foreground">{index}</div>
                   <ClarityValueView value={item} />
                 </div>
               ))}
@@ -185,14 +157,12 @@ export function ClarityValueView({ value }: { value: ClarityValue }) {
             <p className="font-mono text-muted-foreground text-xs">empty</p>
           ) : (
             <div className="space-y-3">
-              {keys.map((key) => {
+              {keys.map(key => {
                 const inner = value.value[key];
                 if (!inner) return null;
                 return (
                   <div key={key}>
-                    <div className="mb-1 font-mono text-muted-foreground text-xs">
-                      {key}
-                    </div>
+                    <div className="mb-1 font-mono text-muted-foreground text-xs">{key}</div>
                     <ClarityValueView value={inner} />
                   </div>
                 );

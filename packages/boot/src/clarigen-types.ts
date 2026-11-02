@@ -103,10 +103,7 @@ export const contracts = {
         access: 'private',
         args: [{ name: 'namespace', type: { buffer: { length: 20 } } }],
         outputs: { type: 'bool' },
-      } as TypedAbiFunction<
-        [namespace: TypedAbiArg<Uint8Array, 'namespace'>],
-        boolean
-      >,
+      } as TypedAbiFunction<[namespace: TypedAbiArg<Uint8Array, 'namespace'>], boolean>,
       isNonalpha: {
         name: 'is-nonalpha',
         access: 'private',
@@ -134,10 +131,7 @@ export const contracts = {
         ],
         outputs: { type: 'uint128' },
       } as TypedAbiFunction<
-        [
-          a: TypedAbiArg<number | bigint, 'a'>,
-          b: TypedAbiArg<number | bigint, 'b'>,
-        ],
+        [a: TypedAbiArg<number | bigint, 'a'>, b: TypedAbiArg<number | bigint, 'b'>],
         bigint
       >,
       min: {
@@ -149,10 +143,7 @@ export const contracts = {
         ],
         outputs: { type: 'uint128' },
       } as TypedAbiFunction<
-        [
-          a: TypedAbiArg<number | bigint, 'a'>,
-          b: TypedAbiArg<number | bigint, 'b'>,
-        ],
+        [a: TypedAbiArg<number | bigint, 'a'>, b: TypedAbiArg<number | bigint, 'b'>],
         bigint
       >,
       mintOrTransferName_q: {
@@ -193,14 +184,8 @@ export const contracts = {
         outputs: { type: { response: { ok: 'uint128', error: 'int128' } } },
       } as TypedAbiFunction<
         [
-          namespaceLaunchedAt: TypedAbiArg<
-            number | bigint | null,
-            'namespaceLaunchedAt'
-          >,
-          namespaceRevealedAt: TypedAbiArg<
-            number | bigint,
-            'namespaceRevealedAt'
-          >,
+          namespaceLaunchedAt: TypedAbiArg<number | bigint | null, 'namespaceLaunchedAt'>,
+          namespaceRevealedAt: TypedAbiArg<number | bigint, 'namespaceRevealedAt'>,
           nameProps: TypedAbiArg<
             {
               importedAt: number | bigint | null;
@@ -343,10 +328,7 @@ export const contracts = {
         ],
         outputs: { type: { response: { ok: 'bool', error: 'int128' } } },
       } as TypedAbiFunction<
-        [
-          namespace: TypedAbiArg<Uint8Array, 'namespace'>,
-          name: TypedAbiArg<Uint8Array, 'name'>,
-        ],
+        [namespace: TypedAbiArg<Uint8Array, 'namespace'>, name: TypedAbiArg<Uint8Array, 'name'>],
         Response<boolean, bigint>
       >,
       nameTransfer: {
@@ -398,10 +380,7 @@ export const contracts = {
         outputs: { type: { response: { ok: 'uint128', error: 'int128' } } },
       } as TypedAbiFunction<
         [
-          hashedSaltedNamespace: TypedAbiArg<
-            Uint8Array,
-            'hashedSaltedNamespace'
-          >,
+          hashedSaltedNamespace: TypedAbiArg<Uint8Array, 'hashedSaltedNamespace'>,
           stxToBurn: TypedAbiArg<number | bigint, 'stxToBurn'>,
         ],
         Response<bigint, bigint>
@@ -467,14 +446,8 @@ export const contracts = {
           pFuncB14: TypedAbiArg<number | bigint, 'pFuncB14'>,
           pFuncB15: TypedAbiArg<number | bigint, 'pFuncB15'>,
           pFuncB16: TypedAbiArg<number | bigint, 'pFuncB16'>,
-          pFuncNonAlphaDiscount: TypedAbiArg<
-            number | bigint,
-            'pFuncNonAlphaDiscount'
-          >,
-          pFuncNoVowelDiscount: TypedAbiArg<
-            number | bigint,
-            'pFuncNoVowelDiscount'
-          >,
+          pFuncNonAlphaDiscount: TypedAbiArg<number | bigint, 'pFuncNonAlphaDiscount'>,
+          pFuncNoVowelDiscount: TypedAbiArg<number | bigint, 'pFuncNoVowelDiscount'>,
           lifetime: TypedAbiArg<number | bigint, 'lifetime'>,
           namespaceImport: TypedAbiArg<string, 'namespaceImport'>,
         ],
@@ -537,14 +510,8 @@ export const contracts = {
           pFuncB14: TypedAbiArg<number | bigint, 'pFuncB14'>,
           pFuncB15: TypedAbiArg<number | bigint, 'pFuncB15'>,
           pFuncB16: TypedAbiArg<number | bigint, 'pFuncB16'>,
-          pFuncNonAlphaDiscount: TypedAbiArg<
-            number | bigint,
-            'pFuncNonAlphaDiscount'
-          >,
-          pFuncNoVowelDiscount: TypedAbiArg<
-            number | bigint,
-            'pFuncNoVowelDiscount'
-          >,
+          pFuncNonAlphaDiscount: TypedAbiArg<number | bigint, 'pFuncNonAlphaDiscount'>,
+          pFuncNoVowelDiscount: TypedAbiArg<number | bigint, 'pFuncNoVowelDiscount'>,
         ],
         Response<boolean, bigint>
       >,
@@ -557,10 +524,7 @@ export const contracts = {
         ],
         outputs: { type: { response: { ok: 'bool', error: 'int128' } } },
       } as TypedAbiFunction<
-        [
-          namespace: TypedAbiArg<Uint8Array, 'namespace'>,
-          name: TypedAbiArg<Uint8Array, 'name'>,
-        ],
+        [namespace: TypedAbiArg<Uint8Array, 'namespace'>, name: TypedAbiArg<Uint8Array, 'name'>],
         Response<boolean, bigint>
       >,
       canNamespaceBeRegistered: {
@@ -577,10 +541,7 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'owner', type: 'principal' }],
         outputs: { type: { response: { ok: 'bool', error: 'int128' } } },
-      } as TypedAbiFunction<
-        [owner: TypedAbiArg<string, 'owner'>],
-        Response<boolean, bigint>
-      >,
+      } as TypedAbiFunction<[owner: TypedAbiArg<string, 'owner'>], Response<boolean, bigint>>,
       checkNameOpsPreconditions: {
         name: 'check-name-ops-preconditions',
         access: 'read_only',
@@ -645,10 +606,7 @@ export const contracts = {
           },
         },
       } as TypedAbiFunction<
-        [
-          namespace: TypedAbiArg<Uint8Array, 'namespace'>,
-          name: TypedAbiArg<Uint8Array, 'name'>,
-        ],
+        [namespace: TypedAbiArg<Uint8Array, 'namespace'>, name: TypedAbiArg<Uint8Array, 'name'>],
         Response<
           {
             nameProps: {
@@ -685,10 +643,7 @@ export const contracts = {
         ],
         outputs: { type: { response: { ok: 'uint128', error: 'int128' } } },
       } as TypedAbiFunction<
-        [
-          namespace: TypedAbiArg<Uint8Array, 'namespace'>,
-          name: TypedAbiArg<Uint8Array, 'name'>,
-        ],
+        [namespace: TypedAbiArg<Uint8Array, 'namespace'>, name: TypedAbiArg<Uint8Array, 'name'>],
         Response<bigint, bigint>
       >,
       getNamespacePrice: {
@@ -775,10 +730,7 @@ export const contracts = {
         ],
         outputs: { type: { response: { ok: 'bool', error: 'int128' } } },
       } as TypedAbiFunction<
-        [
-          namespace: TypedAbiArg<Uint8Array, 'namespace'>,
-          name: TypedAbiArg<Uint8Array, 'name'>,
-        ],
+        [namespace: TypedAbiArg<Uint8Array, 'namespace'>, name: TypedAbiArg<Uint8Array, 'name'>],
         Response<boolean, bigint>
       >,
       isNameLeaseExpired: {
@@ -790,10 +742,7 @@ export const contracts = {
         ],
         outputs: { type: { response: { ok: 'bool', error: 'int128' } } },
       } as TypedAbiFunction<
-        [
-          namespace: TypedAbiArg<Uint8Array, 'namespace'>,
-          name: TypedAbiArg<Uint8Array, 'name'>,
-        ],
+        [namespace: TypedAbiArg<Uint8Array, 'namespace'>, name: TypedAbiArg<Uint8Array, 'name'>],
         Response<boolean, bigint>
       >,
       nameResolve: {
@@ -819,10 +768,7 @@ export const contracts = {
           },
         },
       } as TypedAbiFunction<
-        [
-          namespace: TypedAbiArg<Uint8Array, 'namespace'>,
-          name: TypedAbiArg<Uint8Array, 'name'>,
-        ],
+        [namespace: TypedAbiArg<Uint8Array, 'namespace'>, name: TypedAbiArg<Uint8Array, 'name'>],
         Response<
           {
             leaseEndingAt: bigint | null;
@@ -11312,12 +11258,7 @@ export const contracts = {
           },
         },
       } as TypedAbiFunction<
-        [
-          stxBlockHeightOpt: TypedAbiArg<
-            number | bigint | null,
-            'stxBlockHeightOpt'
-          >,
-        ],
+        [stxBlockHeightOpt: TypedAbiArg<number | bigint | null, 'stxBlockHeightOpt'>],
         Response<
           {
             amount: bigint;
@@ -11604,10 +11545,7 @@ export const contracts = {
         access: 'private',
         args: [{ name: 'height', type: 'uint128' }],
         outputs: { type: 'uint128' },
-      } as TypedAbiFunction<
-        [height: TypedAbiArg<number | bigint, 'height'>],
-        bigint
-      >,
+      } as TypedAbiFunction<[height: TypedAbiArg<number | bigint, 'height'>], bigint>,
       checkCallerAllowed: {
         name: 'check-caller-allowed',
         access: 'private',
@@ -11619,19 +11557,13 @@ export const contracts = {
         access: 'private',
         args: [{ name: 'version', type: { buffer: { length: 1 } } }],
         outputs: { type: 'bool' },
-      } as TypedAbiFunction<
-        [version: TypedAbiArg<Uint8Array, 'version'>],
-        boolean
-      >,
+      } as TypedAbiFunction<[version: TypedAbiArg<Uint8Array, 'version'>], boolean>,
       checkPoxLockPeriod: {
         name: 'check-pox-lock-period',
         access: 'private',
         args: [{ name: 'lock-period', type: 'uint128' }],
         outputs: { type: 'bool' },
-      } as TypedAbiFunction<
-        [lockPeriod: TypedAbiArg<number | bigint, 'lockPeriod'>],
-        boolean
-      >,
+      } as TypedAbiFunction<[lockPeriod: TypedAbiArg<number | bigint, 'lockPeriod'>], boolean>,
       currentPoxRewardCycle: {
         name: 'current-pox-reward-cycle',
         access: 'private',
@@ -11687,10 +11619,7 @@ export const contracts = {
         access: 'private',
         args: [{ name: 'cycle', type: 'uint128' }],
         outputs: { type: 'uint128' },
-      } as TypedAbiFunction<
-        [cycle: TypedAbiArg<number | bigint, 'cycle'>],
-        bigint
-      >,
+      } as TypedAbiFunction<[cycle: TypedAbiArg<number | bigint, 'cycle'>], bigint>,
       allowContractCaller: {
         name: 'allow-contract-caller',
         access: 'public',
@@ -11801,10 +11730,7 @@ export const contracts = {
         access: 'public',
         args: [{ name: 'caller', type: 'principal' }],
         outputs: { type: { response: { ok: 'bool', error: 'int128' } } },
-      } as TypedAbiFunction<
-        [caller: TypedAbiArg<string, 'caller'>],
-        Response<boolean, bigint>
-      >,
+      } as TypedAbiFunction<[caller: TypedAbiArg<string, 'caller'>], Response<boolean, bigint>>,
       rejectPox: {
         name: 'reject-pox',
         access: 'public',
@@ -11830,10 +11756,7 @@ export const contracts = {
       } as TypedAbiFunction<
         [
           firstBurnHeight: TypedAbiArg<number | bigint, 'firstBurnHeight'>,
-          prepareCycleLength: TypedAbiArg<
-            number | bigint,
-            'prepareCycleLength'
-          >,
+          prepareCycleLength: TypedAbiArg<number | bigint, 'prepareCycleLength'>,
           rewardCycleLength: TypedAbiArg<number | bigint, 'rewardCycleLength'>,
           rejectionFraction: TypedAbiArg<number | bigint, 'rejectionFraction'>,
         ],
@@ -12055,10 +11978,7 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'reward-cycle', type: 'uint128' }],
         outputs: { type: 'uint128' },
-      } as TypedAbiFunction<
-        [rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>],
-        bigint
-      >,
+      } as TypedAbiFunction<[rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>], bigint>,
       getStackerInfo: {
         name: 'get-stacker-info',
         access: 'read_only',
@@ -12106,19 +12026,13 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'reward-cycle', type: 'uint128' }],
         outputs: { type: 'uint128' },
-      } as TypedAbiFunction<
-        [rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>],
-        bigint
-      >,
+      } as TypedAbiFunction<[rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>], bigint>,
       isPoxActive: {
         name: 'is-pox-active',
         access: 'read_only',
         args: [{ name: 'reward-cycle', type: 'uint128' }],
         outputs: { type: 'bool' },
-      } as TypedAbiFunction<
-        [rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>],
-        boolean
-      >,
+      } as TypedAbiFunction<[rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>], boolean>,
       minimalCanStackStx: {
         name: 'minimal-can-stack-stx',
         access: 'read_only',
@@ -13193,10 +13107,7 @@ export const contracts = {
         access: 'public',
         args: [{ name: 'caller', type: 'principal' }],
         outputs: { type: { response: { ok: 'bool', error: 'int128' } } },
-      } as TypedAbiFunction<
-        [caller: TypedAbiArg<string, 'caller'>],
-        Response<boolean, bigint>
-      >,
+      } as TypedAbiFunction<[caller: TypedAbiArg<string, 'caller'>], Response<boolean, bigint>>,
       rejectPox: {
         name: 'reject-pox',
         access: 'public',
@@ -13223,16 +13134,10 @@ export const contracts = {
       } as TypedAbiFunction<
         [
           firstBurnHeight: TypedAbiArg<number | bigint, 'firstBurnHeight'>,
-          prepareCycleLength: TypedAbiArg<
-            number | bigint,
-            'prepareCycleLength'
-          >,
+          prepareCycleLength: TypedAbiArg<number | bigint, 'prepareCycleLength'>,
           rewardCycleLength: TypedAbiArg<number | bigint, 'rewardCycleLength'>,
           rejectionFraction: TypedAbiArg<number | bigint, 'rejectionFraction'>,
-          begin21RewardCycle: TypedAbiArg<
-            number | bigint,
-            'begin21RewardCycle'
-          >,
+          begin21RewardCycle: TypedAbiArg<number | bigint, 'begin21RewardCycle'>,
         ],
         Response<boolean, bigint>
       >,
@@ -13457,10 +13362,7 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'height', type: 'uint128' }],
         outputs: { type: 'uint128' },
-      } as TypedAbiFunction<
-        [height: TypedAbiArg<number | bigint, 'height'>],
-        bigint
-      >,
+      } as TypedAbiFunction<[height: TypedAbiArg<number | bigint, 'height'>], bigint>,
       canStackStx: {
         name: 'can-stack-stx',
         access: 'read_only',
@@ -13520,19 +13422,13 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'version', type: { buffer: { length: 1 } } }],
         outputs: { type: 'bool' },
-      } as TypedAbiFunction<
-        [version: TypedAbiArg<Uint8Array, 'version'>],
-        boolean
-      >,
+      } as TypedAbiFunction<[version: TypedAbiArg<Uint8Array, 'version'>], boolean>,
       checkPoxLockPeriod: {
         name: 'check-pox-lock-period',
         access: 'read_only',
         args: [{ name: 'lock-period', type: 'uint128' }],
         outputs: { type: 'bool' },
-      } as TypedAbiFunction<
-        [lockPeriod: TypedAbiArg<number | bigint, 'lockPeriod'>],
-        boolean
-      >,
+      } as TypedAbiFunction<[lockPeriod: TypedAbiArg<number | bigint, 'lockPeriod'>], boolean>,
       currentPoxRewardCycle: {
         name: 'current-pox-reward-cycle',
         access: 'read_only',
@@ -13643,10 +13539,7 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'reward-cycle', type: 'uint128' }],
         outputs: { type: 'uint128' },
-      } as TypedAbiFunction<
-        [rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>],
-        bigint
-      >,
+      } as TypedAbiFunction<[rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>], bigint>,
       getPartialStackedByCycle: {
         name: 'get-partial-stacked-by-cycle',
         access: 'read_only',
@@ -13787,10 +13680,7 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'reward-cycle', type: 'uint128' }],
         outputs: { type: 'uint128' },
-      } as TypedAbiFunction<
-        [rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>],
-        bigint
-      >,
+      } as TypedAbiFunction<[rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>], bigint>,
       getStackerInfo: {
         name: 'get-stacker-info',
         access: 'read_only',
@@ -13841,28 +13731,19 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'reward-cycle', type: 'uint128' }],
         outputs: { type: 'uint128' },
-      } as TypedAbiFunction<
-        [rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>],
-        bigint
-      >,
+      } as TypedAbiFunction<[rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>], bigint>,
       getTotalUstxStacked: {
         name: 'get-total-ustx-stacked',
         access: 'read_only',
         args: [{ name: 'reward-cycle', type: 'uint128' }],
         outputs: { type: 'uint128' },
-      } as TypedAbiFunction<
-        [rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>],
-        bigint
-      >,
+      } as TypedAbiFunction<[rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>], bigint>,
       isPoxActive: {
         name: 'is-pox-active',
         access: 'read_only',
         args: [{ name: 'reward-cycle', type: 'uint128' }],
         outputs: { type: 'bool' },
-      } as TypedAbiFunction<
-        [rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>],
-        boolean
-      >,
+      } as TypedAbiFunction<[rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>], boolean>,
       minimalCanStackStx: {
         name: 'minimal-can-stack-stx',
         access: 'read_only',
@@ -13907,10 +13788,7 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'cycle', type: 'uint128' }],
         outputs: { type: 'uint128' },
-      } as TypedAbiFunction<
-        [cycle: TypedAbiArg<number | bigint, 'cycle'>],
-        bigint
-      >,
+      } as TypedAbiFunction<[cycle: TypedAbiArg<number | bigint, 'cycle'>], bigint>,
     },
     maps: {
       allowanceContractCallers: {
@@ -15065,10 +14943,7 @@ export const contracts = {
         access: 'public',
         args: [{ name: 'caller', type: 'principal' }],
         outputs: { type: { response: { ok: 'bool', error: 'int128' } } },
-      } as TypedAbiFunction<
-        [caller: TypedAbiArg<string, 'caller'>],
-        Response<boolean, bigint>
-      >,
+      } as TypedAbiFunction<[caller: TypedAbiArg<string, 'caller'>], Response<boolean, bigint>>,
       rejectPox: {
         name: 'reject-pox',
         access: 'public',
@@ -15095,16 +14970,10 @@ export const contracts = {
       } as TypedAbiFunction<
         [
           firstBurnHeight: TypedAbiArg<number | bigint, 'firstBurnHeight'>,
-          prepareCycleLength: TypedAbiArg<
-            number | bigint,
-            'prepareCycleLength'
-          >,
+          prepareCycleLength: TypedAbiArg<number | bigint, 'prepareCycleLength'>,
           rewardCycleLength: TypedAbiArg<number | bigint, 'rewardCycleLength'>,
           rejectionFraction: TypedAbiArg<number | bigint, 'rejectionFraction'>,
-          begin21RewardCycle: TypedAbiArg<
-            number | bigint,
-            'begin21RewardCycle'
-          >,
+          begin21RewardCycle: TypedAbiArg<number | bigint, 'begin21RewardCycle'>,
         ],
         Response<boolean, bigint>
       >,
@@ -15329,10 +15198,7 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'height', type: 'uint128' }],
         outputs: { type: 'uint128' },
-      } as TypedAbiFunction<
-        [height: TypedAbiArg<number | bigint, 'height'>],
-        bigint
-      >,
+      } as TypedAbiFunction<[height: TypedAbiArg<number | bigint, 'height'>], bigint>,
       canStackStx: {
         name: 'can-stack-stx',
         access: 'read_only',
@@ -15392,19 +15258,13 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'version', type: { buffer: { length: 1 } } }],
         outputs: { type: 'bool' },
-      } as TypedAbiFunction<
-        [version: TypedAbiArg<Uint8Array, 'version'>],
-        boolean
-      >,
+      } as TypedAbiFunction<[version: TypedAbiArg<Uint8Array, 'version'>], boolean>,
       checkPoxLockPeriod: {
         name: 'check-pox-lock-period',
         access: 'read_only',
         args: [{ name: 'lock-period', type: 'uint128' }],
         outputs: { type: 'bool' },
-      } as TypedAbiFunction<
-        [lockPeriod: TypedAbiArg<number | bigint, 'lockPeriod'>],
-        boolean
-      >,
+      } as TypedAbiFunction<[lockPeriod: TypedAbiArg<number | bigint, 'lockPeriod'>], boolean>,
       currentPoxRewardCycle: {
         name: 'current-pox-reward-cycle',
         access: 'read_only',
@@ -15515,10 +15375,7 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'reward-cycle', type: 'uint128' }],
         outputs: { type: 'uint128' },
-      } as TypedAbiFunction<
-        [rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>],
-        bigint
-      >,
+      } as TypedAbiFunction<[rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>], bigint>,
       getPartialStackedByCycle: {
         name: 'get-partial-stacked-by-cycle',
         access: 'read_only',
@@ -15659,10 +15516,7 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'reward-cycle', type: 'uint128' }],
         outputs: { type: 'uint128' },
-      } as TypedAbiFunction<
-        [rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>],
-        bigint
-      >,
+      } as TypedAbiFunction<[rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>], bigint>,
       getStackerInfo: {
         name: 'get-stacker-info',
         access: 'read_only',
@@ -15715,28 +15569,19 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'reward-cycle', type: 'uint128' }],
         outputs: { type: 'uint128' },
-      } as TypedAbiFunction<
-        [rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>],
-        bigint
-      >,
+      } as TypedAbiFunction<[rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>], bigint>,
       getTotalUstxStacked: {
         name: 'get-total-ustx-stacked',
         access: 'read_only',
         args: [{ name: 'reward-cycle', type: 'uint128' }],
         outputs: { type: 'uint128' },
-      } as TypedAbiFunction<
-        [rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>],
-        bigint
-      >,
+      } as TypedAbiFunction<[rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>], bigint>,
       isPoxActive: {
         name: 'is-pox-active',
         access: 'read_only',
         args: [{ name: 'reward-cycle', type: 'uint128' }],
         outputs: { type: 'bool' },
-      } as TypedAbiFunction<
-        [rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>],
-        boolean
-      >,
+      } as TypedAbiFunction<[rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>], boolean>,
       minimalCanStackStx: {
         name: 'minimal-can-stack-stx',
         access: 'read_only',
@@ -15781,10 +15626,7 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'cycle', type: 'uint128' }],
         outputs: { type: 'uint128' },
-      } as TypedAbiFunction<
-        [cycle: TypedAbiArg<number | bigint, 'cycle'>],
-        bigint
-      >,
+      } as TypedAbiFunction<[cycle: TypedAbiArg<number | bigint, 'cycle'>], bigint>,
     },
     maps: {
       allowanceContractCallers: {
@@ -16944,10 +16786,7 @@ export const contracts = {
         access: 'public',
         args: [{ name: 'caller', type: 'principal' }],
         outputs: { type: { response: { ok: 'bool', error: 'int128' } } },
-      } as TypedAbiFunction<
-        [caller: TypedAbiArg<string, 'caller'>],
-        Response<boolean, bigint>
-      >,
+      } as TypedAbiFunction<[caller: TypedAbiArg<string, 'caller'>], Response<boolean, bigint>>,
       revokeDelegateStx: {
         name: 'revoke-delegate-stx',
         access: 'public',
@@ -17013,15 +16852,9 @@ export const contracts = {
       } as TypedAbiFunction<
         [
           firstBurnHeight: TypedAbiArg<number | bigint, 'firstBurnHeight'>,
-          prepareCycleLength: TypedAbiArg<
-            number | bigint,
-            'prepareCycleLength'
-          >,
+          prepareCycleLength: TypedAbiArg<number | bigint, 'prepareCycleLength'>,
           rewardCycleLength: TypedAbiArg<number | bigint, 'rewardCycleLength'>,
-          beginPox4RewardCycle: TypedAbiArg<
-            number | bigint,
-            'beginPox4RewardCycle'
-          >,
+          beginPox4RewardCycle: TypedAbiArg<number | bigint, 'beginPox4RewardCycle'>,
         ],
         Response<boolean, bigint>
       >,
@@ -17359,10 +17192,7 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'height', type: 'uint128' }],
         outputs: { type: 'uint128' },
-      } as TypedAbiFunction<
-        [height: TypedAbiArg<number | bigint, 'height'>],
-        bigint
-      >,
+      } as TypedAbiFunction<[height: TypedAbiArg<number | bigint, 'height'>], bigint>,
       canStackStx: {
         name: 'can-stack-stx',
         access: 'read_only',
@@ -17422,19 +17252,13 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'version', type: { buffer: { length: 1 } } }],
         outputs: { type: 'bool' },
-      } as TypedAbiFunction<
-        [version: TypedAbiArg<Uint8Array, 'version'>],
-        boolean
-      >,
+      } as TypedAbiFunction<[version: TypedAbiArg<Uint8Array, 'version'>], boolean>,
       checkPoxLockPeriod: {
         name: 'check-pox-lock-period',
         access: 'read_only',
         args: [{ name: 'lock-period', type: 'uint128' }],
         outputs: { type: 'bool' },
-      } as TypedAbiFunction<
-        [lockPeriod: TypedAbiArg<number | bigint, 'lockPeriod'>],
-        boolean
-      >,
+      } as TypedAbiFunction<[lockPeriod: TypedAbiArg<number | bigint, 'lockPeriod'>], boolean>,
       currentPoxRewardCycle: {
         name: 'current-pox-reward-cycle',
         access: 'read_only',
@@ -17545,10 +17369,7 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'reward-cycle', type: 'uint128' }],
         outputs: { type: 'uint128' },
-      } as TypedAbiFunction<
-        [rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>],
-        bigint
-      >,
+      } as TypedAbiFunction<[rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>], bigint>,
       getPartialStackedByCycle: {
         name: 'get-partial-stacked-by-cycle',
         access: 'read_only',
@@ -17668,10 +17489,7 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'reward-cycle', type: 'uint128' }],
         outputs: { type: 'uint128' },
-      } as TypedAbiFunction<
-        [rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>],
-        bigint
-      >,
+      } as TypedAbiFunction<[rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>], bigint>,
       getSignerKeyMessageHash: {
         name: 'get-signer-key-message-hash',
         access: 'read_only',
@@ -17761,10 +17579,7 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'reward-cycle', type: 'uint128' }],
         outputs: { type: 'uint128' },
-      } as TypedAbiFunction<
-        [rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>],
-        bigint
-      >,
+      } as TypedAbiFunction<[rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>], bigint>,
       minimalCanStackStx: {
         name: 'minimal-can-stack-stx',
         access: 'read_only',
@@ -17803,10 +17618,7 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'cycle', type: 'uint128' }],
         outputs: { type: 'uint128' },
-      } as TypedAbiFunction<
-        [cycle: TypedAbiArg<number | bigint, 'cycle'>],
-        bigint
-      >,
+      } as TypedAbiFunction<[cycle: TypedAbiArg<number | bigint, 'cycle'>], bigint>,
       verifySignerKeySig: {
         name: 'verify-signer-key-sig',
         access: 'read_only',
@@ -18904,10 +18716,7 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'height', type: 'uint128' }],
         outputs: { type: 'uint128' },
-      } as TypedAbiFunction<
-        [height: TypedAbiArg<number | bigint, 'height'>],
-        bigint
-      >,
+      } as TypedAbiFunction<[height: TypedAbiArg<number | bigint, 'height'>], bigint>,
       currentRewardCycle: {
         name: 'current-reward-cycle',
         access: 'read_only',
@@ -19023,10 +18832,7 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'reward-cycle', type: 'uint128' }],
         outputs: { type: 'uint128' },
-      } as TypedAbiFunction<
-        [rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>],
-        bigint
-      >,
+      } as TypedAbiFunction<[rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>], bigint>,
       getVote: {
         name: 'get-vote',
         access: 'read_only',
@@ -19064,10 +18870,7 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'height', type: 'uint128' }],
         outputs: { type: 'bool' },
-      } as TypedAbiFunction<
-        [height: TypedAbiArg<number | bigint, 'height'>],
-        boolean
-      >,
+      } as TypedAbiFunction<[height: TypedAbiArg<number | bigint, 'height'>], boolean>,
       isNovelAggregatePublicKey: {
         name: 'is-novel-aggregate-public-key',
         access: 'read_only',
@@ -19088,10 +18891,7 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'reward-cycle', type: 'uint128' }],
         outputs: { type: 'uint128' },
-      } as TypedAbiFunction<
-        [rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>],
-        bigint
-      >,
+      } as TypedAbiFunction<[rewardCycle: TypedAbiArg<number | bigint, 'rewardCycle'>], bigint>,
     },
     maps: {
       aggregatePublicKeys: {

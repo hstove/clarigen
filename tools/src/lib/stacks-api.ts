@@ -24,36 +24,23 @@ export function getStacksApi(network: NETWORK, apiKey = getHiroApiKey()) {
   });
 }
 
-export async function getContractInfo(
-  network: NETWORK,
-  contractId: string,
-  apiKey?: string
-) {
+export async function getContractInfo(network: NETWORK, contractId: string, apiKey?: string) {
   const client = getStacksApi(network, apiKey);
-  const { data, error, response } = await client.GET(
-    '/extended/v1/contract/{contract_id}',
-    {
-      params: {
-        path: {
-          contract_id: contractId,
-        },
+  const { data, error, response } = await client.GET('/extended/v1/contract/{contract_id}', {
+    params: {
+      path: {
+        contract_id: contractId,
       },
-    }
-  );
+    },
+  });
   if (!data) {
-    throw new Error(
-      `Failed to get contract info. Status ${response.status}. ${error?.message}`
-    );
+    throw new Error(`Failed to get contract info. Status ${response.status}. ${error?.message}`);
   }
 
   return data;
 }
 
-export async function getContractAbi(
-  network: NETWORK,
-  contractId: string,
-  apiKey?: string
-) {
+export async function getContractAbi(network: NETWORK, contractId: string, apiKey?: string) {
   const contractInfo = await getContractInfo(network, contractId, apiKey);
   return parseContractAbi(contractInfo.abi);
 }
@@ -78,9 +65,7 @@ export async function getStxBalance(network: NETWORK, address: string) {
     }
   );
   if (!data) {
-    throw new Error(
-      `Failed to get STX balance. Status ${response.status}. ${error?.message}`
-    );
+    throw new Error(`Failed to get STX balance. Status ${response.status}. ${error?.message}`);
   }
   const { balance } = data;
   return {
@@ -94,37 +79,26 @@ export async function getTransaction(
   txId: string
 ): Promise<typeof StacksTransaction.infer> {
   const client = getStacksApi(network);
-  const { data, error, response } = await client.GET(
-    '/extended/v1/tx/{tx_id}',
-    {
-      params: {
-        path: {
-          tx_id: txId,
-        },
+  const { data, error, response } = await client.GET('/extended/v1/tx/{tx_id}', {
+    params: {
+      path: {
+        tx_id: txId,
       },
-    }
-  );
+    },
+  });
   if (!data) {
-    throw new Error(
-      `Failed to get transaction. Status ${response.status}. ${error?.message}`
-    );
+    throw new Error(`Failed to get transaction. Status ${response.status}. ${error?.message}`);
   }
   return StacksTransaction.assert(data);
 }
 
-export async function getRawTransaction(
-  network: NETWORK,
-  txId: string
-): Promise<string> {
+export async function getRawTransaction(network: NETWORK, txId: string): Promise<string> {
   const client = getStacksApi(network);
-  const { data, error, response } = await client.GET(
-    '/extended/v1/tx/{tx_id}/raw',
-    { params: { path: { tx_id: txId } } }
-  );
+  const { data, error, response } = await client.GET('/extended/v1/tx/{tx_id}/raw', {
+    params: { path: { tx_id: txId } },
+  });
   if (!data) {
-    throw new Error(
-      `Failed to get raw transaction. Status ${response.status}. ${error?.message}`
-    );
+    throw new Error(`Failed to get raw transaction. Status ${response.status}. ${error?.message}`);
   }
   return data.raw_tx;
 }

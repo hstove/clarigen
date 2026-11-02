@@ -1,11 +1,6 @@
 /** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
 import { project, contracts } from './generated/clarigen-types';
-import {
-  type DeploymentNetwork,
-  contractsFactory,
-  mapFactory,
-  projectFactory,
-} from '../src';
+import { type DeploymentNetwork, contractsFactory, mapFactory, projectFactory } from '../src';
 import { stringAsciiCV, uintCV } from '@stacks/transactions';
 import { test, expect } from 'vitest';
 
@@ -70,9 +65,6 @@ test('projectFactory returns contract even if some deployment address missing', 
   /* eslint-enable @typescript-eslint/ban-ts-comment */
   /* eslint-enable @typescript-eslint/no-unsafe-call */
 
-  const { tester: tester2 } = projectFactory(
-    project,
-    'devnet' as unknown as DeploymentNetwork
-  );
+  const { tester: tester2 } = projectFactory(project, 'devnet' as unknown as DeploymentNetwork);
   expect(tester2).toBeTruthy();
 });

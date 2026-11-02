@@ -41,14 +41,9 @@ export function cwdRelative(path: string) {
 
 // Sort contracts alphabetically by their contract name.
 // Used to preserve ordering when generating files
-export function sortContracts<T extends { contract_id: string }>(
-  contracts: T[]
-): T[] {
+export function sortContracts<T extends { contract_id: string }>(contracts: T[]): T[] {
   const nameSorted = [...contracts].sort((a, b) => {
-    if (
-      getContractName(a.contract_id, false) <
-      getContractName(b.contract_id, false)
-    ) {
+    if (getContractName(a.contract_id, false) < getContractName(b.contract_id, false)) {
       return -1;
     }
     return 1;

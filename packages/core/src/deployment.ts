@@ -91,9 +91,7 @@ export type SimnetDeploymentPlan = {
   };
   plan: {
     batches: Readonly<
-      Batch<
-        EmulatedContractPublishTransaction | EmulatedContractCallTransaction
-      >[]
+      Batch<EmulatedContractPublishTransaction | EmulatedContractCallTransaction>[]
     >;
   };
 };
@@ -120,11 +118,7 @@ export type MainnetDeploymentPlan = {
   network: 'mainnet';
   plan: {
     batches: Readonly<
-      Batch<
-        | ContractPublishTransaction
-        | ContractCallTransaction
-        | BtcTransferTransaction
-      >[]
+      Batch<ContractPublishTransaction | ContractCallTransaction | BtcTransferTransaction>[]
     >;
   };
 };
@@ -135,13 +129,11 @@ export type DeploymentPlan =
   | TestnetDeploymentPlan
   | MainnetDeploymentPlan;
 
-export function flatBatch<T extends DeploymentTransaction>(
-  batches: Batch<T>[]
-) {
+export function flatBatch<T extends DeploymentTransaction>(batches: Batch<T>[]) {
   // const start: T[][] = [];
   const txs: T[] = [];
   // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
-  batches.forEach((batch) => txs.push(...batch.transactions));
+  batches.forEach(batch => txs.push(...batch.transactions));
   return txs;
 }
 
@@ -178,9 +170,7 @@ export function getDeploymentContract(
       }
     }
   }
-  throw new Error(
-    `Unable to find deployment tx for contract '${contractName}'`
-  );
+  throw new Error(`Unable to find deployment tx for contract '${contractName}'`);
 }
 
 export function getDeploymentTxPath(tx: ContractDeploymentTransaction): string {
@@ -201,9 +191,7 @@ export function getDeploymentTxPath(tx: ContractDeploymentTransaction): string {
   throw new Error('Couldnt get path for deployment tx.');
 }
 
-export function getIdentifierForDeploymentTx(
-  tx: ContractDeploymentTransaction
-): string {
+export function getIdentifierForDeploymentTx(tx: ContractDeploymentTransaction): string {
   if (!isContractDeploymentTx(tx)) {
     throw new Error('Unable to get ID for tx type.');
   }

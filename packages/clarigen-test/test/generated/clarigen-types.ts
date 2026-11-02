@@ -20,7 +20,7 @@ export const contracts = {
       } as TypedAbiFunction<
         [
           roleToAdd: TypedAbiArg<number | bigint, 'roleToAdd'>,
-          principalToAdd: TypedAbiArg<string, 'principalToAdd'>
+          principalToAdd: TypedAbiArg<string, 'principalToAdd'>,
         ],
         Response<boolean, bigint>
       >,
@@ -35,7 +35,7 @@ export const contracts = {
       } as TypedAbiFunction<
         [
           burnAmount: TypedAbiArg<number | bigint, 'burnAmount'>,
-          burnFrom: TypedAbiArg<string, 'burnFrom'>
+          burnFrom: TypedAbiArg<string, 'burnFrom'>,
         ],
         Response<boolean, bigint>
       >,
@@ -54,7 +54,7 @@ export const contracts = {
           nameToSet: TypedAbiArg<string, 'nameToSet'>,
           symbolToSet: TypedAbiArg<string, 'symbolToSet'>,
           decimalsToSet: TypedAbiArg<number | bigint, 'decimalsToSet'>,
-          initialOwner: TypedAbiArg<string, 'initialOwner'>
+          initialOwner: TypedAbiArg<string, 'initialOwner'>,
         ],
         Response<boolean, bigint>
       >,
@@ -69,7 +69,7 @@ export const contracts = {
       } as TypedAbiFunction<
         [
           mintAmount: TypedAbiArg<number | bigint, 'mintAmount'>,
-          mintTo: TypedAbiArg<string, 'mintTo'>
+          mintTo: TypedAbiArg<string, 'mintTo'>,
         ],
         Response<boolean, bigint>
       >,
@@ -84,7 +84,7 @@ export const contracts = {
       } as TypedAbiFunction<
         [
           roleToRemove: TypedAbiArg<number | bigint, 'roleToRemove'>,
-          principalToRemove: TypedAbiArg<string, 'principalToRemove'>
+          principalToRemove: TypedAbiArg<string, 'principalToRemove'>,
         ],
         Response<boolean, bigint>
       >,
@@ -101,7 +101,7 @@ export const contracts = {
         [
           revokeAmount: TypedAbiArg<number | bigint, 'revokeAmount'>,
           revokeFrom: TypedAbiArg<string, 'revokeFrom'>,
-          revokeTo: TypedAbiArg<string, 'revokeTo'>
+          revokeTo: TypedAbiArg<string, 'revokeTo'>,
         ],
         Response<boolean, bigint>
       >,
@@ -129,7 +129,7 @@ export const contracts = {
           amount: TypedAbiArg<number | bigint, 'amount'>,
           sender: TypedAbiArg<string, 'sender'>,
           recipient: TypedAbiArg<string, 'recipient'>,
-          memo: TypedAbiArg<Uint8Array | null, 'memo'>
+          memo: TypedAbiArg<Uint8Array | null, 'memo'>,
         ],
         Response<boolean, bigint>
       >,
@@ -144,7 +144,7 @@ export const contracts = {
       } as TypedAbiFunction<
         [
           principalToUpdate: TypedAbiArg<string, 'principalToUpdate'>,
-          setBlacklisted: TypedAbiArg<boolean, 'setBlacklisted'>
+          setBlacklisted: TypedAbiArg<boolean, 'setBlacklisted'>,
         ],
         Response<boolean, bigint>
       >,
@@ -161,7 +161,7 @@ export const contracts = {
         [
           amount: TypedAbiArg<number | bigint, 'amount'>,
           sender: TypedAbiArg<string, 'sender'>,
-          recipient: TypedAbiArg<string, 'recipient'>
+          recipient: TypedAbiArg<string, 'recipient'>,
         ],
         Response<bigint, bigint>
       >,
@@ -216,7 +216,7 @@ export const contracts = {
       } as TypedAbiFunction<
         [
           roleToCheck: TypedAbiArg<number | bigint, 'roleToCheck'>,
-          principalToCheck: TypedAbiArg<string, 'principalToCheck'>
+          principalToCheck: TypedAbiArg<string, 'principalToCheck'>,
         ],
         boolean
       >,
@@ -461,7 +461,7 @@ export const contracts = {
             },
             'deposit'
           >,
-          helperResponse: TypedAbiArg<Response<number | bigint, number | bigint>, 'helperResponse'>
+          helperResponse: TypedAbiArg<Response<number | bigint, number | bigint>, 'helperResponse'>,
         ],
         Response<bigint, bigint>
       >,
@@ -486,7 +486,7 @@ export const contracts = {
           recipient: TypedAbiArg<string, 'recipient'>,
           burnHash: TypedAbiArg<Uint8Array, 'burnHash'>,
           burnHeight: TypedAbiArg<number | bigint, 'burnHeight'>,
-          sweepTxid: TypedAbiArg<Uint8Array, 'sweepTxid'>
+          sweepTxid: TypedAbiArg<Uint8Array, 'sweepTxid'>,
         ],
         Response<boolean, bigint>
       >,
@@ -528,7 +528,7 @@ export const contracts = {
               voutIndex: number | bigint;
             }[],
             'deposits'
-          >
+          >,
         ],
         Response<bigint, bigint>
       >,
@@ -662,7 +662,7 @@ export const contracts = {
           recipient: TypedAbiArg<string, 'recipient'>,
           burnHash: TypedAbiArg<Uint8Array, 'burnHash'>,
           burnHeight: TypedAbiArg<number | bigint, 'burnHeight'>,
-          sweepTxid: TypedAbiArg<Uint8Array, 'sweepTxid'>
+          sweepTxid: TypedAbiArg<Uint8Array, 'sweepTxid'>,
         ],
         Response<boolean, bigint>
       >,
@@ -689,7 +689,7 @@ export const contracts = {
           fee: TypedAbiArg<number | bigint, 'fee'>,
           burnHash: TypedAbiArg<Uint8Array, 'burnHash'>,
           burnHeight: TypedAbiArg<number | bigint, 'burnHeight'>,
-          sweepTxid: TypedAbiArg<Uint8Array, 'sweepTxid'>
+          sweepTxid: TypedAbiArg<Uint8Array, 'sweepTxid'>,
         ],
         Response<boolean, bigint>
       >,
@@ -704,7 +704,7 @@ export const contracts = {
       } as TypedAbiFunction<
         [
           requestId: TypedAbiArg<number | bigint, 'requestId'>,
-          signerBitmap: TypedAbiArg<number | bigint, 'signerBitmap'>
+          signerBitmap: TypedAbiArg<number | bigint, 'signerBitmap'>,
         ],
         Response<boolean, bigint>
       >,
@@ -739,7 +739,7 @@ export const contracts = {
             },
             'recipient'
           >,
-          height: TypedAbiArg<number | bigint, 'height'>
+          height: TypedAbiArg<number | bigint, 'height'>,
         ],
         Response<bigint, bigint>
       >,
@@ -758,7 +758,7 @@ export const contracts = {
           newKeys: TypedAbiArg<Uint8Array[], 'newKeys'>,
           newAddress: TypedAbiArg<string, 'newAddress'>,
           newAggregatePubkey: TypedAbiArg<Uint8Array, 'newAggregatePubkey'>,
-          newSignatureThreshold: TypedAbiArg<number | bigint, 'newSignatureThreshold'>
+          newSignatureThreshold: TypedAbiArg<number | bigint, 'newSignatureThreshold'>,
         ],
         Response<boolean, bigint>
       >,
@@ -773,7 +773,7 @@ export const contracts = {
       } as TypedAbiFunction<
         [
           contractType: TypedAbiArg<Uint8Array, 'contractType'>,
-          newContract: TypedAbiArg<string, 'newContract'>
+          newContract: TypedAbiArg<string, 'newContract'>,
         ],
         Response<boolean, bigint>
       >,
@@ -806,7 +806,7 @@ export const contracts = {
       } as TypedAbiFunction<
         [
           txid: TypedAbiArg<Uint8Array, 'txid'>,
-          voutIndex: TypedAbiArg<number | bigint, 'voutIndex'>
+          voutIndex: TypedAbiArg<number | bigint, 'voutIndex'>,
         ],
         {
           amount: bigint;
@@ -894,7 +894,7 @@ export const contracts = {
       } as TypedAbiFunction<
         [
           txid: TypedAbiArg<Uint8Array, 'txid'>,
-          voutIndex: TypedAbiArg<number | bigint, 'voutIndex'>
+          voutIndex: TypedAbiArg<number | bigint, 'voutIndex'>,
         ],
         boolean | null
       >,
@@ -949,7 +949,7 @@ export const contracts = {
       } as TypedAbiFunction<
         [
           contractFlag: TypedAbiArg<Uint8Array, 'contractFlag'>,
-          contract: TypedAbiArg<string, 'contract'>
+          contract: TypedAbiArg<string, 'contract'>,
         ],
         Response<boolean, bigint>
       >,
@@ -1201,7 +1201,7 @@ export const contracts = {
               recipient: string;
             },
             'item'
-          >
+          >,
         ],
         Response<boolean, bigint>
       >,
@@ -1234,7 +1234,7 @@ export const contracts = {
             },
             'individualTransfer'
           >,
-          result: TypedAbiArg<Response<number | bigint, number | bigint>, 'result'>
+          result: TypedAbiArg<Response<number | bigint, number | bigint>, 'result'>,
         ],
         Response<bigint, bigint>
       >,
@@ -1251,7 +1251,7 @@ export const contracts = {
         [
           amount: TypedAbiArg<number | bigint, 'amount'>,
           owner: TypedAbiArg<string, 'owner'>,
-          contractFlag: TypedAbiArg<Uint8Array, 'contractFlag'>
+          contractFlag: TypedAbiArg<Uint8Array, 'contractFlag'>,
         ],
         Response<boolean, bigint>
       >,
@@ -1268,7 +1268,7 @@ export const contracts = {
         [
           amount: TypedAbiArg<number | bigint, 'amount'>,
           owner: TypedAbiArg<string, 'owner'>,
-          contractFlag: TypedAbiArg<Uint8Array, 'contractFlag'>
+          contractFlag: TypedAbiArg<Uint8Array, 'contractFlag'>,
         ],
         Response<boolean, bigint>
       >,
@@ -1285,7 +1285,7 @@ export const contracts = {
         [
           amount: TypedAbiArg<number | bigint, 'amount'>,
           owner: TypedAbiArg<string, 'owner'>,
-          contractFlag: TypedAbiArg<Uint8Array, 'contractFlag'>
+          contractFlag: TypedAbiArg<Uint8Array, 'contractFlag'>,
         ],
         Response<boolean, bigint>
       >,
@@ -1302,7 +1302,7 @@ export const contracts = {
         [
           amount: TypedAbiArg<number | bigint, 'amount'>,
           recipient: TypedAbiArg<string, 'recipient'>,
-          contractFlag: TypedAbiArg<Uint8Array, 'contractFlag'>
+          contractFlag: TypedAbiArg<Uint8Array, 'contractFlag'>,
         ],
         Response<boolean, bigint>
       >,
@@ -1343,7 +1343,7 @@ export const contracts = {
             }[],
             'recipients'
           >,
-          contractFlag: TypedAbiArg<Uint8Array, 'contractFlag'>
+          contractFlag: TypedAbiArg<Uint8Array, 'contractFlag'>,
         ],
         Response<Response<boolean, bigint>[], bigint>
       >,
@@ -1358,7 +1358,7 @@ export const contracts = {
       } as TypedAbiFunction<
         [
           newName: TypedAbiArg<string, 'newName'>,
-          contractFlag: TypedAbiArg<Uint8Array, 'contractFlag'>
+          contractFlag: TypedAbiArg<Uint8Array, 'contractFlag'>,
         ],
         Response<boolean, bigint>
       >,
@@ -1373,7 +1373,7 @@ export const contracts = {
       } as TypedAbiFunction<
         [
           newSymbol: TypedAbiArg<string, 'newSymbol'>,
-          contractFlag: TypedAbiArg<Uint8Array, 'contractFlag'>
+          contractFlag: TypedAbiArg<Uint8Array, 'contractFlag'>,
         ],
         Response<boolean, bigint>
       >,
@@ -1388,7 +1388,7 @@ export const contracts = {
       } as TypedAbiFunction<
         [
           newUri: TypedAbiArg<string | null, 'newUri'>,
-          contractFlag: TypedAbiArg<Uint8Array, 'contractFlag'>
+          contractFlag: TypedAbiArg<Uint8Array, 'contractFlag'>,
         ],
         Response<boolean, bigint>
       >,
@@ -1405,7 +1405,7 @@ export const contracts = {
         [
           amount: TypedAbiArg<number | bigint, 'amount'>,
           owner: TypedAbiArg<string, 'owner'>,
-          contractFlag: TypedAbiArg<Uint8Array, 'contractFlag'>
+          contractFlag: TypedAbiArg<Uint8Array, 'contractFlag'>,
         ],
         Response<boolean, bigint>
       >,
@@ -1424,7 +1424,7 @@ export const contracts = {
           amount: TypedAbiArg<number | bigint, 'amount'>,
           sender: TypedAbiArg<string, 'sender'>,
           recipient: TypedAbiArg<string, 'recipient'>,
-          memo: TypedAbiArg<Uint8Array | null, 'memo'>
+          memo: TypedAbiArg<Uint8Array | null, 'memo'>,
         ],
         Response<boolean, bigint>
       >,
@@ -1460,7 +1460,7 @@ export const contracts = {
               to: string;
             }[],
             'recipients'
-          >
+          >,
         ],
         Response<bigint, bigint>
       >,
@@ -1623,7 +1623,7 @@ export const contracts = {
             'k'
           >,
           l: TypedAbiArg<Response<number | bigint, number | bigint>, 'l'>,
-          m: TypedAbiArg<number | bigint | null, 'm'>
+          m: TypedAbiArg<number | bigint | null, 'm'>,
         ],
         Response<boolean, null>
       >,
@@ -1753,7 +1753,7 @@ export const contracts = {
               minHeight: number | bigint;
             },
             'i'
-          >
+          >,
         ],
         {
           maxHeight: bigint;

@@ -9,7 +9,6 @@ Clarigen is a tool to build type-safe code that interfacts with Clarity smart co
 We use `@tanstack/react-form` with `arktype` for validation. Forms follow a consistent pattern:
 
 1. **Schema definition** in @src/lib/form-options.ts:
-
    - Use `arktype` `type()` function to define validation schema
    - Create `formOptions()` with defaultValues and validators
    - Optional fields use `'field?': 'type'` syntax

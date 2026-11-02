@@ -4,9 +4,7 @@ export function getHiroApiKey(): string | undefined {
   if (typeof window === 'undefined') return;
 
   try {
-    return (
-      window.localStorage.getItem(HIRO_API_KEY_STORAGE_KEY)?.trim() || undefined
-    );
+    return window.localStorage.getItem(HIRO_API_KEY_STORAGE_KEY)?.trim() || undefined;
   } catch {
     return;
   }

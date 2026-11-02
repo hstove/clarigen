@@ -9,25 +9,20 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TxDecoderRouteImport } from './routes/tx-decoder'
-import { Route as DecoderRouteImport } from './routes/decoder'
-import { Route as BtcAddressRouteImport } from './routes/btc-address'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BtcAddressRouteImport } from './routes/btc-address'
+import { Route as DecoderRouteImport } from './routes/decoder'
+import { Route as TxDecoderRouteImport } from './routes/tx-decoder'
 import { Route as ApiSplatRouteImport } from './routes/api.$'
-import { Route as TxNetworkContractAddressRouteImport } from './routes/tx.$network.$contractAddress'
 import { Route as ApiRpcSplatRouteImport } from './routes/api.rpc.$'
+import { Route as TxNetworkContractAddressRouteImport } from './routes/tx.$network.$contractAddress'
+import { Route as ReadNetworkContractAddressFunctionNameRouteImport } from './routes/read.$network.$contractAddress.$functionName'
 import { Route as TxNetworkContractAddressIndexRouteImport } from './routes/tx.$network.$contractAddress.index'
 import { Route as TxNetworkContractAddressFunctionNameRouteImport } from './routes/tx.$network.$contractAddress.$functionName'
-import { Route as ReadNetworkContractAddressFunctionNameRouteImport } from './routes/read.$network.$contractAddress.$functionName'
 
-const TxDecoderRoute = TxDecoderRouteImport.update({
-  id: '/tx-decoder',
-  path: '/tx-decoder',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DecoderRoute = DecoderRouteImport.update({
-  id: '/decoder',
-  path: '/decoder',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BtcAddressRoute = BtcAddressRouteImport.update({
@@ -35,14 +30,24 @@ const BtcAddressRoute = BtcAddressRouteImport.update({
   path: '/btc-address',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const DecoderRoute = DecoderRouteImport.update({
+  id: '/decoder',
+  path: '/decoder',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TxDecoderRoute = TxDecoderRouteImport.update({
+  id: '/tx-decoder',
+  path: '/tx-decoder',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiSplatRoute = ApiSplatRouteImport.update({
   id: '/api/$',
   path: '/api/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiRpcSplatRoute = ApiRpcSplatRouteImport.update({
+  id: '/api/rpc/$',
+  path: '/api/rpc/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TxNetworkContractAddressRoute =
@@ -51,11 +56,12 @@ const TxNetworkContractAddressRoute =
     path: '/tx/$network/$contractAddress',
     getParentRoute: () => rootRouteImport,
   } as any)
-const ApiRpcSplatRoute = ApiRpcSplatRouteImport.update({
-  id: '/api/rpc/$',
-  path: '/api/rpc/$',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const ReadNetworkContractAddressFunctionNameRoute =
+  ReadNetworkContractAddressFunctionNameRouteImport.update({
+    id: '/read/$network/$contractAddress/$functionName',
+    path: '/read/$network/$contractAddress/$functionName',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const TxNetworkContractAddressIndexRoute =
   TxNetworkContractAddressIndexRouteImport.update({
     id: '/',
@@ -67,12 +73,6 @@ const TxNetworkContractAddressFunctionNameRoute =
     id: '/$functionName',
     path: '/$functionName',
     getParentRoute: () => TxNetworkContractAddressRoute,
-  } as any)
-const ReadNetworkContractAddressFunctionNameRoute =
-  ReadNetworkContractAddressFunctionNameRouteImport.update({
-    id: '/read/$network/$contractAddress/$functionName',
-    path: '/read/$network/$contractAddress/$functionName',
-    getParentRoute: () => rootRouteImport,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -162,18 +162,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/tx-decoder': {
-      id: '/tx-decoder'
-      path: '/tx-decoder'
-      fullPath: '/tx-decoder'
-      preLoaderRoute: typeof TxDecoderRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/decoder': {
-      id: '/decoder'
-      path: '/decoder'
-      fullPath: '/decoder'
-      preLoaderRoute: typeof DecoderRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/btc-address': {
@@ -183,11 +176,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BtcAddressRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/decoder': {
+      id: '/decoder'
+      path: '/decoder'
+      fullPath: '/decoder'
+      preLoaderRoute: typeof DecoderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tx-decoder': {
+      id: '/tx-decoder'
+      path: '/tx-decoder'
+      fullPath: '/tx-decoder'
+      preLoaderRoute: typeof TxDecoderRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/$': {
@@ -197,6 +197,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/rpc/$': {
+      id: '/api/rpc/$'
+      path: '/api/rpc/$'
+      fullPath: '/api/rpc/$'
+      preLoaderRoute: typeof ApiRpcSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tx/$network/$contractAddress': {
       id: '/tx/$network/$contractAddress'
       path: '/tx/$network/$contractAddress'
@@ -204,11 +211,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TxNetworkContractAddressRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/rpc/$': {
-      id: '/api/rpc/$'
-      path: '/api/rpc/$'
-      fullPath: '/api/rpc/$'
-      preLoaderRoute: typeof ApiRpcSplatRouteImport
+    '/read/$network/$contractAddress/$functionName': {
+      id: '/read/$network/$contractAddress/$functionName'
+      path: '/read/$network/$contractAddress/$functionName'
+      fullPath: '/read/$network/$contractAddress/$functionName'
+      preLoaderRoute: typeof ReadNetworkContractAddressFunctionNameRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tx/$network/$contractAddress/': {
@@ -224,13 +231,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/tx/$network/$contractAddress/$functionName'
       preLoaderRoute: typeof TxNetworkContractAddressFunctionNameRouteImport
       parentRoute: typeof TxNetworkContractAddressRoute
-    }
-    '/read/$network/$contractAddress/$functionName': {
-      id: '/read/$network/$contractAddress/$functionName'
-      path: '/read/$network/$contractAddress/$functionName'
-      fullPath: '/read/$network/$contractAddress/$functionName'
-      preLoaderRoute: typeof ReadNetworkContractAddressFunctionNameRouteImport
-      parentRoute: typeof rootRouteImport
     }
   }
 }

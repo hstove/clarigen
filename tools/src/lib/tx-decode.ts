@@ -132,21 +132,14 @@ function readAll<T>(bytes: Uint8Array, read: (reader: BytesReader) => T): T {
   const reader = new BytesReader(bytes);
   const result = read(reader);
   if (reader.consumed !== bytes.length) {
-    throw new Error(
-      `${bytes.length - reader.consumed} trailing bytes after decoding`
-    );
+    throw new Error(`${bytes.length - reader.consumed} trailing bytes after decoding`);
   }
   return result;
 }
 
-function spenderInfo(
-  condition: SpendingCondition,
-  network: TxNetwork
-): Spender {
+function spenderInfo(condition: SpendingCondition, network: TxNetwork): Spender {
   const version = addressHashModeToVersion(condition.hashMode, network);
-  const address = addressToString(
-    addressFromVersionHash(version, condition.signer)
-  );
+  const address = addressToString(addressFromVersionHash(version, condition.signer));
   const hashMode = HASH_MODE_LABELS[condition.hashMode] ?? 'unknown';
   if (isSingleSig(condition)) {
     const signed = !EMPTY_SIGNATURE.test(condition.signature.data);
@@ -161,7 +154,7 @@ function spenderInfo(
     };
   }
   const signatures = condition.fields.filter(
-    (field) => field.contents.type === StacksWireType.MessageSignature
+    field => field.contents.type === StacksWireType.MessageSignature
   ).length;
   return {
     address,
@@ -210,9 +203,8 @@ function payloadInfo(payload: PayloadWire): TxPayload {
 }
 
 export function decodeTransaction(bytes: Uint8Array): DecodedTransaction {
-  const tx = readAll(bytes, (reader) => deserializeTransaction(reader));
-  const network: TxNetwork =
-    tx.transactionVersion === 0 ? 'mainnet' : 'testnet';
+  const tx = readAll(bytes, reader => deserializeTransaction(reader));
+  const network: TxNetwork = tx.transactionVersion === 0 ? 'mainnet' : 'testnet';
   const sponsored = tx.auth.authType === AuthType.Sponsored;
   return {
     network,
@@ -224,7 +216,7 @@ export function decodeTransaction(bytes: Uint8Array): DecodedTransaction {
         ? spenderInfo(tx.auth.sponsorSpendingCondition, network)
         : null,
     postConditionMode: modeName(tx.postConditionMode),
-    postConditions: tx.postConditions.values.map((pc) =>
+    postConditions: tx.postConditions.values.map(pc =>
       wireToPostCondition(pc as PostConditionWire)
     ),
     payload: payloadInfo(tx.payload),
@@ -237,9 +229,7 @@ const MAINNET_ADDRESS_VERSIONS = new Set([22, 20]);
 
 function payloadNetwork(payload: PayloadWire): TxNetwork | null {
   if (payload.payloadType === PayloadType.ContractCall) {
-    return MAINNET_ADDRESS_VERSIONS.has(payload.contractAddress.version)
-      ? 'mainnet'
-      : 'testnet';
+    return MAINNET_ADDRESS_VERSIONS.has(payload.contractAddress.version) ? 'mainnet' : 'testnet';
   }
   if (payload.payloadType === PayloadType.TokenTransfer) {
     return principalNetwork(principalToString(payload.recipient));
@@ -248,7 +238,7 @@ function payloadNetwork(payload: PayloadWire): TxNetwork | null {
 }
 
 function decodePayload(bytes: Uint8Array): DecodedItem {
-  const payload = readAll(bytes, (reader) => deserializePayload(reader));
+  const payload = readAll(bytes, reader => deserializePayload(reader));
   return {
     kind: 'payload',
     payload: payloadInfo(payload),
@@ -257,20 +247,16 @@ function decodePayload(bytes: Uint8Array): DecodedItem {
 }
 
 function decodeClarity(bytes: Uint8Array): ClarityValue {
-  return readAll(bytes, (reader) => deserializeCV(reader));
+  return readAll(bytes, reader => deserializeCV(reader));
 }
 
 function decodePostCondition(bytes: Uint8Array): PostCondition {
-  return wireToPostCondition(
-    readAll(bytes, (reader) => deserializePostConditionWire(reader))
-  );
+  return wireToPostCondition(readAll(bytes, reader => deserializePostConditionWire(reader)));
 }
 
 function decodePostConditionList(bytes: Uint8Array): PostCondition[] {
-  const list = readAll(bytes, (reader) =>
-    deserializeLPList(reader, StacksWireType.PostCondition)
-  );
-  return list.values.map((pc) => wireToPostCondition(pc));
+  const list = readAll(bytes, reader => deserializeLPList(reader, StacksWireType.PostCondition));
+  return list.values.map(pc => wireToPostCondition(pc));
 }
 
 function decodeTxid(bytes: Uint8Array): string {
@@ -280,25 +266,22 @@ function decodeTxid(bytes: Uint8Array): string {
   return bytesToHex(bytes);
 }
 
-const HEX_DECODERS: Record<
-  Exclude<DecodeMode, 'auto'>,
-  (bytes: Uint8Array) => DecodedItem
-> = {
-  transaction: (bytes) => ({
+const HEX_DECODERS: Record<Exclude<DecodeMode, 'auto'>, (bytes: Uint8Array) => DecodedItem> = {
+  transaction: bytes => ({
     kind: 'transaction',
     tx: decodeTransaction(bytes),
   }),
   payload: decodePayload,
-  clarity: (bytes) => ({ kind: 'clarity', value: decodeClarity(bytes) }),
-  'post-conditions': (bytes) => ({
+  clarity: bytes => ({ kind: 'clarity', value: decodeClarity(bytes) }),
+  'post-conditions': bytes => ({
     kind: 'post-conditions',
     postConditions: decodePostConditionList(bytes),
   }),
-  'post-condition': (bytes) => ({
+  'post-condition': bytes => ({
     kind: 'post-condition',
     postCondition: decodePostCondition(bytes),
   }),
-  txid: (bytes) => ({ kind: 'txid', txid: decodeTxid(bytes) }),
+  txid: bytes => ({ kind: 'txid', txid: decodeTxid(bytes) }),
 };
 
 const AUTO_ORDER: Exclude<DecodeMode, 'auto'>[] = [
@@ -339,9 +322,7 @@ function asRecord(value: unknown): Record<string, unknown> | null {
 
 function isPostConditionObject(value: unknown): value is PostCondition {
   const record = asRecord(value);
-  return (
-    typeof record?.type === 'string' && record.type.endsWith('-postcondition')
-  );
+  return typeof record?.type === 'string' && record.type.endsWith('-postcondition');
 }
 
 function jsonPostCondition(value: unknown): PostCondition {
@@ -359,8 +340,7 @@ function jsonClarityArg(value: unknown): ClarityValue {
 }
 
 function jsonNetwork(value: unknown): TxNetwork | null {
-  const name =
-    typeof value === 'string' ? value : (asRecord(value)?.chainId ?? null);
+  const name = typeof value === 'string' ? value : (asRecord(value)?.chainId ?? null);
   if (name === 'mainnet' || name === 1) return 'mainnet';
   if (name === 'testnet' || name === 'devnet' || typeof name === 'number') {
     return 'testnet';
@@ -426,9 +406,7 @@ function decodeOne(source: string, mode: DecodeMode): DecodeEntry {
   try {
     const trimmed = source.trim();
     const isJson = trimmed.startsWith('{') || trimmed.startsWith('[');
-    const item = isJson
-      ? decodeJsonValue(JSON.parse(trimmed), mode)
-      : decodeHex(trimmed, mode);
+    const item = isJson ? decodeJsonValue(JSON.parse(trimmed), mode) : decodeHex(trimmed, mode);
     return { status: 'ok', source: trimmed, item };
   } catch (error) {
     return {
@@ -453,10 +431,10 @@ export function decodeInput(input: string, mode: DecodeMode): DecodeEntry[] {
   if (whole.status === 'ok') return [whole];
   const parts = input
     .split(VALUE_SEPARATOR)
-    .map((part) => part.trim().replace(QUOTES, ''))
-    .filter((part) => part.length > 0);
+    .map(part => part.trim().replace(QUOTES, ''))
+    .filter(part => part.length > 0);
   if (parts.length <= 1) return [whole];
-  return parts.map((part) => decodeOne(part, mode));
+  return parts.map(part => decodeOne(part, mode));
 }
 
 export type Warning = { level: 'danger' | 'warn' | 'info'; message: string };
@@ -491,13 +469,13 @@ export function collectPrincipals(value: ClarityValue): string[] {
 function networkWarnings(network: TxNetwork, principals: string[]): Warning[] {
   const mismatched = [
     ...new Set(
-      principals.filter((p) => {
+      principals.filter(p => {
         const detected = principalNetwork(p);
         return detected !== null && detected !== network;
       })
     ),
   ];
-  return mismatched.map((principal) => ({
+  return mismatched.map(principal => ({
     level: 'danger',
     message: `${principal} is not a ${network} address`,
   }));
@@ -520,8 +498,7 @@ function postConditionWarnings(
     return [
       {
         level: 'info',
-        message:
-          'deny mode with no post-conditions: no assets may leave any account',
+        message: 'deny mode with no post-conditions: no assets may leave any account',
       },
     ];
   }
@@ -541,15 +518,10 @@ export function transactionWarnings(tx: DecodedTransaction): Warning[] {
     ...postConditionWarnings(tx.postConditionMode, tx.postConditions),
     ...networkWarnings(tx.network, [
       ...payloadPrincipals(tx.payload),
-      ...tx.postConditions
-        .map((pc) => pc.address)
-        .filter((a) => a !== 'origin'),
+      ...tx.postConditions.map(pc => pc.address).filter(a => a !== 'origin'),
     ]),
   ];
-  if (
-    tx.origin.fee >= HIGH_FEE_USTX ||
-    (tx.sponsor?.fee ?? 0n) >= HIGH_FEE_USTX
-  ) {
+  if (tx.origin.fee >= HIGH_FEE_USTX || (tx.sponsor?.fee ?? 0n) >= HIGH_FEE_USTX) {
     warnings.push({ level: 'warn', message: 'fee is unusually high' });
   }
   if (tx.sponsored) {
@@ -570,21 +542,15 @@ export function transactionWarnings(tx: DecodedTransaction): Warning[] {
 export function callRequestWarnings(request: CallRequest): Warning[] {
   return [
     ...postConditionWarnings(request.postConditionMode, request.postConditions),
-    ...(request.network
-      ? networkWarnings(request.network, payloadPrincipals(request.call))
-      : []),
+    ...(request.network ? networkWarnings(request.network, payloadPrincipals(request.call)) : []),
   ];
 }
 
-export function payloadWarnings(
-  payload: TxPayload,
-  network: TxNetwork | null
-): Warning[] {
+export function payloadWarnings(payload: TxPayload, network: TxNetwork | null): Warning[] {
   return [
     {
       level: 'info',
-      message:
-        'payload only: sender, fee, nonce, and post-conditions are not included',
+      message: 'payload only: sender, fee, nonce, and post-conditions are not included',
     },
     ...(network ? networkWarnings(network, payloadPrincipals(payload)) : []),
   ];

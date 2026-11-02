@@ -43,8 +43,8 @@ function App() {
           Build contract calls without the boilerplate.
         </h1>
         <p className="max-w-2xl text-muted-foreground text-sm leading-6">
-          Open any deployed contract, inspect its public functions, and build a
-          wallet-ready transaction from its ABI.
+          Open any deployed contract, inspect its public functions, and build a wallet-ready
+          transaction from its ABI.
         </p>
       </section>
 
@@ -55,27 +55,19 @@ function App() {
       <section className="space-y-4">
         <div className="flex items-end justify-between gap-4">
           <div className="space-y-1">
-            <h2 className="font-medium font-mono text-sm tracking-tight">
-              recent activity
-            </h2>
+            <h2 className="font-medium font-mono text-sm tracking-tight">recent activity</h2>
             <p className="text-muted-foreground text-xs">
-              {visitedContracts.length} contracts · {visitedFunctions.length}{' '}
-              visits
+              {visitedContracts.length} contracts · {visitedFunctions.length} visits
             </p>
           </div>
-          <Button
-            disabled={!hasHistory}
-            onClick={clear}
-            size="xs"
-            variant="outline"
-          >
+          <Button disabled={!hasHistory} onClick={clear} size="xs" variant="outline">
             clear history
           </Button>
         </div>
 
         {hasHistory ? (
           <div className="grid gap-4">
-            {groups.map((group) => (
+            {groups.map(group => (
               <div
                 className="border border-border bg-card"
                 key={`${group.network}:${group.contractId}`}
@@ -98,13 +90,12 @@ function App() {
                       </div>
                     </div>
                     <div className="font-mono text-[10px] text-muted-foreground">
-                      {group.entries.length}{' '}
-                      {group.entries.length === 1 ? 'entry' : 'entries'}
+                      {group.entries.length} {group.entries.length === 1 ? 'entry' : 'entries'}
                     </div>
                   </div>
                 </div>
                 <div className="space-y-2 p-4">
-                  {group.entries.map((entry) => (
+                  {group.entries.map(entry => (
                     <div
                       className="flex items-center justify-between gap-4 border border-border/60 bg-muted/10 px-3 py-2"
                       key={`${entry.contractId}:${entry.functionName ?? 'overview'}:${
@@ -222,7 +213,7 @@ function OpenContractForm() {
       <div className="flex flex-wrap items-center justify-between gap-3 border-border border-b bg-muted/30 px-4 py-3">
         <h2 className="font-medium font-mono text-sm">open a contract</h2>
         <div className="flex flex-wrap gap-2">
-          {EXAMPLE_CONTRACTS.map((example) => (
+          {EXAMPLE_CONTRACTS.map(example => (
             <Link
               className="font-mono text-[10px] text-muted-foreground hover:text-primary hover:underline"
               key={example.label}
@@ -245,12 +236,8 @@ function OpenContractForm() {
               network
             </Label>
             <Select.Select
-              onValueChange={(value) => {
-                if (
-                  value === 'mainnet' ||
-                  value === 'testnet' ||
-                  value === 'devnet'
-                ) {
+              onValueChange={value => {
+                if (value === 'mainnet' || value === 'testnet' || value === 'devnet') {
                   setNetwork(value);
                 }
               }}
@@ -273,7 +260,7 @@ function OpenContractForm() {
             <Input
               className="font-mono"
               id="contract-id"
-              onChange={(e) => handleContractIdChange(e.target.value)}
+              onChange={e => handleContractIdChange(e.target.value)}
               placeholder="SP….contract-name"
               value={contractId}
             />
@@ -286,14 +273,12 @@ function OpenContractForm() {
           <Input
             className="font-mono"
             id="function-name"
-            onChange={(e) => setFunctionName(e.target.value)}
+            onChange={e => setFunctionName(e.target.value)}
             placeholder="leave blank to list functions"
             value={functionName}
           />
         </div>
-        {error ? (
-          <p className="font-mono text-destructive text-xs">× {error}</p>
-        ) : null}
+        {error ? <p className="font-mono text-destructive text-xs">× {error}</p> : null}
         <div className="flex flex-col items-start justify-between gap-3 border-border border-t pt-4 sm:flex-row sm:items-center">
           <p className="break-all font-mono text-[10px] text-muted-foreground">
             → /tx/{network}/{contractId.trim() || '{contract-id}'}
@@ -308,8 +293,7 @@ function OpenContractForm() {
   );
 }
 
-const EXAMPLE_TXID =
-  '0xa5a59ef2961ac000efb78128e35a7a0b0ef3528ad6fd293be39cd1fcb8901682';
+const EXAMPLE_TXID = '0xa5a59ef2961ac000efb78128e35a7a0b0ef3528ad6fd293be39cd1fcb8901682';
 
 function OpenTxForm() {
   const navigate = useNavigate();
@@ -320,9 +304,7 @@ function OpenTxForm() {
 
   let normalizedPreview: string | null = null;
   try {
-    normalizedPreview = txid.replace(/\s+/g, '').length
-      ? normalizeTxid(txid)
-      : null;
+    normalizedPreview = txid.replace(/\s+/g, '').length ? normalizeTxid(txid) : null;
   } catch {
     normalizedPreview = null;
   }
@@ -376,7 +358,7 @@ function OpenTxForm() {
       </div>
       <form
         className="space-y-4 p-4"
-        onSubmit={(event) => {
+        onSubmit={event => {
           handleSubmit(event);
         }}
       >
@@ -386,21 +368,14 @@ function OpenTxForm() {
               network
             </Label>
             <Select.Select
-              onValueChange={(value) => {
-                if (
-                  value === 'mainnet' ||
-                  value === 'testnet' ||
-                  value === 'devnet'
-                ) {
+              onValueChange={value => {
+                if (value === 'mainnet' || value === 'testnet' || value === 'devnet') {
                   setNetwork(value);
                 }
               }}
               value={network}
             >
-              <Select.SelectTrigger
-                className="w-full font-mono"
-                id="tx-network"
-              >
+              <Select.SelectTrigger className="w-full font-mono" id="tx-network">
                 <Select.SelectValue />
               </Select.SelectTrigger>
               <Select.SelectContent>
@@ -417,7 +392,7 @@ function OpenTxForm() {
             <Input
               className="font-mono"
               id="txid"
-              onChange={(e) => {
+              onChange={e => {
                 setTxid(e.target.value);
                 setError(null);
               }}
@@ -426,9 +401,7 @@ function OpenTxForm() {
             />
           </div>
         </div>
-        {error ? (
-          <p className="font-mono text-destructive text-xs">× {error}</p>
-        ) : null}
+        {error ? <p className="font-mono text-destructive text-xs">× {error}</p> : null}
         <div className="flex flex-col items-start justify-between gap-3 border-border border-t pt-4 sm:flex-row sm:items-center">
           <p className="break-all font-mono text-[10px] text-muted-foreground">
             {normalizedPreview
@@ -455,9 +428,7 @@ type GroupedVisited = {
   }[];
 };
 
-function groupVisitedByContract(
-  entries: GroupedVisited['entries']
-): GroupedVisited[] {
+function groupVisitedByContract(entries: GroupedVisited['entries']): GroupedVisited[] {
   const groups: GroupedVisited[] = [];
   const map = new Map<string, GroupedVisited>();
 

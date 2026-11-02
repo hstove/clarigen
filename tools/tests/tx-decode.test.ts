@@ -28,17 +28,12 @@ describe('decodeInput', () => {
     expect(tx.origin.fee).toBe(1097n);
     expect(tx.origin.signed).toBe(true);
     expect(tx.postConditionMode).toBe('allow');
-    expect(tx.txid).toBe(
-      '0x0325239e1444936f22610055a7cd161e6a7055c7b7eeac336c6e772b1d9df3d0'
-    );
+    expect(tx.txid).toBe('0x0325239e1444936f22610055a7cd161e6a7055c7b7eeac336c6e772b1d9df3d0');
     if (tx.payload.kind !== 'contract-call') throw new Error(tx.payload.kind);
     expect(tx.payload.contractId).toBe('SP000000000000000000002Q6VF78.pox-5');
     expect(tx.payload.functionName).toBe('setup-bond');
-    expect(tx.payload.args.map((a) => cvToString(a)).slice(0, 2)).toEqual([
-      'u2',
-      'u300',
-    ]);
-    const messages = transactionWarnings(tx).map((w) => w.level);
+    expect(tx.payload.args.map(a => cvToString(a)).slice(0, 2)).toEqual(['u2', 'u300']);
+    const messages = transactionWarnings(tx).map(w => w.level);
     expect(messages).toContain('danger');
   });
 
@@ -56,14 +51,9 @@ describe('decodeInput', () => {
   });
 
   it('decodes one arg per line', () => {
-    const input = [cvToHex(Cl.uint(1)), cvToHex(Cl.stringAscii('hi'))].join(
-      '\n'
-    );
+    const input = [cvToHex(Cl.uint(1)), cvToHex(Cl.stringAscii('hi'))].join('\n');
     const entries = decodeInput(input, 'auto');
-    expect(entries.map((e) => e.status === 'ok' && e.item.kind)).toEqual([
-      'clarity',
-      'clarity',
-    ]);
+    expect(entries.map(e => e.status === 'ok' && e.item.kind)).toEqual(['clarity', 'clarity']);
   });
 
   it('decodes space-separated values', () => {
@@ -98,9 +88,7 @@ describe('decodeInput', () => {
   });
 
   it('detects a txid', () => {
-    const item = only(
-      '0x0325239e1444936f22610055a7cd161e6a7055c7b7eeac336c6e772b1d9df3d0'
-    );
+    const item = only('0x0325239e1444936f22610055a7cd161e6a7055c7b7eeac336c6e772b1d9df3d0');
     expect(item.kind).toBe('txid');
   });
 
@@ -115,7 +103,7 @@ describe('value hints', () => {
     const hints = bufferHints(
       '2102fd9c38fb020cb9efe3f89f80cc118a27272828c477eaa0a5a6d7403ee8d8fc45ac'
     );
-    expect(hints.find((h) => h.label === 'btc script')?.value).toBe(
+    expect(hints.find(h => h.label === 'btc script')?.value).toBe(
       '02fd9c38fb020cb9efe3f89f80cc118a27272828c477eaa0a5a6d7403ee8d8fc45 OP_CHECKSIG'
     );
   });

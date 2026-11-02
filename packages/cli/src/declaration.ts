@@ -11,11 +11,7 @@ import {
   isClarityAbiTraitReference,
 } from '@clarigen/core';
 // import { ClarityAbiArg, ClarityAbiFunction, ClarityAbiType } from '../types.ts';
-import {
-  toCamelCase,
-  type ClarityAbiArg,
-  type ClarityAbiFunction,
-} from '@clarigen/core';
+import { toCamelCase, type ClarityAbiArg, type ClarityAbiFunction } from '@clarigen/core';
 
 export const jsTypeFromAbiType = (
   val: ClarityAbiType,
@@ -43,9 +39,7 @@ export const jsTypeFromAbiType = (
     if (val === 'trait_reference') {
       return 'string';
     }
-    throw new Error(
-      `Unexpected Clarity ABI type primitive: ${JSON.stringify(val)}`
-    );
+    throw new Error(`Unexpected Clarity ABI type primitive: ${JSON.stringify(val)}`);
   }
   if (isClarityAbiBuffer(val)) {
     return 'Uint8Array';

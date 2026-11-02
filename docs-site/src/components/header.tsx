@@ -33,9 +33,7 @@ export const Header: React.FC<{ children?: React.ReactNode }> = () => {
             <Link
               className={cn(
                 'transition-colors hover:text-foreground/80',
-                pathname.startsWith('/docs')
-                  ? 'text-foreground'
-                  : 'text-foreground/60'
+                pathname.startsWith('/docs') ? 'text-foreground' : 'text-foreground/60'
               )}
               href="/docs/intro"
             >
@@ -44,9 +42,7 @@ export const Header: React.FC<{ children?: React.ReactNode }> = () => {
             <Link
               className={cn(
                 'transition-colors hover:text-foreground/80',
-                pathname.startsWith('/contracts')
-                  ? 'text-foreground'
-                  : 'text-foreground/60'
+                pathname.startsWith('/contracts') ? 'text-foreground' : 'text-foreground/60'
               )}
               href="/contracts"
             >
@@ -60,11 +56,7 @@ export const Header: React.FC<{ children?: React.ReactNode }> = () => {
           </div>
 
           <div className="flex items-center">
-            <Link
-              href="https://github.com/hstove/clarigen"
-              rel="noreferrer"
-              target="_blank"
-            >
+            <Link href="https://github.com/hstove/clarigen" rel="noreferrer" target="_blank">
               <div
                 className={cn(
                   buttonVariants({

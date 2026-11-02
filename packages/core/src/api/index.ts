@@ -2,17 +2,8 @@
 // biome-ignore lint/style/noExportedImports: ignored using `--suppress`
 import { cvToHex, hexToCV } from '@stacks/transactions';
 export { cvToHex, hexToCV };
-import {
-  type StacksTransactionWire,
-  broadcastTransaction,
-} from '@stacks/transactions';
-import {
-  cvToJSON,
-  cvToValue,
-  expectErr,
-  expectOk,
-  type Jsonize,
-} from '../clarity-types';
+import { type StacksTransactionWire, broadcastTransaction } from '@stacks/transactions';
+import { cvToJSON, cvToValue, expectErr, expectOk, type Jsonize } from '../clarity-types';
 import type { Response, TypedAbiMap } from '../abi-types';
 import type { ContractCall } from '../factory-types';
 import { mapFactory } from '../factory';
@@ -20,11 +11,7 @@ import { mapFactory } from '../factory';
 export * from './call-read-only';
 import { callReadOnlyFunction } from './call-read-only';
 import { generateUrl, getHeaders, v2Endpoint } from './api-helpers';
-import {
-  type StacksNetwork,
-  type StacksNetworkName,
-  networkFrom,
-} from '@stacks/network';
+import { type StacksNetwork, type StacksNetworkName, networkFrom } from '@stacks/network';
 
 export type ApiOptionsUrl = {
   url: string;
@@ -58,9 +45,7 @@ export type ApiOptions = ApiOptionsBase & {
   json?: boolean;
 };
 
-export type JsonIfOption<O extends ApiOptions, R> = O extends ApiOptionsJsonize
-  ? Jsonize<R>
-  : R;
+export type JsonIfOption<O extends ApiOptions, R> = O extends ApiOptionsJsonize ? Jsonize<R> : R;
 
 // export type ApiOptions = ApiOptionsJsonize | ApiOptionsNoJson;
 
@@ -146,10 +131,7 @@ export async function fetchMapGet<Key, Val>(
   return cvToValue<Val | null>(valueCV, true);
 }
 
-export async function broadcast(
-  transaction: StacksTransactionWire,
-  options: ApiOptions
-) {
+export async function broadcast(transaction: StacksTransactionWire, options: ApiOptions) {
   const network = options.network;
   const result = await broadcastTransaction({
     transaction,
@@ -197,10 +179,7 @@ export class ClarigenClient {
     };
   }
 
-  ro<T, O extends ClientOptions>(
-    tx: ContractCall<T>,
-    options?: O
-  ): Promise<JsonIf<O, T>> {
+  ro<T, O extends ClientOptions>(tx: ContractCall<T>, options?: O): Promise<JsonIf<O, T>> {
     return ro(tx, this.roOptions(options || {})) as Promise<JsonIf<O, T>>;
   }
 

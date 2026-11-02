@@ -10,9 +10,7 @@ module.exports = (api, _targets) => {
         '@babel/preset-env',
         {
           modules: isTestEnv ? 'commonjs' : false,
-          targets: isTestEnv
-            ? { node: 'current' }
-            : ['maintained node versions', '> 2%'],
+          targets: isTestEnv ? { node: 'current' } : ['maintained node versions', '> 2%'],
           loose: false,
           useBuiltIns: false,
           exclude: [

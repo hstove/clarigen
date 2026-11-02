@@ -12,36 +12,18 @@ export function rehypeNpmCommand() {
       if (node.properties?.__rawString__?.startsWith('npm install')) {
         const npmCommand = node.properties?.__rawString__;
         node.properties.__npmCommand__ = npmCommand;
-        node.properties.__yarnCommand__ = npmCommand.replace(
-          'npm install',
-          'yarn add'
-        );
-        node.properties.__pnpmCommand__ = npmCommand.replace(
-          'npm install',
-          'pnpm add'
-        );
-        node.properties.__bunCommand__ = npmCommand.replace(
-          'npm install',
-          'bun add'
-        );
+        node.properties.__yarnCommand__ = npmCommand.replace('npm install', 'yarn add');
+        node.properties.__pnpmCommand__ = npmCommand.replace('npm install', 'pnpm add');
+        node.properties.__bunCommand__ = npmCommand.replace('npm install', 'bun add');
       }
 
       // npx create.
       if (node.properties?.__rawString__?.startsWith('npx create-')) {
         const npmCommand = node.properties?.__rawString__;
         node.properties.__npmCommand__ = npmCommand;
-        node.properties.__yarnCommand__ = npmCommand.replace(
-          'npx create-',
-          'yarn create '
-        );
-        node.properties.__pnpmCommand__ = npmCommand.replace(
-          'npx create-',
-          'pnpm create '
-        );
-        node.properties.__bunCommand__ = npmCommand.replace(
-          'npx',
-          'bunx --bun'
-        );
+        node.properties.__yarnCommand__ = npmCommand.replace('npx create-', 'yarn create ');
+        node.properties.__pnpmCommand__ = npmCommand.replace('npx create-', 'pnpm create ');
+        node.properties.__bunCommand__ = npmCommand.replace('npx', 'bunx --bun');
       }
 
       // npx.
@@ -53,10 +35,7 @@ export function rehypeNpmCommand() {
         node.properties.__npmCommand__ = npmCommand;
         node.properties.__yarnCommand__ = npmCommand;
         node.properties.__pnpmCommand__ = npmCommand.replace('npx', 'pnpm');
-        node.properties.__bunCommand__ = npmCommand.replace(
-          'npx',
-          'bunx --bun'
-        );
+        node.properties.__bunCommand__ = npmCommand.replace('npx', 'bunx --bun');
       }
     });
   };

@@ -5,12 +5,12 @@
   "module": "./dist/index.mjs",
   "exports": {
     ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
     },
     "./run-cli": {
-      "require": "./dist/run-cli.cjs",
-      "import": "./dist/run-cli.mjs"
+      "import": "./dist/run-cli.mjs",
+      "require": "./dist/run-cli.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -22,27 +22,25 @@
     "node": ">=10"
   },
   "bin": {
-    "clarigen": "./dist/run-cli.mjs"
+    "cli": "./dist/run-cli.mjs"
   },
   "scripts": {
     "start": "tsx src/run-cli.ts",
-    "dev": "tsdown --watch",
-    "build": "tsdown",
+    "dev": "vp pack --watch",
+    "build": "vp pack",
     "test": "vitest run --passWithNoTests",
-    "lint": "eslint \"src/**/*.{ts,tsx}\" && prettier --check \"./**/*.{ts,js}\"",
-    "format:fix": "prettier -w \"./**/*.{ts,js}\"",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" && vp fmt --check \"./**/*.{ts,js}\"",
+    "format:fix": "vp fmt \"./**/*.{ts,js}\"",
     "typecheck": "tsc --noEmit -p tsconfig-test.json",
-    "type-stubs": "tsx scripts/generate-type-stubs.ts && prettier --loglevel error -w ./src/**/*.ts",
-    "publish": "bun publish"
+    "type-stubs": "tsx scripts/generate-type-stubs.ts && vp fmt --loglevel error ./src/**/*.ts",
+    "publish": "pnpm publish"
   },
-  "prettier": "@stacks/prettier-config",
   "name": "@clarigen/cli",
   "author": "Hank Stoever",
   "devDependencies": {
     "@stacks/clarinet-sdk": "3.19.0",
     "@stacks/clarinet-sdk-wasm": "3.19.0",
-    "tsx": "^4.7.2",
-    "vitest": "3.2.4"
+    "tsx": "^4.7.2"
   },
   "peerDependencies": {
     "@stacks/clarinet-sdk": "^3.9.2",

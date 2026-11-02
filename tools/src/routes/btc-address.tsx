@@ -62,8 +62,8 @@ function BtcAddressPage() {
           BTC address ↔ {'{ version, hashbytes }'}
         </h1>
         <p className="max-w-2xl text-muted-foreground text-sm leading-6">
-          Convert a Bitcoin address into the Clarity pox-addr tuple used by
-          pox-4 / pox-5, or rebuild an address from version and hashbytes hex.
+          Convert a Bitcoin address into the Clarity pox-addr tuple used by pox-4 / pox-5, or
+          rebuild an address from version and hashbytes hex.
         </p>
       </section>
 
@@ -97,7 +97,7 @@ function FromAddress() {
       <div className="flex flex-wrap items-center justify-between gap-3 border-border border-b bg-muted/30 px-4 py-3">
         <h2 className="font-medium font-mono text-sm">from btc address</h2>
         <div className="flex flex-wrap gap-2">
-          {EXAMPLE_ADDRESSES.map((example) => (
+          {EXAMPLE_ADDRESSES.map(example => (
             <button
               className="font-mono text-[10px] text-muted-foreground hover:text-primary hover:underline"
               key={example.label}
@@ -117,16 +117,14 @@ function FromAddress() {
           <Input
             className="font-mono"
             id="btc-address"
-            onChange={(event) => setAddress(event.target.value)}
+            onChange={event => setAddress(event.target.value)}
             placeholder="bc1q… / 1… / 3… / tb1q…"
             value={address}
           />
         </div>
 
         {result.status === 'error' ? (
-          <p className="font-mono text-destructive text-xs">
-            × {result.message}
-          </p>
+          <p className="font-mono text-destructive text-xs">× {result.message}</p>
         ) : null}
 
         {result.status === 'ok' ? (
@@ -181,17 +179,14 @@ function FromTuple() {
               btc network
             </Label>
             <Select.Select
-              onValueChange={(value) => {
+              onValueChange={value => {
                 if (value === 'mainnet' || value === 'testnet') {
                   setNetwork(value);
                 }
               }}
               value={network}
             >
-              <Select.SelectTrigger
-                className="w-full font-mono"
-                id="btc-network"
-              >
+              <Select.SelectTrigger className="w-full font-mono" id="btc-network">
                 <Select.SelectValue />
               </Select.SelectTrigger>
               <Select.SelectContent>
@@ -207,7 +202,7 @@ function FromTuple() {
             <Input
               className="font-mono"
               id="pox-version"
-              onChange={(event) => setVersion(event.target.value)}
+              onChange={event => setVersion(event.target.value)}
               placeholder="0x00"
               value={version}
             />
@@ -219,23 +214,21 @@ function FromTuple() {
             <Input
               className="font-mono"
               id="pox-hashbytes"
-              onChange={(event) => setHashbytes(event.target.value)}
+              onChange={event => setHashbytes(event.target.value)}
               placeholder="0x…"
               value={hashbytes}
             />
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
-          {VERSION_CHIPS.map((chip) => (
+          {VERSION_CHIPS.map(chip => (
             <Button
               key={chip.version}
               onClick={() => setVersion(chip.version)}
               size="xs"
               type="button"
               variant={
-                version.replace(/\s+/g, '').toLowerCase() === chip.version
-                  ? 'default'
-                  : 'outline'
+                version.replace(/\s+/g, '').toLowerCase() === chip.version ? 'default' : 'outline'
               }
             >
               {chip.version} {chip.label}
@@ -243,14 +236,12 @@ function FromTuple() {
           ))}
         </div>
         <p className="font-mono text-[10px] text-muted-foreground">
-          pox-addr tuple is {'{ version: (buff 1), hashbytes: (buff 32) }'}. hex
-          may omit the 0x prefix.
+          pox-addr tuple is {'{ version: (buff 1), hashbytes: (buff 32) }'}. hex may omit the 0x
+          prefix.
         </p>
 
         {result.status === 'error' ? (
-          <p className="font-mono text-destructive text-xs">
-            × {result.message}
-          </p>
+          <p className="font-mono text-destructive text-xs">× {result.message}</p>
         ) : null}
 
         {result.status === 'ok' ? (

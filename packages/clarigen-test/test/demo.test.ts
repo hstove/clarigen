@@ -64,9 +64,7 @@ describe('using clarigen/test', () => {
     rovOk(tester.roResp(false), deployer) as string;
     rovErr(tester.roResp(true), deployer) as bigint;
     rov(tester.roResp(true), deployer) as Response<string, bigint>;
-    tx(tester.printPub(), deployer) as TransactionResult<
-      Response<boolean, bigint>
-    >;
+    tx(tester.printPub(), deployer) as TransactionResult<Response<boolean, bigint>>;
   });
 
   it('throws for ok with txErr', () => {

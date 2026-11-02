@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useCallback,
-  useState,
-  type ReactNode,
-} from 'react';
+import { createContext, useContext, useCallback, useState, type ReactNode } from 'react';
 import type { ClarityAbiType } from '@clarigen/core';
 
 export type FocusedField = {
@@ -18,9 +12,7 @@ type FocusedFieldContextValue = {
   setFocusedField: (field: FocusedField | null) => void;
 };
 
-const FocusedFieldContext = createContext<FocusedFieldContextValue | null>(
-  null
-);
+const FocusedFieldContext = createContext<FocusedFieldContextValue | null>(null);
 
 export function FocusedFieldProvider({ children }: { children: ReactNode }) {
   const [focusedField, setFocusedField] = useState<FocusedField | null>(null);
@@ -35,9 +27,7 @@ export function FocusedFieldProvider({ children }: { children: ReactNode }) {
 export function useFocusedField() {
   const context = useContext(FocusedFieldContext);
   if (!context) {
-    throw new Error(
-      'useFocusedField must be used within a FocusedFieldProvider'
-    );
+    throw new Error('useFocusedField must be used within a FocusedFieldProvider');
   }
   return context;
 }

@@ -24,7 +24,7 @@ vi.stubGlobal('window', {
 
 beforeEach(() => {
   // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
-  Object.keys(mockStorage).forEach((key) => delete mockStorage[key]);
+  Object.keys(mockStorage).forEach(key => delete mockStorage[key]);
 });
 
 describe('getContextHistory / addContextHistory', () => {
@@ -38,9 +38,7 @@ describe('getContextHistory / addContextHistory', () => {
 
   it('stores and retrieves a single value', () => {
     addContextHistory(contractId, functionName, argName, 'SP456');
-    expect(getContextHistory(contractId, functionName, argName)).toEqual([
-      'SP456',
-    ]);
+    expect(getContextHistory(contractId, functionName, argName)).toEqual(['SP456']);
   });
 
   it('stores multiple values in most-recent-first order', () => {
@@ -58,10 +56,7 @@ describe('getContextHistory / addContextHistory', () => {
     addContextHistory(contractId, functionName, argName, 'SP111');
     addContextHistory(contractId, functionName, argName, 'SP222');
     addContextHistory(contractId, functionName, argName, 'SP111');
-    expect(getContextHistory(contractId, functionName, argName)).toEqual([
-      'SP111',
-      'SP222',
-    ]);
+    expect(getContextHistory(contractId, functionName, argName)).toEqual(['SP111', 'SP222']);
   });
 
   it('limits to 10 items', () => {
@@ -80,9 +75,7 @@ describe('getContextHistory / addContextHistory', () => {
     addContextHistory(contractId, functionName, argName, 'SP111');
     addContextHistory(contractId, functionName, argName, '');
     addContextHistory(contractId, functionName, argName, '   ');
-    expect(getContextHistory(contractId, functionName, argName)).toEqual([
-      'SP111',
-    ]);
+    expect(getContextHistory(contractId, functionName, argName)).toEqual(['SP111']);
   });
 });
 
@@ -115,12 +108,7 @@ describe('getCombinedHistory', () => {
     addContextHistory('SP123.token', 'transfer', 'recipient', 'SPCONTEXT');
     addTypeHistory('principal', 'SPGLOBAL');
 
-    const combined = getCombinedHistory(
-      'SP123.token',
-      'transfer',
-      'recipient',
-      'principal'
-    );
+    const combined = getCombinedHistory('SP123.token', 'transfer', 'recipient', 'principal');
     expect(combined.contextHistory).toEqual(['SPCONTEXT']);
     expect(combined.typeHistory).toEqual(['SPGLOBAL']);
   });
@@ -133,12 +121,8 @@ describe('saveFormHistory', () => {
       { name: 'amount', type: 'uint128', value: '1000' },
     ]);
 
-    expect(getContextHistory('SP123.token', 'transfer', 'recipient')).toEqual([
-      'SP456',
-    ]);
-    expect(getContextHistory('SP123.token', 'transfer', 'amount')).toEqual([
-      '1000',
-    ]);
+    expect(getContextHistory('SP123.token', 'transfer', 'recipient')).toEqual(['SP456']);
+    expect(getContextHistory('SP123.token', 'transfer', 'amount')).toEqual(['1000']);
     expect(getTypeHistory('principal')).toEqual(['SP456']);
     expect(getTypeHistory('uint128')).toEqual(['1000']);
   });
@@ -149,11 +133,7 @@ describe('saveFormHistory', () => {
       { name: 'amount', type: 'uint128', value: '1000' },
     ]);
 
-    expect(getContextHistory('SP123.token', 'transfer', 'recipient')).toEqual(
-      []
-    );
-    expect(getContextHistory('SP123.token', 'transfer', 'amount')).toEqual([
-      '1000',
-    ]);
+    expect(getContextHistory('SP123.token', 'transfer', 'recipient')).toEqual([]);
+    expect(getContextHistory('SP123.token', 'transfer', 'amount')).toEqual(['1000']);
   });
 });

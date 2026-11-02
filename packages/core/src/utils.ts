@@ -1,8 +1,5 @@
 /** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
-import {
-  contractPrincipalCV,
-  type ContractPrincipalCV,
-} from '@stacks/transactions';
+import { contractPrincipalCV, type ContractPrincipalCV } from '@stacks/transactions';
 import type { Contract } from './types';
 import { hex } from '@scure/base';
 import type { TypedAbi } from './abi-types';
@@ -11,10 +8,7 @@ import type { AllContracts } from './factory-types';
 export const TESTNET_BURN_ADDRESS = 'ST000000000000000000002AMW42H';
 export const MAINNET_BURN_ADDRESS = 'SP000000000000000000002Q6VF78';
 
-export const toCamelCase = (
-  input: string | number | symbol,
-  titleCase?: boolean
-) => {
+export const toCamelCase = (input: string | number | symbol, titleCase?: boolean) => {
   const inputStr = typeof input === 'string' ? input : String(input);
   // Check if the input string only contains uppercase letters and/or underscores
   // biome-ignore lint/performance/useTopLevelRegex: ignored using `--suppress`
@@ -22,10 +16,7 @@ export const toCamelCase = (
   if (isUpperCaseAndUnderscore) {
     return inputStr;
   }
-  const [first, ...parts] = inputStr
-    .replace('!', '_x')
-    .replace('?', '_q')
-    .split('-');
+  const [first, ...parts] = inputStr.replace('!', '_x').replace('?', '_q').split('-');
   const firstChar = titleCase
     ? // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
       first![0]!.toUpperCase()
@@ -36,7 +27,7 @@ export const toCamelCase = (
     first!.slice(1)
   }`;
   // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
-  parts.forEach((part) => {
+  parts.forEach(part => {
     // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
     const capitalized = part[0]!.toUpperCase() + part.slice(1);
     result += capitalized;
@@ -45,9 +36,7 @@ export const toCamelCase = (
 };
 
 export function toKebabCase(input: string): string {
-  const matches = input.match(
-    /[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g
-  );
+  const matches = input.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g);
   if (!matches) return input;
   return matches.join('-').toLowerCase();
 }
@@ -68,9 +57,7 @@ export const getContractNameFromPath = (path: string) => {
 export const getContractIdentifier = <T>(contract: Contract<T>) =>
   `${contract.address}.${contract.name}`;
 
-export const getContractPrincipalCV = <T>(
-  contract: Contract<T>
-): ContractPrincipalCV => {
+export const getContractPrincipalCV = <T>(contract: Contract<T>): ContractPrincipalCV => {
   const contractName = getContractNameFromPath(contract.contractFile);
   // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
   return contractPrincipalCV(contract.address, contractName!);
@@ -94,8 +81,7 @@ export function bytesToAscii(bytes: Uint8Array) {
   return String.fromCharCode.apply(null, bytesArray);
 }
 
-export const isNumber = (value: number | string): value is number =>
-  typeof value === 'number';
+export const isNumber = (value: number | string): value is number => typeof value === 'number';
 
 // Error code helpers
 
@@ -122,9 +108,7 @@ export type ProjectErrors<
   [K in keyof T['contracts']]: ErrorCodes<T['contracts'][K]['constants']>;
 };
 
-export function extractErrors<T extends TypedAbi>(
-  contract: T
-): ErrorCodes<T['constants']> {
+export function extractErrors<T extends TypedAbi>(contract: T): ErrorCodes<T['constants']> {
   const { constants } = contract;
 
   const result: Partial<ErrorCodes<T['constants']>> = {};
@@ -139,10 +123,9 @@ export function extractErrors<T extends TypedAbi>(
         !value.isOk &&
         'value' in value
       ) {
-        result[key as keyof ErrorCodes<T['constants']>] =
-          value.value as ErrorCodes<T['constants']>[keyof ErrorCodes<
-            T['constants']
-          >];
+        result[key as keyof ErrorCodes<T['constants']>] = value.value as ErrorCodes<
+          T['constants']
+        >[keyof ErrorCodes<T['constants']>];
       } else {
         result[key as keyof ErrorCodes<T['constants']>] = value as ErrorCodes<
           T['constants']

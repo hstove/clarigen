@@ -7,15 +7,14 @@
   "module": "./dist/index.mjs",
   "import": "./dist/index.mjs",
   "scripts": {
-    "start": "tsdown --watch",
-    "dev": "tsdown --watch",
-    "build": "shx rm -rf ./dist && tsdown",
+    "start": "vp pack --watch",
+    "dev": "vp pack --watch",
+    "build": "shx rm -rf ./dist && vp pack",
     "test": "vitest run --passWithNoTests",
-    "lint": "eslint \"src/**/*.{ts,tsx}\" && prettier --check \"./**/*.{ts,js}\"",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" && vp fmt --check \"./**/*.{ts,js}\"",
     "typecheck": "tsc --noEmit -p tsconfig-test.json",
-    "publish": "bun publish"
+    "publish": "pnpm publish"
   },
-  "prettier": "@stacks/prettier-config",
   "author": "Hank Stoever",
   "dependencies": {
     "@clarigen/core": "workspace:*"
@@ -26,8 +25,8 @@
   },
   "exports": {
     ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"
   }

@@ -15,22 +15,14 @@ type ContextPanelProps = {
   functionDoc?: ClaridocFunction;
 };
 
-function TxStatusLoading({
-  txid,
-  network,
-}: {
-  txid: string;
-  network: NETWORK;
-}) {
+function TxStatusLoading({ txid, network }: { txid: string; network: NETWORK }) {
   return (
     <div className="animate-pulse space-y-2 border border-border bg-muted/30 p-4">
       <div className="flex items-center gap-2 font-medium text-sm">
         <span className="text-muted-foreground">◌</span>
         <span>Loading transaction...</span>
       </div>
-      <p className="break-all font-mono text-muted-foreground text-xs">
-        {txid}
-      </p>
+      <p className="break-all font-mono text-muted-foreground text-xs">{txid}</p>
       <ExplorerLink network={network} txid={txid} />
     </div>
   );
@@ -43,9 +35,7 @@ function TxStatusError({ txid, network }: { txid: string; network: NETWORK }) {
         <span>×</span>
         <span>Transaction Status Unavailable</span>
       </div>
-      <p className="break-all font-mono text-muted-foreground text-xs">
-        {txid}
-      </p>
+      <p className="break-all font-mono text-muted-foreground text-xs">{txid}</p>
       <ExplorerLink network={network} txid={txid} />
     </div>
   );

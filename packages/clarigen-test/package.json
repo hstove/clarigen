@@ -12,15 +12,14 @@
     "node": ">=10"
   },
   "scripts": {
-    "start": "tsdown --watch",
-    "dev": "tsdown --watch",
-    "build": "shx rm -rf dist && tsdown",
+    "start": "vp pack --watch",
+    "dev": "vp pack --watch",
+    "build": "shx rm -rf dist && vp pack",
     "test": "vitest run",
-    "lint": "eslint \"src/**/*.{ts,tsx}\" && prettier --check \"./**/*.{ts,js}\"",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" && vp fmt --check \"./**/*.{ts,js}\"",
     "typecheck": "tsc --noEmit -p tsconfig-test.json",
-    "publish": "bun publish"
+    "publish": "pnpm publish"
   },
-  "prettier": "@stacks/prettier-config",
   "name": "@clarigen/test",
   "author": "Hank Stoever",
   "type": "module",
@@ -30,7 +29,7 @@
     "@types/node": "24.2.0",
     "tsx": "^4.8.1",
     "typescript": "5.9.3",
-    "vitest": "3.2.4",
+    "vitest": "catalog:",
     "vitest-environment-clarinet": "3.0.2"
   },
   "peerDependencies": {
@@ -47,8 +46,8 @@
   },
   "exports": {
     ".": {
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
     },
     "./package.json": "./package.json"
   }

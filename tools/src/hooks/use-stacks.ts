@@ -40,8 +40,7 @@ function useStacksAccount() {
 
 export function useAccount() {
   const queryClient = useQueryClient();
-  const { stacksAccount, stacksAddress, stacksAddressTestnet } =
-    useStacksAccount();
+  const { stacksAccount, stacksAddress, stacksAddressTestnet } = useStacksAccount();
 
   const connect = React.useCallback(async () => {
     const { connect: connectStacks } = await import('@stacks/connect');

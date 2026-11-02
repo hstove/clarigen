@@ -1,10 +1,10 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { defineConfig, type Plugin } from 'vite';
+import type { Plugin } from 'vite';
+import { defineConfig } from 'vite-plus';
 import { devtools } from '@tanstack/devtools-vite';
 import { tanstackStart } from '@tanstack/react-start/plugin/vite';
 import viteReact from '@vitejs/plugin-react';
-import viteTsConfigPaths from 'vite-tsconfig-paths';
 import tailwindcss from '@tailwindcss/vite';
 
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
@@ -23,24 +23,18 @@ function stacksConnectSsrStub(): Plugin {
   };
 }
 
-const config = defineConfig({
+const config = defineConfig(({ mode }) => ({
   resolve: {
+    tsconfigPaths: true,
     dedupe: ['react', 'react-dom'],
   },
   server: {
     port: 2527,
   },
-  plugins: [
-    stacksConnectSsrStub(),
-    devtools(),
-    // this is the plugin that enables path aliases
-    viteTsConfigPaths({
-      projects: ['./tsconfig.json'],
-    }),
-    tailwindcss(),
-    tanstackStart(),
-    viteReact(),
-  ],
-});
+  plugins:
+    mode === 'test'
+      ? []
+      : [stacksConnectSsrStub(), devtools(), tailwindcss(), tanstackStart(), viteReact()],
+}));
 
 export default config;

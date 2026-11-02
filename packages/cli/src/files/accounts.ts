@@ -3,7 +3,7 @@ import type { SessionAccount } from '../session';
 export function generateAccountsCode(accounts: SessionAccount[]) {
   const sortedAccounts = sortAccounts(accounts);
   const namedAccounts = Object.fromEntries(
-    sortedAccounts.map((a) => {
+    sortedAccounts.map(a => {
       const { name, ...rest } = a;
       return [name, rest];
     })

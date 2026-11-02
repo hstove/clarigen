@@ -11,19 +11,12 @@ type PrincipalHelperProps = {
   contractId: string;
 };
 
-export function PrincipalHelper({
-  field,
-  onApply,
-  network,
-  contractId,
-}: PrincipalHelperProps) {
-  const { stacksAddress, stacksAddressTestnet, connect, stacksAccount } =
-    useAccount();
+export function PrincipalHelper({ field, onApply, network, contractId }: PrincipalHelperProps) {
+  const { stacksAddress, stacksAddressTestnet, connect, stacksAccount } = useAccount();
   const isContract = field.type === 'trait_reference';
 
   // Use the appropriate address based on network
-  const userAddress =
-    network === 'mainnet' ? stacksAddress : stacksAddressTestnet;
+  const userAddress = network === 'mainnet' ? stacksAddress : stacksAddressTestnet;
 
   const handleUseWalletAddress = () => {
     if (userAddress) {
@@ -76,12 +69,7 @@ export function PrincipalHelper({
             )}
           </div>
         ) : (
-          <Button
-            className="w-full"
-            onClick={handleConnect}
-            size="sm"
-            variant="secondary"
-          >
+          <Button className="w-full" onClick={handleConnect} size="sm" variant="secondary">
             Connect Wallet
           </Button>
         )}
@@ -96,9 +84,7 @@ export function PrincipalHelper({
             <FileCode className="h-4 w-4" />
             <span className="flex-1 text-left">Contract Address</span>
           </Button>
-          <p className="truncate px-2 font-mono text-[10px] text-muted-foreground">
-            {contractId}
-          </p>
+          <p className="truncate px-2 font-mono text-[10px] text-muted-foreground">{contractId}</p>
         </div>
       </div>
 

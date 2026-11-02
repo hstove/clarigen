@@ -32,11 +32,7 @@ function clarityVersionForContract(contract: SessionContract) {
   }
 }
 
-export function getVariablesV2(
-  contract: SessionContract,
-  simnet: Simnet,
-  verbose?: boolean
-) {
+export function getVariablesV2(contract: SessionContract, simnet: Simnet, verbose?: boolean) {
   const [deployer] = contract.contract_id.split('.');
   const fakeId = `${getContractName(contract.contract_id)}-vars`;
   logger.debug(`Deploying ${contract.contract_id} for variables.`);
@@ -49,15 +45,13 @@ export function getVariablesV2(
   }
 
   if (contract.contract_interface.variables.length === 0) {
-    logger.info(
-      `Contract ${getContractName(contract.contract_id, false)} has no variables`
-    );
+    logger.info(`Contract ${getContractName(contract.contract_id, false)} has no variables`);
     return {};
   }
 
   let varFn = '{\n';
 
-  const varLines = contract.contract_interface.variables.map((variable) => {
+  const varLines = contract.contract_interface.variables.map(variable => {
     let varLine = `${variable.name}: `;
     if (variable.access === 'constant') {
       varLine += `${variable.name}`;
@@ -66,7 +60,7 @@ export function getVariablesV2(
     }
     return varLine;
   });
-  varFn += varLines.map((l) => ` ${l},`).join('\n');
+  varFn += varLines.map(l => ` ${l},`).join('\n');
 
   varFn += '\n}';
 
@@ -77,11 +71,7 @@ export function getVariablesV2(
       fullSrc,
       {
         // hacky type to prevent having to constantly update this
-        clarityVersion: clarityVersionForContract(contract) as unknown as
-          | 1
-          | 2
-          | 3
-          | 4,
+        clarityVersion: clarityVersionForContract(contract) as unknown as 1 | 2 | 3 | 4,
       },
       deployer
     );
@@ -115,7 +105,7 @@ export function getVariablesV2(
 type Writeable<T> = { -readonly [P in keyof T]: Writeable<T[P]> };
 
 export function mapVariables(session: Session, simnet: Simnet) {
-  return session.contracts.map((contract) => {
+  return session.contracts.map(contract => {
     const vars = getVariablesV2(contract, simnet);
     return serialize(vars);
   });

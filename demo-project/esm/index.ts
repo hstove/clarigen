@@ -108,9 +108,7 @@ export const contracts = {
       setTokenUri: {
         name: 'set-token-uri',
         access: 'public',
-        args: [
-          { name: 'updated-uri', type: { 'string-utf8': { length: 256 } } },
-        ],
+        args: [{ name: 'updated-uri', type: { 'string-utf8': { length: 256 } } }],
         outputs: { type: { response: { ok: 'bool', error: 'uint128' } } },
       } as TypedAbiFunction<
         [updatedUri: TypedAbiArg<string, 'updatedUri'>],
@@ -172,10 +170,7 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'owner', type: 'principal' }],
         outputs: { type: { response: { ok: 'uint128', error: 'none' } } },
-      } as TypedAbiFunction<
-        [owner: TypedAbiArg<string, 'owner'>],
-        Response<bigint, null>
-      >,
+      } as TypedAbiFunction<[owner: TypedAbiArg<string, 'owner'>], Response<bigint, null>>,
       getDecimals: {
         name: 'get-decimals',
         access: 'read_only',
@@ -241,10 +236,7 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'principal-to-check', type: 'principal' }],
         outputs: { type: 'bool' },
-      } as TypedAbiFunction<
-        [principalToCheck: TypedAbiArg<string, 'principalToCheck'>],
-        boolean
-      >,
+      } as TypedAbiFunction<[principalToCheck: TypedAbiArg<string, 'principalToCheck'>], boolean>,
       messageForRestriction: {
         name: 'message-for-restriction',
         access: 'read_only',
@@ -389,19 +381,13 @@ export const contracts = {
         access: 'public',
         args: [{ name: 'step', type: 'uint128' }],
         outputs: { type: { response: { ok: 'uint128', error: 'none' } } },
-      } as TypedAbiFunction<
-        [step: TypedAbiArg<number | bigint, 'step'>],
-        Response<bigint, null>
-      >,
+      } as TypedAbiFunction<[step: TypedAbiArg<number | bigint, 'step'>], Response<bigint, null>>,
       increment: {
         name: 'increment',
         access: 'public',
         args: [{ name: 'step', type: 'uint128' }],
         outputs: { type: { response: { ok: 'uint128', error: 'uint128' } } },
-      } as TypedAbiFunction<
-        [step: TypedAbiArg<number | bigint, 'step'>],
-        Response<bigint, bigint>
-      >,
+      } as TypedAbiFunction<[step: TypedAbiArg<number | bigint, 'step'>], Response<bigint, bigint>>,
       getCounter: {
         name: 'get-counter',
         access: 'read_only',
@@ -494,10 +480,7 @@ export const contracts = {
             },
             'deposit'
           >,
-          helperResponse: TypedAbiArg<
-            Response<number | bigint, number | bigint>,
-            'helperResponse'
-          >,
+          helperResponse: TypedAbiArg<Response<number | bigint, number | bigint>, 'helperResponse'>,
         ],
         Response<bigint, bigint>
       >,
@@ -573,10 +556,7 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'height', type: 'uint128' }],
         outputs: { type: { optional: { buffer: { length: 32 } } } },
-      } as TypedAbiFunction<
-        [height: TypedAbiArg<number | bigint, 'height'>],
-        Uint8Array | null
-      >,
+      } as TypedAbiFunction<[height: TypedAbiArg<number | bigint, 'height'>], Uint8Array | null>,
     },
     maps: {},
     variables: {
@@ -800,10 +780,7 @@ export const contracts = {
           newKeys: TypedAbiArg<Uint8Array[], 'newKeys'>,
           newAddress: TypedAbiArg<string, 'newAddress'>,
           newAggregatePubkey: TypedAbiArg<Uint8Array, 'newAggregatePubkey'>,
-          newSignatureThreshold: TypedAbiArg<
-            number | bigint,
-            'newSignatureThreshold'
-          >,
+          newSignatureThreshold: TypedAbiArg<number | bigint, 'newSignatureThreshold'>,
         ],
         Response<boolean, bigint>
       >,
@@ -827,10 +804,7 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'contract-flag', type: { buffer: { length: 1 } } }],
         outputs: { type: { optional: 'principal' } },
-      } as TypedAbiFunction<
-        [contractFlag: TypedAbiArg<Uint8Array, 'contractFlag'>],
-        string | null
-      >,
+      } as TypedAbiFunction<[contractFlag: TypedAbiArg<Uint8Array, 'contractFlag'>], string | null>,
       getCompletedDeposit: {
         name: 'get-completed-deposit',
         access: 'read_only',
@@ -1296,10 +1270,7 @@ export const contracts = {
             },
             'individualTransfer'
           >,
-          result: TypedAbiArg<
-            Response<number | bigint, number | bigint>,
-            'result'
-          >,
+          result: TypedAbiArg<Response<number | bigint, number | bigint>, 'result'>,
         ],
         Response<bigint, bigint>
       >,
@@ -1545,28 +1516,19 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'who', type: 'principal' }],
         outputs: { type: { response: { ok: 'uint128', error: 'none' } } },
-      } as TypedAbiFunction<
-        [who: TypedAbiArg<string, 'who'>],
-        Response<bigint, null>
-      >,
+      } as TypedAbiFunction<[who: TypedAbiArg<string, 'who'>], Response<bigint, null>>,
       getBalanceAvailable: {
         name: 'get-balance-available',
         access: 'read_only',
         args: [{ name: 'who', type: 'principal' }],
         outputs: { type: { response: { ok: 'uint128', error: 'none' } } },
-      } as TypedAbiFunction<
-        [who: TypedAbiArg<string, 'who'>],
-        Response<bigint, null>
-      >,
+      } as TypedAbiFunction<[who: TypedAbiArg<string, 'who'>], Response<bigint, null>>,
       getBalanceLocked: {
         name: 'get-balance-locked',
         access: 'read_only',
         args: [{ name: 'who', type: 'principal' }],
         outputs: { type: { response: { ok: 'uint128', error: 'none' } } },
-      } as TypedAbiFunction<
-        [who: TypedAbiArg<string, 'who'>],
-        Response<bigint, null>
-      >,
+      } as TypedAbiFunction<[who: TypedAbiArg<string, 'who'>], Response<bigint, null>>,
       getDecimals: {
         name: 'get-decimals',
         access: 'read_only',
@@ -1775,10 +1737,7 @@ export const contracts = {
         ],
         outputs: { type: { response: { ok: 'bool', error: 'none' } } },
       } as TypedAbiFunction<
-        [
-          key: TypedAbiArg<number | bigint, 'key'>,
-          val: TypedAbiArg<boolean, 'val'>,
-        ],
+        [key: TypedAbiArg<number | bigint, 'key'>, val: TypedAbiArg<boolean, 'val'>],
         Response<boolean, null>
       >,
       setNum: {
@@ -1786,10 +1745,7 @@ export const contracts = {
         access: 'public',
         args: [{ name: 'num', type: 'uint128' }],
         outputs: { type: { response: { ok: 'bool', error: 'none' } } },
-      } as TypedAbiFunction<
-        [num: TypedAbiArg<number | bigint, 'num'>],
-        Response<boolean, null>
-      >,
+      } as TypedAbiFunction<[num: TypedAbiArg<number | bigint, 'num'>], Response<boolean, null>>,
       throwErrorOne: {
         name: 'throw-error-one',
         access: 'public',
@@ -2026,8 +1982,7 @@ export const identifiers = {
   wrappedBitcoin: 'SP3DX3H4FEYZJZ586MFBS25ZW3HZDMEW92260R2PR.Wrapped-Bitcoin',
   counter: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.counter',
   ftTrait: 'SP3DX3H4FEYZJZ586MFBS25ZW3HZDMEW92260R2PR.ft-trait',
-  restrictedTokenTrait:
-    'SP3DX3H4FEYZJZ586MFBS25ZW3HZDMEW92260R2PR.restricted-token-trait',
+  restrictedTokenTrait: 'SP3DX3H4FEYZJZ586MFBS25ZW3HZDMEW92260R2PR.restricted-token-trait',
   sbtcDeposit: 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-deposit',
   sbtcRegistry: 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-registry',
   sbtcToken: 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token',

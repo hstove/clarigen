@@ -18,8 +18,7 @@ export const PoXAddressVersion = {
   P2TR: 0x06,
 } as const;
 
-export type PoXAddressVersionNumber =
-  (typeof PoXAddressVersion)[keyof typeof PoXAddressVersion];
+export type PoXAddressVersionNumber = (typeof PoXAddressVersion)[keyof typeof PoXAddressVersion];
 
 const BITCOIN_VERSION = {
   mainnet: { P2PKH: 0x00, P2SH: 0x05 },
@@ -60,10 +59,7 @@ function versionHex(version: number): string {
 }
 
 function hashLenForVersion(version: number): 20 | 32 {
-  if (
-    version === PoXAddressVersion.P2WSH ||
-    version === PoXAddressVersion.P2TR
-  ) {
+  if (version === PoXAddressVersion.P2WSH || version === PoXAddressVersion.P2TR) {
     return 32;
   }
   return 20;
@@ -85,15 +81,10 @@ function bitcoinVersionToPoxVersion(btcVersion: number): {
   if (btcVersion === BITCOIN_VERSION.testnet.P2SH) {
     return { version: PoXAddressVersion.P2SH, network: 'testnet' };
   }
-  throw new Error(
-    `unsupported bitcoin address version 0x${btcVersion.toString(16)}`
-  );
+  throw new Error(`unsupported bitcoin address version 0x${btcVersion.toString(16)}`);
 }
 
-function poxVersionToBitcoinVersion(
-  version: number,
-  network: BtcNetwork
-): number {
+function poxVersionToBitcoinVersion(version: number, network: BtcNetwork): number {
   switch (version) {
     case PoXAddressVersion.P2PKH:
       return BITCOIN_VERSION[network].P2PKH;
@@ -108,11 +99,7 @@ function poxVersionToBitcoinVersion(
 
 function isSegwitAddress(address: string): boolean {
   const lower = address.toLowerCase();
-  return (
-    lower.startsWith('bc1') ||
-    lower.startsWith('tb1') ||
-    lower.startsWith('bcrt1')
-  );
+  return lower.startsWith('bc1') || lower.startsWith('tb1') || lower.startsWith('bcrt1');
 }
 
 function networkFromHrp(hrp: string): BtcNetwork {
@@ -121,10 +108,7 @@ function networkFromHrp(hrp: string): BtcNetwork {
   throw new Error(`unsupported bech32 prefix ${hrp}`);
 }
 
-function segwitVersionToPoxVersion(
-  witnessVersion: number,
-  dataLength: number
-): number {
+function segwitVersionToPoxVersion(witnessVersion: number, dataLength: number): number {
   if (witnessVersion === SEGWIT_V0 && dataLength === 20) {
     return PoXAddressVersion.P2WPKH;
   }
@@ -134,9 +118,7 @@ function segwitVersionToPoxVersion(
   if (witnessVersion === SEGWIT_V1 && dataLength === 32) {
     return PoXAddressVersion.P2TR;
   }
-  throw new Error(
-    'unsupported native segwit address; expected p2wpkh, p2wsh, or p2tr'
-  );
+  throw new Error('unsupported native segwit address; expected p2wpkh, p2wsh, or p2tr');
 }
 
 function decodeNativeSegwit(address: string): {
@@ -145,17 +127,11 @@ function decodeNativeSegwit(address: string): {
   network: BtcNetwork;
 } {
   const lower = address.toLowerCase();
-  if (
-    lower.startsWith('bc1p') ||
-    lower.startsWith('tb1p') ||
-    lower.startsWith('bcrt1p')
-  ) {
+  if (lower.startsWith('bc1p') || lower.startsWith('tb1p') || lower.startsWith('bcrt1p')) {
     const decoded = bech32m.decode(address as `${string}1${string}`);
     const witnessVersion = decoded.words[0];
     if (witnessVersion === undefined || witnessVersion === SEGWIT_V0) {
-      throw new Error(
-        'taproot addresses must use bech32m with witness version 1'
-      );
+      throw new Error('taproot addresses must use bech32m with witness version 1');
     }
     return {
       witnessVersion,
@@ -170,9 +146,7 @@ function decodeNativeSegwit(address: string): {
     throw new Error('invalid bech32 address');
   }
   if (witnessVersion > 0) {
-    throw new Error(
-      'addresses with witness version >= 1 should be encoded in bech32m'
-    );
+    throw new Error('addresses with witness version >= 1 should be encoded in bech32m');
   }
   return {
     witnessVersion,
@@ -222,10 +196,7 @@ export function btcAddressToPoxTuple(address: string): PoxAddressDecoded {
     if (isSegwitAddress(trimmed)) {
       const segwit = decodeNativeSegwit(trimmed);
       return toDecoded({
-        version: segwitVersionToPoxVersion(
-          segwit.witnessVersion,
-          segwit.data.length
-        ),
+        version: segwitVersionToPoxVersion(segwit.witnessVersion, segwit.data.length),
         hashbytes: segwit.data,
         network: segwit.network,
         address: trimmed,
@@ -285,9 +256,7 @@ export function poxTupleToBtcAddress(
   const hashbytes = parseHashbytesHex(hashbytesInput);
   const expectedLen = hashLenForVersion(version);
   if (hashbytes.length !== expectedLen) {
-    throw new Error(
-      `${POX_VERSION_LABELS[version]} hashbytes must be ${expectedLen} bytes`
-    );
+    throw new Error(`${POX_VERSION_LABELS[version]} hashbytes must be ${expectedLen} bytes`);
   }
 
   let address: string;

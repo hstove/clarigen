@@ -14,10 +14,7 @@ export async function highlightCode(code: string) {
     return code;
   }
 
-  const editorTheme = await fs.readFile(
-    path.join(process.cwd(), 'lib/themes/dark.json'),
-    'utf-8'
-  );
+  const editorTheme = await fs.readFile(path.join(process.cwd(), 'lib/themes/dark.json'), 'utf-8');
 
   const highlighter = await getHighlighter({
     langs: ['typescript'],

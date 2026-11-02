@@ -14,9 +14,7 @@ export type UseVisitedHistoryReturn = {
 };
 
 export function useVisitedHistory(): UseVisitedHistoryReturn {
-  const [visitedFunctions, setVisitedFunctions] = useState<VisitedFunction[]>(
-    []
-  );
+  const [visitedFunctions, setVisitedFunctions] = useState<VisitedFunction[]>([]);
   const [visitedContracts, setVisitedContracts] = useState<string[]>([]);
 
   const refresh = useCallback(() => {

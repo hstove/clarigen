@@ -45,21 +45,12 @@ export function HiroApiKeyButton() {
   return (
     <AlertDialog onOpenChange={handleOpenChange} open={open}>
       <AlertDialogTrigger
-        render={
-          <Button
-            aria-label="configure Hiro API key"
-            size="sm"
-            variant="ghost"
-          />
-        }
+        render={<Button aria-label="configure Hiro API key" size="sm" variant="ghost" />}
       >
         <KeyRound data-icon="inline-start" />
         <span className="hidden sm:inline">api key</span>
         {hasApiKey ? (
-          <span
-            className="text-green-600 dark:text-green-500"
-            title="Hiro API key configured"
-          >
+          <span className="text-green-600 dark:text-green-500" title="Hiro API key configured">
             ●
           </span>
         ) : null}
@@ -67,12 +58,10 @@ export function HiroApiKeyButton() {
       <AlertDialogContent>
         <form className="grid gap-4" onSubmit={handleSubmit}>
           <AlertDialogHeader>
-            <AlertDialogTitle className="font-mono">
-              Hiro API key
-            </AlertDialogTitle>
+            <AlertDialogTitle className="font-mono">Hiro API key</AlertDialogTitle>
             <AlertDialogDescription>
-              Optional. Stored only in this browser and sent as{' '}
-              <code>x-api-key</code> with Hiro API requests.
+              Optional. Stored only in this browser and sent as <code>x-api-key</code> with Hiro API
+              requests.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <div className="grid gap-2">
@@ -81,7 +70,7 @@ export function HiroApiKeyButton() {
               autoComplete="off"
               id="hiro-api-key"
               name="hiro-api-key"
-              onChange={(event) => setApiKey(event.target.value)}
+              onChange={event => setApiKey(event.target.value)}
               placeholder="paste your Hiro API key"
               spellCheck={false}
               type="password"
@@ -90,11 +79,7 @@ export function HiroApiKeyButton() {
           </div>
           <AlertDialogFooter>
             {hasApiKey ? (
-              <Button
-                onClick={handleRemove}
-                type="button"
-                variant="destructive"
-              >
+              <Button onClick={handleRemove} type="button" variant="destructive">
                 remove
               </Button>
             ) : null}

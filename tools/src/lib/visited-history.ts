@@ -61,10 +61,7 @@ export function addVisitedFunction(
 
   const visited = readVisited();
   const existingIndex = visited.findIndex(
-    (v) =>
-      v.contractId === contractId &&
-      v.functionName === functionName &&
-      v.network === network
+    v => v.contractId === contractId && v.functionName === functionName && v.network === network
   );
 
   if (existingIndex !== -1) {

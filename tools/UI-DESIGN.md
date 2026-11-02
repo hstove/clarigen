@@ -11,12 +11,12 @@ This app uses a **TUI-inspired** (Terminal UI) aesthetic suited for developer to
 
 ## Typography
 
-| Context | Font | Size |
-|---------|------|------|
-| Technical labels | `font-mono` | `text-xs` |
-| Form inputs | `font-mono` | default |
-| Data values (addresses, hashes) | `font-mono` | varies |
-| Prose/descriptions | `font-sans` | `text-xs` or `text-sm` |
+| Context                         | Font        | Size                   |
+| ------------------------------- | ----------- | ---------------------- |
+| Technical labels                | `font-mono` | `text-xs`              |
+| Form inputs                     | `font-mono` | default                |
+| Data values (addresses, hashes) | `font-mono` | varies                 |
+| Prose/descriptions              | `font-sans` | `text-xs` or `text-sm` |
 
 ## Status Indicators
 

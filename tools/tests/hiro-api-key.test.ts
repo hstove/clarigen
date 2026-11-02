@@ -42,9 +42,7 @@ describe('Hiro API key storage', () => {
 
 describe('Stacks API client', () => {
   it('adds the Hiro API key to API requests', async () => {
-    const fetchMock = vi.fn(async () =>
-      Response.json({ abi: '{}', source_code: '' })
-    );
+    const fetchMock = vi.fn(async () => Response.json({ abi: '{}', source_code: '' }));
     vi.stubGlobal('fetch', fetchMock);
 
     const client = getStacksApi('mainnet', 'test-key');
