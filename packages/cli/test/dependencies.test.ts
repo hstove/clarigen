@@ -22,9 +22,6 @@ test('contract interfaces with the same name keep the canonical requirement', ()
 });
 
 test('getting a session with a project that has testnet requirements', async () => {
-  if (process.env.CI) {
-    return;
-  }
   const config = await Config.load(dependenciesFixture);
   // console.log('config', config);
   const session = await getSession(config);
@@ -34,9 +31,6 @@ test('getting a session with a project that has testnet requirements', async () 
 });
 
 test('boot contract overrides do not produce duplicate contract names', async () => {
-  if (process.env.CI) {
-    return;
-  }
   const config = await Config.load(dependenciesFixture);
   const session = await getSession(config);
   const names = session.contracts.map(contract => contract.contract_id.split('.')[1]);

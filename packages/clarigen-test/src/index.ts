@@ -95,6 +95,11 @@ export function tx<A extends UnknownArgs, R extends AnyResponse>(
 ): TransactionResult<R> {
   const receipt = getTxReceipt(tx, sender);
   const value = validateResponse<R>(receipt.result, undefined, tx.contractAbi);
+  if (!isResponse(value)) {
+    throw new Error(
+      'Expected response when calling function, but not a response. Try using just `rov`'
+    );
+  }
 
   return {
     ...receipt,

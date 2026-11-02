@@ -19,17 +19,6 @@ epoch = '3.0'
 path = 'contracts/tester.clar'
 clarity_version = 4
 epoch = '3.3'
-[repl.analysis]
-passes = []
-
-[repl.analysis.lints]
-
-[repl.analysis.check_checker]
-strict = false
-trusted_sender = false
-trusted_caller = false
-callee_filter = false
-
 [repl.remote_data]
 enabled = false
 api_url = 'https://api.hiro.so'

@@ -6,7 +6,6 @@ import {
   type StacksEpochId,
   TESTNET_BURN_ADDRESS,
   getContractName,
-  hexToCvValue,
 } from '@clarigen/core';
 import {
   type Batch,
@@ -74,18 +73,13 @@ export async function getSession(config: Config): Promise<SessionWithVariables> 
   const deploymentIdentifiers = await getSimnetDeploymentIdentifiers(config);
   const accounts = simnet.getAccounts();
 
-  const allAccounts = [...accounts.entries()].map(([name, address]) => {
-    const result = simnet.runSnippet(`(stx-get-balance '${address})`) as string;
-    const resultCV = hexToCvValue<bigint>(result);
-    if (typeof resultCV !== 'bigint') {
-      throw new Error(`Unexpected result type for \`(stx-get-balance \`, got ${resultCV}`);
-    }
-    return {
-      name,
-      address,
-      balance: resultCV.toString(),
-    };
-  });
+  const stxBalances = simnet.getAssetsMap().get('STX');
+
+  const allAccounts = [...accounts.entries()].map(([name, address]) => ({
+    name,
+    address,
+    balance: (stxBalances?.get(address) ?? 0n).toString(),
+  }));
 
   // const docsBaseFolder = (config.outputResolve(OutputType.Docs, './')!)[0];
 

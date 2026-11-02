@@ -9,6 +9,8 @@ import {
 } from '@clarigen/core';
 import { serialize } from './base';
 
+const VARIABLES_FN = 'clarigen-get-variables';
+
 function clarityVersionForContract(contract: SessionContract) {
   switch (contract.contract_interface.clarity_version) {
     case 'Clarity1':
@@ -49,7 +51,7 @@ export function getVariablesV2(contract: SessionContract, simnet: Simnet, verbos
     return {};
   }
 
-  let varFn = '{\n';
+  let varFn = `(define-read-only (${VARIABLES_FN})\n{\n`;
 
   const varLines = contract.contract_interface.variables.map(variable => {
     let varLine = `${variable.name}: `;
@@ -62,11 +64,11 @@ export function getVariablesV2(contract: SessionContract, simnet: Simnet, verbos
   });
   varFn += varLines.map(l => ` ${l},`).join('\n');
 
-  varFn += '\n}';
+  varFn += '\n})';
 
   const fullSrc = `${contract.source}\n\n${varFn}`;
   try {
-    const receipt = simnet.deployContract(
+    simnet.deployContract(
       fakeId,
       fullSrc,
       {
@@ -75,7 +77,7 @@ export function getVariablesV2(contract: SessionContract, simnet: Simnet, verbos
       },
       deployer
     );
-    const result = receipt.result;
+    const { result } = simnet.callReadOnlyFn(`${deployer}.${fakeId}`, VARIABLES_FN, [], deployer);
 
     const varsAbi: Writeable<ClarityAbiTypeTuple> = {
       tuple: [],
