@@ -48,6 +48,21 @@
       "whatwg-url": "^14.0.0",
       "effect": "4.0.0-beta.105",
       "vite": "catalog:"
-    }
+    },
+    "ignoredBuiltDependencies": [
+      "@reown/appkit",
+      "contentlayer",
+      "esbuild",
+      "husky",
+      "msgpackr-extract",
+      "msw",
+      "protobufjs",
+      "secp256k1",
+      "sharp",
+      "unrs-resolver"
+    ],
+    "onlyBuiltDependencies": [
+      "workerd"
+    ]
   }
 }
