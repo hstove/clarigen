@@ -11,7 +11,7 @@
     "typecheck": "turbo run typecheck --continue --filter=!clarigen-docs",
     "publish-packages": "vp run build:packages && vp update && turbo run publish --continue --concurrency=1",
     "publish-local": "vp run build:packages && pnpm -r publish",
-    "publish-changesets": "vp run build:packages && changeset publish",
+    "version-packages": "changeset version && vp fmt",
     "demo-types": "pnpm --filter @clarigen/cli start ../../demo-project",
     "clarigen": "pnpm --filter @clarigen/cli start",
     "dev:web": "pnpm --filter clarigen-docs dev",
@@ -20,7 +20,7 @@
   },
   "packageManager": "pnpm@10.12.1",
   "devDependencies": {
-    "@changesets/changelog-github": "0.5.0",
+    "@changesets/changelog-github": "1.0.1",
     "@total-typescript/tsconfig": "^1.0.4",
     "@types/node": "24.2.0",
     "@vitest/coverage-v8": "4.1.8",
@@ -35,7 +35,7 @@
     "vitest": "catalog:"
   },
   "dependencies": {
-    "@changesets/cli": "^2.31.0",
+    "@changesets/cli": "^3.0.3",
     "jsonfile": "^6.2.1"
   },
   "resolutions": {
