@@ -71,7 +71,7 @@ function DecoderPage() {
                 className="font-mono text-[10px] text-muted-foreground hover:text-primary hover:underline"
                 key={example.label}
                 onClick={() => {
-                  void setHex(example.hex);
+                  setHex(example.hex);
                 }}
                 type="button"
               >
@@ -88,7 +88,7 @@ function DecoderPage() {
             className="min-h-28 font-mono"
             id="cv-hex"
             onChange={(event) => {
-              void setHex(event.target.value);
+              setHex(event.target.value);
             }}
             placeholder="0x0c00000002…"
             value={hex}

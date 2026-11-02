@@ -35,7 +35,7 @@ function TxDecoderPage() {
   const [input, setInputState] = useState(urlInput);
   const setInput = (value: string) => {
     setInputState(value);
-    void setUrlInput(value.replace(NEWLINES, ' '));
+    setUrlInput(value.replace(NEWLINES, ' '));
   };
   const [mode, setMode] = useQueryState(
     'as',
@@ -79,7 +79,7 @@ function TxDecoderPage() {
                 key={example.label}
                 onClick={() => {
                   setInput(example.input);
-                  void setMode('auto');
+                  setMode('auto');
                 }}
                 type="button"
               >
@@ -103,7 +103,7 @@ function TxDecoderPage() {
               <Select.Select
                 onValueChange={(value) => {
                   const match = DECODE_MODES.find((m) => m.value === value);
-                  if (match) void setMode(match.value);
+                  if (match) setMode(match.value);
                 }}
                 value={mode}
               >

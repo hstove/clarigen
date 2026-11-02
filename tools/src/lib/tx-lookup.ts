@@ -15,8 +15,10 @@ export type ContractCallLookup = {
   tx: ContractCallTx;
 };
 
+const NOT_FOUND_REGEX = /Status 404/;
+
 function isNotFoundError(error: unknown): boolean {
-  return error instanceof Error && /Status 404/.test(error.message);
+  return error instanceof Error && NOT_FOUND_REGEX.test(error.message);
 }
 
 function lookupOrder(preferred: NETWORK): NETWORK[] {

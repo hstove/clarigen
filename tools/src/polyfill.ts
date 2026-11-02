@@ -8,23 +8,23 @@
  * init. Cloudflare Workers SSR has no DOM, so stub the minimum needed to load.
  */
 if (typeof globalThis.HTMLElement === 'undefined') {
-  // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
-  globalThis.HTMLElement = class HTMLElement {} as any;
+  globalThis.HTMLElement =
+    class HTMLElement {} as unknown as typeof globalThis.HTMLElement;
 }
 
 if (typeof globalThis.customElements === 'undefined') {
-  // biome-ignore lint/suspicious/noExplicitAny: ignored using `--suppress`
+  const noop = () => undefined;
   globalThis.customElements = {
-    define() {},
+    define: noop,
     get() {
       return;
     },
     whenDefined() {
       return Promise.resolve(undefined as unknown as CustomElementConstructor);
     },
-    upgrade() {},
+    upgrade: noop,
     getName() {
       return null;
     },
-  } as any;
+  } as unknown as CustomElementRegistry;
 }

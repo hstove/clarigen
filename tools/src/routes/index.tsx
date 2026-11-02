@@ -197,7 +197,7 @@ function OpenContractForm() {
     }
 
     if (trimmedFunction) {
-      void navigate({
+      navigate({
         to: '/tx/$network/$contractAddress/$functionName',
         params: {
           network,
@@ -208,7 +208,7 @@ function OpenContractForm() {
       return;
     }
 
-    void navigate({
+    navigate({
       to: '/tx/$network/$contractAddress',
       params: {
         network,
@@ -376,7 +376,9 @@ function OpenTxForm() {
       </div>
       <form
         className="space-y-4 p-4"
-        onSubmit={(event) => void handleSubmit(event)}
+        onSubmit={(event) => {
+          handleSubmit(event);
+        }}
       >
         <div className="grid gap-4 sm:grid-cols-[10rem_1fr]">
           <div className="space-y-1.5">

@@ -220,9 +220,16 @@ export function btcAddressToPoxTuple(address: string): PoxAddressDecoded {
 
   try {
     if (isSegwitAddress(trimmed)) {
-      const { witnessVersion, data, network } = decodeNativeSegwit(trimmed);
-      const version = segwitVersionToPoxVersion(witnessVersion, data.length);
-      return toDecoded({ version, hashbytes: data, network, address: trimmed });
+      const segwit = decodeNativeSegwit(trimmed);
+      return toDecoded({
+        version: segwitVersionToPoxVersion(
+          segwit.witnessVersion,
+          segwit.data.length
+        ),
+        hashbytes: segwit.data,
+        network: segwit.network,
+        address: trimmed,
+      });
     }
 
     const decoded = b58.decode(trimmed);

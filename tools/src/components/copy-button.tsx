@@ -9,11 +9,12 @@ export function CopyButton({
   label?: string;
 }) {
   const [copied, setCopied] = useState(false);
+  const buttonText = copied ? 'copied' : label;
 
   return (
     <Button
       onClick={() => {
-        void navigator.clipboard.writeText(text);
+        navigator.clipboard.writeText(text);
         setCopied(true);
         window.setTimeout(() => setCopied(false), 1500);
       }}
@@ -21,7 +22,7 @@ export function CopyButton({
       type="button"
       variant="outline"
     >
-      {copied ? 'copied' : label}
+      {buttonText}
     </Button>
   );
 }

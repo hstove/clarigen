@@ -9,8 +9,10 @@ export function stripHexPrefix(value: string): string {
   return compact;
 }
 
+const HEX_REGEX = /^[0-9a-f]*$/i;
+
 export function isHexString(value: string): boolean {
-  return /^[0-9a-f]*$/i.test(value);
+  return HEX_REGEX.test(value);
 }
 
 /**
