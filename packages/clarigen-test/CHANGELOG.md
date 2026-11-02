@@ -1,5 +1,21 @@
 # @clarigen/test
 
+## 4.2.0
+
+### Minor Changes
+
+- [#33](https://github.com/hstove/clarigen/pull/33) [`c8006f4`](https://github.com/hstove/clarigen/commit/c8006f4b76fc04e036c900a2c452be61e215473b) Thanks [@hstove](https://github.com/hstove)! - Add support for Clarinet v4 (`@stacks/clarinet-sdk@^4.0.0`). Clarinet v3 remains supported from 3.15.0; the previous `^3.9.2` peer range was inaccurate, as earlier v3 releases did not work.
+
+  - `@clarigen/cli` no longer uses the removed `simnet.runSnippet`, and reads contract variables via a read-only function, since `deployContract` no longer returns the contract's last expression in Clarinet v4.
+  - `@clarigen/test`'s `tx` throws when a function doesn't return a response, matching Clarinet v3 behavior.
+
+- [#31](https://github.com/hstove/clarigen/pull/31) [`1a997a3`](https://github.com/hstove/clarigen/commit/1a997a3c87a872a4a13f5b2f644f9cd0173a7cd0) Thanks [@hstove](https://github.com/hstove)! - Internal packaging moved from Bun to pnpm + vite+
+
+### Patch Changes
+
+- Updated dependencies [[`1a997a3`](https://github.com/hstove/clarigen/commit/1a997a3c87a872a4a13f5b2f644f9cd0173a7cd0)]:
+  - @clarigen/core@4.2.0
+
 ## 4.1.7
 
 ### Patch Changes

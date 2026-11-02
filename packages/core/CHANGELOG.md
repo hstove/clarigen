@@ -1,5 +1,11 @@
 # @clarigen/core
 
+## 4.2.0
+
+### Minor Changes
+
+- [#31](https://github.com/hstove/clarigen/pull/31) [`1a997a3`](https://github.com/hstove/clarigen/commit/1a997a3c87a872a4a13f5b2f644f9cd0173a7cd0) Thanks [@hstove](https://github.com/hstove)! - Internal packaging moved from Bun to pnpm + vite+
+
 ## 4.1.7
 
 ### Patch Changes
@@ -227,11 +233,11 @@
     createAssetInfo,
     makeNonFungiblePostCondition,
     makeFungiblePostCondition,
-  } from '@clarigen/core';
-  import { contract } from './contracts';
+  } from "@clarigen/core";
+  import { contract } from "./contracts";
 
   // create asset info by specifying the name of the asset
-  createAssetInfo(contract, 'names');
+  createAssetInfo(contract, "names");
 
   makeNonFungiblePostCondition(contract, sender, NFTCode.DoesNotOwn, 1n);
 
@@ -319,13 +325,14 @@
 - [#28](https://github.com/mechanismHQ/clarigen/pull/28) [`2480675`](https://github.com/mechanismHQ/clarigen/commit/2480675c36da569870e36feba714cc22d849654a) Thanks [@hstove](https://github.com/hstove)! - Migrates all packages to depend on `micro-stacks`. This allows for simplicity and much reduced bundle sizes.
 
   Most APIs do not change at all, however, there are some breaking changes:
+
   - The `buff` Clarity type now uses the `Uint8Array` native JS type, instead of `Buffer`
   - Some TypeScript types that came from `@stacks/transactions` will break, like the `PostCondition` type
 
 * [#30](https://github.com/mechanismHQ/clarigen/pull/30) [`f153dc4`](https://github.com/mechanismHQ/clarigen/commit/f153dc4aecc8d65a01933dbe65dd90f85d884756) Thanks [@hstove](https://github.com/hstove)! - Updates the core types built by Clarigen to a more flexible approach. Previously, types were built such the API for returning info from a contract function was supposed to be identical. Here's what types used to look like:
 
   ```typescript
-  import { ClarityTypes, Transaction } from '@clarigen/core';
+  import { ClarityTypes, Transaction } from "@clarigen/core";
 
   // prettier-ignore
   export interface MyContract {
@@ -604,7 +611,7 @@
 - Updates the core types built by Clarigen to a more flexible approach. Previously, types were built such the API for returning info from a contract function was supposed to be identical. Here's what types used to look like:
 
   ```typescript
-  import { ClarityTypes, Transaction } from '@clarigen/core';
+  import { ClarityTypes, Transaction } from "@clarigen/core";
 
   // prettier-ignore
   export interface MyContract {
@@ -651,6 +658,7 @@
 - [#28](https://github.com/obylabs/clarigen/pull/28) [`574834a`](https://github.com/obylabs/clarigen/commit/574834a950d8b8cfcff620c66f3f22b62c191c51) Thanks [@hstove](https://github.com/hstove)! - Migrates all packages to depend on `micro-stacks`. This allows for simplicity and much reduced bundle sizes.
 
   Most APIs do not change at all, however, there are some breaking changes:
+
   - The `buff` Clarity type now uses the `Uint8Array` native JS type, instead of `Buffer`
   - Some TypeScript types that came from `@stacks/transactions` will break, like the `PostCondition` type
 
@@ -683,7 +691,7 @@
     ...contracts,
     myContract2: {
       ...contracts.myContract,
-      name: 'my-contract-2',
+      name: "my-contract-2",
     },
   });
   ```
@@ -711,6 +719,7 @@
   These changes should really improve DX for project setup, as well as the ability to run Clarigen in CI.
 
   Other changes:
+
   - **Breaking change** JS types for functions that return `uint` or `int` types now use the `BigInt` native JavaScript type.
     - Although this is a breaking change, this is not a major update. Clarigen is still 0.x and is not in wide use.
   - **Breaking change**: Projects that have a `clarinet` configuration now look for the `Devnet.toml` file (instead of `Development.toml`)

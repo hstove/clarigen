@@ -1,5 +1,16 @@
 # @clarigen/docs
 
+## 4.2.0
+
+### Minor Changes
+
+- [#31](https://github.com/hstove/clarigen/pull/31) [`1a997a3`](https://github.com/hstove/clarigen/commit/1a997a3c87a872a4a13f5b2f644f9cd0173a7cd0) Thanks [@hstove](https://github.com/hstove)! - Internal packaging moved from Bun to pnpm + vite+
+
+### Patch Changes
+
+- Updated dependencies [[`1a997a3`](https://github.com/hstove/clarigen/commit/1a997a3c87a872a4a13f5b2f644f9cd0173a7cd0)]:
+  - @clarigen/core@4.2.0
+
 ## 4.1.7
 
 ### Patch Changes
