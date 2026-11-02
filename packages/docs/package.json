@@ -1,6 +1,11 @@
 {
   "name": "@clarigen/docs",
   "version": "4.2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hstove/clarigen.git",
+    "directory": "packages/docs"
+  },
   "public": true,
   "types": "./dist/index.d.cts",
   "main": "./dist/index.cjs",
