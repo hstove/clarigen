@@ -22,6 +22,13 @@ export function Header() {
           <Link
             activeProps={{ className: 'text-primary' }}
             className="text-muted-foreground transition-colors hover:text-primary"
+            to="/tx-decoder"
+          >
+            tx decoder
+          </Link>
+          <Link
+            activeProps={{ className: 'text-primary' }}
+            className="text-muted-foreground transition-colors hover:text-primary"
             to="/decoder"
           >
             decoder

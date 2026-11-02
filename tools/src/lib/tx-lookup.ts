@@ -1,5 +1,5 @@
 import type { NETWORK } from './constants';
-import { getTransaction } from './stacks-api';
+import { getRawTransaction, getTransaction } from './stacks-api';
 import type { StacksTransaction } from '@/types/stacks-transaction';
 
 type ContractCallTx = Extract<
@@ -66,4 +66,22 @@ export async function lookupContractCall(
   }
 
   throw lastError ?? new Error('transaction not found');
+}
+
+/** Fetch a raw transaction, falling back to the other public network on 404. */
+export async function lookupRawTransaction(
+  txid: string,
+  preferred: NETWORK
+): Promise<{ network: NETWORK; rawTx: string }> {
+  const networks = lookupOrder(preferred);
+  for (const network of networks) {
+    try {
+      return { network, rawTx: await getRawTransaction(network, txid) };
+    } catch (error) {
+      if (!isNotFoundError(error) || network === networks.at(-1)) {
+        throw error instanceof Error ? error : new Error(String(error));
+      }
+    }
+  }
+  throw new Error('transaction not found');
 }

@@ -111,3 +111,20 @@ export async function getTransaction(
   }
   return StacksTransaction.assert(data);
 }
+
+export async function getRawTransaction(
+  network: NETWORK,
+  txId: string
+): Promise<string> {
+  const client = getStacksApi(network);
+  const { data, error, response } = await client.GET(
+    '/extended/v1/tx/{tx_id}/raw',
+    { params: { path: { tx_id: txId } } }
+  );
+  if (!data) {
+    throw new Error(
+      `Failed to get raw transaction. Status ${response.status}. ${error?.message}`
+    );
+  }
+  return data.raw_tx;
+}

@@ -1,10 +1,8 @@
 import type { ReactNode } from 'react';
 import { cvToString, principalToString } from '@clarigen/core';
-import {
-  ClarityType,
-  type ClarityValue,
-} from '@stacks/transactions';
+import { ClarityType, type ClarityValue } from '@stacks/transactions';
 import { cn } from '@/lib/utils';
+import { bufferHints, integerHints } from '@/lib/value-hints';
 
 function TypeBadge({
   children,
@@ -29,24 +27,44 @@ function Primitive({
   type,
   value,
   valueClassName,
+  hints = [],
 }: {
   type: string;
   value: string;
   valueClassName?: string;
+  hints?: { label?: string; value: string }[];
 }) {
   return (
-    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-      <TypeBadge>{type}</TypeBadge>
-      <span
-        className={cn(
-          'break-all font-mono text-xs',
-          valueClassName
-        )}
-      >
-        {value}
-      </span>
+    <div className="space-y-1">
+      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <TypeBadge>{type}</TypeBadge>
+        <span className={cn('break-all font-mono text-xs', valueClassName)}>
+          {value}
+        </span>
+      </div>
+      {hints.length > 0 ? (
+        <ul className="space-y-0.5 border-border border-l pl-3">
+          {hints.map((hint) => (
+            <li
+              className="break-all font-mono text-[10px] text-muted-foreground"
+              key={`${hint.label}:${hint.value}`}
+            >
+              {hint.label ? (
+                <span className="mr-2 uppercase tracking-wider">
+                  {hint.label}
+                </span>
+              ) : null}
+              <span className="text-foreground/80">{hint.value}</span>
+            </li>
+          ))}
+        </ul>
+      ) : null}
     </div>
   );
+}
+
+function numberHints(value: bigint) {
+  return integerHints(value).map((hint) => ({ value: hint }));
 }
 
 function Nested({
@@ -94,11 +112,29 @@ export function ClarityValueView({ value }: { value: ClarityValue }) {
         />
       );
     case ClarityType.Int:
-      return <Primitive type="int" value={value.value.toString()} />;
+      return (
+        <Primitive
+          hints={numberHints(BigInt(value.value))}
+          type="int"
+          value={value.value.toString()}
+        />
+      );
     case ClarityType.UInt:
-      return <Primitive type="uint" value={`u${value.value.toString()}`} />;
+      return (
+        <Primitive
+          hints={numberHints(BigInt(value.value))}
+          type="uint"
+          value={`u${value.value.toString()}`}
+        />
+      );
     case ClarityType.Buffer:
-      return <Primitive type="buffer" value={`0x${value.value}`} />;
+      return (
+        <Primitive
+          hints={bufferHints(value.value)}
+          type="buffer"
+          value={`0x${value.value}`}
+        />
+      );
     case ClarityType.OptionalNone:
       return <Primitive type="optional" value="none" />;
     case ClarityType.OptionalSome:
