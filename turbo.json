@@ -31,5 +31,11 @@
       "outputs": []
     }
   },
-  "globalEnv": ["NODE_ENV", "NEXT_PUBLIC_STACKS_API_URL", "CI", "LOG_TX_CALLS"]
+  "globalEnv": [
+    "NODE_ENV",
+    "NEXT_PUBLIC_STACKS_API_URL",
+    "CI",
+    "LOG_TX_CALLS",
+    "SKIP_REQUIREMENTS_TESTS"
+  ]
 }

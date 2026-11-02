@@ -60,4 +60,175 @@ genesis:
     - costs-4
     - pox-5
 plan:
-  batches: []
+  batches:
+    - id: 0
+      transactions:
+        - transaction-type: emulated-contract-publish
+          contract-name: sip-010-trait-ft-standard
+          emulated-sender: SP2AKWJYC7BNY18W1XXKPGP0YVEK63QJG4793Z2D4
+          path: .cache/requirements/SP2AKWJYC7BNY18W1XXKPGP0YVEK63QJG4793Z2D4.sip-010-trait-ft-standard.clar
+          clarity-version: 1
+      epoch: '2.05'
+    - id: 1
+      transactions:
+        - transaction-type: emulated-contract-publish
+          contract-name: dao
+          emulated-sender: SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG
+          path: .cache/requirements/SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG.dao.clar
+          clarity-version: 2
+        - transaction-type: emulated-contract-publish
+          contract-name: sip-010-trait-ft-standard
+          emulated-sender: SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG
+          path: .cache/requirements/SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG.sip-010-trait-ft-standard.clar
+          clarity-version: 2
+      epoch: '2.4'
+    - id: 2
+      transactions:
+        - transaction-type: emulated-contract-publish
+          contract-name: sip-010-trait-ft-standard-v-1-1
+          emulated-sender: SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR
+          path: .cache/requirements/SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.sip-010-trait-ft-standard-v-1-1.clar
+          clarity-version: 2
+        - transaction-type: emulated-contract-publish
+          contract-name: stableswap-pool-trait-v-1-2
+          emulated-sender: SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR
+          path: .cache/requirements/SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.stableswap-pool-trait-v-1-2.clar
+          clarity-version: 2
+        - transaction-type: emulated-contract-publish
+          contract-name: xyk-pool-trait-v-1-2
+          emulated-sender: SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR
+          path: .cache/requirements/SM1793C4R5PZ4NS4VQ4WMP7SKKYVH8JZEWSZ9HCCR.xyk-pool-trait-v-1-2.clar
+          clarity-version: 2
+        - transaction-type: emulated-contract-publish
+          contract-name: trait-sip-010
+          emulated-sender: SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM
+          path: .cache/requirements/SP102V8P0F7JX67ARQ77WEA3D3CFB5XW39REDT0AM.trait-sip-010.clar
+          clarity-version: 2
+        - transaction-type: emulated-contract-publish
+          contract-name: curve-fees-trait_v1_0_0
+          emulated-sender: SP1Y5YSTAHZ88XYK1VPDH24GY0HPX5J4JECTMY4A1
+          path: .cache/requirements/SP1Y5YSTAHZ88XYK1VPDH24GY0HPX5J4JECTMY4A1.curve-fees-trait_v1_0_0.clar
+          clarity-version: 2
+        - transaction-type: emulated-contract-publish
+          contract-name: curve-lp-token-trait_v1_0_0
+          emulated-sender: SP1Y5YSTAHZ88XYK1VPDH24GY0HPX5J4JECTMY4A1
+          path: .cache/requirements/SP1Y5YSTAHZ88XYK1VPDH24GY0HPX5J4JECTMY4A1.curve-lp-token-trait_v1_0_0.clar
+          clarity-version: 2
+        - transaction-type: emulated-contract-publish
+          contract-name: curve-pool-trait_v1_0_0
+          emulated-sender: SP1Y5YSTAHZ88XYK1VPDH24GY0HPX5J4JECTMY4A1
+          path: .cache/requirements/SP1Y5YSTAHZ88XYK1VPDH24GY0HPX5J4JECTMY4A1.curve-pool-trait_v1_0_0.clar
+          clarity-version: 2
+      epoch: '2.5'
+    - id: 3
+      transactions:
+        - transaction-type: emulated-contract-publish
+          contract-name: position-trait-v1
+          emulated-sender: SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG
+          path: .cache/requirements/SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG.position-trait-v1.clar
+          clarity-version: 3
+        - transaction-type: emulated-contract-publish
+          contract-name: ststxbtc-tracking-data
+          emulated-sender: SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG
+          path: .cache/requirements/SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG.ststxbtc-tracking-data.clar
+          clarity-version: 3
+        - transaction-type: emulated-contract-publish
+          contract-name: ststxbtc-tracking
+          emulated-sender: SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG
+          path: .cache/requirements/SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG.ststxbtc-tracking.clar
+          clarity-version: 3
+        - transaction-type: emulated-contract-publish
+          contract-name: ststxbtc-token
+          emulated-sender: SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG
+          path: .cache/requirements/SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG.ststxbtc-token.clar
+          clarity-version: 2
+        - transaction-type: emulated-contract-publish
+          contract-name: ststxbtc-tracking-data-v2
+          emulated-sender: SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG
+          path: .cache/requirements/SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG.ststxbtc-tracking-data-v2.clar
+          clarity-version: 2
+        - transaction-type: emulated-contract-publish
+          contract-name: ststxbtc-tracking-v2
+          emulated-sender: SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG
+          path: .cache/requirements/SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG.ststxbtc-tracking-v2.clar
+          clarity-version: 2
+        - transaction-type: emulated-contract-publish
+          contract-name: ststxbtc-token-v2
+          emulated-sender: SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG
+          path: .cache/requirements/SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG.ststxbtc-token-v2.clar
+          clarity-version: 2
+      epoch: '3.1'
+    - id: 4
+      transactions:
+        - transaction-type: emulated-contract-publish
+          contract-name: sip-010-trait-ft-standard-v-1-1
+          emulated-sender: SM1FKXGNZJWSTWDWXQZJNF7B5TV5ZB235JTCXYXKD
+          path: .cache/requirements/SM1FKXGNZJWSTWDWXQZJNF7B5TV5ZB235JTCXYXKD.sip-010-trait-ft-standard-v-1-1.clar
+          clarity-version: 4
+        - transaction-type: emulated-contract-publish
+          contract-name: dlmm-pool-trait-v-1-1
+          emulated-sender: SM1FKXGNZJWSTWDWXQZJNF7B5TV5ZB235JTCXYXKD
+          path: .cache/requirements/SM1FKXGNZJWSTWDWXQZJNF7B5TV5ZB235JTCXYXKD.dlmm-pool-trait-v-1-1.clar
+          clarity-version: 4
+      epoch: '3.3'
+    - id: 5
+      transactions:
+        - transaction-type: emulated-contract-publish
+          contract-name: sip010-trait
+          emulated-sender: SP3EWCDA3V8HCP64CSETSNYXZ25WC4AJ95EC0ZEST
+          path: .cache/requirements/SP3EWCDA3V8HCP64CSETSNYXZ25WC4AJ95EC0ZEST.sip010-trait.clar
+          clarity-version: 5
+        - transaction-type: emulated-contract-publish
+          contract-name: swap-trait
+          emulated-sender: SP3EWCDA3V8HCP64CSETSNYXZ25WC4AJ95EC0ZEST
+          path: .cache/requirements/SP3EWCDA3V8HCP64CSETSNYXZ25WC4AJ95EC0ZEST.swap-trait.clar
+          clarity-version: 5
+        - transaction-type: emulated-contract-publish
+          contract-name: swap-trait-alex
+          emulated-sender: SP3EWCDA3V8HCP64CSETSNYXZ25WC4AJ95EC0ZEST
+          path: .cache/requirements/SP3EWCDA3V8HCP64CSETSNYXZ25WC4AJ95EC0ZEST.swap-trait-alex.clar
+          clarity-version: 5
+        - transaction-type: emulated-contract-publish
+          contract-name: swap-trait-curve
+          emulated-sender: SP3EWCDA3V8HCP64CSETSNYXZ25WC4AJ95EC0ZEST
+          path: .cache/requirements/SP3EWCDA3V8HCP64CSETSNYXZ25WC4AJ95EC0ZEST.swap-trait-curve.clar
+          clarity-version: 5
+        - transaction-type: emulated-contract-publish
+          contract-name: swap-trait-dlmm
+          emulated-sender: SP3EWCDA3V8HCP64CSETSNYXZ25WC4AJ95EC0ZEST
+          path: .cache/requirements/SP3EWCDA3V8HCP64CSETSNYXZ25WC4AJ95EC0ZEST.swap-trait-dlmm.clar
+          clarity-version: 5
+        - transaction-type: emulated-contract-publish
+          contract-name: swap-trait-stableswap
+          emulated-sender: SP3EWCDA3V8HCP64CSETSNYXZ25WC4AJ95EC0ZEST
+          path: .cache/requirements/SP3EWCDA3V8HCP64CSETSNYXZ25WC4AJ95EC0ZEST.swap-trait-stableswap.clar
+          clarity-version: 5
+        - transaction-type: emulated-contract-publish
+          contract-name: swap-trait-xyk
+          emulated-sender: SP3EWCDA3V8HCP64CSETSNYXZ25WC4AJ95EC0ZEST
+          path: .cache/requirements/SP3EWCDA3V8HCP64CSETSNYXZ25WC4AJ95EC0ZEST.swap-trait-xyk.clar
+          clarity-version: 5
+      epoch: '3.4'
+    - id: 6
+      transactions:
+        - transaction-type: emulated-contract-publish
+          contract-name: commission-sbtc-v1
+          emulated-sender: SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG
+          path: .cache/requirements/SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG.commission-sbtc-v1.clar
+          clarity-version: 6
+        - transaction-type: emulated-contract-publish
+          contract-name: data-pools-stbtc-v1
+          emulated-sender: SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG
+          path: .cache/requirements/SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG.data-pools-stbtc-v1.clar
+          clarity-version: 6
+        - transaction-type: emulated-contract-publish
+          contract-name: rewards-pox5-v1
+          emulated-sender: SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG
+          path: .cache/requirements/SP4SZE494VC2YC5JYG7AYFQ44F5Q4PYV7DVMDPBG.rewards-pox5-v1.clar
+          clarity-version: 6
+        - transaction-type: emulated-contract-publish
+          contract-name: stacking-dao-router-v1
+          emulated-sender: SP3EWCDA3V8HCP64CSETSNYXZ25WC4AJ95EC0ZEST
+          path: .cache/requirements/SP3EWCDA3V8HCP64CSETSNYXZ25WC4AJ95EC0ZEST.stacking-dao-router-v1.clar
+          clarity-version: 6
+      epoch: '4.0'

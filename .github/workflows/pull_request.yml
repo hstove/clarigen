@@ -33,7 +33,12 @@ jobs:
       fail-fast: false
       matrix:
         # Oldest and newest supported v3 releases. v4 is covered by `code_checks`.
-        clarinet-sdk: ['3.15.0', '3.26.0']
+        include:
+          # The requirements fixture needs Clarinet >= 3.25 (Clarity 6 contracts)
+          - clarinet-sdk: '3.15.0'
+            skip-requirements-tests: 'true'
+          - clarinet-sdk: '3.26.0'
+            skip-requirements-tests: ''
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -56,3 +61,5 @@ jobs:
         run: pnpm exec vp run typecheck
       - name: Tests
         run: pnpm exec vp run test
+        env:
+          SKIP_REQUIREMENTS_TESTS: ${{ matrix.skip-requirements-tests }}
