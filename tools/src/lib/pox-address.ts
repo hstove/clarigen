@@ -85,7 +85,9 @@ function bitcoinVersionToPoxVersion(btcVersion: number): {
   if (btcVersion === BITCOIN_VERSION.testnet.P2SH) {
     return { version: PoXAddressVersion.P2SH, network: 'testnet' };
   }
-  throw new Error(`unsupported bitcoin address version 0x${btcVersion.toString(16)}`);
+  throw new Error(
+    `unsupported bitcoin address version 0x${btcVersion.toString(16)}`
+  );
 }
 
 function poxVersionToBitcoinVersion(
@@ -143,11 +145,17 @@ function decodeNativeSegwit(address: string): {
   network: BtcNetwork;
 } {
   const lower = address.toLowerCase();
-  if (lower.startsWith('bc1p') || lower.startsWith('tb1p') || lower.startsWith('bcrt1p')) {
+  if (
+    lower.startsWith('bc1p') ||
+    lower.startsWith('tb1p') ||
+    lower.startsWith('bcrt1p')
+  ) {
     const decoded = bech32m.decode(address as `${string}1${string}`);
     const witnessVersion = decoded.words[0];
     if (witnessVersion === undefined || witnessVersion === SEGWIT_V0) {
-      throw new Error('taproot addresses must use bech32m with witness version 1');
+      throw new Error(
+        'taproot addresses must use bech32m with witness version 1'
+      );
     }
     return {
       witnessVersion,
@@ -162,7 +170,9 @@ function decodeNativeSegwit(address: string): {
     throw new Error('invalid bech32 address');
   }
   if (witnessVersion > 0) {
-    throw new Error('addresses with witness version >= 1 should be encoded in bech32m');
+    throw new Error(
+      'addresses with witness version >= 1 should be encoded in bech32m'
+    );
   }
   return {
     witnessVersion,

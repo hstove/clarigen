@@ -53,7 +53,7 @@ async function getSimnetDeploymentIdentifiers(config: Config) {
     deployment.plan.batches as Batch<DeploymentTransaction>[]
   );
   return new Set(
-    transactions.flatMap(transaction => {
+    transactions.flatMap((transaction) => {
       try {
         return [getIdentifierForDeploymentTx(transaction)];
       } catch {
@@ -105,36 +105,34 @@ export async function getSession(
       deduplicateContractInterfaces(
         interfaces.entries(),
         deploymentIdentifiers
-      ).map(
-        async ([contract_id, contract_interface]) => {
-          if (
-            (contract_id.startsWith(MAINNET_BURN_ADDRESS) &&
-              config.esm?.include_boot_contracts !== true) ||
-            contract_id.startsWith(TESTNET_BURN_ADDRESS)
-          ) {
-            return;
-          }
-          // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
-          const name = getContractName(contract_id, false)!;
-          const contractPathDef = config.clarinet.contracts?.[name]?.path;
-          let source: string | undefined;
-          if (contractPathDef) {
-            const contractPathFull = config.joinFromClarinet(contractPathDef);
-            source = await readFile(contractPathFull, 'utf-8');
-          }
-
-          return {
-            contract_id,
-            contract_interface: {
-              ...contract_interface,
-              epoch: contract_interface.epoch as StacksEpochId,
-              clarity_version:
-                contract_interface.clarity_version as ClarityVersion,
-            },
-            source: source ?? '',
-          } as SessionContract;
+      ).map(async ([contract_id, contract_interface]) => {
+        if (
+          (contract_id.startsWith(MAINNET_BURN_ADDRESS) &&
+            config.esm?.include_boot_contracts !== true) ||
+          contract_id.startsWith(TESTNET_BURN_ADDRESS)
+        ) {
+          return;
         }
-      )
+        // biome-ignore lint/style/noNonNullAssertion: ignored using `--suppress`
+        const name = getContractName(contract_id, false)!;
+        const contractPathDef = config.clarinet.contracts?.[name]?.path;
+        let source: string | undefined;
+        if (contractPathDef) {
+          const contractPathFull = config.joinFromClarinet(contractPathDef);
+          source = await readFile(contractPathFull, 'utf-8');
+        }
+
+        return {
+          contract_id,
+          contract_interface: {
+            ...contract_interface,
+            epoch: contract_interface.epoch as StacksEpochId,
+            clarity_version:
+              contract_interface.clarity_version as ClarityVersion,
+          },
+          source: source ?? '',
+        } as SessionContract;
+      })
     )
   ).filter((x): x is SessionContract => x !== undefined);
 

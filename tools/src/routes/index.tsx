@@ -7,10 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import * as Select from '@/components/ui/select';
 import { useVisitedHistory } from '@/hooks/use-visited-history';
-import {
-  detectNetworkFromAddress,
-  type NETWORK,
-} from '@/lib/constants';
+import { detectNetworkFromAddress, type NETWORK } from '@/lib/constants';
 import { normalizeTxid } from '@/lib/txid';
 import { lookupContractCall } from '@/lib/tx-lookup';
 
@@ -284,8 +281,7 @@ function OpenContractForm() {
         </div>
         <div className="space-y-1.5">
           <Label className="font-mono text-xs" htmlFor="function-name">
-            function{' '}
-            <span className="text-muted-foreground">(optional)</span>
+            function <span className="text-muted-foreground">(optional)</span>
           </Label>
           <Input
             className="font-mono"
@@ -378,7 +374,10 @@ function OpenTxForm() {
           pox-5 register-for-bond ↗
         </button>
       </div>
-      <form className="space-y-4 p-4" onSubmit={(event) => void handleSubmit(event)}>
+      <form
+        className="space-y-4 p-4"
+        onSubmit={(event) => void handleSubmit(event)}
+      >
         <div className="grid gap-4 sm:grid-cols-[10rem_1fr]">
           <div className="space-y-1.5">
             <Label className="font-mono text-xs" htmlFor="tx-network">
@@ -396,7 +395,10 @@ function OpenTxForm() {
               }}
               value={network}
             >
-              <Select.SelectTrigger className="w-full font-mono" id="tx-network">
+              <Select.SelectTrigger
+                className="w-full font-mono"
+                id="tx-network"
+              >
                 <Select.SelectValue />
               </Select.SelectTrigger>
               <Select.SelectContent>

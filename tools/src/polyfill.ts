@@ -17,7 +17,7 @@ if (typeof globalThis.customElements === 'undefined') {
   globalThis.customElements = {
     define() {},
     get() {
-      return undefined;
+      return;
     },
     whenDefined() {
       return Promise.resolve(undefined as unknown as CustomElementConstructor);

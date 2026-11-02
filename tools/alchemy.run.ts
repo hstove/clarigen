@@ -1,17 +1,17 @@
-import * as Alchemy from "alchemy";
-import * as Cloudflare from "alchemy/Cloudflare";
-import * as Effect from "effect/Effect";
+import * as Alchemy from 'alchemy';
+import * as Cloudflare from 'alchemy/Cloudflare';
+import * as Effect from 'effect/Effect';
 
-export const Website = Cloudflare.Website.Vite("Website", {
-  name: "clarigen-tools",
-  domain: "tools.clarigen.dev",
+export const Website = Cloudflare.Website.Vite('Website', {
+  name: 'clarigen-tools',
+  domain: 'tools.clarigen.dev',
   compatibility: {
-    flags: ["nodejs_compat", "global_fetch_strictly_public"],
+    flags: ['nodejs_compat', 'global_fetch_strictly_public'],
   },
 });
 
 export default Alchemy.Stack(
-  "clarigen-web-tools",
+  'clarigen-web-tools',
   {
     providers: Cloudflare.providers(),
     state: Cloudflare.state(),
@@ -22,5 +22,5 @@ export default Alchemy.Stack(
     return {
       url: website.url.as<string>(),
     };
-  }),
+  })
 );

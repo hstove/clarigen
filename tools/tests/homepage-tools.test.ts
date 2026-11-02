@@ -72,7 +72,11 @@ describe('pox address conversion', () => {
   it('round-trips p2tr', () => {
     const hash32 =
       '0x751e76e8199196d454941c45d1b3a323f1433bd6751e76e8199196d454941c45';
-    const { address, decoded } = poxTupleToBtcAddress('0x06', hash32, 'mainnet');
+    const { address, decoded } = poxTupleToBtcAddress(
+      '0x06',
+      hash32,
+      'mainnet'
+    );
     expect(address.startsWith('bc1p')).toBe(true);
     const back = btcAddressToPoxTuple(address);
     expect(back.version).toBe(0x06);

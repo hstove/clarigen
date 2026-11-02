@@ -6,13 +6,16 @@ import { generateAccountsCode } from './accounts';
 import { generateIdentifiersCode } from './identifiers';
 import { inspect, type InspectOptions } from 'node:util';
 
-export function generateContractMeta(contract: SessionContract, constants: string) {
+export function generateContractMeta(
+  contract: SessionContract,
+  constants: string
+) {
   const abi = contract.contract_interface;
   const functionLines: string[] = [];
   const { functions, maps, variables, non_fungible_tokens, ...rest } = abi;
 
   // biome-ignore lint/complexity/noForEach: ignored using `--suppress`
-  functions.forEach(func => {
+  functions.forEach((func) => {
     let functionLine = `${toCamelCase(func.name)}: `;
     const funcDef = JSON.stringify(func);
     functionLine += funcDef;
@@ -21,7 +24,7 @@ export function generateContractMeta(contract: SessionContract, constants: strin
     functionLines.push(functionLine);
   });
 
-  const mapLines = maps.map(map => {
+  const mapLines = maps.map((map) => {
     let mapLine = `${toCamelCase(map.name)}: `;
     const keyType = jsTypeFromAbiType(map.key, true);
     const valType = jsTypeFromAbiType(map.value);
@@ -35,7 +38,7 @@ export function generateContractMeta(contract: SessionContract, constants: strin
 
   const variableLines = encodeVariables(variables);
 
-  const nftLines = non_fungible_tokens.map(nft => JSON.stringify(nft));
+  const nftLines = non_fungible_tokens.map((nft) => JSON.stringify(nft));
 
   return `{
   ${serializeLines('functions', functionLines)}
@@ -55,7 +58,7 @@ export function generateBaseFile(session: SessionWithVariables) {
     ...c,
     constants: session.variables[i],
   }));
-  const contractDefs = sortContracts(combined).map(contract => {
+  const contractDefs = sortContracts(combined).map((contract) => {
     const meta = generateContractMeta(contract, contract.constants);
     const id = contract.contract_id.split('.')[1];
     const keyName = toCamelCase(id);
@@ -84,7 +87,7 @@ export const simnet = {
 }
 
 export function encodeVariables(variables: ClarityAbiVariable[]) {
-  return variables.map(v => {
+  return variables.map((v) => {
     let varLine = `${encodeVariableName(v.name)}: `;
     const type = jsTypeFromAbiType(v.type);
     const varJSON = serialize(v);
@@ -101,7 +104,10 @@ declare global {
   }
 }
 
-Uint8Array.prototype[inspect.custom] = function (_depth: number, _options: InspectOptions) {
+Uint8Array.prototype[inspect.custom] = function (
+  _depth: number,
+  _options: InspectOptions
+) {
   return `Uint8Array.from([${this.join(',')}])`;
 };
 

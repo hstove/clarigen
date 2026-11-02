@@ -124,7 +124,9 @@ function FromAddress() {
         </div>
 
         {result.status === 'error' ? (
-          <p className="font-mono text-destructive text-xs">× {result.message}</p>
+          <p className="font-mono text-destructive text-xs">
+            × {result.message}
+          </p>
         ) : null}
 
         {result.status === 'ok' ? (
@@ -186,7 +188,10 @@ function FromTuple() {
               }}
               value={network}
             >
-              <Select.SelectTrigger className="w-full font-mono" id="btc-network">
+              <Select.SelectTrigger
+                className="w-full font-mono"
+                id="btc-network"
+              >
                 <Select.SelectValue />
               </Select.SelectTrigger>
               <Select.SelectContent>
@@ -227,7 +232,11 @@ function FromTuple() {
               onClick={() => setVersion(chip.version)}
               size="xs"
               type="button"
-              variant={version.replace(/\s+/g, '').toLowerCase() === chip.version ? 'default' : 'outline'}
+              variant={
+                version.replace(/\s+/g, '').toLowerCase() === chip.version
+                  ? 'default'
+                  : 'outline'
+              }
             >
               {chip.version} {chip.label}
             </Button>
@@ -239,7 +248,9 @@ function FromTuple() {
         </p>
 
         {result.status === 'error' ? (
-          <p className="font-mono text-destructive text-xs">× {result.message}</p>
+          <p className="font-mono text-destructive text-xs">
+            × {result.message}
+          </p>
         ) : null}
 
         {result.status === 'ok' ? (
@@ -318,4 +329,3 @@ function TupleResult({
     </div>
   );
 }
-

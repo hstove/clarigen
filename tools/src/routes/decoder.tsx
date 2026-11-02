@@ -57,8 +57,8 @@ function DecoderPage() {
           deserializeCV, then read it.
         </h1>
         <p className="max-w-2xl text-muted-foreground text-sm leading-6">
-          Paste any serialized Clarity value as hex. The decoder turns it into
-          a structured view and a pretty-printed Clarity literal.
+          Paste any serialized Clarity value as hex. The decoder turns it into a
+          structured view and a pretty-printed Clarity literal.
         </p>
       </section>
 

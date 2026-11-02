@@ -1,16 +1,12 @@
 /** biome-ignore-all lint/style/useTrimStartEnd: suppressed */
-import {
-  deduplicateContractInterfaces,
-  getSession,
-} from '../src/clarinet-sdk';
+import { deduplicateContractInterfaces, getSession } from '../src/clarinet-sdk';
 import { test, expect } from 'vitest';
 import { Config } from '../src/config';
 
 test('contract interfaces with the same name keep the canonical requirement', () => {
   const requirement = { name: 'requirement' };
   const simnetDependency = { name: 'simnet' };
-  const requirementId =
-    'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token';
+  const requirementId = 'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token';
   const interfaces = deduplicateContractInterfaces(
     [
       [
@@ -45,19 +41,19 @@ test('boot contract overrides do not produce duplicate contract names', async ()
   }
   const config = await Config.load('./test/dependencies');
   const session = await getSession(config);
-  const names = session.contracts.map(contract =>
-    contract.contract_id.split('.')[1]
+  const names = session.contracts.map(
+    (contract) => contract.contract_id.split('.')[1]
   );
 
   expect(new Set(names).size).toBe(names.length);
   expect(
     session.contracts
-      .filter(contract =>
-        ['sbtc-registry', 'sbtc-token'].some(name =>
+      .filter((contract) =>
+        ['sbtc-registry', 'sbtc-token'].some((name) =>
           contract.contract_id.endsWith(`.${name}`)
         )
       )
-      .map(contract => contract.contract_id)
+      .map((contract) => contract.contract_id)
       .sort()
   ).toEqual([
     'SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-registry',
