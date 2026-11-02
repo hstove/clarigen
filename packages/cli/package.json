@@ -32,7 +32,7 @@
     "lint": "eslint \"src/**/*.{ts,tsx}\" && vp fmt --check \"./**/*.{ts,js}\"",
     "format:fix": "vp fmt \"./**/*.{ts,js}\"",
     "typecheck": "tsc --noEmit -p tsconfig-test.json",
-    "type-stubs": "tsx scripts/generate-type-stubs.ts && vp fmt \"./src/**/*.ts\"",
+    "type-stubs": "tsx scripts/generate-type-stubs.ts && vp fmt \"./src/**/*.ts\" scripts/config-schema.json",
     "publish": "pnpm publish"
   },
   "name": "@clarigen/cli",

@@ -31,4 +31,5 @@ output = "docs"
 # \`docs.after\` - script to run after docs are generated.
 # examples:
 # after = "npm run prettier -w ./docs"
+
 `;
