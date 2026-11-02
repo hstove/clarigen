@@ -1,5 +1,10 @@
-import { Link } from '@tanstack/react-router';
-import { WalletButton } from './wallet-button';
+import { ClientOnly, Link } from '@tanstack/react-router';
+import { lazy, Suspense } from 'react';
+
+const WalletButton = lazy(() => import('./wallet-button').then(m => ({ default: m.WalletButton })));
+const HiroApiKeyButton = lazy(() =>
+  import('./hiro-api-key-button').then(m => ({ default: m.HiroApiKeyButton }))
+);
 
 export function Header() {
   return (
@@ -11,8 +16,40 @@ export function Header() {
         >
           <span className="text-muted-foreground">$</span> clarigen
         </Link>
-        <div className="ml-auto">
-          <WalletButton />
+        <nav className="ml-6 flex items-center gap-4 font-mono text-xs">
+          <Link
+            activeProps={{ className: 'text-primary' }}
+            className="text-muted-foreground transition-colors hover:text-primary"
+            to="/tx-decoder"
+          >
+            tx decoder
+          </Link>
+          <Link
+            activeProps={{ className: 'text-primary' }}
+            className="text-muted-foreground transition-colors hover:text-primary"
+            to="/decoder"
+          >
+            decoder
+          </Link>
+          <Link
+            activeProps={{ className: 'text-primary' }}
+            className="text-muted-foreground transition-colors hover:text-primary"
+            to="/btc-address"
+          >
+            btc address
+          </Link>
+        </nav>
+        <div className="ml-auto flex items-center gap-1">
+          <ClientOnly
+            fallback={<span className="font-mono text-muted-foreground text-xs">connect</span>}
+          >
+            <Suspense
+              fallback={<span className="font-mono text-muted-foreground text-xs">connect</span>}
+            >
+              <HiroApiKeyButton />
+              <WalletButton />
+            </Suspense>
+          </ClientOnly>
         </div>
       </div>
     </header>

@@ -5,6 +5,8 @@ Web application for Stacks blockchain utilities. Part of the Clarigen monorepo.
 ## Key Features
 
 - **TX Builder** (`/tx/:network/:contract/:function`) - Dynamic form builder for contract calls. See [TX-BUILDER.md](./TX-BUILDER.md) for architecture details.
+- **TX Decoder** (`/tx-decoder`) - Decode raw txs, txids, single Clarity args, post-conditions, or `stx_callContract` JSON to verify before signing. Logic in `src/lib/tx-decode.ts`.
+- Homepage has an **open a contract** form — paste a contract id (and optional function) instead of hand-building the URL.
 
 ## Forms
 
@@ -30,6 +32,9 @@ const form = useAppForm({ defaultValues, onSubmit });
 
 - Dev server: `localhost:2527`
 - Server logs: `tail -n 100 tmp/dev-server.log`
+- Production Cloudflare account: Personal (`82d6b61d18e47412d942d6e35208c71d`)
+- Production Alchemy profile and stage: `personal` / `prod`
+- Production deploy: `pnpm run deploy` (targets Worker `clarigen-tools` at `tools.clarigen.dev`)
 - UI design: See `./UI-DESIGN.md`
 - Debugging: Use playwriter tool to interact with the running app
 - For debugging, these are some good paths to try:

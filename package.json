@@ -15,7 +15,8 @@
     "demo-types": "pnpm --filter @clarigen/cli start ../../demo-project",
     "clarigen": "pnpm --filter @clarigen/cli start",
     "dev:web": "pnpm --filter clarigen-docs dev",
-    "dev:tools": "turbo run dev --filter=@clarigen/web-tools --log-prefix=none"
+    "dev:tools": "turbo run dev --filter=@clarigen/web-tools --log-prefix=none",
+    "deploy:tools": "pnpm --filter @clarigen/web-tools run deploy"
   },
   "packageManager": "pnpm@10.12.1",
   "devDependencies": {
@@ -39,11 +40,13 @@
   },
   "resolutions": {
     "typescript": "5.9.3",
-    "whatwg-url": "^14.0.0"
+    "whatwg-url": "^14.0.0",
+    "effect": "4.0.0-beta.105"
   },
   "pnpm": {
     "overrides": {
       "whatwg-url": "^14.0.0",
+      "effect": "4.0.0-beta.105",
       "vite": "catalog:"
     }
   }

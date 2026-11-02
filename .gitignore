@@ -66,5 +66,6 @@ deprecated
 
 tmp
 
-# bv (beads viewer) local config and caches
-.bv/
+# Alchemy local state / logs
+.alchemy/
+**/.alchemy/

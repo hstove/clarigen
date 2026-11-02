@@ -4,6 +4,7 @@ import { StacksTransaction } from '../types/stacks-transaction';
 import type { NETWORK } from './constants';
 import type { ClarityAbi } from '@clarigen/core';
 import { format } from 'dnum';
+import { getHiroApiKey } from './hiro-api-key';
 
 export function getStacksApiUrl(network: NETWORK) {
   return network === 'mainnet'
@@ -14,16 +15,17 @@ export function getStacksApiUrl(network: NETWORK) {
       : 'https://api.testnet.hiro.so';
 }
 
-export function getStacksApi(network: NETWORK) {
+export function getStacksApi(network: NETWORK, apiKey = getHiroApiKey()) {
   const baseUrl = getStacksApiUrl(network);
 
   return createClient<paths>({
     baseUrl,
+    headers: apiKey ? { 'x-api-key': apiKey } : undefined,
   });
 }
 
-export async function getContractInfo(network: NETWORK, contractId: string) {
-  const client = getStacksApi(network);
+export async function getContractInfo(network: NETWORK, contractId: string, apiKey?: string) {
+  const client = getStacksApi(network, apiKey);
   const { data, error, response } = await client.GET('/extended/v1/contract/{contract_id}', {
     params: {
       path: {
@@ -38,8 +40,8 @@ export async function getContractInfo(network: NETWORK, contractId: string) {
   return data;
 }
 
-export async function getContractAbi(network: NETWORK, contractId: string) {
-  const contractInfo = await getContractInfo(network, contractId);
+export async function getContractAbi(network: NETWORK, contractId: string, apiKey?: string) {
+  const contractInfo = await getContractInfo(network, contractId, apiKey);
   return parseContractAbi(contractInfo.abi);
 }
 
@@ -88,4 +90,15 @@ export async function getTransaction(
     throw new Error(`Failed to get transaction. Status ${response.status}. ${error?.message}`);
   }
   return StacksTransaction.assert(data);
+}
+
+export async function getRawTransaction(network: NETWORK, txId: string): Promise<string> {
+  const client = getStacksApi(network);
+  const { data, error, response } = await client.GET('/extended/v1/tx/{tx_id}/raw', {
+    params: { path: { tx_id: txId } },
+  });
+  if (!data) {
+    throw new Error(`Failed to get raw transaction. Status ${response.status}. ${error?.message}`);
+  }
+  return data.raw_tx;
 }

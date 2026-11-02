@@ -181,13 +181,21 @@ export const contracts = {
         name: 'get-name',
         access: 'read_only',
         args: [],
-        outputs: { type: { response: { ok: { 'string-ascii': { length: 32 } }, error: 'none' } } },
+        outputs: {
+          type: {
+            response: { ok: { 'string-ascii': { length: 32 } }, error: 'none' },
+          },
+        },
       } as TypedAbiFunction<[], Response<string, null>>,
       getSymbol: {
         name: 'get-symbol',
         access: 'read_only',
         args: [],
-        outputs: { type: { response: { ok: { 'string-ascii': { length: 32 } }, error: 'none' } } },
+        outputs: {
+          type: {
+            response: { ok: { 'string-ascii': { length: 32 } }, error: 'none' },
+          },
+        },
       } as TypedAbiFunction<[], Response<string, null>>,
       getTokenUri: {
         name: 'get-token-uri',
@@ -195,7 +203,10 @@ export const contracts = {
         args: [],
         outputs: {
           type: {
-            response: { ok: { optional: { 'string-utf8': { length: 256 } } }, error: 'none' },
+            response: {
+              ok: { optional: { 'string-utf8': { length: 256 } } },
+              error: 'none',
+            },
           },
         },
       } as TypedAbiFunction<[], Response<string | null, null>>,
@@ -230,7 +241,11 @@ export const contracts = {
         name: 'message-for-restriction',
         access: 'read_only',
         args: [{ name: 'restriction-code', type: 'uint128' }],
-        outputs: { type: { response: { ok: { 'string-ascii': { length: 70 } }, error: 'none' } } },
+        outputs: {
+          type: {
+            response: { ok: { 'string-ascii': { length: 70 } }, error: 'none' },
+          },
+        },
       } as TypedAbiFunction<
         [restrictionCode: TypedAbiArg<number | bigint, 'restrictionCode'>],
         Response<string, null>
@@ -381,10 +396,11 @@ export const contracts = {
       } as TypedAbiFunction<[], bigint>,
     },
     maps: {
-      lastIncrement: { name: 'last-increment', key: 'principal', value: 'uint128' } as TypedAbiMap<
-        string,
-        bigint
-      >,
+      lastIncrement: {
+        name: 'last-increment',
+        key: 'principal',
+        value: 'uint128',
+      } as TypedAbiMap<string, bigint>,
     },
     variables: {
       counter: {
@@ -444,7 +460,10 @@ export const contracts = {
               ],
             },
           },
-          { name: 'helper-response', type: { response: { ok: 'uint128', error: 'uint128' } } },
+          {
+            name: 'helper-response',
+            type: { response: { ok: 'uint128', error: 'uint128' } },
+          },
         ],
         outputs: { type: { response: { ok: 'uint128', error: 'uint128' } } },
       } as TypedAbiFunction<
@@ -747,7 +766,10 @@ export const contracts = {
         name: 'rotate-keys',
         access: 'public',
         args: [
-          { name: 'new-keys', type: { list: { type: { buffer: { length: 33 } }, length: 128 } } },
+          {
+            name: 'new-keys',
+            type: { list: { type: { buffer: { length: 33 } }, length: 128 } },
+          },
           { name: 'new-address', type: 'principal' },
           { name: 'new-aggregate-pubkey', type: { buffer: { length: 33 } } },
           { name: 'new-signature-threshold', type: 'uint128' },
@@ -852,12 +874,17 @@ export const contracts = {
         outputs: {
           type: {
             tuple: [
-              { name: 'current-aggregate-pubkey', type: { buffer: { length: 33 } } },
+              {
+                name: 'current-aggregate-pubkey',
+                type: { buffer: { length: 33 } },
+              },
               { name: 'current-signature-threshold', type: 'uint128' },
               { name: 'current-signer-principal', type: 'principal' },
               {
                 name: 'current-signer-set',
-                type: { list: { type: { buffer: { length: 33 } }, length: 128 } },
+                type: {
+                  list: { type: { buffer: { length: 33 } }, length: 128 },
+                },
               },
             ],
           },
@@ -881,7 +908,9 @@ export const contracts = {
         name: 'get-current-signer-set',
         access: 'read_only',
         args: [],
-        outputs: { type: { list: { type: { buffer: { length: 33 } }, length: 128 } } },
+        outputs: {
+          type: { list: { type: { buffer: { length: 33 } }, length: 128 } },
+        },
       } as TypedAbiFunction<[], Uint8Array[]>,
       getDepositStatus: {
         name: 'get-deposit-status',
@@ -1067,10 +1096,11 @@ export const contracts = {
           sender: string;
         }
       >,
-      withdrawalStatus: { name: 'withdrawal-status', key: 'uint128', value: 'bool' } as TypedAbiMap<
-        number | bigint,
-        boolean
-      >,
+      withdrawalStatus: {
+        name: 'withdrawal-status',
+        key: 'uint128',
+        value: 'bool',
+      } as TypedAbiMap<number | bigint, boolean>,
     },
     variables: {
       ERR_AGG_PUBKEY_REPLAY: {
@@ -1214,13 +1244,19 @@ export const contracts = {
             type: {
               tuple: [
                 { name: 'amount', type: 'uint128' },
-                { name: 'memo', type: { optional: { buffer: { length: 34 } } } },
+                {
+                  name: 'memo',
+                  type: { optional: { buffer: { length: 34 } } },
+                },
                 { name: 'sender', type: 'principal' },
                 { name: 'to', type: 'principal' },
               ],
             },
           },
-          { name: 'result', type: { response: { ok: 'uint128', error: 'uint128' } } },
+          {
+            name: 'result',
+            type: { response: { ok: 'uint128', error: 'uint128' } },
+          },
         ],
         outputs: { type: { response: { ok: 'uint128', error: 'uint128' } } },
       } as TypedAbiFunction<
@@ -1329,7 +1365,12 @@ export const contracts = {
         outputs: {
           type: {
             response: {
-              ok: { list: { type: { response: { ok: 'bool', error: 'uint128' } }, length: 200 } },
+              ok: {
+                list: {
+                  type: { response: { ok: 'bool', error: 'uint128' } },
+                  length: 200,
+                },
+              },
               error: 'uint128',
             },
           },
@@ -1381,7 +1422,10 @@ export const contracts = {
         name: 'protocol-set-token-uri',
         access: 'public',
         args: [
-          { name: 'new-uri', type: { optional: { 'string-utf8': { length: 256 } } } },
+          {
+            name: 'new-uri',
+            type: { optional: { 'string-utf8': { length: 256 } } },
+          },
           { name: 'contract-flag', type: { buffer: { length: 1 } } },
         ],
         outputs: { type: { response: { ok: 'bool', error: 'uint128' } } },
@@ -1439,7 +1483,10 @@ export const contracts = {
                 type: {
                   tuple: [
                     { name: 'amount', type: 'uint128' },
-                    { name: 'memo', type: { optional: { buffer: { length: 34 } } } },
+                    {
+                      name: 'memo',
+                      type: { optional: { buffer: { length: 34 } } },
+                    },
                     { name: 'sender', type: 'principal' },
                     { name: 'to', type: 'principal' },
                   ],
@@ -1492,13 +1539,21 @@ export const contracts = {
         name: 'get-name',
         access: 'read_only',
         args: [],
-        outputs: { type: { response: { ok: { 'string-ascii': { length: 32 } }, error: 'none' } } },
+        outputs: {
+          type: {
+            response: { ok: { 'string-ascii': { length: 32 } }, error: 'none' },
+          },
+        },
       } as TypedAbiFunction<[], Response<string, null>>,
       getSymbol: {
         name: 'get-symbol',
         access: 'read_only',
         args: [],
-        outputs: { type: { response: { ok: { 'string-ascii': { length: 10 } }, error: 'none' } } },
+        outputs: {
+          type: {
+            response: { ok: { 'string-ascii': { length: 10 } }, error: 'none' },
+          },
+        },
       } as TypedAbiFunction<[], Response<string, null>>,
       getTokenUri: {
         name: 'get-token-uri',
@@ -1506,7 +1561,10 @@ export const contracts = {
         args: [],
         outputs: {
           type: {
-            response: { ok: { optional: { 'string-utf8': { length: 256 } } }, error: 'none' },
+            response: {
+              ok: { optional: { 'string-utf8': { length: 256 } } },
+              error: 'none',
+            },
           },
         },
       } as TypedAbiFunction<[], Response<string | null, null>>,
@@ -1600,7 +1658,10 @@ export const contracts = {
               ],
             },
           },
-          { name: 'l', type: { response: { ok: 'uint128', error: 'uint128' } } },
+          {
+            name: 'l',
+            type: { response: { ok: 'uint128', error: 'uint128' } },
+          },
           { name: 'm', type: { optional: 'uint128' } },
         ],
         outputs: { type: { response: { ok: 'bool', error: 'none' } } },
@@ -1646,7 +1707,14 @@ export const contracts = {
         outputs: {
           type: {
             response: {
-              ok: { tuple: [{ name: 'a', type: { response: { ok: 'uint128', error: 'none' } } }] },
+              ok: {
+                tuple: [
+                  {
+                    name: 'a',
+                    type: { response: { ok: 'uint128', error: 'none' } },
+                  },
+                ],
+              },
               error: 'none',
             },
           },
@@ -1719,7 +1787,14 @@ export const contracts = {
               { name: 'bool-prop', type: 'bool' },
               {
                 name: 'tuple-prop',
-                type: { tuple: [{ name: 'sub-prop', type: { 'string-ascii': { length: 4 } } }] },
+                type: {
+                  tuple: [
+                    {
+                      name: 'sub-prop',
+                      type: { 'string-ascii': { length: 4 } },
+                    },
+                  ],
+                },
               },
             ],
           },
@@ -1737,7 +1812,12 @@ export const contracts = {
       mergeTuple: {
         name: 'merge-tuple',
         access: 'read_only',
-        args: [{ name: 'i', type: { tuple: [{ name: 'min-height', type: 'uint128' }] } }],
+        args: [
+          {
+            name: 'i',
+            type: { tuple: [{ name: 'min-height', type: 'uint128' }] },
+          },
+        ],
         outputs: {
           type: {
             tuple: [
@@ -1765,7 +1845,12 @@ export const contracts = {
         access: 'read_only',
         args: [{ name: 'return-err', type: 'bool' }],
         outputs: {
-          type: { response: { ok: { 'string-ascii': { length: 4 } }, error: 'uint128' } },
+          type: {
+            response: {
+              ok: { 'string-ascii': { length: 4 } },
+              error: 'uint128',
+            },
+          },
         },
       } as TypedAbiFunction<
         [returnErr: TypedAbiArg<boolean, 'returnErr'>],
@@ -1773,10 +1858,11 @@ export const contracts = {
       >,
     },
     maps: {
-      simpleMap: { name: 'simple-map', key: 'uint128', value: 'bool' } as TypedAbiMap<
-        number | bigint,
-        boolean
-      >,
+      simpleMap: {
+        name: 'simple-map',
+        key: 'uint128',
+        value: 'bool',
+      } as TypedAbiMap<number | bigint, boolean>,
     },
     variables: {
       ERR_ONE: {
@@ -1850,16 +1936,46 @@ export const contracts = {
 } as const;
 
 export const accounts = {
-  deployer: { address: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM', balance: '100000000000000' },
-  faucet: { address: 'STNHKEPYEPJ8ET55ZZ0M5A34J0R3N5FM2CMMMAZ6', balance: '100000000000000' },
-  wallet_1: { address: 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5', balance: '100000000000000' },
-  wallet_2: { address: 'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG', balance: '100000000000000' },
-  wallet_3: { address: 'ST2JHG361ZXG51QTKY2NQCVBPPRRE2KZB1HR05NNC', balance: '100000000000000' },
-  wallet_4: { address: 'ST2NEB84ASENDXKYGJPQW86YXQCEFEX2ZQPG87ND', balance: '100000000000000' },
-  wallet_5: { address: 'ST2REHHS5J3CERCRBEPMGH7921Q6PYKAADT7JP2VB', balance: '100000000000000' },
-  wallet_6: { address: 'ST3AM1A56AK2C1XAFJ4115ZSV26EB49BVQ10MGCS0', balance: '100000000000000' },
-  wallet_7: { address: 'ST3PF13W7Z0RRM42A8VZRVFQ75SV1K26RXEP8YGKJ', balance: '100000000000000' },
-  wallet_8: { address: 'ST3NBRSFKX28FQ2ZJ1MAKX58HKHSDGNV5N7R21XCP', balance: '100000000000000' },
+  deployer: {
+    address: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
+    balance: '100000000000000',
+  },
+  faucet: {
+    address: 'STNHKEPYEPJ8ET55ZZ0M5A34J0R3N5FM2CMMMAZ6',
+    balance: '100000000000000',
+  },
+  wallet_1: {
+    address: 'ST1SJ3DTE5DN7X54YDH5D64R3BCB6A2AG2ZQ8YPD5',
+    balance: '100000000000000',
+  },
+  wallet_2: {
+    address: 'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG',
+    balance: '100000000000000',
+  },
+  wallet_3: {
+    address: 'ST2JHG361ZXG51QTKY2NQCVBPPRRE2KZB1HR05NNC',
+    balance: '100000000000000',
+  },
+  wallet_4: {
+    address: 'ST2NEB84ASENDXKYGJPQW86YXQCEFEX2ZQPG87ND',
+    balance: '100000000000000',
+  },
+  wallet_5: {
+    address: 'ST2REHHS5J3CERCRBEPMGH7921Q6PYKAADT7JP2VB',
+    balance: '100000000000000',
+  },
+  wallet_6: {
+    address: 'ST3AM1A56AK2C1XAFJ4115ZSV26EB49BVQ10MGCS0',
+    balance: '100000000000000',
+  },
+  wallet_7: {
+    address: 'ST3PF13W7Z0RRM42A8VZRVFQ75SV1K26RXEP8YGKJ',
+    balance: '100000000000000',
+  },
+  wallet_8: {
+    address: 'ST3NBRSFKX28FQ2ZJ1MAKX58HKHSDGNV5N7R21XCP',
+    balance: '100000000000000',
+  },
 } as const;
 
 export const identifiers = {

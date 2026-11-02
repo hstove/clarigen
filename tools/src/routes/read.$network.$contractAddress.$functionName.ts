@@ -21,9 +21,10 @@ export const Route = createFileRoute('/read/$network/$contractAddress/$functionN
           return new Response('Invalid network', { status: 400 });
         }
         const network = networkResult as NETWORK;
+        const apiKey = request.headers.get('x-api-key') ?? undefined;
 
         try {
-          const abi = await getContractAbi(network, contractAddress);
+          const abi = await getContractAbi(network, contractAddress, apiKey);
           const func = abi.functions.find(f => f.name === functionName);
 
           if (!func) {
@@ -53,6 +54,7 @@ export const Route = createFileRoute('/read/$network/$contractAddress/$functionN
             functionName,
             functionArgs: args,
             url: rpcUrl,
+            apiKey,
           });
 
           return Response.json({
