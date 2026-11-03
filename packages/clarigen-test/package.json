@@ -22,7 +22,7 @@
     "build": "shx rm -rf dist && vp pack",
     "test": "vitest run",
     "lint": "eslint \"src/**/*.{ts,tsx}\" && vp fmt --check \"./**/*.{ts,js}\"",
-    "typecheck": "tsc --noEmit -p tsconfig-test.json",
+    "typecheck": "tsgo --noEmit -p tsconfig-test.json",
     "publish": "pnpm publish"
   },
   "name": "@clarigen/test",

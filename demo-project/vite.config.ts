@@ -9,7 +9,7 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: true,
     exports: true,
-    dts: true,
+    dts: { tsgo: true },
     format: ['esm', 'cjs'],
   },
   test: {
