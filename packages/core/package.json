@@ -22,7 +22,7 @@
     "build": "vp pack",
     "test": "vitest run",
     "lint": "eslint \"src/**/*.{ts,tsx}\" && vp fmt --check \"./**/*.{ts,js}\"",
-    "typecheck": "tsc --noEmit -p tsconfig-test.json",
+    "typecheck": "tsgo --noEmit -p tsconfig-test.json",
     "copy-types": "node copy-types.js",
     "publish": "pnpm publish"
   },

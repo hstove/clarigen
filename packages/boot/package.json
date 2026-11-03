@@ -36,7 +36,7 @@
     "test": "vitest run --passWithNoTests",
     "lint": "eslint \"src/**/*.{ts,tsx}\" && vp fmt --check \"./**/*.{ts,js}\"",
     "format:fix": "vp fmt \"./**/*.{ts,js}\"",
-    "typecheck": "tsc --noEmit -p tsconfig-test.json",
+    "typecheck": "tsgo --noEmit -p tsconfig-test.json",
     "type-stubs": "clarigen",
     "publish": "pnpm publish"
   },

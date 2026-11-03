@@ -1,5 +1,12 @@
 name: Pull Request
-on: [pull_request, workflow_dispatch]
+on:
+  pull_request:
+  # Runs on `main` seed the pnpm and Turborepo caches. PR runs can only read
+  # caches saved on their own branch or the default branch, so without this
+  # every new PR starts cold.
+  push:
+    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -22,12 +29,20 @@ jobs:
         with:
           node-version: 24
           cache: pnpm
+      - name: Restore Turborepo cache
+        uses: actions/cache@v4
+        with:
+          path: .turbo/cache
+          key: turbo-${{ runner.os }}-code-checks-${{ github.sha }}
+          restore-keys: |
+            turbo-${{ runner.os }}-code-checks-
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-      - name: Build packages
-        run: pnpm exec vp run build:packages
+        run: pnpm install --frozen-lockfile --prefer-offline
+      # Lint and format don't depend on build output, so fail fast on them.
       - name: Check
         run: pnpm exec vp check
+      - name: Build packages
+        run: pnpm exec vp run build:packages
       - name: Type checks
         run: pnpm exec vp run typecheck
       - name: Tests
@@ -51,12 +66,19 @@ jobs:
         with:
           node-version: 24
           cache: pnpm
+      - name: Restore Turborepo cache
+        uses: actions/cache@v4
+        with:
+          path: .turbo/cache
+          key: turbo-${{ runner.os }}-clarinet-sdk-${{ matrix.clarinet-sdk }}-${{ github.sha }}
+          restore-keys: |
+            turbo-${{ runner.os }}-clarinet-sdk-${{ matrix.clarinet-sdk }}-
       - name: Install dependencies with @stacks/clarinet-sdk ${{ matrix.clarinet-sdk }}
         run: |
           npm pkg set \
             "pnpm.overrides.@stacks/clarinet-sdk=${{ matrix.clarinet-sdk }}" \
             "pnpm.overrides.@stacks/clarinet-sdk-wasm=${{ matrix.clarinet-sdk }}"
-          pnpm install --no-frozen-lockfile
+          pnpm install --no-frozen-lockfile --prefer-offline
       - name: Build packages
         run: pnpm exec vp run build:packages
       - name: Type checks

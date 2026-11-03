@@ -10,7 +10,7 @@
     "preview": "vp preview",
     "deploy": "alchemy deploy --stage prod --profile personal --yes",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsgo --noEmit"
   },
   "dependencies": {
     "@base-ui/react": "^1.0.0",
